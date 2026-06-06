@@ -1,0 +1,19 @@
+.active {
+  color: var(--bs-primary, #1890ff);
+  cursor: pointer;
+}
+
+.notactive {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upIcon {
+  margin-bottom: -0.55rem;
+}

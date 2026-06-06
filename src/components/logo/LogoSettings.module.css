@@ -1,0 +1,54 @@
+.section { margin-bottom: 32px; }
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-text);
+  margin: 0 0 8px 0;
+}
+
+.sectionDesc {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+  margin: 0 0 16px 0;
+}
+
+.currentLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--theme-hover);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.currentLabel {
+  font-size: 13px;
+  color: var(--theme-text-secondary);
+  font-weight: 500;
+}
+
+.smallPreview {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--theme-surface);
+  padding: 4px;
+}
+
+.largePreview {
+  height: 40px;
+  max-width: 200px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--theme-surface);
+  padding: 4px;
+}
+
+.resetSection {
+  padding-top: 16px;
+  border-top: 1px solid var(--theme-border);
+  text-align: center;
+}

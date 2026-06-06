@@ -1,0 +1,45 @@
+/* Status Label Styles */
+.draftTag {
+  font-size: 0.7rem;
+  background: #f0f0f0;
+  color: #727272;
+  border: 1px solid #999999;
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+.submitTag {
+  font-size: 0.7rem;
+  background: #d4dfe6;
+  color: #51709a;
+  border: 1px solid #51709a;
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+.reviewedTag {
+  font-size: 0.7rem;
+  background: #d6cecd;
+  color: #8b7a7b;
+  border: 1px solid #8b7a7b;
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+.approvedTag {
+  font-size: 0.7rem;
+  background: #d7e2d8;
+  color: #0e5440;
+  border: 1px solid #0e5440;
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+.defaultTag {
+  font-size: 0.7rem;
+  background: #f0f0f0;
+  color: #727272;
+  border: 1px solid #999999;
+  border-radius: 10px;
+  padding: 2px 7px;
+}

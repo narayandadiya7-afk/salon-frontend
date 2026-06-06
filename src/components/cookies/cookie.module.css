@@ -1,0 +1,66 @@
+/* CookieBanner.module.css */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background-color: #E1000F;
+  margin-bottom: 7vh;
+  border-radius: 4px;
+  color: white;
+  margin-left: 2vw;
+  display: flex;
+  justify-content: space-around;
+  transition: opacity 0.5s;
+}
+
+.cookie-banner.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cookie-banner.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cookie-banner div {
+  padding: 1%;
+}
+
+.buttons-container {
+  align-items: center;
+  padding: 1rem !important;
+  display: flex;
+  gap: 8px;
+}
+
+.accept-button,
+.privacy-button {
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  border: 0.1rem solid white;
+  border-radius: 4px;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.privacy-button {
+  width: max-content;
+}
+
+@media (max-width: 600px) {
+  .cookie-banner {
+    flex-direction: column;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+  }
+
+  .accept-button,
+  .privacy-button {
+    margin-top: 1rem;
+  }
+}

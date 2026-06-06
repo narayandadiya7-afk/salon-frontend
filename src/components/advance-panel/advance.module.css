@@ -1,0 +1,46 @@
+/* Advance Panel Styles */
+.parentContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.verticalText {
+  font-size: 18px;
+  writing-mode: vertical-rl;
+  letter-spacing: 2px;
+  text-orientation: upright;
+}
+
+.iconContainer {
+  cursor: pointer;
+  position: fixed;
+  top: 90%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right 0.3s ease;
+}
+
+.openPanelWidth { right: 70px; }
+.closePanelWidth { right: 0; }
+
+.icon {
+  color: var(--theme-primary, #1890ff);
+  font-size: 20px;
+  transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+.icon:hover {
+  font-size: 25px;
+  transform: scale(1.2);
+}

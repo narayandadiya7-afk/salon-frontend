@@ -1,0 +1,60 @@
+/* Pagination Styles */
+.pageitem { display: inline-block; }
+
+.pagelink {
+  display: block;
+  cursor: pointer;
+  color: var(--theme-primary, #1890ff);
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pageitem.active .pagelink {
+  color: #fff;
+  background-color: var(--theme-primary, #1890ff);
+}
+
+.pageitem.disabled .pagelink {
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: right;
+  padding-right: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageInfo {
+  display: flex;
+  justify-content: left;
+  padding-left: 1rem;
+  font-size: 0.9em;
+  align-items: center;
+}
+
+.pageSize { margin-left: 20px; }
+.pageSizeBox { margin-left: 10px; }
+
+@media (max-width: 767px) {
+  .paginationContainer { flex-direction: column; padding-bottom: 15px; }
+  .showingMessageSmallScreen { display: block; }
+  .showingMessageLargeScreen { display: none; }
+}
+
+@media (min-width: 768px) {
+  .showingMessageSmallScreen { display: none; }
+  .showingMessageLargeScreen { display: block; }
+}

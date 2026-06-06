@@ -1,0 +1,135 @@
+.footer {
+  background: var(--theme-surface);
+  border-top: 1px solid var(--theme-border);
+  padding: var(--spacing-3xl) 0 var(--spacing-lg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-3xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.logo {
+  font-family: "LexendBold", sans-serif;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--theme-primary);
+  text-decoration: none;
+}
+
+.tagline {
+  font-size: var(--font-size-sm);
+  color: var(--theme-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 240px;
+  margin: 0;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.groupTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--theme-text);
+  margin: 0 0 var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.link {
+  font-size: var(--font-size-sm);
+  color: var(--theme-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast) var(--transition-timing);
+}
+
+.link:hover {
+  color: var(--theme-primary);
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--theme-border-light);
+}
+
+.copyright {
+  font-size: var(--font-size-xs);
+  color: var(--theme-text-secondary);
+  margin: 0;
+}
+
+.socials {
+  display: flex;
+  gap: var(--spacing-base);
+}
+
+.social {
+  font-size: var(--font-size-xs);
+  color: var(--theme-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast) var(--transition-timing);
+}
+
+.social:hover {
+  color: var(--theme-primary);
+}
+
+@media (max-width: 768px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .bottom {
+    flex-direction: column;
+    gap: var(--spacing-base);
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .links {
+    grid-template-columns: 1fr;
+  }
+}

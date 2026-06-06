@@ -1,0 +1,25 @@
+/* Custom Dropdown Styles */
+.mainDivStyle {
+  position: relative;
+  flex: 1;
+}
+
+.lables {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  outline: none;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.labelColor {
+  color: #ff4d4f;
+}
+
+.errorLabel {
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #ff4d4f;
+  font-size: 12px;
+}

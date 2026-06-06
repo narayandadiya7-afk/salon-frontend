@@ -1,0 +1,117 @@
+/* Layout Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: var(--theme-primary, #1890ff);
+  border-bottom: 1px solid #ddd;
+  top: 0;
+  width: 100%;
+  z-index: 900;
+  position: fixed;
+  box-sizing: border-box;
+  height: 4.2rem;
+}
+
+.logo {
+  padding: 5px;
+  font-size: 24px;
+  color: var(--theme-primary, #1890ff);
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.logoSize {
+  display: flex;
+  align-items: center;
+  width: 10%;
+}
+
+.headerMenu {
+  width: 17%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userProfileIcon {
+  margin: 0.1rem 1rem 0 1rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.primaryColor {
+  color: var(--theme-primary, #1890ff);
+  font-size: 18px;
+  transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+.primaryColor:hover {
+  font-size: 22px;
+  transform: scale(1.2);
+}
+
+.welcomelogo {
+  margin-left: 3vw;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.userBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.pencil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6%;
+  white-space: nowrap;
+}
+
+.userName {
+  padding: 0.9rem 1rem 0rem 1.2rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.userProfile {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-width: 200px;
+}
+
+.profileWrapper {
+  color: #535353;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  line-height: 1.8rem;
+  cursor: pointer;
+}
+
+.logoutDiv {
+  padding: 1rem;
+}
+
+.popoverOverlay {
+  z-index: 10000 !important;
+}
+
+.tooltipContainer {
+  z-index: 10000 !important;
+}
+
+.userIcon {
+  font-size: 1.2rem;
+  color: var(--theme-primary, #1890ff);
+}

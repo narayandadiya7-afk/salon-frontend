@@ -1,0 +1,301 @@
+/* ============================================================
+   404 — Editorial / minimal-luxury design, theme-aware
+   ============================================================ */
+
+.root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--theme-background);
+  padding: 40px 32px 80px;
+  opacity: 0;
+  transition: opacity 0.5s ease,
+              background-color var(--transition-base) var(--transition-timing);
+}
+.root.ready { opacity: 1; }
+
+/* ── radial glow ── */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,
+      rgba(var(--nf-primary-rgb), 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 100%,
+      rgba(var(--nf-primary-rgb), 0.05) 0%, transparent 55%);
+}
+
+/* ── wave canvas sits at bottom ── */
+.waveCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ============================================================
+   COUNTER / 404 NUMBER
+   ============================================================ */
+.counterWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  animation: numIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both 0.2s;
+}
+
+@keyframes numIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* The big number */
+.counterNum {
+  font-family: "LexendBold", sans-serif;
+  font-size: clamp(160px, 28vw, 320px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    var(--theme-text)          0%,
+    var(--theme-primary-hover) 50%,
+    var(--theme-primary)       100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  animation: glitchMain 5s steps(1) infinite;
+}
+
+/* ── left-to-right shine sweep ── */
+.counterNum::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent            0%,
+    rgba(255,255,255,0.22) 30%,
+    rgba(255,255,255,0.75) 50%,
+    rgba(255,255,255,0.22) 70%,
+    transparent            100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: skewX(-12deg) translateX(-120%);
+  animation: shinePass 3.2s ease-in-out infinite;
+  animation-delay: 1.4s;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: overlay;
+}
+
+@keyframes shinePass {
+  0%        { transform: skewX(-12deg) translateX(-120%); opacity: 0; }
+  8%        { opacity: 1; }
+  60%, 100% { transform: skewX(-12deg) translateX(220%);  opacity: 0; }
+}
+
+/* ── glitch offset layers ── */
+.glitchLayer1,
+.glitchLayer2 {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    145deg,
+    var(--theme-text)          0%,
+    var(--theme-primary-hover) 50%,
+    var(--theme-primary)       100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+.glitchLayer1 {
+  animation: glitch1 5s steps(1) infinite;
+  clip-path: polygon(0 15%, 100% 15%, 100% 40%, 0 40%);
+}
+.glitchLayer2 {
+  animation: glitch2 5s steps(1) infinite;
+  clip-path: polygon(0 58%, 100% 58%, 100% 78%, 0 78%);
+}
+
+@keyframes glitchMain {
+  0%, 91%, 100% { transform: translate(0); }
+  92%  { transform: translate(-3px,  1px); }
+  93%  { transform: translate( 3px, -1px); }
+  94%  { transform: translate(0); }
+  95%  { transform: translate( 2px,  2px); }
+  96%  { transform: translate(-2px, -1px); }
+  97%  { transform: translate(0); }
+}
+@keyframes glitch1 {
+  0%, 89%, 100% { transform: translate(0);         opacity: 0; }
+  90%           { transform: translate(-6px,  2px); opacity: 0.8; }
+  91%           { transform: translate( 6px, -2px); opacity: 0.65; }
+  92%           { transform: translate(0);          opacity: 0; }
+  95%           { transform: translate(-4px,  1px); opacity: 0.7; }
+  96%           { transform: translate(0);          opacity: 0; }
+}
+@keyframes glitch2 {
+  0%, 89%, 100% { transform: translate(0);         opacity: 0; }
+  90%           { transform: translate( 6px, -2px); opacity: 0.75; }
+  91%           { transform: translate(-6px,  2px); opacity: 0.55; }
+  92%           { transform: translate(0);          opacity: 0; }
+  95%           { transform: translate( 4px, -1px); opacity: 0.65; }
+  96%           { transform: translate(0);          opacity: 0; }
+}
+
+/* ── rule that draws itself under the number ── */
+.rule {
+  width: 0;
+  height: 3px;
+  border-radius: 999px;
+  margin-top: 12px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--theme-primary) 20%,
+    var(--theme-primary-hover) 50%,
+    var(--theme-primary) 80%,
+    transparent
+  );
+  animation: drawRule 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.9s;
+}
+@keyframes drawRule {
+  to { width: clamp(160px, 26vw, 300px); }
+}
+
+/* ============================================================
+   LABEL ROW
+   ============================================================ */
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  animation: fadeUp 0.55s ease both 0.75s;
+}
+.labelLine {
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: var(--theme-border);
+}
+.labelText {
+  font-family: "LexendSemiBold", sans-serif;
+  font-size: clamp(16px, 2.2vw, 24px);
+  font-weight: 600;
+  color: var(--theme-text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   DESCRIPTION
+   ============================================================ */
+.desc {
+  font-family: "LexendRegular", sans-serif;
+  font-size: 14px;
+  color: var(--theme-text-secondary);
+  line-height: 1.8;
+  margin: 0 0 36px;
+  animation: fadeUp 0.55s ease both 0.85s;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================
+   BUTTON
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 34px;
+  border-radius: var(--radius-lg);
+  font-family: "LexendMedium", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-hover) 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.15) inset,
+    0 4px 20px color-mix(in srgb, var(--theme-primary) 32%, transparent);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeUp 0.55s ease both 0.95s;
+}
+/* shimmer on hover */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.55s ease;
+}
+.btn:hover::after { transform: translateX(100%); }
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.15) inset,
+    0 10px 28px color-mix(in srgb, var(--theme-primary) 42%, transparent);
+  color: #fff;
+}
+.btn:active { transform: translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .root { padding: 40px 20px 72px; }
+  .desc { font-size: 13px; }
+  .btn { padding: 12px 28px; }
+}

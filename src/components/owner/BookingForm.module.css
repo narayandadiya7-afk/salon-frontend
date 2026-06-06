@@ -1,0 +1,13 @@
+.form {
+  display: grid;
+  gap: 12px;
+  max-width: 600px;
+}
+.message { padding: 8px 12px; border-radius: 6px; background: #f6f8fa; color: #111; }
+.slotList { display: flex; flex-wrap: wrap; gap: 8px; }
+.slotButton { padding: 8px 10px; border-radius: 6px; border: 1px solid #e6e6e6; background: white; cursor: pointer; }
+.slotButton.active { background: #1890ff; color: white; border-color: #1890ff; }
+
+@media (max-width: 640px) {
+  .form { padding: 0 12px; }
+}

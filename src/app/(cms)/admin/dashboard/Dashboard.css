@@ -1,0 +1,102 @@
+/* Dashboard Styles */
+
+.dashboard-container {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-header { margin-bottom: 24px; }
+.dashboard-header h2 { margin-bottom: 4px; color: var(--theme-text) !important; }
+
+.stats-row .stat-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  background: var(--theme-surface) !important;
+}
+
+.stats-row .stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.stat-trend {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.activity-card,
+.tasks-card,
+.quick-stat-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  background: var(--theme-surface) !important;
+}
+
+.activity-card .ant-card-head,
+.tasks-card .ant-card-head {
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.activity-card .ant-card-head-title,
+.tasks-card .ant-card-head-title {
+  color: var(--theme-text) !important;
+  font-weight: 600;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-header span { color: var(--theme-text) !important; }
+
+.activity-card .ant-table { background: transparent !important; }
+
+.activity-card .ant-table-thead > tr > th {
+  background: var(--theme-hover) !important;
+  color: var(--theme-text) !important;
+  border-bottom: 1px solid var(--theme-border) !important;
+}
+
+.activity-card .ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--theme-border) !important;
+  color: var(--theme-text) !important;
+}
+
+.activity-card .ant-table-tbody > tr:hover > td {
+  background: var(--theme-hover) !important;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header h2 { font-size: 20px; }
+  .stat-card { margin-bottom: 8px; }
+}

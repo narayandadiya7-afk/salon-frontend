@@ -1,0 +1,98 @@
+/* Sidebar Menu Styles */
+.user_sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.user_box {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.user_detail {
+  height: 50px;
+  padding: 0.6em 0;
+}
+
+.user_pic {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 35% 50%;
+  margin-left: 1.6rem;
+}
+
+.user_pic_compact {
+  position: relative;
+  height: 50px;
+  width: 80%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.user_menu {
+  flex: 1;
+  overflow: hidden;
+}
+
+.user_menu .item {
+  transition: all 100ms ease-in;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  justify-content: space-between;
+  color: #696969;
+  cursor: pointer;
+  padding: 0.72857143em 1.14285714em;
+}
+
+.user_menu .item:hover {
+  background: rgba(24, 144, 255, 0.1);
+}
+
+.user_menu .item.active {
+  background: #545454;
+  color: #ffffff !important;
+}
+
+.sub_menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.primaryColor {
+  color: var(--theme-primary, #1890ff);
+}
+
+.menu_name {
+  padding-left: 10px;
+}
+
+.menuSection {
+  margin-top: 1rem;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+.iconStyle {
+  width: 100%;
+  display: flex;
+}
+
+.spanOfInconStyle { width: 10%; }
+.spanDispName { width: 90%; }
+
+.linkStyle {
+  width: 100%;
+  display: flex;
+}
+
+.linkSpan { width: 10%; }

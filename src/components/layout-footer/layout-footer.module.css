@@ -1,0 +1,26 @@
+/* Layout Footer Styles */
+.footer {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  align-items: center;
+  background-color: var(--theme-primary, #1890ff);
+  height: 30px;
+  color: white;
+  font-size: 12px;
+}
+
+.footerCondition {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .footer { font-size: 10px; }
+}

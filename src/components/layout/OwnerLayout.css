@@ -1,0 +1,21 @@
+/* Owner Layout Styles */
+.owner-page-header {
+  margin-bottom: 24px;
+}
+
+.owner-page-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.owner-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 768px) {
+  .ant-layout-content {
+    padding: 16px !important;
+  }
+}

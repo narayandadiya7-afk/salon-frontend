@@ -1,0 +1,63 @@
+/* Sidebar Component Styles */
+
+.app-sidebar {
+  background: var(--theme-surface) !important;
+  border-right: 1px solid var(--theme-border);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  z-index: 100;
+  left: 0;
+}
+
+.app-sidebar::-webkit-scrollbar { width: 6px; }
+.app-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--theme-border);
+  border-radius: 3px;
+}
+
+.sidebar-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--theme-border);
+  margin-bottom: 8px;
+  background: var(--theme-surface);
+}
+
+.logo-icon {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffa1a1 0%, #ff5b5b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu {
+  border-right: none !important;
+  background: transparent !important;
+  padding: 0 10px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .app-sidebar {
+    left: -250px !important;
+    z-index: 1000;
+    transition: left 0.3s ease;
+  }
+
+  .app-sidebar[data-mobile-open="true"] {
+    left: 0 !important;
+  }
+
+  .app-sidebar.ant-layout-sider-collapsed {
+    left: -80px !important;
+  }
+
+  .app-sidebar.ant-layout-sider-collapsed[data-mobile-open="true"] {
+    left: 0 !important;
+  }
+}

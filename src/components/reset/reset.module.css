@@ -1,0 +1,51 @@
+/* Reset Component Styles */
+.resetIcon {
+  color: var(--theme-primary, #1890ff);
+  cursor: pointer;
+  margin-left: -10px;
+}
+
+.tooltipContainer {
+  position: relative;
+}
+
+.tooltipText {
+  display: none;
+  position: absolute;
+  top: 145%;
+  left: -22px;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.01rem 0.4rem;
+  z-index: 2;
+  border-radius: 1em;
+  color: var(--theme-primary, #1890ff);
+}
+
+.tooltipText1 {
+  display: none;
+  position: absolute;
+  top: 145%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.01rem 0.4rem;
+  z-index: 2;
+  border-radius: 1em;
+  color: #5d5454;
+  width: 4vw;
+}
+
+.tooltipContainer:hover .tooltipText {
+  display: block;
+  width: 6rem;
+  text-align: center;
+}
+
+.tooltipContainer:hover .tooltipText1 {
+  display: block;
+  padding: 10px;
+  width: 15rem;
+  text-align: center;
+}
