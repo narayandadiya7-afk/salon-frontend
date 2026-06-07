@@ -23,6 +23,9 @@ class AuthUtil {
    */
   static setToken(token: string): void {
     StoreUtil.setCookie(NEXT_PUBLIC_ACCESS_TOKEN_KEY, token.startsWith('Bearer ') ? token : `Bearer ${token}`);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('auth:token-changed', { detail: { hasToken: true } }));
+    }
   }
 
   /**
@@ -54,6 +57,9 @@ class AuthUtil {
       StoreUtil.removeCookie(NEXT_PUBLIC_ACCESS_TOKEN_KEY);
       StoreUtil.removeCookie(NEXT_PUBLIC_REFRESH_TOKEN_KEY);
       StoreUtil.removeAllCookies();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('auth:token-changed', { detail: { hasToken: false } }));
+      }
       Utils.redirectUrl('/login');
     }
     return true;

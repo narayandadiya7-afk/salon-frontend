@@ -13,7 +13,13 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get(ACCESS_TOKEN_KEY)?.value;
   const isAuthenticated = !!token && token.length > 0;
-  const role = decodeRole(token);
+  const decoded = decodeToken(token);
+  const role = decoded?.role || null;
+  const roles = decoded?.roles || [];
+
+  // Check if user has a role either via primary `role` or `roles` array
+  const hasRole = (...allowed: string[]) =>
+    (role && allowed.includes(role)) || roles.some((r: string) => allowed.includes(r));
 
   const isProtectedRoute = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
   const isTenantAccountRoute = /^\/tenant\/[^/]+\/(account|my-bookings|admin)(\/|$)/.test(pathname);
@@ -27,11 +33,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname.startsWith('/superadmin') && role && role !== 'SUPER_ADMIN' && role !== 'ADMIN') {
+  if (pathname.startsWith('/superadmin') && !hasRole('SUPER_ADMIN', 'ADMIN')) {
     return NextResponse.redirect(new URL('/owner/dashboard', request.url));
   }
 
-  if (pathname.startsWith('/owner') && role && !['OWNER', 'SALON_OWNER', 'TENANT_ADMIN', 'STAFF', 'ADMIN', 'SUPER_ADMIN'].includes(role)) {
+  if (pathname.startsWith('/owner') && !hasRole('OWNER', 'SALON_OWNER', 'TENANT_ADMIN', 'STAFF', 'ADMIN', 'SUPER_ADMIN')) {
     return NextResponse.redirect(new URL('/account', request.url));
   }
 
@@ -43,13 +49,12 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-function decodeRole(token?: string): string | null {
+function decodeToken(token?: string): { role?: string; roles?: string[] } | null {
   if (!token) return null;
   try {
     const raw = token.startsWith('Bearer ') ? token.slice(7) : token;
     const payload = raw.split('.')[1];
-    const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
-    return decoded.role || null;
+    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
   } catch {
     return null;
   }

@@ -1,133 +1,184 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button, Form, Input, Select, Row, Col } from 'antd';
 import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
-import { TUser } from '@/types/config';
-import { notification } from '@/utils/notification';
-
-const roleOptions = [
-  { label: 'Admin', value: 1 },
-  { label: 'User', value: 2 },
-  { label: 'Guest', value: 3 },
-];
+import useFetch from '@/hooks/useFetch';
+import { eResultCode } from '@/utils/enum';
+import notification from '@/utils/notification';
+import EncryptUtils from '@/utils/encrypt';
+import { AddEditUser, GetSpecificUser, GetRolesList } from '@/utils/api.constant';
 
 type DrawerProps = {
-  id: number;
+  id: string | number;
   onCloseDrawer: () => void;
   onRefreshList: () => void;
-  initialValues?: TUser;
-};
-
-const defaultValues: TUser = {
-  id: 0, userName: '', displayName: '', emailId: '',
-  mobileNo: '', password: '', roles: [],
 };
 
 export default function UserForm(props: DrawerProps) {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [roleOptions, setRoleOptions] = useState<{ label: string; value: string }[]>([]);
+  const [rolesLoading, setRolesLoading] = useState(false);
+  const { post } = useFetch();
+  const isEdit = !!props.id;
+  const effectRan = useRef(false);
 
-  if (props.initialValues && props.id > 0) {
-    form.setFieldsValue(props.initialValues);
-  }
+  useEffect(() => {
+    if (effectRan.current) return;
+    fetchRoles();
+    if (isEdit) fetchSpecificUser();
+    return () => { effectRan.current = true; };
+  }, [props.id]);
 
-  const onFinish = async (values: TUser) => {
+  const fetchRoles = async () => {
+    try {
+      setRolesLoading(true);
+      const response = await post(GetRolesList, {
+        data: { currentPage: 1, pageSize: 100, searchText: '' },
+      });
+      if (response.dataResponse.returnCode === eResultCode.SUCCESS) {
+        const options = (response.data as { id: string; name: string }[]).map(
+          (r) => ({ label: r.name, value: r.id })
+        );
+        setRoleOptions(options);
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+    } finally {
+      setRolesLoading(false);
+    }
+  };
+
+  const fetchSpecificUser = async () => {
     try {
       setIsLoading(true);
-      notification.success('User saved successfully');
-      props.onRefreshList();
-      props.onCloseDrawer();
-    } catch {
-      notification.error('Failed to save user');
+      const response = await post(GetSpecificUser, { data: { id: props.id } });
+      const { dataResponse, data } = response;
+      if (dataResponse.returnCode === eResultCode.SUCCESS) {
+        const user = Array.isArray(data) ? data[0] : data;
+        form.setFieldsValue({
+          fullName: user.name,
+          emailId: user.email,
+          mobileNumber: user.phone,
+          roleId: user.roleId,
+        });
+      } else {
+        notification.error(dataResponse.description);
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onFinish = async (values: any) => {
+    try {
+      setIsLoading(true);
+      const payload = {
+        data: {
+          id: props.id ?? 0,
+          fullName: values.fullName,
+          roleId: values.roleId,
+          emailId: values.emailId,
+          mobileNumber: values.mobileNumber,
+          ...(values.password ? { password: EncryptUtils.encrypt(values.password) } : {}),
+        },
+      };
+      const response = await post(AddEditUser, payload);
+      const { dataResponse } = response;
+      if (dataResponse.returnCode === eResultCode.SUCCESS) {
+        notification.success(dataResponse.description || 'User saved successfully');
+        props.onRefreshList();
+        props.onCloseDrawer();
+      } else {
+        notification.error(dataResponse.description);
+      }
+    } catch (error) {
+      console.error('Error saving user:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div className="drawer-form-container">
       <Form
         form={form}
         name="userForm"
         onFinish={onFinish}
-        initialValues={props.initialValues || defaultValues}
         layout="vertical"
-        style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
+        className="drawer-form"
       >
-        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
+        <div className="drawer-form-content">
           <Row gutter={[16, 0]}>
             <Col xs={24} md={12}>
               <Form.Item
-                name="userName"
-                label="Username"
-                rules={[{ required: true, message: 'Please enter username' }]}
+                name="fullName"
+                label="Name"
+                rules={[{ required: true, message: 'Please enter full name' }]}
               >
-                <Input placeholder="Enter username" />
+                <Input placeholder="Enter full name" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={12}>
-              <Form.Item
-                name="displayName"
-                label="Display Name"
-                rules={[{ required: true, message: 'Please enter display name' }]}
-              >
-                <Input placeholder="Enter display name" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={[16, 0]}>
             <Col xs={24} md={12}>
               <Form.Item
                 name="emailId"
-                label="E-mail"
+                label="Email"
                 rules={[
                   { required: true, message: 'Please enter email' },
-                  { type: 'email', message: 'Please enter valid email' },
+                  { type: 'email', message: 'Please enter a valid email' },
                 ]}
               >
                 <Input placeholder="Enter email" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={12}>
-              <Form.Item
-                name="mobileNo"
-                label="Phone Number"
-                rules={[{ required: true, message: 'Please enter phone number' }]}
-              >
-                <Input placeholder="Enter phone number" />
-              </Form.Item>
-            </Col>
           </Row>
 
           <Row gutter={[16, 0]}>
-            <Col span={24}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="roleId"
                 label="Role"
                 rules={[{ required: true, message: 'Please select a role' }]}
               >
-                <Select placeholder="Select role" options={roleOptions} />
+                <Select placeholder="Select role" options={roleOptions} loading={rolesLoading} />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="mobileNumber"
+                label="Mobile"
+                rules={[{ required: true, message: 'Please enter mobile number' }]}
+              >
+                <Input placeholder="Enter mobile number" maxLength={15} />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 0]}>
+            <Col xs={24}>
+              <Form.Item
+                name="password"
+                label={isEdit ? 'New Password (leave blank to keep current)' : 'Password'}
+                rules={[
+                  ...(!isEdit ? [{ required: true, message: 'Please enter password' }] : []),
+                  { min: 6, message: 'Password must be at least 6 characters' },
+                ]}
+              >
+                <Input.Password placeholder={isEdit ? 'Enter new password (optional)' : 'Enter password'} />
               </Form.Item>
             </Col>
           </Row>
         </div>
 
-        <div style={{
-          borderTop: '1px solid var(--theme-border-light)',
-          paddingTop: 16,
-          marginTop: 16,
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: 8,
-          flexShrink: 0,
-        }}>
+        <div className="drawer-form-footer">
           <Button icon={<CloseOutlined />} onClick={props.onCloseDrawer} disabled={isLoading}>
             Cancel
           </Button>
           <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}>
-            Save
+            {isEdit ? 'Update' : 'Save'}
           </Button>
         </div>
       </Form>

@@ -1,15 +1,32 @@
-/**
- * api.constant.ts
- * Defines all API endpoint constants.
- */
-
-// ─── Legacy ───────────────────────────────────────────────────────────────────
 export const ApiSignin = 'signin';
 
 // ─── Auth (Prisma-based) ──────────────────────────────────────────────────────
 export const ApiAuthRegister = 'auth/register';
 export const ApiAuthLogin = 'auth/login';
 export const ApiAuthProfile = 'auth/profile';
+
+// ─── User Management (Legacy) ──────────────────────────────────────────────────
+export const GetUserList = 'GetUserList';
+export const GetSpecificUser = 'GetSpecificUser';
+export const DeleteUser = 'deleteUser';
+export const AddEditUser = 'addEditUser';
+
+export const GetRolesList = 'getRoleList';
+export const AddEditRole = 'addEditRole';
+export const GetSpecificRole = 'getSpecificRole';
+export const DeleteRole = 'deleteRole';
+
+export const GetConfigGroupList = 'getConfigGroupList';
+export const AddEditConfigGroup = 'addEditConfigGroup';
+export const GetSpecificConfigGroup = 'getSpecificConfigGroup';
+export const DeleteConfigGroup = 'deleteConfigGroup';
+
+export const GetConfigParamList = 'getConfigParamList';
+export const AddEditConfigParam = 'addEditConfigParam';
+export const GetSpecificConfigParam = 'getSpecificConfigParam';
+export const DeleteConfigParam = 'deleteConfigParam';
+
+export const GetMenuHierarchy = 'getMenuHierarchy';
 
 // ─── Public Salon ─────────────────────────────────────────────────────────────
 export const ApiGetSalonBySlug = (slug: string) => `salons/slug/${slug}`;
@@ -48,4 +65,4 @@ export const ApiPaymentHistory = 'payments/history';
 export const ApiAdminSalons = 'admin/salons';
 export const ApiSuperAdminTenants = 'superadmin/tenants';
 export const ApiTenantRoles = (salonId: string) => `owner/salons/${salonId}/roles`;
-export const ApiAssignTenantRole = (salonId: string) => `owner/salons/${salonId}/roles/assign`;
+export const ApiAssignRole = 'roles/assign';

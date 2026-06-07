@@ -1,8 +1,6 @@
-/**
- * Utils - Common utility functions
- */
-
+import { ePermissions, ePrivileges } from './enum';
 import { TFilterModel } from '../types/config';
+import { StoreUtil } from './store';
 
 export default class Utils {
   static isNullOrUndefined = (value: any) => [null, undefined].includes(value);
@@ -49,5 +47,54 @@ export default class Utils {
       if (key in updatedParams) (updatedParams as any)[key] = value;
     });
     return updatedParams;
+  }
+
+  /** Legacy privilege check (menu-based privileges) */
+  static isUserHasAccess = (privileges: any[], privilege: ePrivileges): boolean => {
+    return privileges?.some((p) => p.privilegeUniqueId === privilege);
+  };
+
+  /** Legacy privilege check by raw ID string */
+  static isPrivilegeAssigned = (privileges: any[], privilegeUniqueId: string): boolean => {
+    return privileges?.some((p) => p.privilegeUniqueId === privilegeUniqueId || p.privilegeId === Number(privilegeUniqueId));
+  };
+
+  /**
+   * Decode JWT payload from stored access token cookie.
+   * Returns null if token is missing or invalid.
+   */
+  static decodeToken(): { role?: string; roles?: string[]; permissions?: string[] } | null {
+    const accessTokenKey = process.env.NEXT_PUBLIC_ACCESS_TOKEN_KEY || 'access_token';
+    const token = StoreUtil.getCookie(accessTokenKey);
+    if (!token) return null;
+    try {
+      const raw = token.startsWith('Bearer ') ? token.slice(7) : token;
+      const payload = raw.split('.')[1];
+      return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Check if the current user has a specific RBAC permission key.
+   * This reads from the JWT permissions array (set during login by the backend).
+   * @param permissionKey - e.g. "services.manage", "bookings.edit"
+   */
+  static hasPermission(permissionKey: string): boolean {
+    const decoded = this.decodeToken();
+    if (!decoded?.permissions) return false;
+    return decoded.permissions.includes(permissionKey);
+  }
+
+  /**
+   * Check if the current user has any of the given roles.
+   * Checks against both the single `role` field and the `roles` array.
+   */
+  static hasRole(...roleNames: string[]): boolean {
+    const decoded = this.decodeToken();
+    if (!decoded) return false;
+    if (roleNames.includes(decoded.role || '')) return true;
+    return decoded.roles?.some((r) => roleNames.includes(r)) ?? false;
   }
 }

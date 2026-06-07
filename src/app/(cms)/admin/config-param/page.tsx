@@ -1,50 +1,74 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Table, Card, Input, Button, Space, Typography,
-  Tag, Tooltip, Row, Col, Drawer,
+  Tag, Tooltip, Row, Col, Drawer, Popconfirm,
 } from 'antd';
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import {
-  PlusOutlined, EditOutlined, SearchOutlined,
+  PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
   ReloadOutlined, UnorderedListOutlined,
 } from '@ant-design/icons';
+import useFetch from '@/hooks/useFetch';
 import { TConfigParam, TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
+import { eResultCode } from '@/utils/enum';
+import notification from '@/utils/notification';
 import ConfigParamForm from './form';
+import { GetConfigParamList, DeleteConfigParam } from '@/utils/api.constant';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 type TEditMode = { enable: boolean; data: TConfigParam | null };
 
-const mockData: TConfigParam[] = [
-  { id: 221, name: 'μS', description: 'μS', groupId: 0, groupName: 'UOM', groupUniqueId: 'UOMTYPES', createdOn: '2024-07-02T14:48:09', organizationId: 0, paramUniqueId: 'US' },
-  { id: 218, name: 'minutes', description: 'minutes', groupId: 0, groupName: 'UOM', groupUniqueId: 'UOMTYPES', createdOn: '2024-07-02T14:04:32', organizationId: 0, paramUniqueId: 'MINUTES' },
-  { id: 215, name: 'mm', description: 'mm', groupId: 0, groupName: 'UOM', groupUniqueId: 'UOMTYPES', createdOn: '2024-07-02T14:04:08', organizationId: 0, paramUniqueId: 'MM' },
-  { id: 212, name: '∘', description: '∘', groupId: 0, groupName: 'UOM', groupUniqueId: 'UOMTYPES', createdOn: '2024-07-02T14:03:45', organizationId: 0, paramUniqueId: 'DEGREE' },
-  { id: 127, name: 'CPO', description: 'CPO', groupId: 0, groupName: 'ActionOwner', groupUniqueId: 'ACTIONOWNER', createdOn: '2024-06-21T16:57:13', organizationId: 0, paramUniqueId: 'CPO' },
-];
-
 export default function ConfigParamPage() {
-  const [data] = useState<TConfigParam[]>(mockData);
-  const [loading] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams, totalRows: mockData.length });
+  const { post } = useFetch();
+  const [data, setData] = useState<TConfigParam[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
   const [isEditing, setIsEditing] = useState<TEditMode>({ enable: false, data: null });
   const [addDrawerOpen, setAddDrawerOpen] = useState(false);
 
-  const handleSearch = (value: string) => setFilterParams({ ...filterParams, searchText: value, currentPage: 1 });
-  const handleTableChange = (pagination: TablePaginationConfig) =>
-    setFilterParams({ ...filterParams, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 });
-  const handleReset = () => { setSearchText(''); setFilterParams({ ...defaultFilterParams, totalRows: mockData.length }); };
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await post(GetConfigParamList, {
+        data: { ...filterParams },
+      });
+      const { dataResponse, data: rows, filterModel } = response;
+      if (dataResponse?.returnCode === eResultCode.SUCCESS) {
+        setData(rows?.rows || rows || []);
+        if (filterModel) setFilterParams((prev) => ({ ...prev, ...filterModel }));
+      }
+    } catch {
+      notification.error('Failed to load config params');
+    } finally {
+      setLoading(false);
+    }
+  }, [post, filterParams]);
 
-  const filtered = data.filter(p =>
-    p.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    p.description.toLowerCase().includes(searchText.toLowerCase()) ||
-    p.groupName.toLowerCase().includes(searchText.toLowerCase())
-  );
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const handleSearch = (value: string) => setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
+  const handleTableChange = (pagination: TablePaginationConfig) =>
+    setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
+  const handleReset = () => setFilterParams({ ...defaultFilterParams });
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await post(DeleteConfigParam, { data: { id } });
+      if (response?.dataResponse?.returnCode === eResultCode.SUCCESS) {
+        notification.success('Config param deleted successfully');
+        fetchData();
+      } else {
+        notification.error(response?.dataResponse?.description || 'Failed to delete config param');
+      }
+    } catch {
+      notification.error('Failed to delete config param');
+    }
+  };
 
   const columns: ColumnsType<TConfigParam> = [
     {
@@ -54,7 +78,6 @@ export default function ConfigParamPage() {
     },
     {
       title: 'Name', dataIndex: 'name', key: 'name', width: '20%',
-      sorter: (a, b) => a.name.localeCompare(b.name),
       render: (text: string) => <Typography.Text strong>{text}</Typography.Text>,
     },
     { title: 'Description', dataIndex: 'description', key: 'description', width: '25%' },
@@ -63,17 +86,19 @@ export default function ConfigParamPage() {
       render: (text: string) => <Tag color="blue">{text}</Tag>,
     },
     {
-      title: 'Created On', dataIndex: 'createdOn', key: 'createdOn', width: '20%',
-      sorter: (a, b) => new Date(a.createdOn || 0).getTime() - new Date(b.createdOn || 0).getTime(),
-      render: (date: string) => date ? new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '-',
-    },
-    {
-      title: 'Action', key: 'action', width: 100, align: 'center', fixed: 'right',
+      title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
       render: (_: any, record: TConfigParam) => (
-        <Tooltip title="Edit">
-          <Button type="text" icon={<EditOutlined />} className="action-btn"
-            onClick={() => setIsEditing({ enable: true, data: record })} />
-        </Tooltip>
+        <Space>
+          <Tooltip title="Edit">
+            <Button type="text" icon={<EditOutlined />} className="action-btn"
+              onClick={() => setIsEditing({ enable: true, data: record })} />
+          </Tooltip>
+          <Popconfirm title="Delete this parameter?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+            <Tooltip title="Delete">
+              <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+            </Tooltip>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
@@ -97,19 +122,19 @@ export default function ConfigParamPage() {
 
         <Row gutter={[16, 16]} className="filter-section">
           <Col xs={24} sm={16} md={18}>
-            <Search placeholder="Search by name, description, or group..." value={searchText}
-              onChange={(e) => setSearchText(e.target.value)} onSearch={handleSearch}
-              size="large" prefix={<SearchOutlined />} allowClear />
+            <Search placeholder="Search by name, description, or group..." value={filterParams.searchText}
+              onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
+              onSearch={handleSearch} size="large" prefix={<SearchOutlined />} allowClear />
           </Col>
           <Col xs={24} sm={8} md={6}>
             <Button icon={<ReloadOutlined />} onClick={handleReset} size="large" block>Reset Filters</Button>
           </Col>
         </Row>
 
-        <Table columns={columns} dataSource={filtered} rowKey="id" loading={loading}
+        <Table columns={columns} dataSource={data} rowKey="id" loading={loading}
           pagination={{
             current: filterParams.currentPage, pageSize: filterParams.pageSize,
-            total: filtered.length, showSizeChanger: true,
+            total: filterParams.totalRows, showSizeChanger: true,
             showTotal: (total) => `Total ${total} items`,
             pageSizeOptions: ['10', '20', '50', '100'],
           }}
@@ -119,7 +144,7 @@ export default function ConfigParamPage() {
       <Drawer title="Add Config Parameter" placement="right"
         styles={{ wrapper: { width: 520 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}
         open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose>
-        <ConfigParamForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={() => {}} />
+        <ConfigParamForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
       </Drawer>
 
       <Drawer title="Edit Config Parameter" placement="right"
@@ -130,7 +155,7 @@ export default function ConfigParamPage() {
             id={isEditing.data.id}
             initialValues={isEditing.data}
             onCloseDrawer={() => setIsEditing({ enable: false, data: null })}
-            onRefreshList={() => {}}
+            onRefreshList={fetchData}
           />
         )}
       </Drawer>

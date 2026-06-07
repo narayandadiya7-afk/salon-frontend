@@ -1,49 +1,74 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Table, Card, Input, Button, Space, Typography,
-  Tooltip, Row, Col, Badge, Drawer,
+  Tooltip, Row, Col, Drawer, Popconfirm,
 } from 'antd';
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import {
-  PlusOutlined, EditOutlined, SearchOutlined,
+  PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
   ReloadOutlined, GroupOutlined,
 } from '@ant-design/icons';
+import useFetch from '@/hooks/useFetch';
 import { TConfigGroup, TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
+import { eResultCode } from '@/utils/enum';
+import notification from '@/utils/notification';
 import ConfigGroupForm from './form';
+import { GetConfigGroupList, DeleteConfigGroup } from '@/utils/api.constant';
 
 const { Title, Text } = Typography;
 const { Search } = Input;
 
 type TEditMode = { enable: boolean; data: TConfigGroup | null };
 
-const mockData: TConfigGroup[] = [
-  { id: 1, name: 'User Management', description: 'Handles user roles, permissions, and authentication settings', groupUniqueId: 'CFG-GRP-001' },
-  { id: 2, name: 'Notification Settings', description: 'Controls email, SMS, and push notification preferences', groupUniqueId: 'CFG-GRP-002' },
-  { id: 3, name: 'Payment Configuration', description: 'Manages payment gateways, currencies, and billing cycles', groupUniqueId: 'CFG-GRP-003' },
-  { id: 4, name: 'Security Policies', description: 'Defines password rules, 2FA, and access restrictions', groupUniqueId: 'CFG-GRP-004' },
-  { id: 5, name: 'UI Preferences', description: 'Customizes themes, layouts, and display settings', groupUniqueId: 'CFG-GRP-005' },
-];
-
 export default function ConfigGroupPage() {
-  const [data, setData] = useState<TConfigGroup[]>(mockData);
-  const [loading] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams, totalRows: mockData.length });
+  const { post } = useFetch();
+  const [data, setData] = useState<TConfigGroup[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
   const [isEditing, setIsEditing] = useState<TEditMode>({ enable: false, data: null });
   const [addDrawerOpen, setAddDrawerOpen] = useState(false);
 
-  const handleSearch = (value: string) => setFilterParams({ ...filterParams, searchText: value, currentPage: 1 });
-  const handleTableChange = (pagination: TablePaginationConfig) =>
-    setFilterParams({ ...filterParams, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 });
-  const handleReset = () => { setSearchText(''); setFilterParams({ ...defaultFilterParams, totalRows: mockData.length }); };
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await post(GetConfigGroupList, {
+        data: { ...filterParams },
+      });
+      const { dataResponse, data: rows, filterModel } = response;
+      if (dataResponse?.returnCode === eResultCode.SUCCESS) {
+        setData(rows || []);
+        if (filterModel) setFilterParams((prev) => ({ ...prev, ...filterModel }));
+      }
+    } catch {
+      notification.error('Failed to load config groups');
+    } finally {
+      setLoading(false);
+    }
+  }, [post, filterParams]);
 
-  const filtered = data.filter(g =>
-    g.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    g.description.toLowerCase().includes(searchText.toLowerCase())
-  );
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const handleSearch = (value: string) => setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
+  const handleTableChange = (pagination: TablePaginationConfig) =>
+    setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
+  const handleReset = () => setFilterParams({ ...defaultFilterParams });
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await post(DeleteConfigGroup, { data: { id } });
+      if (response?.dataResponse?.returnCode === eResultCode.SUCCESS) {
+        notification.success('Config group deleted successfully');
+        fetchData();
+      } else {
+        notification.error(response?.dataResponse?.description || 'Failed to delete config group');
+      }
+    } catch {
+      notification.error('Failed to delete config group');
+    }
+  };
 
   const columns: ColumnsType<TConfigGroup> = [
     {
@@ -53,7 +78,6 @@ export default function ConfigGroupPage() {
     },
     {
       title: 'Group Name', dataIndex: 'name', key: 'name', width: '40%',
-      sorter: (a, b) => a.name.localeCompare(b.name),
       render: (text: string) => (
         <Space>
           <GroupOutlined style={{ color: 'var(--theme-primary)' }} />
@@ -62,19 +86,26 @@ export default function ConfigGroupPage() {
       ),
     },
     {
-      title: 'Description', dataIndex: 'description', key: 'description', width: '50%',
+      title: 'Description', dataIndex: 'description', key: 'description', width: '45%',
       ellipsis: { showTitle: false },
       render: (text: string) => (
         <Tooltip placement="topLeft" title={text}><Text type="secondary">{text}</Text></Tooltip>
       ),
     },
     {
-      title: 'Action', key: 'action', width: 100, align: 'center', fixed: 'right',
+      title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
       render: (_: any, record: TConfigGroup) => (
-        <Tooltip title="Edit">
-          <Button type="text" icon={<EditOutlined />} className="action-btn"
-            onClick={() => setIsEditing({ enable: true, data: record })} />
-        </Tooltip>
+        <Space>
+          <Tooltip title="Edit">
+            <Button type="text" icon={<EditOutlined />} className="action-btn"
+              onClick={() => setIsEditing({ enable: true, data: record })} />
+          </Tooltip>
+          <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+            <Tooltip title="Delete">
+              <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+            </Tooltip>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
@@ -87,7 +118,6 @@ export default function ConfigGroupPage() {
             <Space>
               <GroupOutlined className="page-icon" />
               <Title level={3} style={{ margin: 0 }}>Config Groups</Title>
-              <Badge count={filterParams.totalRows} showZero style={{ backgroundColor: 'var(--theme-primary)' }} />
             </Space>
           </Col>
           <Col>
@@ -99,58 +129,40 @@ export default function ConfigGroupPage() {
 
         <Row gutter={[16, 16]} className="filter-section">
           <Col xs={24} sm={16} md={18}>
-            <Search placeholder="Search by group name or description..." value={searchText}
-              onChange={(e) => setSearchText(e.target.value)} onSearch={handleSearch}
-              size="large" prefix={<SearchOutlined />} allowClear />
+            <Search placeholder="Search by group name or description..." value={filterParams.searchText}
+              onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
+              onSearch={handleSearch} size="large" prefix={<SearchOutlined />} allowClear />
           </Col>
           <Col xs={24} sm={8} md={6}>
             <Button icon={<ReloadOutlined />} onClick={handleReset} size="large" block>Reset Filters</Button>
           </Col>
         </Row>
 
-        <Table columns={columns} dataSource={filtered} rowKey="id" loading={loading}
+        <Table columns={columns} dataSource={data} rowKey="id" loading={loading}
           pagination={{
             current: filterParams.currentPage, pageSize: filterParams.pageSize,
-            total: filtered.length, showSizeChanger: true,
+            total: filterParams.totalRows, showSizeChanger: true,
             showTotal: (total) => `Total ${total} groups`,
             pageSizeOptions: ['10', '20', '50', '100'],
           }}
           onChange={handleTableChange} className="config-table" scroll={{ x: 800 }} />
       </Card>
 
-      {/* Add Drawer */}
-      <Drawer
-        title="Add Config Group"
-        placement="right"
-        open={addDrawerOpen}
-        onClose={() => setAddDrawerOpen(false)}
-        closable={true}
-        destroyOnClose
-        styles={{ wrapper: { width: 520 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}
-      >
-        <ConfigGroupForm
-          id={0}
-          onCloseDrawer={() => setAddDrawerOpen(false)}
-          onRefreshList={() => setData([...mockData])}
-        />
+      <Drawer title="Add Config Group" placement="right"
+        open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
+        styles={{ wrapper: { width: 520 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
+        <ConfigGroupForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
       </Drawer>
 
-      {/* Edit Drawer */}
-      <Drawer
-        title="Edit Config Group"
-        placement="right"
-        open={isEditing.enable}
-        onClose={() => setIsEditing({ enable: false, data: null })}
-        closable={true}
-        destroyOnClose
-        styles={{ wrapper: { width: 520 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}
-      >
+      <Drawer title="Edit Config Group" placement="right"
+        open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
+        styles={{ wrapper: { width: 520 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
         {isEditing.data && (
           <ConfigGroupForm
             id={isEditing.data.id}
             initialValues={isEditing.data}
             onCloseDrawer={() => setIsEditing({ enable: false, data: null })}
-            onRefreshList={() => setData([...mockData])}
+            onRefreshList={fetchData}
           />
         )}
       </Drawer>

@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Layout, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import {
   DashboardOutlined, UserOutlined, SettingOutlined,
   FileTextOutlined, TeamOutlined, SafetyOutlined,
+  GroupOutlined, UnorderedListOutlined, HomeOutlined,
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
+import { UserContext } from '../../context/user';
+import { TMenuItem } from '../../types/config';
 import './Sidebar.css';
 
 const { Sider } = Layout;
@@ -19,12 +22,62 @@ interface SidebarProps {
 
 type MenuItem = Required<MenuProps>['items'][number];
 
+const iconMap: Record<string, React.ReactNode> = {
+  home: <HomeOutlined />,
+  dashboard: <DashboardOutlined />,
+  users: <TeamOutlined />,
+  team: <TeamOutlined />,
+  roles: <SafetyOutlined />,
+  safety: <SafetyOutlined />,
+  settings: <SettingOutlined />,
+  config: <SettingOutlined />,
+  group: <GroupOutlined />,
+  list: <UnorderedListOutlined />,
+  file: <FileTextOutlined />,
+  user: <UserOutlined />,
+};
+
+const getIcon = (iconName?: string) => {
+  if (!iconName) return null;
+  const key = iconName.toLowerCase();
+  return iconMap[key] || <SettingOutlined />;
+};
+
+const buildMenuItems = (
+  items: TMenuItem[],
+  handleClick: (path: string) => void,
+): MenuItem[] => {
+  return items
+    .filter((item) => item.isActive === 1)
+    .sort((a, b) => a.displayOrder - b.displayOrder)
+    .map((item) => {
+      const path = item.entityUrl ? `/admin${item.entityUrl.startsWith('/') ? '' : '/'}${item.entityUrl}` : '';
+      const children = item.children?.length ? buildMenuItems(item.children, handleClick) : [];
+      if (children.length) {
+        return {
+          key: item.menuUniqueId,
+          icon: getIcon(item.iconName),
+          label: item.dispName || item.name,
+          children,
+        };
+      }
+      return {
+        key: path,
+        icon: getIcon(item.iconName),
+        label: item.dispName || item.name,
+        onClick: () => path && handleClick(path),
+      };
+    });
+};
+
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, onNavigate }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { menuHierarchy } = useContext(UserContext);
   const [smallLogo, setSmallLogo] = useState<string>('');
   const [largeLogo, setLargeLogo] = useState<string>('');
   const [isMobile, setIsMobile] = useState(false);
+  const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
 
   useEffect(() => {
     const loadLogos = () => {
@@ -46,42 +99,21 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onNavigate }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (menuHierarchy?.length) {
+      const parents = menuHierarchy
+        .filter((m) => m.children?.length)
+        .map((m) => m.menuUniqueId);
+      setDefaultOpenKeys(parents);
+    }
+  }, [menuHierarchy]);
+
   const handleMenuClick = (path: string) => {
     router.push(path);
     if (onNavigate) setTimeout(() => onNavigate(), 100);
   };
 
-  const menuItems: MenuItem[] = [
-    {
-      key: '/admin/dashboard',
-      icon: <DashboardOutlined />,
-      label: 'Dashboard',
-      onClick: () => handleMenuClick('/admin/dashboard'),
-    },
-    {
-      key: '/admin/users',
-      icon: <TeamOutlined />,
-      label: 'Users',
-      onClick: () => handleMenuClick('/admin/users'),
-    },
-    {
-      key: '/admin/roles',
-      icon: <SafetyOutlined />,
-      label: 'Roles',
-      onClick: () => handleMenuClick('/admin/roles'),
-    },
-    {
-      key: 'config',
-      icon: <SettingOutlined />,
-      label: 'Configuration',
-      children: [
-        { key: '/admin/config-param', label: 'Parameters', onClick: () => handleMenuClick('/admin/config-param') },
-        { key: '/admin/config-group', label: 'Groups', onClick: () => handleMenuClick('/admin/config-group') },
-      ],
-    },
-    { key: 'docs', icon: <FileTextOutlined />, label: 'Documentation' },
-    { key: 'profile', icon: <UserOutlined />, label: 'Profile' },
-  ];
+  const menuItems: MenuItem[] = buildMenuItems(menuHierarchy || [], handleMenuClick);
 
   const isMobileOpen = isMobile ? !collapsed : false;
 
@@ -112,7 +144,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onNavigate }) => {
       <Menu
         mode="inline"
         selectedKeys={[pathname]}
-        defaultOpenKeys={['config']}
+        defaultOpenKeys={defaultOpenKeys}
         items={menuItems}
         className="sidebar-menu"
       />

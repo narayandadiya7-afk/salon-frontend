@@ -42,3 +42,37 @@ export enum eLoginMode {
   PASSWORD = 1,
   OTP = 2,
 }
+
+// Enums for Privileges (legacy menu-based privileges)
+export enum ePrivileges {
+  VIEW_DASHBOARD = "VIEWDASHBOARD",
+  VIEW_USERS = "VIEWUSERS",
+  ADD_EDIT_USERS = "ADDEDITUSERS",
+  DELETE_USERS = "DELETEUSERS",
+  VIEW_ROLES = "VIEWROLES",
+  ADD_EDIT_ROLES = "ADDEDITROLES",
+  DELETE_ROLES = "DELETEROLES",
+  VIEW_CONFIG_GROUP = "VIEWCONFIGGROUP",
+  ADD_EDIT_CONFIG_GROUP = "ADDEDITCONFIGGROUP",
+  DELETE_CONFIG_GROUP = "DELETECONFIGGROUP",
+  VIEW_CONFIG_PARAM = "VIEWCONFIGPARAM",
+  ADD_EDIT_CONFIG_PARAM = "ADDEDITCONFIGPARAM",
+  DELETE_CONFIG_PARAM = "DELETECONFIGPARAM",
+}
+
+// Permission keys matching backend RBAC permission system
+// These are the granular permission keys stored in the `permissions` table
+// and checked by `requirePermission()` middleware on the backend.
+export enum ePermissions {
+  BOOKINGS_CREATE = "bookings.create",
+  BOOKINGS_EDIT = "bookings.edit",
+  BOOKINGS_DELETE = "bookings.delete",
+  SERVICES_MANAGE = "services.manage",
+  CUSTOMERS_VIEW = "customers.view",
+  STAFF_MANAGE = "staff.manage",
+  REPORTS_VIEW = "reports.view",
+  CMS_MANAGE = "cms.manage",
+  PAYMENTS_MANAGE = "payments.manage",
+  SUBSCRIPTION_MANAGE = "subscription.manage",
+  ROLES_MANAGE = "roles.manage",
+}
