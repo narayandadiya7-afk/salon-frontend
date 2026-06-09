@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import {
   Table, Card, Input, Button, Space, Typography,
   Tooltip, Row, Col, Drawer, Popconfirm,
@@ -10,10 +10,12 @@ import {
   PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
   ReloadOutlined, SafetyOutlined,
 } from '@ant-design/icons';
+import { UserContext } from '@/context/user';
 import useFetch from '@/hooks/useFetch';
 import { TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode } from '@/utils/enum';
+import { eResultCode, ePrivileges } from '@/utils/enum';
+import Utils from '@/utils/index';
 import notification from '@/utils/notification';
 import RoleForm from './form';
 import { GetRolesList, DeleteRole } from '@/utils/api.constant';
@@ -30,6 +32,7 @@ type TEditMode = { enable: boolean; data: TRoleRow | null };
 
 export default function RolesPage() {
   const { post } = useFetch();
+  const context = useContext(UserContext);
   const [data, setData] = useState<TRoleRow[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -123,15 +126,19 @@ export default function RolesPage() {
       title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
       render: (_: any, record: TRoleRow) => (
         <Space>
-          <Tooltip title="Edit">
-            <Button type="text" icon={<EditOutlined />} className="action-btn"
-              onClick={() => setIsEditing({ enable: true, data: record })} />
-          </Tooltip>
-          <Popconfirm title="Delete this role?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-            <Tooltip title="Delete">
-              <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_ROLES) && (
+            <Tooltip title="Edit">
+              <Button type="text" icon={<EditOutlined />} className="action-btn"
+                onClick={() => setIsEditing({ enable: true, data: record })} />
             </Tooltip>
-          </Popconfirm>
+          )}
+          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.DELETE_ROLES) && (
+            <Popconfirm title="Delete this role?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+              <Tooltip title="Delete">
+                <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+              </Tooltip>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },
@@ -148,9 +155,11 @@ export default function RolesPage() {
             </Space>
           </Col>
           <Col>
-            <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
-              Add Role
-            </Button>
+            {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_ROLES) && (
+              <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
+                Add Role
+              </Button>
+            )}
           </Col>
         </Row>
 

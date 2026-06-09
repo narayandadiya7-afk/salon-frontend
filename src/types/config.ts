@@ -27,6 +27,7 @@ export type TPrivilege = {
   menuId: number;
   privilegeUniqueId: string;
   menuUniqueId: string;
+  isAssigned?: boolean;
 };
 
 export type TMenuItem = {
@@ -123,7 +124,7 @@ export type TConfigParam = {
 
 export type TConfigGroup = {
   id: number;
-  name: string;
+  groupName: string;
   description: string;
   groupUniqueId: string;
 };

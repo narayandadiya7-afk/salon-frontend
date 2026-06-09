@@ -26,7 +26,10 @@ export default function ConfigGroupForm(props: DrawerProps) {
         try {
           const response = await post(GetSpecificConfigGroup, { data: { id: props.id } });
           if (response?.dataResponse?.returnCode === eResultCode.SUCCESS && response.data) {
-            form.setFieldsValue(response.data);
+            form.setFieldsValue({
+              name: response.data.name || response.data.groupName,
+              description: response.data.description,
+            });
           }
         } catch {
           // silently fail
@@ -43,7 +46,6 @@ export default function ConfigGroupForm(props: DrawerProps) {
         data: {
           id: props.id > 0 ? props.id : 0,
           name: values.name,
-          groupUniqueId: values.groupUniqueId,
           description: values.description || '',
         },
       };
@@ -68,23 +70,14 @@ export default function ConfigGroupForm(props: DrawerProps) {
         form={form}
         name="configGroupForm"
         onFinish={onFinish}
-        initialValues={props.initialValues || { id: 0, name: '', groupUniqueId: '', description: '' }}
+        initialValues={props.initialValues || { id: 0, name: '', description: '' }}
         layout="vertical"
         style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
       >
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
-          <Row gutter={[16, 0]}>
-            <Col xs={24} md={12}>
-              <Form.Item name="name" label="Group Name" rules={[{ required: true, message: 'Please enter group name' }]}>
-                <Input placeholder="Enter group name" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={12}>
-              <Form.Item name="groupUniqueId" label="Group Unique ID" rules={[{ required: true, message: 'Please enter group unique ID' }]}>
-                <Input placeholder="Enter unique ID" />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item name="name" label="Group Name" rules={[{ required: true, message: 'Please enter group name' }]}>
+            <Input placeholder="Enter group name" />
+          </Form.Item>
           <Row gutter={[16, 0]}>
             <Col span={24}>
               <Form.Item name="description" label="Description">

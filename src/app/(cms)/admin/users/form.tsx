@@ -150,9 +150,19 @@ export default function UserForm(props: DrawerProps) {
               <Form.Item
                 name="mobileNumber"
                 label="Mobile"
-                rules={[{ required: true, message: 'Please enter mobile number' }]}
+                rules={[
+                  { required: true, message: 'Please enter mobile number' },
+                  { pattern: /^[0-9]+$/, message: 'Please enter only digits' },
+                ]}
               >
-                <Input placeholder="Enter mobile number" maxLength={15} />
+                <Input
+                  placeholder="Enter mobile number"
+                  maxLength={15}
+                  type="tel"
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) e.preventDefault();
+                  }}
+                />
               </Form.Item>
             </Col>
           </Row>

@@ -43,7 +43,8 @@ export enum eLoginMode {
   OTP = 2,
 }
 
-// Enums for Privileges (legacy menu-based privileges)
+// Enums for Privileges (menu-based privileges from GetMenuHierarchy API)
+// Values match the privilegeUniqueId from the backend menu response.
 export enum ePrivileges {
   VIEW_DASHBOARD = "VIEWDASHBOARD",
   VIEW_USERS = "VIEWUSERS",

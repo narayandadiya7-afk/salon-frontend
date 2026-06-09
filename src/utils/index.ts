@@ -51,7 +51,7 @@ export default class Utils {
 
   /** Legacy privilege check (menu-based privileges) */
   static isUserHasAccess = (privileges: any[], privilege: ePrivileges): boolean => {
-    return privileges?.some((p) => p.privilegeUniqueId === privilege);
+    return privileges?.some((p) => p.privilegeUniqueId === privilege && p.isAssigned === true);
   };
 
   /** Legacy privilege check by raw ID string */

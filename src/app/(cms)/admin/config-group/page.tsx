@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import {
   Table, Card, Input, Button, Space, Typography,
   Tooltip, Row, Col, Drawer, Popconfirm,
@@ -10,10 +10,12 @@ import {
   PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
   ReloadOutlined, GroupOutlined,
 } from '@ant-design/icons';
+import { UserContext } from '@/context/user';
 import useFetch from '@/hooks/useFetch';
 import { TConfigGroup, TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode } from '@/utils/enum';
+import { eResultCode, ePrivileges } from '@/utils/enum';
+import Utils from '@/utils/index';
 import notification from '@/utils/notification';
 import ConfigGroupForm from './form';
 import { GetConfigGroupList, DeleteConfigGroup } from '@/utils/api.constant';
@@ -25,21 +27,27 @@ type TEditMode = { enable: boolean; data: TConfigGroup | null };
 
 export default function ConfigGroupPage() {
   const { post } = useFetch();
+  const context = useContext(UserContext);
   const [data, setData] = useState<TConfigGroup[]>([]);
   const [loading, setLoading] = useState(false);
   const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
+  const filterParamsRef = useRef(filterParams);
+  filterParamsRef.current = filterParams;
+  const initialFetchDone = useRef(false);
   const [isEditing, setIsEditing] = useState<TEditMode>({ enable: false, data: null });
   const [addDrawerOpen, setAddDrawerOpen] = useState(false);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (overrideParams?: Partial<TFilterModel>) => {
     setLoading(true);
     try {
+      const params = { ...filterParamsRef.current, ...overrideParams };
       const response = await post(GetConfigGroupList, {
-        data: { ...filterParams },
+        data: { ...params },
       });
       const { dataResponse, data: rows, filterModel } = response;
       if (dataResponse?.returnCode === eResultCode.SUCCESS) {
-        setData(rows || []);
+        const normalized = (rows || []).map((r: any) => ({ ...r, name: r.name || r.groupName }));
+        setData(normalized);
         if (filterModel) setFilterParams((prev) => ({ ...prev, ...filterModel }));
       }
     } catch {
@@ -47,14 +55,27 @@ export default function ConfigGroupPage() {
     } finally {
       setLoading(false);
     }
-  }, [post, filterParams]);
+  }, [post]);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  useEffect(() => {
+    if (initialFetchDone.current) return;
+    initialFetchDone.current = true;
+    fetchData();
+  }, [fetchData]);
 
-  const handleSearch = (value: string) => setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
-  const handleTableChange = (pagination: TablePaginationConfig) =>
-    setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
-  const handleReset = () => setFilterParams({ ...defaultFilterParams });
+  const handleSearch = (value: string) => {
+    setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
+    fetchData({ searchText: value, currentPage: 1 });
+  };
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const newParams = { currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 };
+    setFilterParams((prev) => ({ ...prev, ...newParams }));
+    fetchData(newParams);
+  };
+  const handleReset = () => {
+    setFilterParams({ ...defaultFilterParams });
+    fetchData(defaultFilterParams);
+  };
 
   const handleDelete = async (id: number) => {
     try {
@@ -80,7 +101,6 @@ export default function ConfigGroupPage() {
       title: 'Group Name', dataIndex: 'name', key: 'name', width: '40%',
       render: (text: string) => (
         <Space>
-          <GroupOutlined style={{ color: 'var(--theme-primary)' }} />
           <Typography.Text strong>{text}</Typography.Text>
         </Space>
       ),
@@ -96,15 +116,19 @@ export default function ConfigGroupPage() {
       title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
       render: (_: any, record: TConfigGroup) => (
         <Space>
-          <Tooltip title="Edit">
-            <Button type="text" icon={<EditOutlined />} className="action-btn"
-              onClick={() => setIsEditing({ enable: true, data: record })} />
-          </Tooltip>
-          <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-            <Tooltip title="Delete">
-              <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_CONFIG_GROUP) && (
+            <Tooltip title="Edit">
+              <Button type="text" icon={<EditOutlined />} className="action-btn"
+                onClick={() => setIsEditing({ enable: true, data: record })} />
             </Tooltip>
-          </Popconfirm>
+          )}
+          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.DELETE_CONFIG_GROUP) && (
+            <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+              <Tooltip title="Delete">
+                <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
+              </Tooltip>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },
@@ -121,9 +145,11 @@ export default function ConfigGroupPage() {
             </Space>
           </Col>
           <Col>
-            <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
-              Add Group
-            </Button>
+            {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_CONFIG_GROUP) && (
+              <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
+                Add Group
+              </Button>
+            )}
           </Col>
         </Row>
 
