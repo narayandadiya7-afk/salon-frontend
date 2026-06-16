@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function ServicesRedirect() {
+export default function AvailabilityRedirect() {
   const router = useRouter();
-  useEffect(() => { router.replace('/owner/services'); }, []);
+  useEffect(() => { router.replace('/owner/availability'); }, []);
   return null;
 }

@@ -40,9 +40,11 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children }) => {
 
   if (!mounted) return null;
 
+    const isDashboardActive = pathname === '/owner/dashboard' || pathname.endsWith('/dashboard');
+
   const menuItems: MenuProps['items'] = [
     {
-      key: '/owner/dashboard',
+      key: isDashboardActive ? '/owner/dashboard' : '/owner/dashboard',
       icon: <DashboardOutlined />,
       label: 'Dashboard',
       onClick: () => router.push('/owner/dashboard'),
@@ -144,7 +146,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[pathname]}
+          selectedKeys={[isDashboardActive ? '/owner/dashboard' : pathname]}
           items={menuItems}
           style={{ borderRight: 0, marginTop: 8 }}
         />

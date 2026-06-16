@@ -4,6 +4,15 @@ const ACCESS_TOKEN_KEY = process.env.NEXT_PUBLIC_ACCESS_TOKEN_KEY || 'access_tok
 
 // Routes that require authentication
 const PROTECTED_ROUTES = ['/admin', '/owner', '/superadmin', '/account', '/my-bookings'];
+const PROTECTED_PATTERNS = [
+  /^\/salon\/[^/]+\/portal\/dashboard(\/|$)/,
+  /^\/salon\/[^/]+\/dashboard(\/|$)/,
+  /^\/salon\/[^/]+\/services(\/|$)/,
+  /^\/salon\/[^/]+\/appointments(\/|$)/,
+  /^\/salon\/[^/]+\/availability(\/|$)/,
+  /^\/salon\/[^/]+\/subscription(\/|$)/,
+  /^\/salon\/[^/]+\/settings(\/|$)/,
+];
 
 // Auth routes — redirect to dashboard if already logged in
 const AUTH_ROUTES = ['/login', '/register', '/forgot-password'];
@@ -23,11 +32,12 @@ export function middleware(request: NextRequest) {
 
   const isProtectedRoute = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
   const isTenantAccountRoute = /^\/tenant\/[^/]+\/(account|my-bookings|admin)(\/|$)/.test(pathname);
+  const isPortalDashboardRoute = PROTECTED_PATTERNS.some((pattern) => pattern.test(pathname));
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route));
 
   // Owner setup page is accessible after registration (token exists)
   // Unauthenticated user trying to access protected routes → redirect to login
-  if ((isProtectedRoute || isTenantAccountRoute) && !isAuthenticated) {
+  if ((isProtectedRoute || isTenantAccountRoute || isPortalDashboardRoute) && !isAuthenticated) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);

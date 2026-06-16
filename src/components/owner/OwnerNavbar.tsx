@@ -1,16 +1,24 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import { useParams, useRouter } from 'next/navigation';
+import { MenuOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import Utils from '../../utils';
 import styles from './OwnerNavbar.module.css';
 
 export default function OwnerNavbar({ salon }: { salon: any }) {
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const params = useParams();
+  const router = useRouter();
   const slug = (params?.slug as string) || salon?.slug || '';
+
+  useEffect(() => {
+    const decoded = Utils.decodeToken();
+    setRole(decoded?.role || null);
+  }, []);
 
   const links = [
     { label: 'Home', href: `/salon/${slug}` },
@@ -19,6 +27,8 @@ export default function OwnerNavbar({ salon }: { salon: any }) {
     { label: 'Team', href: `/salon/${slug}/team` },
     { label: 'Book', href: `/salon/${slug}/book` },
   ];
+
+  const isOwner = role === 'SALON_OWNER' || role === 'SALON_STAFF' || role === 'ADMIN' || role === 'SUPER_ADMIN';
 
   return (
     <header className={styles.navbar}>
@@ -34,6 +44,15 @@ export default function OwnerNavbar({ salon }: { salon: any }) {
         </nav>
 
         <div className={styles.actions}>
+          {isOwner ? (
+            <Button type="default" icon={<UserOutlined />} onClick={() => router.push(`/salon/${slug}/dashboard`)}>
+              Dashboard
+            </Button>
+          ) : (
+            <Button type="default" onClick={() => router.push(`/salon/${slug}/portal/login`)}>
+              Owner Login
+            </Button>
+          )}
           <Link href={`/salon/${slug}/book`}>
             <Button type="primary">Book Now</Button>
           </Link>
@@ -51,6 +70,17 @@ export default function OwnerNavbar({ salon }: { salon: any }) {
               {l.label}
             </Link>
           ))}
+          <div style={{ padding: '12px 20px' }}>
+            {isOwner ? (
+              <Button block type="default" icon={<UserOutlined />} onClick={() => { setOpen(false); router.push(`/salon/${slug}/dashboard`); }}>
+                Dashboard
+              </Button>
+            ) : (
+              <Button block type="default" onClick={() => { setOpen(false); router.push(`/salon/${slug}/portal/login`); }}>
+                Owner Login
+              </Button>
+            )}
+          </div>
         </div>
       )}
     </header>

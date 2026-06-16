@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function ServicesRedirect() {
+export default function AppointmentsRedirect() {
   const router = useRouter();
-  useEffect(() => { router.replace('/owner/services'); }, []);
+  useEffect(() => { router.replace('/owner/appointments'); }, []);
   return null;
 }

@@ -86,8 +86,8 @@ const testimonials = [
 ];
 
 const steps = [
-  { step: '01', title: 'Sign Up & Choose a Plan', desc: 'Create your account and pick the plan that fits your salon.' },
-  { step: '02', title: 'Pay via Razorpay', desc: 'Secure checkout in seconds. Your salon is activated immediately.' },
+  { step: '01', title: 'Create Your Free Account', desc: 'Sign up with your salon name and email. No payment needed.' },
+  { step: '02', title: 'Get Your Salon Website', desc: 'Your professional salon website is live instantly with a 1-month free trial.' },
   { step: '03', title: 'Customize Your Salon', desc: 'Add your services, set working hours, and personalize your page.' },
   { step: '04', title: 'Share & Start Booking', desc: 'Share your unique salon link. Customers book appointments 24/7.' },
 ];
@@ -107,7 +107,7 @@ export default function HomePage() {
               The complete SaaS platform for salon businesses. Get your own booking website, manage appointments, and grow your clientele — all powered by one subscription.
             </p>
             <div className="hero-actions">
-              <Link href="/pricing">
+              <Link href="/register">
                 <Button type="primary" size="large">Get Your Salon Website →</Button>
               </Link>
               <Link href="/salon/demo-salon">
@@ -242,16 +242,16 @@ export default function HomePage() {
         <h2 className="cta-title">Ready to grow your salon?</h2>
         <p className="cta-subtitle">Join 500+ salon owners already using SalonSaaS. Start your free trial today.</p>
         <div className="cta-actions">
-          <Link href="/pricing">
-            <Button size="large" style={{ background: '#fff', color: '#1890ff', border: 'none', fontWeight: 600 }}>
-              View Pricing Plans
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button size="large" style={{ background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.5)' }}>
-              Create Free Account
-            </Button>
-          </Link>
+      <Link href="/register">
+        <Button size="large" style={{ background: '#fff', color: '#1890ff', border: 'none', fontWeight: 600 }}>
+          Get Started Free
+        </Button>
+      </Link>
+      <Link href="/pricing">
+        <Button size="large" style={{ background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.5)' }}>
+          View Pricing Plans
+        </Button>
+      </Link>
         </div>
       </div>
     </>

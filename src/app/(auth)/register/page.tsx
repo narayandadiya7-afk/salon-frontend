@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
-import { Form, Input, Button, Typography, Alert } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Form, Input, Button, Typography } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined, ShopOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { notification } from '../../../utils/notification';
 import apiUtil from '../../../utils/api';
 import AuthUtil from '../../../utils/auth';
@@ -15,20 +15,12 @@ import styles from './Register.module.css';
 
 const { Title, Text } = Typography;
 
-const PLAN_LABELS: Record<string, string> = {
-  BASIC: 'Basic — ₹499/month',
-  PRO: 'Pro — ₹999/month',
-  PRO_YEARLY: 'Pro Yearly — ₹8,999/year',
-};
-
 function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const selectedPlan = searchParams.get('plan') || '';
 
-  const onFinish = async (values: { name: string; email: string; password: string; phone?: string }) => {
+  const onFinish = async (values: { name: string; email: string; password: string; phone?: string; salonName: string }) => {
     try {
       setLoading(true);
 
@@ -40,6 +32,7 @@ function RegisterForm() {
         password: encryptedPassword,
         phone: values.phone,
         role: 'SALON_OWNER',
+        salonName: values.salonName,
       });
 
       const { dataResponse, data } = response || {};
@@ -49,8 +42,14 @@ function RegisterForm() {
         const token = data?.accessToken || data?.token;
         if (token) AuthUtil.setToken(token);
 
-        notification.success(dataResponse?.description || 'Account created successfully!');
-        router.push(selectedPlan ? `/owner/setup?plan=${selectedPlan}` : '/owner/setup');
+        const slug = data?.salon?.slug;
+        notification.success('Your salon is ready! Get started with your 1-month free trial.');
+
+        if (slug) {
+          router.push(`/salon/${slug}/welcome`);
+        } else {
+          router.push('/salon');
+        }
       } else if (returnCode === eResultCode.DUPLICATE_DATA) {
         notification.error(dataResponse?.description || 'Email or phone already registered.');
       } else {
@@ -67,28 +66,22 @@ function RegisterForm() {
     <div className={styles.formWrapper}>
       <div className={styles.formContainer}>
         <div className={styles.formHeader}>
-          <Title level={2} style={{ margin: 0 }}>Create your account</Title>
-          <Text type="secondary">
-            {selectedPlan
-              ? `You selected: ${PLAN_LABELS[selectedPlan] || selectedPlan}`
-              : 'Join thousands of salon owners on SalonSaaS'}
-          </Text>
+          <Title level={2} style={{ margin: 0 }}>Create your salon</Title>
+          <Text type="secondary">Get your salon website free for 1 month — no payment needed</Text>
         </div>
-
-        {selectedPlan && (
-          <Alert
-            type="info"
-            message={`You're signing up for the ${PLAN_LABELS[selectedPlan] || selectedPlan} plan`}
-            description="Complete registration to proceed to payment and launch your salon website."
-            showIcon
-            style={{ marginBottom: 24 }}
-          />
-        )}
 
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
+            name="salonName"
+            label="Salon Name"
+            rules={[{ required: true, message: 'Please enter your salon name' }]}
+          >
+            <Input prefix={<ShopOutlined />} placeholder="e.g. Glow & Beauty Salon" size="large" />
+          </Form.Item>
+
+          <Form.Item
             name="name"
-            label="Full Name"
+            label="Your Name"
             rules={[{ required: true, message: 'Please enter your name' }]}
           >
             <Input prefix={<UserOutlined />} placeholder="Your full name" size="large" />
@@ -114,23 +107,16 @@ function RegisterForm() {
             <Input.Password prefix={<LockOutlined />} placeholder="Create a strong password" size="large" />
           </Form.Item>
 
-          <div style={{ marginBottom: 24 }}>
-            <Text strong>Account type</Text>
-            <div style={{ marginTop: 8, padding: '12px 16px', background: '#f6f8ff', borderRadius: 12, border: '1px solid #d9e6ff' }}>
-              Salon Owner — I want to create my salon website
-            </div>
-          </div>
-
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} block size="large">
-              {selectedPlan ? 'Create Account & Continue to Payment' : 'Create Account'}
+              Create My Salon Website
             </Button>
           </Form.Item>
         </Form>
 
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.footer}>
           <Text type="secondary">Already have an account? </Text>
-          <Link href="/login">Sign in</Link>
+          <Link href="/login" className={styles.link}>Sign in</Link>
         </div>
       </div>
     </div>
@@ -138,9 +124,5 @@ function RegisterForm() {
 }
 
 export default function RegisterPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RegisterForm />
-    </Suspense>
-  );
+  return <RegisterForm />;
 }
