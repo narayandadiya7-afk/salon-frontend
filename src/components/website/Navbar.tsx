@@ -48,7 +48,7 @@ export default function Navbar() {
           <Link href="/login">
             <Button variant="outlined" className={styles.loginBtn}>Sign In</Button>
           </Link>
-          <Link href="/pricing">
+          <Link href="/register">
             <Button type="primary" className={styles.ctaBtn}>Get Your Salon Website</Button>
           </Link>
         </div>
@@ -78,7 +78,7 @@ export default function Navbar() {
             <Link href="/login" onClick={() => setMenuOpen(false)}>
               <Button variant="outlined" block>Sign In</Button>
             </Link>
-            <Link href="/pricing" onClick={() => setMenuOpen(false)}>
+            <Link href="/register" onClick={() => setMenuOpen(false)}>
               <Button type="primary" block>Get Your Salon Website</Button>
             </Link>
           </div>

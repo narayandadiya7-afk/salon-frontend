@@ -1,4 +1,20 @@
-.formWrapper { width: 100%; }
+.formWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 460px;
+}
+
+.formHeader {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
 .title { font-size: 24px; font-weight: 600; color: var(--theme-text); margin: 0 0 8px 0; text-align: center; }
 .subtitle { font-size: 14px; color: var(--theme-text-secondary); margin: 0 0 32px 0; text-align: center; }
 .link { color: var(--theme-primary); font-weight: 500; }
