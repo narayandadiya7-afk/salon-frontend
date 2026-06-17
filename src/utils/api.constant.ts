@@ -29,6 +29,7 @@ export const DeleteConfigParam = 'deleteConfigParam';
 export const GetMenuHierarchy = 'getMenuHierarchy';
 
 // ─── Public Salon ─────────────────────────────────────────────────────────────
+export const ApiCheckSlugAvailability = (slug: string) => `salons/check-slug/${slug}`;
 export const ApiGetSalonBySlug = (slug: string) => `salons/slug/${slug}`;
 export const ApiResolveTenant = (slug: string) => `tenant/${slug}`;
 export const ApiTenantServices = (slug: string) => `tenant/${slug}/services`;
