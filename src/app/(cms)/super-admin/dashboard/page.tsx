@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Row, Col, Typography, Space, Card, Button } from 'antd';
+import { Row, Col, Typography, Space, Card, Button, Tag } from 'antd';
 import {
   BuildOutlined, DollarOutlined, UserAddOutlined, FallOutlined,
   RiseOutlined, BankOutlined, PlusOutlined, FileTextOutlined,
   SettingOutlined, CustomerServiceOutlined, DownloadOutlined,
-  CreditCardOutlined,
+  UserOutlined, ShoppingCartOutlined, CreditCardOutlined, CheckCircleOutlined,
 } from '@ant-design/icons';
 import AnalyticsCard from '../../../../components/super-admin/AnalyticsCard';
 import AreaChart from '../../../../components/super-admin/AreaChart';
@@ -95,14 +95,15 @@ const ticketColumns = [
   { title: 'Assignee', dataIndex: 'assignee', key: 'assignee' },
 ];
 
-export default function AdminDashboardPage() {
+export default function SuperAdminDashboardPage() {
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <div className="super-dashboard">
+      {/* Welcome Header */}
       <div className="super-dash-welcome">
         <div className="super-dash-welcome-left">
-          <Title level={4} className="super-dash-greeting">Good morning, Admin</Title>
+          <Title level={4} className="super-dash-greeting">Good morning, Super Admin</Title>
           <Text className="super-dash-date">{today}</Text>
         </div>
         <div className="super-dash-welcome-right">
@@ -115,6 +116,7 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
+      {/* KPI Cards */}
       <Row gutter={[16, 16]} className="super-kpi-row">
         <Col xs={12} sm={8} lg={4}>
           <AnalyticsCard
@@ -178,6 +180,7 @@ export default function AdminDashboardPage() {
         </Col>
       </Row>
 
+      {/* Charts Row */}
       <Row gutter={[16, 16]} style={{ marginTop: 8 }}>
         <Col xs={24} lg={14}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Revenue Analytics</span>}>
@@ -191,6 +194,7 @@ export default function AdminDashboardPage() {
         </Col>
       </Row>
 
+      {/* Middle Row */}
       <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={8}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Subscription Distribution</span>}>
@@ -225,6 +229,7 @@ export default function AdminDashboardPage() {
         </Col>
       </Row>
 
+      {/* Activity + Quick Actions */}
       <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={14}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Tenant Activity</span>}>

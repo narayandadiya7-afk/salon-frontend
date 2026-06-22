@@ -1,0 +1,47 @@
+.super-stat-card {
+  border-radius: 10px !important;
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--theme-border) !important;
+  transition: all 0.2s ease;
+}
+
+.super-stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.super-stat-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.super-stat-card-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  flex-shrink: 0;
+}
+
+.super-stat-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.super-stat-card-value {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--theme-text) !important;
+  line-height: 1.2 !important;
+  font-family: "RobotoBold", "Roboto", monospace !important;
+}
+
+.super-stat-card-label {
+  font-size: 12px !important;
+  color: var(--theme-text-secondary) !important;
+}

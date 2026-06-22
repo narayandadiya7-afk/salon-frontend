@@ -1,21 +1,20 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useContext } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  Table, Card, Input, Button, Space, Typography,
-  Tag, Tooltip, Row, Col, Avatar, Drawer, Popconfirm,
+  Button, Space, Typography, Input, Card,
+  Drawer, Tooltip, Popconfirm,
 } from 'antd';
-import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import type { TablePaginationConfig } from 'antd/es/table';
 import {
-  PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
-  ReloadOutlined, UserOutlined,
+  PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined,
+  UserOutlined, TeamOutlined,
 } from '@ant-design/icons';
-import { UserContext } from '@/context/user';
+import DataTable from '@/components/super-admin/DataTable';
 import useFetch from '@/hooks/useFetch';
 import { TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode, ePrivileges } from '@/utils/enum';
-import Utils from '@/utils/index';
+import { eResultCode } from '@/utils/enum';
 import notification from '@/utils/notification';
 import UserForm from './form';
 import { GetUserList, DeleteUser } from '@/utils/api.constant';
@@ -33,10 +32,9 @@ type TEditMode = { enable: boolean; data: TUserRow | null };
 
 export default function UsersPage() {
   const { post } = useFetch();
-  const context = useContext(UserContext);
   const [data, setData] = useState<TUserRow[]>([]);
   const [totalRows, setTotalRows] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
   const filterParamsRef = useRef(filterParams);
   filterParamsRef.current = filterParams;
@@ -74,10 +72,12 @@ export default function UsersPage() {
     setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
     setFetchTrigger((t) => t + 1);
   };
+
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
     setFetchTrigger((t) => t + 1);
   };
+
   const handleReset = () => {
     setFilterParams({ ...defaultFilterParams });
     setFetchTrigger((t) => t + 1);
@@ -97,109 +97,115 @@ export default function UsersPage() {
     }
   };
 
-  const columns: ColumnsType<TUserRow> = [
+  const columns = [
     {
-      title: 'Sr. No.', key: 'index', width: 80, align: 'center',
+      title: 'Sr. No.', key: 'index', width: 80, align: 'center' as const,
       render: (_: any, __: TUserRow, index: number) =>
         index + 1 + (filterParams.currentPage - 1) * filterParams.pageSize,
     },
     {
-      title: 'Name', key: 'user', width: '25%',
+      title: 'Name', key: 'user',
       render: (_: any, record: TUserRow) => (
         <Space>
-          <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: 'var(--theme-primary)' }} />
-          <Typography.Text strong>{record.userName}</Typography.Text>
+          <span style={{ width: 28, height: 28, borderRadius: '50%', background: '#d4a853', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>
+            <UserOutlined />
+          </span>
+          <Text strong>{record.userName}</Text>
         </Space>
       ),
     },
     {
-      title: 'Email', dataIndex: 'emailId', key: 'emailId', width: '20%',
+      title: 'Email', dataIndex: 'emailId', key: 'emailId',
     },
     {
-      title: 'Mobile', dataIndex: 'mobileNumber', key: 'mobileNumber', width: '15%',
+      title: 'Mobile', dataIndex: 'mobileNumber', key: 'mobileNumber',
       render: (mobile: string) => mobile || '-',
     },
     {
-      title: 'Role', dataIndex: 'roleName', key: 'roleName', width: '15%',
-      render: (role: string) => <Tag color="blue">{role || '-'}</Tag>,
+      title: 'Role', dataIndex: 'roleName', key: 'roleName',
+      render: (role: string) => (
+        <span style={{
+          display: 'inline-block', padding: '2px 10px', borderRadius: 9999, fontSize: 12,
+          fontWeight: 500, background: 'rgba(212,168,83,0.12)', color: '#b89447',
+        }}>
+          {role || '-'}
+        </span>
+      ),
     },
     {
-      title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
+      title: 'Actions', key: 'action', width: 100, align: 'center' as const,
       render: (_: any, record: TUserRow) => (
         <Space>
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_USERS) && (
-            <Tooltip title="Edit">
-              <Button type="text" icon={<EditOutlined />} className="action-btn"
-                onClick={() => setIsEditing({ enable: true, data: record })} />
+          <Tooltip title="Edit">
+            <Button type="text" size="small" icon={<EditOutlined />}
+              onClick={() => setIsEditing({ enable: true, data: record })} />
+          </Tooltip>
+          <Popconfirm title="Delete this user?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+            <Tooltip title="Delete">
+              <Button type="text" size="small" danger icon={<DeleteOutlined />} />
             </Tooltip>
-          )}
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.DELETE_USERS) && (
-            <Popconfirm title="Delete this user?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-              <Tooltip title="Delete">
-                <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
-              </Tooltip>
-            </Popconfirm>
-          )}
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
   return (
-    <div className="user-list-container">
-      <Card className="page-card" variant="borderless">
-        <Row justify="space-between" align="middle" className="page-header">
-          <Col>
-            <Space>
-              <UserOutlined className="page-icon" />
-              <Title level={3} style={{ margin: 0 }}>Users Management</Title>
-            </Space>
-          </Col>
-          <Col>
-            {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_USERS) && (
-              <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
-                Add User
-              </Button>
-            )}
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]} className="filter-section">
-          <Col xs={24} sm={16} md={18}>
-            <Search placeholder="Search by name or email..." value={filterParams.searchText}
+    <div className="super-page">
+      <Card className="super-page-card" variant="borderless">
+        <div className="super-page-header" style={{ marginBottom: 0, paddingTop: 8, paddingBottom: 8 }}>
+          <div>
+            <Title level={4} className="super-page-title">
+              <TeamOutlined className="super-page-icon" /> Users
+            </Title>
+            <Text type="secondary">Manage platform users and their roles</Text>
+          </div>
+          <Space>
+            <Button type="primary" icon={<PlusOutlined />}
+              style={{ background: '#d4a853', borderColor: '#d4a853' }}
+              onClick={() => setAddDrawerOpen(true)}>
+              Add User
+            </Button>
+            <Search
+              placeholder="Search by name or email..."
+              value={filterParams.searchText}
               onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
-              onSearch={handleSearch} size="large" prefix={<SearchOutlined />} allowClear />
-          </Col>
-          <Col xs={24} sm={8} md={6}>
-            <Button icon={<ReloadOutlined />} onClick={handleReset} size="large" block>Reset Filters</Button>
-          </Col>
-        </Row>
+              onSearch={handleSearch} allowClear style={{ width: 250 }} />
+            <Tooltip title="Reset Filters">
+              <Button icon={<ReloadOutlined />} onClick={handleReset} />
+            </Tooltip>
+          </Space>
+        </div>
 
-        <Table columns={columns} dataSource={data} rowKey="id" loading={loading}
+        <DataTable
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
           pagination={{
-            current: filterParams.currentPage, pageSize: filterParams.pageSize,
-            total: totalRows, showSizeChanger: true,
-            showTotal: (total) => `Total ${total} users`,
+            current: filterParams.currentPage,
+            pageSize: filterParams.pageSize,
+            total: totalRows,
+            showSizeChanger: true,
+            showTotal: (total: number) => `Total ${total} users`,
             pageSizeOptions: ['10', '20', '50', '100'],
           }}
-          onChange={handleTableChange} className="config-table" scroll={{ x: 900 }} />
+          onChange={handleTableChange}
+          scroll={{ x: 900 }}
+        />
       </Card>
 
-      {addDrawerOpen && (
-        <Drawer title="Add New User" placement="right"
-          open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
-          styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-          <UserForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
-        </Drawer>
-      )}
+      <Drawer title="Add New User" placement="right"
+        open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
+        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
+        <UserForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
+      </Drawer>
 
-      {isEditing.enable && (
-        <Drawer title="Edit User" placement="right"
-          open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
-          styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-          <UserForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
-        </Drawer>
-      )}
+      <Drawer title="Edit User" placement="right"
+        open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
+        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
+        <UserForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
+      </Drawer>
     </div>
   );
 }

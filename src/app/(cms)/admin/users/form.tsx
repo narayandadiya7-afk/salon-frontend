@@ -103,20 +103,20 @@ export default function UserForm(props: DrawerProps) {
   };
 
   return (
-    <div className="drawer-form-container">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <Form
         form={form}
         name="userForm"
         onFinish={onFinish}
         layout="vertical"
-        className="drawer-form"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
       >
-        <div className="drawer-form-content">
+        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
           <Row gutter={[16, 0]}>
             <Col xs={24} md={12}>
               <Form.Item
                 name="fullName"
-                label="Name"
+                label={<span style={{ color: 'var(--theme-text)' }}>Name</span>}
                 rules={[{ required: true, message: 'Please enter full name' }]}
               >
                 <Input placeholder="Enter full name" />
@@ -125,7 +125,7 @@ export default function UserForm(props: DrawerProps) {
             <Col xs={24} md={12}>
               <Form.Item
                 name="emailId"
-                label="Email"
+                label={<span style={{ color: 'var(--theme-text)' }}>Email</span>}
                 rules={[
                   { required: true, message: 'Please enter email' },
                   { type: 'email', message: 'Please enter a valid email' },
@@ -140,7 +140,7 @@ export default function UserForm(props: DrawerProps) {
             <Col xs={24} md={12}>
               <Form.Item
                 name="roleId"
-                label="Role"
+                label={<span style={{ color: 'var(--theme-text)' }}>Role</span>}
                 rules={[{ required: true, message: 'Please select a role' }]}
               >
                 <Select placeholder="Select role" options={roleOptions} loading={rolesLoading} />
@@ -149,20 +149,10 @@ export default function UserForm(props: DrawerProps) {
             <Col xs={24} md={12}>
               <Form.Item
                 name="mobileNumber"
-                label="Mobile"
-                rules={[
-                  { required: true, message: 'Please enter mobile number' },
-                  { pattern: /^[0-9]+$/, message: 'Please enter only digits' },
-                ]}
+                label={<span style={{ color: 'var(--theme-text)' }}>Mobile</span>}
+                rules={[{ required: true, message: 'Please enter mobile number' }]}
               >
-                <Input
-                  placeholder="Enter mobile number"
-                  maxLength={15}
-                  type="tel"
-                  onKeyPress={(e) => {
-                    if (!/[0-9]/.test(e.key)) e.preventDefault();
-                  }}
-                />
+                <Input placeholder="Enter mobile number" maxLength={15} />
               </Form.Item>
             </Col>
           </Row>
@@ -171,7 +161,7 @@ export default function UserForm(props: DrawerProps) {
             <Col xs={24}>
               <Form.Item
                 name="password"
-                label={isEdit ? 'New Password (leave blank to keep current)' : 'Password'}
+                label={<span style={{ color: 'var(--theme-text)' }}>{isEdit ? 'New Password (leave blank to keep current)' : 'Password'}</span>}
                 rules={[
                   ...(!isEdit ? [{ required: true, message: 'Please enter password' }] : []),
                   { min: 6, message: 'Password must be at least 6 characters' },
@@ -183,11 +173,12 @@ export default function UserForm(props: DrawerProps) {
           </Row>
         </div>
 
-        <div className="drawer-form-footer">
+        <div style={{ borderTop: '1px solid var(--theme-border)', paddingTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
           <Button icon={<CloseOutlined />} onClick={props.onCloseDrawer} disabled={isLoading}>
             Cancel
           </Button>
-          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}>
+          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}>
             {isEdit ? 'Update' : 'Save'}
           </Button>
         </div>

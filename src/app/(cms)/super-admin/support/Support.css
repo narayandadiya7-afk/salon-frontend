@@ -1,0 +1,43 @@
+/* Support Page Styles */
+
+.support-stat-card {
+  border-radius: 12px !important;
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--theme-border) !important;
+  text-align: center;
+  padding: 4px;
+}
+
+.support-stat-value {
+  display: block;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  font-family: "RobotoBold", "Roboto", monospace !important;
+}
+
+.support-stat-label {
+  display: block;
+  font-size: 12px !important;
+  color: var(--theme-text-secondary) !important;
+  margin-top: 2px;
+}
+
+.support-drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+}
+
+.support-ticket-meta {
+  padding: 12px 16px;
+  background: var(--theme-hover);
+  border-radius: 10px;
+}
+
+.support-chat-container {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--theme-border);
+}

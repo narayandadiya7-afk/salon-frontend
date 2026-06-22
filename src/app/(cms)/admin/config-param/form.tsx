@@ -13,8 +13,6 @@ type DrawerProps = {
   onCloseDrawer: () => void;
   onRefreshList: () => void;
   initialValues?: any;
-  prefilledGroupId?: number;
-  disableGroup?: boolean;
 };
 
 export default function ConfigParamForm(props: DrawerProps) {
@@ -31,7 +29,7 @@ export default function ConfigParamForm(props: DrawerProps) {
         });
         if (response?.dataResponse?.returnCode === eResultCode.SUCCESS) {
           const groups = (response.data || []).map((g: any) => ({
-            label: g.name || g.groupName,
+            label: g.name,
             value: g.id,
           }));
           setGroupOptions(groups);
@@ -44,18 +42,12 @@ export default function ConfigParamForm(props: DrawerProps) {
   }, [post]);
 
   useEffect(() => {
-    if (props.prefilledGroupId && props.id === 0) {
-      form.setFieldsValue({ groupId: props.prefilledGroupId });
-    }
-  }, [props.prefilledGroupId, props.id, form]);
-
-  useEffect(() => {
     if (props.id > 0) {
       const fetchParam = async () => {
         try {
           const response = await post(GetSpecificConfigParam, { data: { id: props.id } });
           if (response?.dataResponse?.returnCode === eResultCode.SUCCESS && response.data) {
-            form.setFieldsValue({ ...response.data, name: response.data.name || response.data.paramName });
+            form.setFieldsValue(response.data);
           }
         } catch {
           // silently fail
@@ -102,29 +94,32 @@ export default function ConfigParamForm(props: DrawerProps) {
         style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
       >
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
-          <Row gutter={[16, 0]}>
+          <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
-              <Form.Item name="groupId" label="Group" rules={[{ required: true, message: 'Please select group' }]}>
-                <Select placeholder="Select group" options={groupOptions} disabled={props.disableGroup} />
+              <Form.Item name="groupId" label={<span style={{ color: 'var(--theme-text)' }}>Config Group</span>}
+                rules={[{ required: true, message: 'Please select config group' }]}>
+                <Select placeholder="Select config group" options={groupOptions} />
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
-              <Form.Item name="name" label="Parameter Name" rules={[{ required: true, message: 'Please enter parameter name' }]}>
+              <Form.Item name="name" label={<span style={{ color: 'var(--theme-text)' }}>Parameter Name</span>}
+                rules={[{ required: true, message: 'Please enter parameter name' }]}>
                 <Input placeholder="Enter parameter name" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
             <Col xs={24}>
-              <Form.Item name="description" label="Description">
+              <Form.Item name="description" label={<span style={{ color: 'var(--theme-text)' }}>Description</span>}>
                 <Input.TextArea placeholder="Enter description (optional)" />
               </Form.Item>
             </Col>
           </Row>
         </div>
-        <div style={{ borderTop: '1px solid var(--theme-border-light)', paddingTop: 16, marginTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
+        <div style={{ borderTop: '1px solid var(--theme-border)', paddingTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
           <Button icon={<CloseOutlined />} onClick={props.onCloseDrawer} disabled={isLoading}>Cancel</Button>
-          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}>Save</Button>
+          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}>Save</Button>
         </div>
       </Form>
     </div>

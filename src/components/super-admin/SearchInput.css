@@ -1,0 +1,21 @@
+.super-search-input {
+  border-radius: 8px !important;
+  border: 1px solid var(--theme-border) !important;
+  background: var(--theme-surface) !important;
+  transition: all 0.2s ease !important;
+  width: 280px;
+}
+
+.super-search-input:hover {
+  border-color: var(--theme-primary) !important;
+}
+
+.super-search-input:focus,
+.super-search-input-focused {
+  border-color: var(--theme-primary) !important;
+  box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.15) !important;
+}
+
+.super-search-input .anticon {
+  color: var(--theme-text-secondary);
+}

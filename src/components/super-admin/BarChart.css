@@ -1,0 +1,18 @@
+.super-bar-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.bar-chart-svg {
+  width: 100%;
+  height: auto;
+}
+
+.bar-chart-bar {
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.bar-chart-bar:hover {
+  opacity: 0.8;
+}

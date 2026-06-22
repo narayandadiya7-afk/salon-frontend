@@ -26,10 +26,7 @@ export default function ConfigGroupForm(props: DrawerProps) {
         try {
           const response = await post(GetSpecificConfigGroup, { data: { id: props.id } });
           if (response?.dataResponse?.returnCode === eResultCode.SUCCESS && response.data) {
-            form.setFieldsValue({
-              name: response.data.name || response.data.groupName,
-              description: response.data.description,
-            });
+            form.setFieldsValue(response.data);
           }
         } catch {
           // silently fail
@@ -75,20 +72,24 @@ export default function ConfigGroupForm(props: DrawerProps) {
         style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
       >
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
-          <Form.Item name="name" label="Group Name" rules={[{ required: true, message: 'Please enter group name' }]}>
-            <Input placeholder="Enter group name" />
-          </Form.Item>
           <Row gutter={[16, 0]}>
-            <Col span={24}>
-              <Form.Item name="description" label="Description">
-                <Input.TextArea rows={3} placeholder="Enter description (optional)" />
+            <Col xs={24} md={12}>
+              <Form.Item name="name" label={<span style={{ color: 'var(--theme-text)' }}>Group Name</span>}
+                rules={[{ required: true, message: 'Please enter group name' }]}>
+                <Input placeholder="Enter group name" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item name="description" label={<span style={{ color: 'var(--theme-text)' }}>Description</span>}>
+                <Input placeholder="Enter description" />
               </Form.Item>
             </Col>
           </Row>
         </div>
-        <div style={{ borderTop: '1px solid var(--theme-border-light)', paddingTop: 16, marginTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
+        <div style={{ borderTop: '1px solid var(--theme-border)', paddingTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
           <Button icon={<CloseOutlined />} onClick={props.onCloseDrawer} disabled={isLoading}>Cancel</Button>
-          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}>Save</Button>
+          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}>Save</Button>
         </div>
       </Form>
     </div>
