@@ -1,21 +1,20 @@
 'use client';
 
-import { useState, useEffect, useCallback, useContext, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  Table, Card, Input, Button, Space, Typography,
-  Tooltip, Row, Col, Drawer, Popconfirm,
+  Button, Space, Typography, Input, Card,
+  Drawer, Tooltip, Popconfirm,
 } from 'antd';
-import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import type { TablePaginationConfig } from 'antd/es/table';
 import {
-  PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
-  ReloadOutlined, GroupOutlined,
+  PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined,
+  GroupOutlined,
 } from '@ant-design/icons';
-import { UserContext } from '@/context/user';
+import DataTable from '@/components/super-admin/DataTable';
 import useFetch from '@/hooks/useFetch';
 import { TConfigGroup, TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode, ePrivileges } from '@/utils/enum';
-import Utils from '@/utils/index';
+import { eResultCode } from '@/utils/enum';
 import notification from '@/utils/notification';
 import ConfigGroupForm from './form';
 import { GetConfigGroupList, DeleteConfigGroup } from '@/utils/api.constant';
@@ -27,27 +26,24 @@ type TEditMode = { enable: boolean; data: TConfigGroup | null };
 
 export default function ConfigGroupPage() {
   const { post } = useFetch();
-  const context = useContext(UserContext);
   const [data, setData] = useState<TConfigGroup[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
   const filterParamsRef = useRef(filterParams);
   filterParamsRef.current = filterParams;
-  const initialFetchDone = useRef(false);
+  const [fetchTrigger, setFetchTrigger] = useState(0);
   const [isEditing, setIsEditing] = useState<TEditMode>({ enable: false, data: null });
   const [addDrawerOpen, setAddDrawerOpen] = useState(false);
 
-  const fetchData = useCallback(async (overrideParams?: Partial<TFilterModel>) => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const params = { ...filterParamsRef.current, ...overrideParams };
       const response = await post(GetConfigGroupList, {
-        data: { ...params },
+        data: { ...filterParamsRef.current },
       });
       const { dataResponse, data: rows, filterModel } = response;
       if (dataResponse?.returnCode === eResultCode.SUCCESS) {
-        const normalized = (rows || []).map((r: any) => ({ ...r, name: r.name || r.groupName }));
-        setData(normalized);
+        setData(rows || []);
         if (filterModel) setFilterParams((prev) => ({ ...prev, ...filterModel }));
       }
     } catch {
@@ -57,24 +53,27 @@ export default function ConfigGroupPage() {
     }
   }, [post]);
 
+  const initialFetchDone = useRef(false);
+
   useEffect(() => {
-    if (initialFetchDone.current) return;
+    if (initialFetchDone.current && fetchTrigger === 0) return;
     initialFetchDone.current = true;
     fetchData();
-  }, [fetchData]);
+  }, [fetchTrigger]);
 
   const handleSearch = (value: string) => {
     setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
-    fetchData({ searchText: value, currentPage: 1 });
+    setFetchTrigger((t) => t + 1);
   };
+
   const handleTableChange = (pagination: TablePaginationConfig) => {
-    const newParams = { currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 };
-    setFilterParams((prev) => ({ ...prev, ...newParams }));
-    fetchData(newParams);
+    setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
+    setFetchTrigger((t) => t + 1);
   };
+
   const handleReset = () => {
     setFilterParams({ ...defaultFilterParams });
-    fetchData(defaultFilterParams);
+    setFetchTrigger((t) => t + 1);
   };
 
   const handleDelete = async (id: number) => {
@@ -91,87 +90,86 @@ export default function ConfigGroupPage() {
     }
   };
 
-  const columns: ColumnsType<TConfigGroup> = [
+  const columns = [
     {
-      title: 'Sr. No.', key: 'index', width: 80, align: 'center',
+      title: 'Sr. No.', key: 'index', width: 80, align: 'center' as const,
       render: (_: any, __: TConfigGroup, index: number) =>
         index + 1 + (filterParams.currentPage - 1) * filterParams.pageSize,
     },
     {
-      title: 'Group Name', dataIndex: 'name', key: 'name', width: '40%',
+      title: 'Group Name', dataIndex: 'name', key: 'name',
       render: (text: string) => (
         <Space>
-          <Typography.Text strong>{text}</Typography.Text>
+          <GroupOutlined style={{ color: '#d4a853' }} />
+          <Text strong>{text}</Text>
         </Space>
       ),
     },
     {
-      title: 'Description', dataIndex: 'description', key: 'description', width: '45%',
-      ellipsis: { showTitle: false },
-      render: (text: string) => (
-        <Tooltip placement="topLeft" title={text}><Text type="secondary">{text}</Text></Tooltip>
-      ),
+      title: 'Description', dataIndex: 'description', key: 'description',
+      render: (text: string) => <Text>{text || '-'}</Text>,
     },
     {
-      title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
+      title: 'Actions', key: 'action', width: 100, align: 'center' as const,
       render: (_: any, record: TConfigGroup) => (
         <Space>
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_CONFIG_GROUP) && (
-            <Tooltip title="Edit">
-              <Button type="text" icon={<EditOutlined />} className="action-btn"
-                onClick={() => setIsEditing({ enable: true, data: record })} />
+          <Tooltip title="Edit">
+            <Button type="text" size="small" icon={<EditOutlined />}
+              onClick={() => setIsEditing({ enable: true, data: record })} />
+          </Tooltip>
+          <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+            <Tooltip title="Delete">
+              <Button type="text" size="small" danger icon={<DeleteOutlined />} />
             </Tooltip>
-          )}
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.DELETE_CONFIG_GROUP) && (
-            <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-              <Tooltip title="Delete">
-                <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
-              </Tooltip>
-            </Popconfirm>
-          )}
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
   return (
-    <div className="config-group-container">
-      <Card className="page-card" variant="borderless">
-        <Row justify="space-between" align="middle" className="page-header">
-          <Col>
-            <Space>
-              <GroupOutlined className="page-icon" />
-              <Title level={3} style={{ margin: 0 }}>Config Groups</Title>
-            </Space>
-          </Col>
-          <Col>
-            {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_CONFIG_GROUP) && (
-              <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
-                Add Group
-              </Button>
-            )}
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]} className="filter-section">
-          <Col xs={24} sm={16} md={18}>
-            <Search placeholder="Search by group name or description..." value={filterParams.searchText}
+    <div className="super-page">
+      <Card className="super-page-card" variant="borderless">
+        <div className="super-page-header" style={{ marginBottom: 0, paddingTop: 8, paddingBottom: 8 }}>
+          <div>
+            <Title level={4} className="super-page-title">
+              <GroupOutlined className="super-page-icon" /> Config Groups
+            </Title>
+            <Text type="secondary">Manage configuration parameter groups</Text>
+          </div>
+          <Space>
+            <Button type="primary" icon={<PlusOutlined />}
+              style={{ background: '#d4a853', borderColor: '#d4a853' }}
+              onClick={() => setAddDrawerOpen(true)}>
+              Add Group
+            </Button>
+            <Search
+              placeholder="Search by group name or description..."
+              value={filterParams.searchText}
               onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
-              onSearch={handleSearch} size="large" prefix={<SearchOutlined />} allowClear />
-          </Col>
-          <Col xs={24} sm={8} md={6}>
-            <Button icon={<ReloadOutlined />} onClick={handleReset} size="large" block>Reset Filters</Button>
-          </Col>
-        </Row>
+              onSearch={handleSearch} allowClear style={{ width: 250 }} />
+            <Tooltip title="Reset Filters">
+              <Button icon={<ReloadOutlined />} onClick={handleReset} />
+            </Tooltip>
+          </Space>
+        </div>
 
-        <Table columns={columns} dataSource={data} rowKey="id" loading={loading}
+        <DataTable
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
           pagination={{
-            current: filterParams.currentPage, pageSize: filterParams.pageSize,
-            total: filterParams.totalRows, showSizeChanger: true,
-            showTotal: (total) => `Total ${total} groups`,
+            current: filterParams.currentPage,
+            pageSize: filterParams.pageSize,
+            total: filterParams.totalRows,
+            showSizeChanger: true,
+            showTotal: (total: number) => `Total ${total} groups`,
             pageSizeOptions: ['10', '20', '50', '100'],
           }}
-          onChange={handleTableChange} className="config-table" scroll={{ x: 800 }} />
+          onChange={handleTableChange}
+          scroll={{ x: 800 }}
+        />
       </Card>
 
       <Drawer title="Add Config Group" placement="right"

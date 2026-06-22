@@ -1,0 +1,24 @@
+.permission-matrix {
+  overflow-x: auto;
+}
+
+.permission-matrix .ant-table-thead > tr > th {
+  background: var(--theme-hover) !important;
+  color: var(--theme-text) !important;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.permission-matrix .ant-table-tbody > tr > td {
+  text-align: center;
+}
+
+.permission-matrix .ant-table-tbody > tr > td:first-child {
+  text-align: left;
+}
+
+.permission-matrix .ant-table-bordered .ant-table-cell {
+  border-color: var(--theme-border) !important;
+}

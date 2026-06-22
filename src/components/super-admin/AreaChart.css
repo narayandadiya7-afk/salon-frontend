@@ -1,0 +1,18 @@
+.super-area-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.area-chart-svg {
+  width: 100%;
+  height: auto;
+}
+
+.area-chart-dot {
+  transition: r 0.2s ease;
+  cursor: pointer;
+}
+
+.area-chart-dot:hover {
+  r: 5;
+}

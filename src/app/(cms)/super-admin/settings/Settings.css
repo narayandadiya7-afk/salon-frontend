@@ -1,0 +1,50 @@
+/* Settings Page Styles */
+
+.settings-tab-content {
+  padding: 8px 0;
+  max-width: 680px;
+}
+
+.settings-section-title {
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.settings-section-title .ant-typography {
+  font-size: 15px;
+  color: var(--theme-text);
+}
+
+.settings-form .ant-form-item {
+  margin-bottom: 20px;
+}
+
+.settings-form .ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--theme-text);
+}
+
+.settings-tabs .ant-tabs-nav {
+  margin-bottom: 24px;
+}
+
+.settings-tabs .ant-tabs-tab {
+  padding: 8px 16px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.settings-tabs .ant-tabs-tab-active {
+  color: #d4a853 !important;
+}
+
+.settings-tabs .ant-tabs-ink-bar {
+  background: #d4a853 !important;
+}
+
+@media (max-width: 768px) {
+  .settings-tab-content {
+    max-width: 100%;
+  }
+}

@@ -1,21 +1,20 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useContext } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  Table, Card, Input, Button, Space, Typography,
-  Tooltip, Row, Col, Drawer, Popconfirm,
+  Button, Space, Typography, Input, Card,
+  Drawer, Tooltip, Popconfirm,
 } from 'antd';
-import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import type { TablePaginationConfig } from 'antd/es/table';
 import {
-  PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined,
-  ReloadOutlined, SafetyOutlined,
+  PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined,
+  SafetyOutlined,
 } from '@ant-design/icons';
-import { UserContext } from '@/context/user';
+import DataTable from '@/components/super-admin/DataTable';
 import useFetch from '@/hooks/useFetch';
 import { TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode, ePrivileges } from '@/utils/enum';
-import Utils from '@/utils/index';
+import { eResultCode } from '@/utils/enum';
 import notification from '@/utils/notification';
 import RoleForm from './form';
 import { GetRolesList, DeleteRole } from '@/utils/api.constant';
@@ -32,10 +31,9 @@ type TEditMode = { enable: boolean; data: TRoleRow | null };
 
 export default function RolesPage() {
   const { post } = useFetch();
-  const context = useContext(UserContext);
   const [data, setData] = useState<TRoleRow[]>([]);
   const [totalRows, setTotalRows] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
   const filterParamsRef = useRef(filterParams);
   filterParamsRef.current = filterParams;
@@ -63,20 +61,22 @@ export default function RolesPage() {
 
   const initialFetchDone = useRef(false);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (initialFetchDone.current && fetchTrigger === 0) return;
     initialFetchDone.current = true;
-    fetchData(); 
+    fetchData();
   }, [fetchTrigger]);
 
   const handleSearch = (value: string) => {
     setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
     setFetchTrigger((t) => t + 1);
   };
+
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
     setFetchTrigger((t) => t + 1);
   };
+
   const handleReset = () => {
     setFilterParams({ ...defaultFilterParams });
     setFetchTrigger((t) => t + 1);
@@ -96,109 +96,103 @@ export default function RolesPage() {
     }
   };
 
-  const columns: ColumnsType<TRoleRow> = [
+  const columns = [
     {
-      title: 'Sr. No.', key: 'index', width: 80, align: 'center',
+      title: 'Sr. No.', key: 'index', width: 80, align: 'center' as const,
       render: (_: any, __: TRoleRow, index: number) =>
         index + 1 + (filterParams.currentPage - 1) * filterParams.pageSize,
     },
     {
-      title: 'Role Name', dataIndex: 'name', key: 'name', width: '25%',
+      title: 'Role Name', dataIndex: 'name', key: 'name',
       render: (text: string) => (
         <Space>
-          <SafetyOutlined style={{ color: 'var(--theme-primary)' }} />
-          <Typography.Text strong>{text}</Typography.Text>
+          <SafetyOutlined style={{ color: '#d4a853' }} />
+          <Text strong>{text}</Text>
         </Space>
       ),
     },
     {
-      title: 'Description', dataIndex: 'description', key: 'description', width: '35%',
-      ellipsis: { showTitle: false },
-      render: (text: string) => (
-        <Tooltip placement="topLeft" title={text}><Text type="secondary">{text}</Text></Tooltip>
-      ),
+      title: 'Description', dataIndex: 'description', key: 'description',
+      render: (text: string) => <Text>{text || '-'}</Text>,
     },
     {
-      title: 'Created On', dataIndex: 'createdAt', key: 'createdAt', width: '15%',
+      title: 'Created On', dataIndex: 'createdAt', key: 'createdAt',
       render: (text: string) => text ? new Date(text).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '-',
     },
     {
-      title: 'Action', key: 'action', width: 120, align: 'center', fixed: 'right',
+      title: 'Actions', key: 'action', width: 100, align: 'center' as const,
       render: (_: any, record: TRoleRow) => (
         <Space>
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_ROLES) && (
-            <Tooltip title="Edit">
-              <Button type="text" icon={<EditOutlined />} className="action-btn"
-                onClick={() => setIsEditing({ enable: true, data: record })} />
+          <Tooltip title="Edit">
+            <Button type="text" size="small" icon={<EditOutlined />}
+              onClick={() => setIsEditing({ enable: true, data: record })} />
+          </Tooltip>
+          <Popconfirm title="Delete this role?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
+            <Tooltip title="Delete">
+              <Button type="text" size="small" danger icon={<DeleteOutlined />} />
             </Tooltip>
-          )}
-          {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.DELETE_ROLES) && (
-            <Popconfirm title="Delete this role?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-              <Tooltip title="Delete">
-                <Button type="text" danger icon={<DeleteOutlined />} className="action-btn" />
-              </Tooltip>
-            </Popconfirm>
-          )}
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
   return (
-    <div className="role-list-container">
-      <Card className="page-card" variant="borderless">
-        <Row justify="space-between" align="middle" className="page-header">
-          <Col>
-            <Space>
-              <SafetyOutlined className="page-icon" />
-              <Title level={3} style={{ margin: 0 }}>Roles &amp; Permissions</Title>
-            </Space>
-          </Col>
-          <Col>
-            {Utils.isUserHasAccess(context.privilegeList as any, ePrivileges.ADD_EDIT_ROLES) && (
-              <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => setAddDrawerOpen(true)}>
-                Add Role
-              </Button>
-            )}
-          </Col>
-        </Row>
-
-        <Row gutter={[16, 16]} className="filter-section">
-          <Col xs={24} sm={16} md={18}>
-            <Search placeholder="Search by role name or description..." value={filterParams.searchText}
+    <div className="super-page">
+      <Card className="super-page-card" variant="borderless">
+        <div className="super-page-header" style={{ marginBottom: 0, paddingTop: 8, paddingBottom: 8 }}>
+          <div>
+            <Title level={4} className="super-page-title">
+              <SafetyOutlined className="super-page-icon" /> Roles
+            </Title>
+            <Text type="secondary">Manage platform roles and their permissions</Text>
+          </div>
+          <Space>
+            <Button type="primary" icon={<PlusOutlined />}
+              style={{ background: '#d4a853', borderColor: '#d4a853' }}
+              onClick={() => setAddDrawerOpen(true)}>
+              Add Role
+            </Button>
+            <Search
+              placeholder="Search by role name or description..."
+              value={filterParams.searchText}
               onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
-              onSearch={handleSearch} size="large" prefix={<SearchOutlined />} allowClear />
-          </Col>
-          <Col xs={24} sm={8} md={6}>
-            <Button icon={<ReloadOutlined />} onClick={handleReset} size="large" block>Reset Filters</Button>
-          </Col>
-        </Row>
+              onSearch={handleSearch} allowClear style={{ width: 250 }} />
+            <Tooltip title="Reset Filters">
+              <Button icon={<ReloadOutlined />} onClick={handleReset} />
+            </Tooltip>
+          </Space>
+        </div>
 
-        <Table columns={columns} dataSource={data} rowKey="id" loading={loading}
+        <DataTable
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
           pagination={{
-            current: filterParams.currentPage, pageSize: filterParams.pageSize,
-            total: totalRows, showSizeChanger: true,
-            showTotal: (total) => `Total ${total} roles`,
+            current: filterParams.currentPage,
+            pageSize: filterParams.pageSize,
+            total: totalRows,
+            showSizeChanger: true,
+            showTotal: (total: number) => `Total ${total} roles`,
             pageSizeOptions: ['10', '20', '50', '100'],
           }}
-          onChange={handleTableChange} className="config-table" scroll={{ x: 1000 }} />
+          onChange={handleTableChange}
+          scroll={{ x: 900 }}
+        />
       </Card>
 
-      {addDrawerOpen && (
-        <Drawer title="Add New Role" placement="right"
-          open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
-          styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-          <RoleForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
-        </Drawer>
-      )}
+      <Drawer title="Add New Role" placement="right"
+        open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
+        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
+        <RoleForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
+      </Drawer>
 
-      {isEditing.enable && (
-        <Drawer title="Edit Role" placement="right"
-          open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
-          styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-          <RoleForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
-        </Drawer>
-      )}
+      <Drawer title="Edit Role" placement="right"
+        open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
+        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
+        <RoleForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
+      </Drawer>
     </div>
   );
 }

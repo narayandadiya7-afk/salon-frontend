@@ -1,0 +1,7 @@
+/* Audit Logs Page Styles */
+
+.audit-timeline-container {
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 8px 0;
+}

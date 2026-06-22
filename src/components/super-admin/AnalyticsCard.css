@@ -1,0 +1,62 @@
+.analytics-card {
+  border-radius: 14px !important;
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--theme-border) !important;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.analytics-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.analytics-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analytics-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.analytics-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--card-accent, #d4a853);
+  flex-shrink: 0;
+}
+
+.analytics-sparkline {
+  flex-shrink: 0;
+}
+
+.analytics-value-wrap {
+  margin-top: 4px;
+}
+
+.analytics-value {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: var(--theme-text) !important;
+  font-family: "RobotoBold", "Roboto", monospace !important;
+  line-height: 1.2 !important;
+}
+
+.analytics-label {
+  font-size: 13px !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+.analytics-trend {
+  margin-top: 4px;
+}

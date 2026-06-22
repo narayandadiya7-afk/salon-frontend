@@ -1,15 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Form, Input, Button, Typography } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined, ShopOutlined } from '@ant-design/icons';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Form, Input, Button, Typography, Spin } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined, ShopOutlined, GlobalOutlined, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { notification } from '../../../utils/notification';
 import apiUtil from '../../../utils/api';
 import AuthUtil from '../../../utils/auth';
 import EncryptUtils from '../../../utils/encrypt';
-import { ApiAuthRegister } from '../../../utils/api.constant';
+import { ApiAuthRegister, ApiCheckSlugAvailability } from '../../../utils/api.constant';
 import { eResultCode } from '../../../utils/enum';
 import styles from './Register.module.css';
 
@@ -17,10 +17,63 @@ const { Title, Text } = Typography;
 
 function RegisterForm() {
   const [loading, setLoading] = useState(false);
+  const [slugStatus, setSlugStatus] = useState<{ available: boolean | null; suggestions: string[]; checking: boolean }>({
+    available: null,
+    suggestions: [],
+    checking: false,
+  });
+  const [slugTouched, setSlugTouched] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [form] = Form.useForm();
   const router = useRouter();
 
-  const onFinish = async (values: { name: string; email: string; password: string; phone?: string; salonName: string }) => {
+  const checkSlug = useCallback(async (slug: string) => {
+    if (!slug || slug.length < 2) {
+      setSlugStatus({ available: null, suggestions: [], checking: false });
+      return;
+    }
+    setSlugStatus((prev) => ({ ...prev, checking: true }));
+    try {
+      const res = await apiUtil.get(ApiCheckSlugAvailability(slug));
+      const rc = res?.dataResponse?.returnCode;
+      if (rc === eResultCode.SUCCESS || rc === eResultCode.CREATED) {
+        setSlugStatus({
+          available: res.data.available,
+          suggestions: res.data.suggestions || [],
+          checking: false,
+        });
+      }
+    } catch {
+      setSlugStatus({ available: null, suggestions: [], checking: false });
+    }
+  }, []);
+
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+    form.setFieldValue('slug', val);
+    setSlugTouched(true);
+    clearTimeout(debounceRef.current);
+    if (val.length >= 2) {
+      setSlugStatus((prev) => ({ ...prev, checking: true }));
+      debounceRef.current = setTimeout(() => checkSlug(val), 400);
+    } else {
+      setSlugStatus({ available: null, suggestions: [], checking: false });
+    }
+  };
+
+  useEffect(() => {
+    if (!slugStatus.checking) {
+      form.validateFields(['slug']).catch(() => {});
+    }
+  }, [slugStatus, form]);
+
+  useEffect(() => {
+    return () => clearTimeout(debounceRef.current);
+  }, []);
+
+  const onFinish = async (values: { name: string; email: string; password: string; phone?: string; salonName: string; slug: string }) => {
+    if (!slugStatus.available) return;
+
     try {
       setLoading(true);
 
@@ -33,6 +86,7 @@ function RegisterForm() {
         phone: values.phone,
         role: 'SALON_OWNER',
         salonName: values.salonName,
+        preferredSlug: values.slug,
       });
 
       const { dataResponse, data } = response || {};
@@ -72,14 +126,6 @@ function RegisterForm() {
 
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
-            name="salonName"
-            label="Salon Name"
-            rules={[{ required: true, message: 'Please enter your salon name' }]}
-          >
-            <Input prefix={<ShopOutlined />} placeholder="e.g. Glow & Beauty Salon" size="large" />
-          </Form.Item>
-
-          <Form.Item
             name="name"
             label="Your Name"
             rules={[{ required: true, message: 'Please enter your name' }]}
@@ -107,8 +153,66 @@ function RegisterForm() {
             <Input.Password prefix={<LockOutlined />} placeholder="Create a strong password" size="large" />
           </Form.Item>
 
+          <Form.Item
+            name="salonName"
+            label="Salon Name"
+            rules={[{ required: true, message: 'Please enter your salon name' }]}
+          >
+            <Input prefix={<ShopOutlined />} placeholder="e.g. Glow & Beauty Salon" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            name="slug"
+            label="Your Salon URL"
+            rules={[
+              { required: true, message: 'Please enter a URL slug' },
+              { pattern: /^[a-z0-9-]+$/, message: 'Only lowercase letters, numbers, and hyphens' },
+              () => ({
+                validator() {
+                  if (slugTouched && slugStatus.available === false) {
+                    return Promise.reject(new Error('This salon URL is already taken. Please choose another.'));
+                  }
+                  return Promise.resolve();
+                },
+              }),
+            ]}
+            extra="Your salon will be at: salonsaas.com/salon/your-slug"
+          >
+            <Input
+              prefix={<GlobalOutlined />}
+              placeholder="glow-beauty-studio"
+              size="large"
+              onChange={handleSlugChange}
+              suffix={
+                slugStatus.checking ? (
+                  <Spin size="small" />
+                ) : slugStatus.available === true ? (
+                  <CheckCircleFilled style={{ color: '#52c41a' }} />
+                ) : slugStatus.available === false ? (
+                  <CloseCircleFilled style={{ color: '#ff4d4f' }} />
+                ) : undefined
+              }
+            />
+          </Form.Item>
+
+          {slugTouched && slugStatus.available === true && (
+            <div style={{ marginTop: -16, marginBottom: 16, color: '#52c41a', fontSize: 13 }}>
+              <CheckCircleFilled style={{ marginRight: 4 }} />
+              <Text style={{ color: '#52c41a' }}>This URL is available!</Text>
+            </div>
+          )}
+
+
+
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} block size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              block
+              size="large"
+              disabled={slugTouched && slugStatus.available === false}
+            >
               Create My Salon Website
             </Button>
           </Form.Item>

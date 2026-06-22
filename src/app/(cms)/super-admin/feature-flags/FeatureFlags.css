@@ -1,0 +1,29 @@
+/* Feature Flags Page Styles */
+
+.rollout-section {
+  padding: 8px 0;
+}
+
+.rollout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.rollout-slider {
+  margin-bottom: 8px;
+}
+
+.rollout-slider .ant-slider-track {
+  background: #d4a853 !important;
+}
+
+.rollout-slider .ant-slider-handle::after {
+  background: #d4a853 !important;
+  box-shadow: 0 0 0 2px #d4a853 !important;
+}
+
+.rollout-slider .ant-slider-dot-active {
+  border-color: #d4a853 !important;
+}

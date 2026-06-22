@@ -1,0 +1,174 @@
+.super-login-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--theme-background);
+}
+
+.super-login-brand {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a2332 0%, #2d1b3d 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.super-login-brand-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 1;
+  position: relative;
+}
+
+.super-login-logo {
+  margin-bottom: 8px;
+}
+
+.super-login-brand-name {
+  color: #ffffff !important;
+  font-size: 40px !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+}
+
+.super-login-tagline {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 16px !important;
+}
+
+.super-login-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+
+.c1 {
+  width: 400px;
+  height: 400px;
+  background: #d4a853;
+  top: -100px;
+  right: -100px;
+}
+
+.c2 {
+  width: 300px;
+  height: 300px;
+  background: #8b5cf6;
+  bottom: -80px;
+  left: -80px;
+}
+
+.c3 {
+  width: 200px;
+  height: 200px;
+  background: #d4a853;
+  bottom: 30%;
+  right: 20%;
+}
+
+.super-login-form-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.super-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px;
+  background: var(--theme-surface);
+  border-radius: 16px;
+  border: 1px solid var(--theme-border);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+.super-login-card-header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.super-login-title {
+  margin: 0 0 4px !important;
+  font-size: 24px !important;
+  color: var(--theme-text) !important;
+}
+
+.super-login-subtitle {
+  color: var(--theme-text-secondary) !important;
+  font-size: 14px !important;
+}
+
+.super-login-form .ant-form-item {
+  margin-bottom: 20px;
+}
+
+.super-login-form .ant-input-affix-wrapper {
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.super-login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.super-forgot-link {
+  font-size: 13px !important;
+  padding: 0 !important;
+}
+
+.super-login-btn {
+  height: 44px !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  background: #d4a853 !important;
+  border-color: #d4a853 !important;
+  box-shadow: 0 4px 12px rgba(212, 168, 83, 0.3) !important;
+}
+
+.super-login-btn:hover {
+  background: #c9952e !important;
+  border-color: #c9952e !important;
+}
+
+.super-login-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.super-login-footer .ant-typography {
+  font-size: 12px !important;
+}
+
+@media (max-width: 768px) {
+  .super-login-page {
+    flex-direction: column;
+  }
+
+  .super-login-brand {
+    display: none;
+  }
+
+  .super-login-form-wrap {
+    padding: 16px;
+  }
+
+  .super-login-card {
+    padding: 28px 24px;
+  }
+}

@@ -100,16 +100,16 @@ export default function RoleForm(props: DrawerProps) {
   };
 
   return (
-    <div className="drawer-form-container">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <Form
         form={form}
         name="roleForm"
         onFinish={onFinish}
         initialValues={{ id: 0, name: '', description: '' }}
         layout="vertical"
-        className="drawer-form"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}
       >
-        <div className="drawer-form-content">
+        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', paddingRight: 4, marginBottom: 16 }}>
           <Form.Item name="id" hidden>
             <Input />
           </Form.Item>
@@ -118,7 +118,7 @@ export default function RoleForm(props: DrawerProps) {
             <Col xs={24}>
               <Form.Item
                 name="name"
-                label="Role Name"
+                label={<span style={{ color: 'var(--theme-text)' }}>Role Name</span>}
                 rules={[{ required: true, message: 'Please enter role name' }]}
               >
                 <Input placeholder="Enter role name" />
@@ -128,7 +128,7 @@ export default function RoleForm(props: DrawerProps) {
 
           <Row gutter={[16, 0]}>
             <Col span={24}>
-              <Form.Item name="description" label="Description">
+              <Form.Item name="description" label={<span style={{ color: 'var(--theme-text)' }}>Description</span>}>
                 <Input.TextArea rows={3} placeholder="Enter description (optional)" />
               </Form.Item>
             </Col>
@@ -141,11 +141,12 @@ export default function RoleForm(props: DrawerProps) {
           />
         </div>
 
-        <div className="drawer-form-footer">
+        <div style={{ borderTop: '1px solid var(--theme-border)', paddingTop: 16, display: 'flex', justifyContent: 'flex-end', gap: 8, flexShrink: 0 }}>
           <Button icon={<CloseOutlined />} onClick={props.onCloseDrawer} disabled={isLoading}>
             Cancel
           </Button>
-          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}>
+          <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={isLoading}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}>
             {isEdit ? 'Update' : 'Save'}
           </Button>
         </div>
