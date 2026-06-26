@@ -1,0 +1,17 @@
+/* Security Page Styles */
+
+.security-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.security-form .ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--theme-text);
+}
+
+.security-overview-item {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--theme-border);
+  background: var(--theme-background);
+}

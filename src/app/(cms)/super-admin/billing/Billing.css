@@ -1,0 +1,42 @@
+/* Billing Page Styles */
+
+.billing-stat-card {
+  border-radius: 12px !important;
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--theme-border) !important;
+  padding: 4px;
+}
+
+.billing-stat-card .ant-statistic {
+  margin-bottom: 4px;
+}
+
+.billing-stat-card .ant-statistic-title {
+  font-size: 12px !important;
+  color: var(--theme-text-secondary) !important;
+  margin-bottom: 4px !important;
+}
+
+.billing-tabs .ant-tabs-nav {
+  margin-bottom: 16px;
+}
+
+.billing-tabs .ant-tabs-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.billing-tabs .ant-tabs-tab-active {
+  color: #d4a853 !important;
+}
+
+.billing-tabs .ant-tabs-ink-bar {
+  background: #d4a853 !important;
+}
+
+@media (max-width: 768px) {
+  .billing-stat-card .ant-statistic-title {
+    font-size: 11px !important;
+  }
+}

@@ -12,6 +12,11 @@ const PROTECTED_PATTERNS = [
   /^\/salon\/[^/]+\/availability(\/|$)/,
   /^\/salon\/[^/]+\/subscription(\/|$)/,
   /^\/salon\/[^/]+\/settings(\/|$)/,
+  /^\/salon\/[^/]+\/customers(\/|$)/,
+  /^\/salon\/[^/]+\/team(\/|$)/,
+  /^\/salon\/[^/]+\/website(\/|$)/,
+  /^\/salon\/[^/]+\/analytics(\/|$)/,
+  /^\/salon\/[^/]+\/marketing(\/|$)/,
 ];
 
 // Auth routes — redirect to dashboard if already logged in
