@@ -42,6 +42,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [salonName, setSalonName] = useState('');
   const router = useRouter();
   const pathname = usePathname();
 
@@ -56,6 +57,16 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
     setMounted(true);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const slug = salonSlug || pathname.split('/')[2] || '';
+    if (!slug) return;
+    const base = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3005/api/';
+    fetch(`${base}salons/slug/${slug}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(payload => { if (payload?.data?.name) setSalonName(payload.data.name); })
+      .catch(() => {});
+  }, [salonSlug, pathname]);
 
   if (!mounted) return null;
 
@@ -76,7 +87,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
   }, {});
 
   const menuItems: MenuProps['items'] = Object.entries(sections).flatMap(([section, items], idx) => [
-    ...(idx > 0 ? [{ type: 'divider' as const, style: { margin: '4px 16px', borderColor: 'rgba(139,92,246,0.08)' } }] : []),
+    ...(idx > 0 ? [{ type: 'divider' as const, style: { margin: '4px 16px', borderColor: 'rgba(124,29,62,0.08)' } }] : []),
     {
       key: `section-${section}`,
       label: <span className="sidebar-section-label">{section}</span>,
@@ -138,10 +149,10 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
         className="owner-sider"
       >
         <div className="sidebar-logo">
-          <div className="sidebar-logo-icon">✂</div>
+          <div className="sidebar-logo-icon"><ScissorOutlined /></div>
           {!collapsed && (
             <div className="sidebar-logo-text">
-              <div className="sidebar-logo-name">SalonSaaS</div>
+              <div className="sidebar-logo-name">{salonName || 'Salon'}</div>
               <div className="sidebar-logo-sub">Owner Portal</div>
             </div>
           )}

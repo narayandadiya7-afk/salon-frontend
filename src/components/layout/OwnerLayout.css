@@ -6,12 +6,12 @@
   --sidebar-width: 260px;
   --sidebar-collapsed: 72px;
   --header-height: 64px;
-  --salon-primary: #8B5CF6;
-  --salon-primary-light: #A78BFA;
-  --salon-primary-dark: #7C3AED;
-  --salon-gradient: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-  --salon-gradient-soft: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(236, 72, 153, 0.08) 100%);
-  --salon-glow: 0 0 20px rgba(139, 92, 246, 0.15);
+  --salon-primary: #7C1D3E;
+  --salon-primary-light: #A43D5E;
+  --salon-primary-dark: #5C0F2A;
+  --salon-gradient: linear-gradient(135deg, #5C0F2A 0%, #7C1D3E 100%);
+  --salon-gradient-soft: linear-gradient(135deg, rgba(124, 29, 62, 0.08) 0%, rgba(201, 149, 63, 0.06) 100%);
+  --salon-glow: 0 0 20px rgba(124, 29, 62, 0.15);
 }
 
 .owner-layout {
@@ -27,9 +27,9 @@
   bottom: 0;
   z-index: 1000;
   overflow: hidden;
-  background: linear-gradient(180deg, #0F0A1E 0%, #1A103C 50%, #0F0A1E 100%) !important;
+  background: linear-gradient(180deg, #1A0A12 0%, #2C1020 50%, #1A0A12 100%) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  border-right: 1px solid rgba(139, 92, 246, 0.1);
+  border-right: 1px solid rgba(124, 29, 62, 0.1);
 }
 
 .owner-sider::before {
@@ -39,7 +39,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 149, 63, 0.3), transparent);
 }
 
 .owner-sider .ant-layout-sider-children {
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+  border-bottom: 1px solid rgba(124, 29, 62, 0.1);
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -67,7 +67,7 @@
   left: 20px;
   right: 20px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 149, 63, 0.2), transparent);
 }
 
 .sidebar-logo-icon {
@@ -79,6 +79,7 @@
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  color: #fff;
   flex-shrink: 0;
   box-shadow: var(--salon-glow);
 }
@@ -98,7 +99,7 @@
 }
 
 .sidebar-logo-sub {
-  color: rgba(167, 139, 250, 0.6);
+  color: rgba(201, 149, 63, 0.6);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -121,7 +122,7 @@
   height: 44px;
   line-height: 44px;
   border-radius: 10px !important;
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
   font-size: 14px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -129,13 +130,13 @@
 
 .sidebar-menu .ant-menu-item .anticon {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.55);
   transition: all 0.2s ease;
 }
 
 .sidebar-menu .ant-menu-item:hover {
   color: #fff !important;
-  background: rgba(139, 92, 246, 0.1) !important;
+  background: rgba(124, 29, 62, 0.1) !important;
 }
 
 .sidebar-menu .ant-menu-item:hover .anticon {
@@ -144,7 +145,7 @@
 
 .sidebar-menu .ant-menu-item-selected {
   color: #fff !important;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.1) 100%) !important;
+  background: linear-gradient(135deg, rgba(124, 29, 62, 0.2) 0%, rgba(201, 149, 63, 0.1) 100%) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
@@ -170,7 +171,7 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: rgba(167, 139, 250, 0.4);
+  color: rgba(201, 149, 63, 0.7);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -178,7 +179,7 @@
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 16px;
-  border-top: 1px solid rgba(139, 92, 246, 0.1);
+  border-top: 1px solid rgba(124, 29, 62, 0.1);
   flex-shrink: 0;
 }
 
@@ -225,7 +226,7 @@
 }
 
 .sidebar-user-role {
-  color: rgba(167, 139, 250, 0.5);
+  color: rgba(201, 149, 63, 0.5);
   font-size: 11px;
   white-space: nowrap;
   overflow: hidden;
@@ -278,7 +279,7 @@
 .collapse-btn:hover {
   border-color: var(--salon-primary) !important;
   color: var(--salon-primary) !important;
-  background: rgba(139, 92, 246, 0.05) !important;
+  background: rgba(124, 29, 62, 0.08) !important;
 }
 
 /* Header Actions */
@@ -421,7 +422,7 @@
 
 .premium-card:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-  border-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(201, 149, 63, 0.2);
 }
 
 .premium-card .ant-card-head {
@@ -468,13 +469,13 @@
 .stat-widget:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
-  border-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(201, 149, 63, 0.2);
 }
 
-.stat-widget-revenue::before { background: linear-gradient(90deg, #8B5CF6, #EC4899); }
-.stat-widget-bookings::before { background: linear-gradient(90deg, #3B82F6, #06B6D4); }
-.stat-widget-customers::before { background: linear-gradient(90deg, #10B981, #34D399); }
-.stat-widget-staff::before { background: linear-gradient(90deg, #F59E0B, #F97316); }
+.stat-widget-revenue::before { background: linear-gradient(90deg, #5C0F2A, #C9953F); }
+.stat-widget-bookings::before { background: linear-gradient(90deg, #7C1D3E, #C9953F); }
+.stat-widget-customers::before { background: linear-gradient(90deg, #2D5E3A, #4A2D5E); }
+.stat-widget-staff::before { background: linear-gradient(90deg, #C9953F, #7C1D3E); }
 
 .stat-widget-header {
   display: flex;
@@ -493,10 +494,10 @@
   font-size: 18px;
 }
 
-.stat-widget-icon-revenue { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; }
-.stat-widget-icon-bookings { background: rgba(59, 130, 246, 0.1); color: #3B82F6; }
-.stat-widget-icon-customers { background: rgba(16, 185, 129, 0.1); color: #10B981; }
-.stat-widget-icon-staff { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+.stat-widget-icon-revenue { background: rgba(124, 29, 62, 0.1); color: #7C1D3E; }
+.stat-widget-icon-bookings { background: rgba(124, 29, 62, 0.1); color: #7C1D3E; }
+.stat-widget-icon-customers { background: rgba(45, 94, 58, 0.1); color: #2D5E3A; }
+.stat-widget-icon-staff { background: rgba(201, 149, 63, 0.1); color: #C9953F; }
 
 .stat-widget-label {
   font-size: 12px;
@@ -526,8 +527,8 @@
   margin-top: 6px;
 }
 
-.stat-widget-trend-up { background: rgba(16, 185, 129, 0.1); color: #10B981; }
-.stat-widget-trend-down { background: rgba(239, 68, 68, 0.1); color: #EF4444; }
+.stat-widget-trend-up { background: rgba(45, 94, 58, 0.1); color: #2D5E3A; }
+.stat-widget-trend-down { background: rgba(124, 29, 62, 0.1); color: #7C1D3E; }
 
 /* ===== MOBILE BACKDROP ===== */
 .mobile-backdrop {
@@ -541,7 +542,38 @@
   animation: fadeIn 0.2s ease;
 }
 
-/* ===== ANIMATIONS ===== */
+/* ===== THEME TABS ===== */
+.salon-tabs.ant-tabs .ant-tabs-tab {
+  color: var(--theme-text-secondary);
+  font-size: 13px;
+  padding: 6px 14px;
+  transition: all 0.2s ease;
+  border-radius: 8px 8px 0 0;
+}
+
+.salon-tabs.ant-tabs .ant-tabs-tab:hover {
+  color: var(--salon-primary);
+}
+
+.salon-tabs.ant-tabs .ant-tabs-tab-active {
+  color: #7C1D3E !important;
+  font-weight: 600;
+}
+
+.salon-tabs.ant-tabs .ant-tabs-ink-bar {
+  background: #7C1D3E !important;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+
+.salon-tabs.ant-tabs .ant-tabs-nav {
+  margin-bottom: 0;
+}
+
+.salon-tabs.ant-tabs .ant-tabs-nav::before {
+  border-bottom: 1px solid var(--theme-border-light);
+}
+
 @keyframes salonFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }

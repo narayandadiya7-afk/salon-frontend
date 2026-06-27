@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import {
-  Row, Col, Card, Tag, Button, Space, Table, Typography, Divider, Tooltip, Select, DatePicker, Progress, Rate, Tabs,
+  Row, Col, Card, Tag, Button, Space, Table, Typography, Divider, Tooltip, Select, DatePicker, Progress, Rate,
 } from 'antd';
-import type { TabsProps } from 'antd';
 import {
   BarChartOutlined, RiseOutlined, ArrowUpOutlined, ArrowDownOutlined,
   TeamOutlined, WalletOutlined, CalendarOutlined, ScissorOutlined,
@@ -13,6 +12,7 @@ import {
   PieChartOutlined, LineChartOutlined, RightOutlined,
 } from '@ant-design/icons';
 import OwnerLayout from '../../../../components/layout/OwnerLayout';
+import PillFilter from '@/components/pill-filter';
 
 const { Text } = Typography;
 
@@ -23,20 +23,20 @@ const maxRevenue = Math.max(...revenueData);
 const kpis = [
   {
     icon: <WalletOutlined />, label: 'Total Revenue', value: '₹3,84,200',
-    trend: '+12.5%', up: true, vs: 'vs last month', color: '#8B5CF6',
+    trend: '+12.5%', up: true, vs: 'vs last month', color: '#7C1D3E',
   },
   {
     icon: <CalendarOutlined />, label: 'Total Bookings', value: '1,428',
-    trend: '+8.3%', up: true, vs: 'vs last month', color: '#3B82F6',
+    trend: '+8.3%', up: true, vs: 'vs last month', color: '#7C1D3E',
   },
   {
     icon: <TeamOutlined />, label: 'Customer Retention', value: '68.5%',
-    trend: '+5.2%', up: true, vs: 'vs last month', color: '#10B981',
+    trend: '+5.2%', up: true, vs: 'vs last month', color: '#7C1D3E',
   },
   {
     icon: <StarOutlined />, label: 'Avg. Rating', value: '4.8',
-    suffix: <StarOutlined style={{ color: '#F59E0B', fontSize: 14 }} />,
-    trend: 'from 156 reviews', up: null, vs: '', color: '#F59E0B',
+    suffix: <StarOutlined style={{ color: '#C9953F', fontSize: 14 }} />,
+    trend: 'from 156 reviews', up: null, vs: '', color: '#C9953F',
   },
 ];
 
@@ -51,10 +51,10 @@ const serviceData = [
 const maxServiceBookings = Math.max(...serviceData.map(s => s.bookings));
 
 const staffData = [
-  { name: 'Ananya', role: 'Senior Stylist', bookings: 186, revenue: 279000, rating: 4.9, utilization: 92, color: '#8B5CF6' },
-  { name: 'Rahul', role: 'Barber', bookings: 152, revenue: 182400, rating: 4.7, utilization: 78, color: '#3B82F6' },
-  { name: 'Priya', role: 'Esthetician', bookings: 138, revenue: 220800, rating: 4.8, utilization: 85, color: '#EC4899' },
-  { name: 'Vikram', role: 'Colorist', bookings: 112, revenue: 201600, rating: 4.6, utilization: 71, color: '#F59E0B' },
+  { name: 'Ananya', role: 'Senior Stylist', bookings: 186, revenue: 279000, rating: 4.9, utilization: 92, color: '#7C1D3E' },
+  { name: 'Rahul', role: 'Barber', bookings: 152, revenue: 182400, rating: 4.7, utilization: 78, color: '#C9953F' },
+  { name: 'Priya', role: 'Esthetician', bookings: 138, revenue: 220800, rating: 4.8, utilization: 85, color: '#4A2D5E' },
+  { name: 'Vikram', role: 'Colorist', bookings: 112, revenue: 201600, rating: 4.6, utilization: 71, color: '#1A5C5C' },
 ];
 
 const retentionData = [
@@ -91,23 +91,23 @@ function RevenueBarChart() {
                 height: `${Math.max(h, 6)}%`,
                 borderRadius: '8px 8px 4px 4px',
                 background: isCurrent
-                  ? 'linear-gradient(180deg, #8B5CF6 0%, #A855F7 50%, #C084FC 100%)'
-                  : 'linear-gradient(180deg, rgba(139,92,246,0.35) 0%, rgba(139,92,246,0.12) 100%)',
+                  ? 'linear-gradient(180deg, #7C1D3E 0%, #4A2D5E 50%, #C9953F 100%)'
+                  : 'linear-gradient(180deg, rgba(124,29,62,0.35) 0%, rgba(124,29,62,0.12) 100%)',
                 transition: 'height 0.3s ease',
                 position: 'relative',
-                border: isCurrent ? '1px solid rgba(139,92,246,0.3)' : 'none',
+                border: isCurrent ? '1px solid rgba(124,29,62,0.3)' : 'none',
               }}>
                 {isCurrent && (
                   <div style={{
                     position: 'absolute', top: -22, left: '50%', transform: 'translateX(-50%)',
-                    background: '#8B5CF6', color: '#fff', fontSize: 9, padding: '2px 8px',
+                    background: '#7C1D3E', color: '#fff', fontSize: 9, padding: '2px 8px',
                     borderRadius: 6, whiteSpace: 'nowrap', fontWeight: 600,
                   }}>
                     ₹{revenueData[i].toLocaleString()}
                   </div>
                 )}
               </div>
-              <Text style={{ fontSize: 10, color: isCurrent ? '#8B5CF6' : 'var(--theme-text-tertiary)', fontWeight: isCurrent ? 600 : 400 }}>{m}</Text>
+              <Text style={{ fontSize: 10, color: isCurrent ? '#7C1D3E' : 'var(--theme-text-tertiary)', fontWeight: isCurrent ? 600 : 400 }}>{m}</Text>
             </div>
           </Tooltip>
         );
@@ -122,16 +122,16 @@ function PeakHoursChart() {
       {peakHoursData.map((p, i) => (
         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <Text style={{ width: 40, fontSize: 11, color: 'var(--theme-text-secondary)', textAlign: 'right', flexShrink: 0 }}>{p.hour}</Text>
-          <div style={{ flex: 1, height: 20, background: 'rgba(139,92,246,0.06)', borderRadius: 10, overflow: 'hidden', position: 'relative' }}>
+          <div style={{ flex: 1, height: 20, background: 'rgba(124,29,62,0.06)', borderRadius: 10, overflow: 'hidden', position: 'relative' }}>
             <div style={{
               width: `${(p.bookings / maxPeak) * 100}%`,
               height: '100%',
               borderRadius: 10,
               background: p.bookings >= 30
-                ? 'linear-gradient(90deg, #8B5CF6, #EC4899)'
+                ? 'linear-gradient(90deg, #7C1D3E, #C9953F)'
                 : p.bookings >= 20
-                  ? 'linear-gradient(90deg, #8B5CF6, #A855F7)'
-                  : 'linear-gradient(90deg, rgba(139,92,246,0.4), rgba(139,92,246,0.2))',
+                  ? 'linear-gradient(90deg, #7C1D3E, #4A2D5E)'
+                  : 'linear-gradient(90deg, rgba(124,29,62,0.4), rgba(124,29,62,0.2))',
               transition: 'width 0.3s ease',
             }} />
           </div>
@@ -167,7 +167,7 @@ const serviceColumns = [
     title: 'Service', dataIndex: 'service', key: 'service',
     render: (name: string) => (
       <Space>
-        <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(139,92,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8B5CF6', fontSize: 14 }}>
+        <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(124,29,62,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7C1D3E', fontSize: 14 }}>
           <ScissorOutlined />
         </div>
         <Text strong style={{ fontSize: 13 }}>{name}</Text>
@@ -180,14 +180,14 @@ const serviceColumns = [
   },
   {
     title: 'Revenue', dataIndex: 'revenue', key: 'revenue',
-    render: (val: number) => <Text style={{ fontSize: 13, fontWeight: 600, color: '#059669' }}>₹{val.toLocaleString()}</Text>,
+    render: (val: number) => <Text style={{ fontSize: 13, fontWeight: 600, color: '#1A5C5C' }}>₹{val.toLocaleString()}</Text>,
   },
   {
     title: 'Growth', dataIndex: 'growth', key: 'growth',
     render: (val: number) => (
       <Space size={4}>
-        {val >= 0 ? <ArrowUpOutlined style={{ fontSize: 10, color: '#10B981' }} /> : <ArrowDownOutlined style={{ fontSize: 10, color: '#EF4444' }} />}
-        <Text style={{ fontSize: 12, fontWeight: 600, color: val >= 0 ? '#10B981' : '#EF4444' }}>{val >= 0 ? '+' : ''}{val}%</Text>
+        {val >= 0 ? <ArrowUpOutlined style={{ fontSize: 10, color: '#2D5E3A' }} /> : <ArrowDownOutlined style={{ fontSize: 10, color: '#7C1D3E' }} />}
+        <Text style={{ fontSize: 12, fontWeight: 600, color: val >= 0 ? '#2D5E3A' : '#7C1D3E' }}>{val >= 0 ? '+' : ''}{val}%</Text>
       </Space>
     ),
   },
@@ -195,11 +195,11 @@ const serviceColumns = [
     title: 'Popularity', key: 'popularity',
     render: (_: any, record: typeof serviceData[0]) => (
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ flex: 1, height: 6, background: 'rgba(139,92,246,0.1)', borderRadius: 3, overflow: 'hidden' }}>
+        <div style={{ flex: 1, height: 6, background: 'rgba(124,29,62,0.1)', borderRadius: 3, overflow: 'hidden' }}>
           <div style={{
             width: `${(record.bookings / maxServiceBookings) * 100}%`,
             height: '100%', borderRadius: 3,
-            background: 'linear-gradient(90deg, #8B5CF6, #C084FC)',
+            background: 'linear-gradient(90deg, #7C1D3E, #C9953F)',
           }} />
         </div>
         <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{Math.round((record.bookings / maxServiceBookings) * 100)}%</Text>
@@ -211,18 +211,18 @@ const serviceColumns = [
 const retentionColumns = [
   { title: 'Month', dataIndex: 'month', key: 'month', render: (m: string) => <Text strong style={{ fontSize: 12 }}>{m}</Text> },
   { title: 'New Customers', dataIndex: 'new', key: 'new', render: (v: number) => <Text style={{ fontSize: 12, fontWeight: 600 }}>{v}</Text> },
-  { title: 'Returning', dataIndex: 'returning', key: 'returning', render: (v: number) => <Text style={{ fontSize: 12, fontWeight: 600, color: '#10B981' }}>{v}</Text> },
+  { title: 'Returning', dataIndex: 'returning', key: 'returning', render: (v: number) => <Text style={{ fontSize: 12, fontWeight: 600, color: '#2D5E3A' }}>{v}</Text> },
   {
     title: 'Retention Rate', dataIndex: 'rate', key: 'rate',
     render: (v: number) => (
       <Space size={6}>
-        <div style={{ width: 60, height: 6, background: 'rgba(139,92,246,0.1)', borderRadius: 3, overflow: 'hidden' }}>
+        <div style={{ width: 60, height: 6, background: 'rgba(124,29,62,0.1)', borderRadius: 3, overflow: 'hidden' }}>
           <div style={{
             width: `${v}%`, height: '100%', borderRadius: 3,
-            background: v >= 68 ? 'linear-gradient(90deg, #10B981, #34D399)' : 'linear-gradient(90deg, #8B5CF6, #A855F7)',
+            background: v >= 68 ? 'linear-gradient(90deg, #2D5E3A, #4A2D5E)' : 'linear-gradient(90deg, #7C1D3E, #4A2D5E)',
           }} />
         </div>
-        <Text style={{ fontSize: 12, fontWeight: 600, color: v >= 68 ? '#10B981' : '#8B5CF6' }}>{v}%</Text>
+        <Text style={{ fontSize: 12, fontWeight: 600, color: v >= 68 ? '#2D5E3A' : '#7C1D3E' }}>{v}%</Text>
       </Space>
     ),
   },
@@ -231,10 +231,11 @@ const retentionColumns = [
 function AnalyticsContent() {
   const params = useParams();
   const slug = params?.slug as string;
+  const [activeChart, setActiveChart] = useState('revenue');
 
-  const chartTabs: TabsProps['items'] = [
-    { key: 'revenue', label: 'Revenue', children: <RevenueBarChart /> },
-    { key: 'bookings', label: 'Bookings', children: <RevenueBarChart /> },
+  const chartOptions = [
+    { key: 'revenue', label: 'Revenue' },
+    { key: 'bookings', label: 'Bookings' },
   ];
 
   return (
@@ -294,12 +295,16 @@ function AnalyticsContent() {
             className="premium-card"
             title={
               <Space>
-                <LineChartOutlined style={{ color: '#8B5CF6' }} />
+                <LineChartOutlined style={{ color: '#7C1D3E' }} />
                 <Text strong style={{ fontSize: 15 }}>Revenue Overview</Text>
               </Space>
             }
             extra={
-              <Tabs defaultActiveKey="revenue" items={chartTabs} size="small" style={{ marginBottom: 0 }} />
+              <PillFilter
+                options={chartOptions}
+                value={activeChart}
+                onChange={setActiveChart}
+              />
             }
           >
             <RevenueBarChart />
@@ -315,7 +320,7 @@ function AnalyticsContent() {
               </Col>
               <Col span={8}>
                 <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Projected Annual</Text>
-                <div><Text strong style={{ fontSize: 20, color: '#8B5CF6' }}>₹{(revenueData.reduce((a, b) => a + b, 0) * 2).toLocaleString()}</Text></div>
+                <div><Text strong style={{ fontSize: 20, color: '#7C1D3E' }}>₹{(revenueData.reduce((a, b) => a + b, 0) * 2).toLocaleString()}</Text></div>
               </Col>
             </Row>
           </Card>
@@ -328,7 +333,7 @@ function AnalyticsContent() {
             className="premium-card"
             title={
               <Space>
-                <PieChartOutlined style={{ color: '#EC4899' }} />
+                <PieChartOutlined style={{ color: '#C9953F' }} />
                 <Text strong style={{ fontSize: 15 }}>Service Analytics</Text>
               </Space>
             }
@@ -348,11 +353,11 @@ function AnalyticsContent() {
             className="premium-card"
             title={
               <Space>
-                <UserOutlined style={{ color: '#F59E0B' }} />
+                <UserOutlined style={{ color: '#C9953F' }} />
                 <Text strong style={{ fontSize: 15 }}>Staff Analytics</Text>
               </Space>
             }
-            extra={<Button type="link" style={{ fontSize: 12 }}>View All <RightOutlined /></Button>}
+            extra={<Button type="link" style={{ fontSize: 12, color: '#7C1D3E' }}>View All <RightOutlined /></Button>}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {staffData.map((staff, i) => (
@@ -370,7 +375,7 @@ function AnalyticsContent() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Text strong style={{ fontSize: 13 }}>{staff.name}</Text>
                         <Space size={3}>
-                          <StarOutlined style={{ fontSize: 11, color: '#F59E0B' }} />
+                          <StarOutlined style={{ fontSize: 11, color: '#C9953F' }} />
                           <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.rating}</Text>
                         </Space>
                       </div>
@@ -384,7 +389,7 @@ function AnalyticsContent() {
                     </div>
                     <div>
                       <Text style={{ fontSize: 10, color: 'var(--theme-text-tertiary)' }}>Revenue</Text>
-                      <div><Text style={{ fontSize: 13, fontWeight: 600, color: '#059669' }}>₹{staff.revenue.toLocaleString()}</Text></div>
+                      <div><Text style={{ fontSize: 13, fontWeight: 600, color: '#1A5C5C' }}>₹{staff.revenue.toLocaleString()}</Text></div>
                     </div>
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
@@ -414,7 +419,7 @@ function AnalyticsContent() {
             className="premium-card"
             title={
               <Space>
-                <TeamOutlined style={{ color: '#10B981' }} />
+                <TeamOutlined style={{ color: '#2D5E3A' }} />
                 <Text strong style={{ fontSize: 15 }}>Customer Retention</Text>
               </Space>
             }
@@ -430,7 +435,7 @@ function AnalyticsContent() {
               <Row gutter={24} align="middle">
                 <Col span={6}>
                   <div style={{ textAlign: 'center' }}>
-                    <DonutChart percentage={68.5} color="#10B981" />
+                    <DonutChart percentage={68.5} color="#2D5E3A" />
                     <div style={{ marginTop: 8 }}>
                       <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Overall Retention</Text>
                     </div>
@@ -439,10 +444,10 @@ function AnalyticsContent() {
                 <Col span={18}>
                   <div style={{ display: 'flex', gap: 24 }}>
                     {[
-                      { label: 'Total Customers', value: '1,284', color: '#8B5CF6' },
-                      { label: 'Returning Rate', value: '68.5%', color: '#10B981' },
-                      { label: 'Avg. Visits/Month', value: '2.4', color: '#3B82F6' },
-                      { label: 'Churn Rate', value: '6.2%', color: '#EF4444' },
+                      { label: 'Total Customers', value: '1,284', color: '#7C1D3E' },
+                      { label: 'Returning Rate', value: '68.5%', color: '#7C1D3E' },
+                      { label: 'Avg. Visits/Month', value: '2.4', color: '#7C1D3E' },
+                      { label: 'Churn Rate', value: '6.2%', color: '#4A2D5E' },
                     ].map((s, i) => (
                       <div key={i}>
                         <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{s.label}</Text>
@@ -468,12 +473,12 @@ function AnalyticsContent() {
             className="premium-card"
             title={
               <Space>
-                <BarChartOutlined style={{ color: '#EC4899' }} />
+                <BarChartOutlined style={{ color: '#C9953F' }} />
                 <Text strong style={{ fontSize: 15 }}>Peak Hours</Text>
               </Space>
             }
             extra={
-              <Tag style={{ borderRadius: 6, fontSize: 10, border: 'none', background: 'rgba(139,92,246,0.08)', color: '#8B5CF6' }}>
+              <Tag style={{ borderRadius: 6, fontSize: 10, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>
                 Weekdays
               </Tag>
             }
@@ -483,7 +488,7 @@ function AnalyticsContent() {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <div>
                 <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Peak Hour</Text>
-                <div><Text strong style={{ fontSize: 16, color: '#EC4899' }}>11 AM</Text></div>
+                <div><Text strong style={{ fontSize: 16, color: '#C9953F' }}>11 AM</Text></div>
                 <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>32 bookings</Text>
               </div>
               <div>

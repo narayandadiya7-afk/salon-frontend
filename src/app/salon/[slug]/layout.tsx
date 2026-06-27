@@ -1,33 +1,34 @@
+'use client';
+
 import React from 'react';
+import { useParams, usePathname } from 'next/navigation';
 import OwnerNavbar from '../../../components/owner/OwnerNavbar';
 import OwnerFooter from '../../../components/owner/OwnerFooter';
 
-type Props = {
-  children: React.ReactNode;
-  params: { slug: string };
-};
+const OWNER_ROUTES = new Set([
+  'dashboard', 'appointments', 'customers', 'team', 'services',
+  'website', 'analytics', 'marketing', 'subscription', 'settings',
+]);
 
-async function fetchSalon(slug: string) {
-  try {
-    const base = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3005/api/';
-    const res = await fetch(`${base}salons/slug/${encodeURIComponent(slug)}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-    const payload = await res.json();
-    return payload?.data || null;
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
+function isOwnerPage(pathname: string): boolean {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length < 3) return false;
+  const page = segments[2]; // e.g., /salon/foo/dashboard -> "dashboard"
+  return OWNER_ROUTES.has(page);
 }
 
-export default async function SalonLayout({ children, params }: Props) {
-  const salon = await fetchSalon(params.slug);
+export default function SalonLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const params = useParams();
+  const slug = params?.slug as string;
+
+  if (isOwnerPage(pathname)) return <>{children}</>;
 
   return (
     <>
-      <OwnerNavbar salon={salon} />
+      <OwnerNavbar salon={null} />
       <main>{children}</main>
-      <OwnerFooter salon={salon} />
+      <OwnerFooter salon={null} />
     </>
   );
 }

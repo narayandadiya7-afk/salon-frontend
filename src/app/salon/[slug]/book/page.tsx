@@ -71,7 +71,6 @@ export default function BookPage() {
   const handleBook = async (values: any) => {
     // TODO: Implement booking logic
     console.log('Booking:', values);
-    Alert.success('Booking request submitted!');
   };
 
   if (loading) {

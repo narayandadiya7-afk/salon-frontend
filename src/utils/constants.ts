@@ -23,6 +23,17 @@ export const RESPONSE_STATUS = {
 export const REMOVE_MESSAGE = 'Are you sure to remove?';
 export const NumberRestrictKeys = ['e', 'E', '+', '-', '.'];
 
+export const THEME_AVATAR_COLORS = [
+  '#7C1D3E',
+  '#C9953F',
+  '#4A2D5E',
+  '#1A5C5C',
+  '#8B6F47',
+  '#5C3A4A',
+  '#2D5E3A',
+  '#5C3A1E',
+];
+
 export const defaultFilterParams: TFilterModel = {
   pageSize: 10,
   currentPage: 1,
