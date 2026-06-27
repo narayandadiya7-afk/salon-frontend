@@ -5,7 +5,7 @@ import { Card, Typography, Space, Button, Tabs, Form, Input, Select, Switch, Inp
 import {
   SettingOutlined, SkinOutlined, MailOutlined, CreditCardOutlined,
   SafetyOutlined, BellOutlined, UploadOutlined, GlobalOutlined,
-  ClockCircleOutlined, WalletOutlined, LanguageOutlined,
+
 } from '@ant-design/icons';
 import './Settings.css';
 

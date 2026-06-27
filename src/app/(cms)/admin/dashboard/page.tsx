@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Row, Col, Typography, Space, Card, Button } from 'antd';
+import { Row, Col, Typography, Space, Card, Button, Tag } from 'antd';
 import {
   BuildOutlined, DollarOutlined, UserAddOutlined, FallOutlined,
   RiseOutlined, BankOutlined, PlusOutlined, FileTextOutlined,
   SettingOutlined, CustomerServiceOutlined, DownloadOutlined,
-  CreditCardOutlined,
+  UserOutlined, ShoppingCartOutlined, CreditCardOutlined, CheckCircleOutlined,
+  BookOutlined, ArrowUpOutlined, ArrowDownOutlined,
 } from '@ant-design/icons';
 import AnalyticsCard from '../../../../components/super-admin/AnalyticsCard';
 import AreaChart from '../../../../components/super-admin/AreaChart';
@@ -42,6 +43,16 @@ const subscriptionData = [
   { label: 'Enterprise', value: 7, color: '#8b5cf6' },
 ];
 
+const dailyActiveUsers = [
+  { label: 'Mon', value: 423, color: '#3b82f6' },
+  { label: 'Tue', value: 478, color: '#3b82f6' },
+  { label: 'Wed', value: 512, color: '#3b82f6' },
+  { label: 'Thu', value: 489, color: '#3b82f6' },
+  { label: 'Fri', value: 534, color: '#3b82f6' },
+  { label: 'Sat', value: 612, color: '#d4a853' },
+  { label: 'Sun', value: 445, color: '#d4a853' },
+];
+
 const activities = [
   { time: '2 min ago', title: 'New tenant registered', description: 'Bloom Beauty Spa joined the platform', type: 'success' as const },
   { time: '15 min ago', title: 'Payment received', description: '$299 from Glamour Studio (Growth plan)', type: 'success' as const },
@@ -51,47 +62,59 @@ const activities = [
   { time: '6 hours ago', title: 'Trial started', description: 'Serenity Day Spa started 14-day trial', type: 'info' as const },
 ];
 
+const newTenants = [
+  { key: '1', name: 'Bloom Beauty Spa', plan: 'Growth', status: 'trial' as const, date: 'Today' },
+  { key: '2', name: 'Serenity Day Spa', plan: 'Trial', status: 'trial' as const, date: 'Today' },
+  { key: '3', name: 'Golden Touch Spa', plan: 'Enterprise', status: 'trial' as const, date: 'Yesterday' },
+  { key: '4', name: 'Style Studio', plan: 'Growth', status: 'active' as const, date: 'Yesterday' },
+  { key: '5', name: 'Divine Cuts', plan: 'Professional', status: 'active' as const, date: '2 days ago' },
+];
+
 const recentPayments = [
-  { key: '1', tenant: 'Bloom Beauty Spa', amount: '$299', plan: 'Growth', status: 'success', date: '2026-06-18' },
-  { key: '2', tenant: 'Glamour Studio', amount: '$299', plan: 'Growth', status: 'success', date: '2026-06-18' },
-  { key: '3', tenant: 'Luxury Nails', amount: '$599', plan: 'Professional', status: 'success', date: '2026-06-17' },
-  { key: '4', tenant: 'Elite Styles', amount: '$99', plan: 'Starter', status: 'pending', date: '2026-06-17' },
-  { key: '5', tenant: 'Serenity Day Spa', amount: '$0', plan: 'Trial', status: 'pending', date: '2026-06-16' },
-  { key: '6', tenant: 'QuickCuts Salon', amount: '$299', plan: 'Growth', status: 'error', date: '2026-06-16' },
-  { key: '7', tenant: 'The Barbershop Co.', amount: '$999', plan: 'Enterprise', status: 'success', date: '2026-06-15' },
-  { key: '8', tenant: 'Nail Artistry', amount: '$99', plan: 'Starter', status: 'success', date: '2026-06-15' },
+  { key: '1', tenant: 'Bloom Beauty Spa', amount: '$299', plan: 'Growth', status: 'success' as const, date: '2026-06-18' },
+  { key: '2', tenant: 'Glamour Studio', amount: '$299', plan: 'Growth', status: 'success' as const, date: '2026-06-18' },
+  { key: '3', tenant: 'Luxury Nails', amount: '$599', plan: 'Professional', status: 'success' as const, date: '2026-06-17' },
+  { key: '4', tenant: 'Elite Styles', amount: '$99', plan: 'Starter', status: 'pending' as const, date: '2026-06-17' },
+  { key: '5', tenant: 'Serenity Day Spa', amount: '$0', plan: 'Trial', status: 'pending' as const, date: '2026-06-16' },
+  { key: '6', tenant: 'QuickCuts Salon', amount: '$299', plan: 'Growth', status: 'failed' as const, date: '2026-06-16' },
+  { key: '7', tenant: 'The Barbershop Co.', amount: '$999', plan: 'Enterprise', status: 'success' as const, date: '2026-06-15' },
+  { key: '8', tenant: 'Nail Artistry', amount: '$99', plan: 'Starter', status: 'success' as const, date: '2026-06-15' },
+];
+
+const expiringTrials = [
+  { key: '1', tenant: 'Serenity Day Spa', startDate: 'Jun 1', endDate: 'Jun 15', daysLeft: 2 },
+  { key: '2', tenant: 'Golden Touch Spa', startDate: 'Jun 10', endDate: 'Jun 24', daysLeft: 11 },
+  { key: '3', tenant: 'Bloom Beauty Spa', startDate: 'Jun 5', endDate: 'Jun 19', daysLeft: 6 },
 ];
 
 const supportTickets = [
-  { key: '1', subject: 'Billing discrepancy', tenant: 'Elite Styles', priority: 'urgent', status: 'open', assignee: '—' },
-  { key: '2', subject: 'Feature request: API access', tenant: 'The Barbershop Co.', priority: 'medium', status: 'open', assignee: 'Mike' },
-  { key: '3', subject: 'Login issue', tenant: 'Nail Artistry', priority: 'high', status: 'pending', assignee: 'Sarah' },
-  { key: '4', subject: 'Integration help', tenant: 'Bloom Beauty Spa', priority: 'low', status: 'resolved', assignee: 'Alex' },
-  { key: '5', subject: 'Account upgrade', tenant: 'Luxury Nails', priority: 'medium', status: 'closed', assignee: '—' },
+  { key: '1', subject: 'Billing discrepancy', tenant: 'Elite Styles', priority: 'urgent' as const, status: 'open' as const, assignee: '—' },
+  { key: '2', subject: 'Feature request: API access', tenant: 'The Barbershop Co.', priority: 'medium' as const, status: 'open' as const, assignee: 'Mike' },
+  { key: '3', subject: 'Login issue', tenant: 'Nail Artistry', priority: 'high' as const, status: 'pending' as const, assignee: 'Sarah' },
+  { key: '4', subject: 'Integration help', tenant: 'Bloom Beauty Spa', priority: 'low' as const, status: 'resolved' as const, assignee: 'Alex' },
+  { key: '5', subject: 'Account upgrade', tenant: 'Luxury Nails', priority: 'medium' as const, status: 'closed' as const, assignee: '—' },
 ];
 
 const paymentColumns = [
   { title: 'Tenant', dataIndex: 'tenant', key: 'tenant' },
   { title: 'Amount', dataIndex: 'amount', key: 'amount' },
-  { title: 'Plan', dataIndex: 'plan', key: 'plan' },
-  {
-    title: 'Status', dataIndex: 'status', key: 'status',
-    render: (s: string) => <StatusBadge status={s} />,
-  },
+  { title: 'Plan', dataIndex: 'plan', key: 'plan', render: (p: string) => <Tag>{p}</Tag> },
+  { title: 'Status', dataIndex: 'status', key: 'status', render: (s: string) => <StatusBadge status={s} /> },
+  { title: 'Date', dataIndex: 'date', key: 'date' },
+];
+
+const newTenantColumns = [
+  { title: 'Salon Name', dataIndex: 'name', key: 'name' },
+  { title: 'Plan', dataIndex: 'plan', key: 'plan', render: (p: string) => <Tag>{p}</Tag> },
+  { title: 'Status', dataIndex: 'status', key: 'status', render: (s: string) => <StatusBadge status={s} /> },
   { title: 'Date', dataIndex: 'date', key: 'date' },
 ];
 
 const ticketColumns = [
   { title: 'Subject', dataIndex: 'subject', key: 'subject' },
   { title: 'Tenant', dataIndex: 'tenant', key: 'tenant' },
-  {
-    title: 'Priority', dataIndex: 'priority', key: 'priority',
-    render: (p: string) => <StatusBadge status={p} />,
-  },
-  {
-    title: 'Status', dataIndex: 'status', key: 'status',
-    render: (s: string) => <StatusBadge status={s} />,
-  },
+  { title: 'Priority', dataIndex: 'priority', key: 'priority', render: (p: string) => <StatusBadge status={p} /> },
+  { title: 'Status', dataIndex: 'status', key: 'status', render: (s: string) => <StatusBadge status={s} /> },
   { title: 'Assignee', dataIndex: 'assignee', key: 'assignee' },
 ];
 
@@ -111,70 +134,29 @@ export default function AdminDashboardPage() {
               <span className="health-dot" />
               <Text className="health-text">All Systems Operational</Text>
             </span>
+            <Button type="primary" icon={<PlusOutlined />} style={{ background: '#d4a853', borderColor: '#d4a853' }}>Quick Invite</Button>
           </Space>
         </div>
       </div>
 
       <Row gutter={[16, 16]} className="super-kpi-row">
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="Total Tenants"
-            value="1,247"
-            trend={12.3}
-            icon={<BuildOutlined />}
-            color="#3b82f6"
-            sparklineData={[5, 8, 6, 10, 7, 12, 9, 14, 11, 15, 13, 18]}
-          />
+          <AnalyticsCard title="Total Tenants" value="1,247" trend={12.3} icon={<BuildOutlined />} color="#3b82f6" sparklineData={[5, 8, 6, 10, 7, 12, 9, 14, 11, 15, 13, 18]} />
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="MRR"
-            value="$84,293"
-            trend={8.7}
-            icon={<DollarOutlined />}
-            color="#10b981"
-            sparklineData={[45, 52, 48, 58, 55, 62, 60, 68, 65, 72, 70, 84]}
-          />
+          <AnalyticsCard title="MRR" value="$84.3K" trend={8.7} icon={<DollarOutlined />} color="#10b981" sparklineData={[45, 52, 48, 58, 55, 62, 60, 68, 65, 72, 70, 84]} />
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="Active Subscriptions"
-            value="1,892"
-            trend={5.2}
-            icon={<CreditCardOutlined />}
-            color="#d4a853"
-            sparklineData={[20, 25, 22, 28, 26, 32, 30, 35, 33, 38, 36, 42]}
-          />
+          <AnalyticsCard title="ARR" value="$1.01M" trend={15.3} icon={<BankOutlined />} color="#d4a853" sparklineData={[60, 68, 65, 72, 70, 78, 76, 82, 80, 88, 86, 95]} />
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="New Signups Today"
-            value="18"
-            trend={-2.1}
-            icon={<UserAddOutlined />}
-            color="#8b5cf6"
-            sparklineData={[3, 5, 2, 6, 4, 7, 5, 8, 6, 9, 7, 10]}
-          />
+          <AnalyticsCard title="Active Users" value="18.2K" trend={5.2} icon={<UserOutlined />} color="#8b5cf6" sparklineData={[20, 25, 22, 28, 26, 32, 30, 35, 33, 38, 36, 42]} />
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="Churn Rate"
-            value="3.2%"
-            trend={-0.8}
-            icon={<FallOutlined />}
-            color="#f59e0b"
-            sparklineData={[8, 7, 6, 7, 5, 6, 4, 5, 3, 4, 3, 2]}
-          />
+          <AnalyticsCard title="Churn Rate" value="2.5%" trend={-0.8} icon={<FallOutlined />} color="#f59e0b" sparklineData={[8, 7, 6, 7, 5, 6, 4, 5, 3, 4, 3, 2]} />
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <AnalyticsCard
-            title="Platform Revenue"
-            value="$1.2M"
-            trend={15.3}
-            icon={<BankOutlined />}
-            color="#f43f5e"
-            sparklineData={[12, 15, 13, 17, 16, 20, 19, 23, 22, 26, 25, 30]}
-          />
+          <AnalyticsCard title="Platform Revenue" value="$1.2M" trend={15.3} icon={<BankOutlined />} color="#f43f5e" sparklineData={[12, 15, 13, 17, 16, 20, 19, 23, 22, 26, 25, 30]} />
         </Col>
       </Row>
 
@@ -185,7 +167,7 @@ export default function AdminDashboardPage() {
           </Card>
         </Col>
         <Col xs={24} lg={10}>
-          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Platform Growth</span>}>
+          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">New Registrations (7 days)</span>}>
             <BarChart data={growthData} height={220} formatValue={(v) => `${v}`} />
           </Card>
         </Col>
@@ -194,64 +176,64 @@ export default function AdminDashboardPage() {
       <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={8}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Subscription Distribution</span>}>
-            <DonutChart
-              data={subscriptionData}
-              size={180}
-              innerRadius={60}
-              centerText="1,247"
-              centerSubtext="Total"
-            />
+            <DonutChart data={subscriptionData} size={180} innerRadius={60} centerText="1,247" centerSubtext="Total" />
+          </Card>
+        </Col>
+        <Col xs={24} lg={8}>
+          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Daily Active Users</span>}>
+            <BarChart data={dailyActiveUsers} height={200} barWidth={28} formatValue={(v) => `${v}`} />
           </Card>
         </Col>
         <Col xs={24} lg={8}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Recent Payments</span>}>
-            <DataTable
-              columns={paymentColumns}
-              dataSource={recentPayments}
-              pagination={false}
-              scroll={{ x: true }}
-            />
+            <DataTable columns={paymentColumns} dataSource={recentPayments} pagination={false} scroll={{ x: true }} />
           </Card>
         </Col>
+      </Row>
+
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={8}>
+          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">New Tenant Registrations</span>}>
+            <DataTable columns={newTenantColumns} dataSource={newTenants} pagination={false} />
+          </Card>
+        </Col>
+        <Col xs={24} lg={6}>
+          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Expiring Trials</span>}>
+            <div className="trial-list">
+              {expiringTrials.map((t) => (
+                <div key={t.key} className="trial-item">
+                  <div className="trial-item-info">
+                    <Text strong style={{ fontSize: 13 }}>{t.tenant}</Text>
+                    <Text type="secondary" style={{ fontSize: 11 }}>{t.startDate} — {t.endDate}</Text>
+                  </div>
+                  <Tag color={t.daysLeft <= 3 ? 'red' : t.daysLeft <= 7 ? 'orange' : 'blue'}>{t.daysLeft} days</Tag>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </Col>
+        <Col xs={24} lg={10}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Support Tickets</span>}>
-            <DataTable
-              columns={ticketColumns}
-              dataSource={supportTickets}
-              pagination={false}
-              scroll={{ x: true }}
-            />
+            <DataTable columns={ticketColumns} dataSource={supportTickets} pagination={false} scroll={{ x: true }} />
           </Card>
         </Col>
       </Row>
 
       <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={14}>
-          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Tenant Activity</span>}>
+          <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Activity Feed</span>}>
             <Timeline events={activities} />
           </Card>
         </Col>
         <Col xs={24} lg={10}>
           <Card className="super-dash-card" variant="borderless" title={<span className="card-title">Quick Actions</span>}>
             <div className="quick-actions-grid">
-              <Button type="default" icon={<PlusOutlined />} block className="quick-action-btn">
-                Invite Tenant
-              </Button>
-              <Button type="default" icon={<FileTextOutlined />} block className="quick-action-btn">
-                View Reports
-              </Button>
-              <Button type="default" icon={<SettingOutlined />} block className="quick-action-btn">
-                Platform Settings
-              </Button>
-              <Button type="default" icon={<CustomerServiceOutlined />} block className="quick-action-btn">
-                Support Queue
-              </Button>
-              <Button type="default" icon={<DownloadOutlined />} block className="quick-action-btn">
-                Export Data
-              </Button>
-              <Button type="default" icon={<DollarOutlined />} block className="quick-action-btn">
-                Revenue Report
-              </Button>
+              <Button type="default" icon={<PlusOutlined />} block className="quick-action-btn">Invite Tenant</Button>
+              <Button type="default" icon={<FileTextOutlined />} block className="quick-action-btn">View Reports</Button>
+              <Button type="default" icon={<SettingOutlined />} block className="quick-action-btn">Platform Settings</Button>
+              <Button type="default" icon={<CustomerServiceOutlined />} block className="quick-action-btn">Support Queue</Button>
+              <Button type="default" icon={<DownloadOutlined />} block className="quick-action-btn">Export Data</Button>
+              <Button type="default" icon={<DollarOutlined />} block className="quick-action-btn">Revenue Report</Button>
             </div>
           </Card>
         </Col>

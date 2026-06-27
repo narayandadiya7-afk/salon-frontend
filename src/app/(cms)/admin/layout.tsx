@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useContext } from 'react';
-import { Layout, Menu, Avatar, Dropdown, Button, Badge, Typography, Space, Modal } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button, Badge, Typography, Space, Tooltip } from 'antd';
 import type { MenuProps } from 'antd';
 import {
   DashboardOutlined, UserOutlined, SettingOutlined,
   FileTextOutlined, TeamOutlined, SafetyOutlined,
   GroupOutlined, UnorderedListOutlined, HomeOutlined,
-  BellOutlined, SearchOutlined,
+  BellOutlined, SearchOutlined, QuestionCircleOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined,
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
@@ -77,7 +77,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [smallLogo, setSmallLogo] = useState('');
   const [largeLogo, setLargeLogo] = useState('');
   const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
-  const [modal, contextHolder] = Modal.useModal();
   const router = useRouter();
   const pathname = usePathname();
   const { menuHierarchy } = useContext(UserContext);
@@ -119,22 +118,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const toggleSidebar = () => setCollapsed(!collapsed);
 
   const handleLogout = () => {
-    modal.confirm({
-      title: 'Confirm Logout',
-      content: 'Are you sure you want to logout?',
-      okText: 'Logout',
-      cancelText: 'Cancel',
-      okType: 'danger',
-      onOk: () => {
-        AuthUtil.logout();
-        notification.success('Logged out successfully');
-        setTimeout(() => { window.location.href = '/login'; }, 500);
-      },
-    });
+    AuthUtil.logout();
+    notification.success('Logged out successfully');
+    setTimeout(() => { window.location.href = '/login'; }, 500);
   };
 
   const userMenuItems: MenuProps['items'] = [
     { key: 'profile', icon: <UserOutlined />, label: 'Profile' },
+    { type: 'divider' },
+    { key: 'help', icon: <QuestionCircleOutlined />, label: 'Help Center' },
     { type: 'divider' },
     { key: 'logout', icon: <LogoutOutlined />, label: 'Logout', danger: true, onClick: handleLogout },
   ];
@@ -143,9 +135,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const menuItems: MenuProps['items'] = buildMenuItems(menuHierarchy || [], handleMenuClick);
 
+  const currentPageLabel = (() => {
+    const find = (items: NonNullable<MenuProps['items']>): string | null => {
+      for (const item of items) {
+        if (!item) continue;
+        if ('key' in item && item.key === pathname && 'label' in item) return item.label as string;
+        if ('children' in item && item.children) {
+          const found = find(item.children as NonNullable<MenuProps['items']>);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+    return find(menuItems) || 'Dashboard';
+  })();
+
   return (
     <Layout className="super-admin-layout">
-      {contextHolder}
       {isMobile && !collapsed && (
         <div className="super-sidebar-backdrop" onClick={() => setCollapsed(true)} />
       )}
@@ -179,13 +185,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           )}
         </div>
 
-        <Menu
-          mode="inline"
-          selectedKeys={[pathname]}
-          defaultOpenKeys={defaultOpenKeys}
-          items={menuItems}
-          className="super-sider-menu"
-        />
+        <div className="super-sider-menu-scroll">
+          <Menu
+            mode="inline"
+            selectedKeys={[pathname]}
+            defaultOpenKeys={defaultOpenKeys}
+            items={menuItems}
+            className="super-sider-menu"
+          />
+        </div>
       </Sider>
 
       <Layout className={`super-site-layout ${collapsed ? 'super-site-collapsed' : ''}`}>
@@ -197,28 +205,50 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               onClick={toggleSidebar}
               className="super-header-toggle"
             />
+            <div className="super-header-breadcrumb">
+              <span className="super-breadcrumb-item">Admin</span>
+              <span className="super-breadcrumb-sep">/</span>
+              <span className="super-breadcrumb-current">{currentPageLabel}</span>
+            </div>
           </div>
 
           <div className="super-header-right">
-            <Space size={12}>
-              <Button
-                type="text"
-                icon={<SearchOutlined style={{ fontSize: 18 }} />}
-                className="super-header-icon"
-                onClick={() => setSearchVisible(!searchVisible)}
-              />
-              <Badge count={5} size="small" offset={[-2, 2]}>
+            <Space size={8}>
+              <Tooltip title="Search">
                 <Button
                   type="text"
-                  icon={<BellOutlined style={{ fontSize: 18 }} />}
+                  icon={<SearchOutlined style={{ fontSize: 18 }} />}
+                  className="super-header-icon"
+                  onClick={() => setSearchVisible(!searchVisible)}
+                />
+              </Tooltip>
+              <Tooltip title="Help Center">
+                <Button
+                  type="text"
+                  icon={<QuestionCircleOutlined style={{ fontSize: 18 }} />}
                   className="super-header-icon"
                 />
+              </Tooltip>
+              <Badge count={5} size="small" offset={[-2, 2]}>
+                <Tooltip title="Notifications">
+                  <Button
+                    type="text"
+                    icon={<BellOutlined style={{ fontSize: 18 }} />}
+                    className="super-header-icon"
+                  />
+                </Tooltip>
               </Badge>
+              <div className="super-header-divider" />
               <ThemeToggle />
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={['click']}>
                 <Space className="super-user-menu">
                   <Avatar size={32} icon={<UserOutlined />} style={{ background: '#d4a853', cursor: 'pointer' }} />
-                  {!isMobile && <Text className="super-user-name">Admin</Text>}
+                  {!isMobile && (
+                    <div className="super-user-info">
+                      <Text className="super-user-name">Admin</Text>
+                      <Text className="super-user-role">Platform Administrator</Text>
+                    </div>
+                  )}
                 </Space>
               </Dropdown>
             </Space>
@@ -227,11 +257,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {searchVisible && (
           <div className="super-search-bar">
-            <input
-              className="super-search-input-field"
-              placeholder="Search tenants, users, settings..."
-              autoFocus
-            />
+            <div className="super-search-input-wrap">
+              <SearchOutlined className="super-search-input-icon" />
+              <input
+                className="super-search-input-field"
+                placeholder="Search tenants, users, settings, reports..."
+                autoFocus
+              />
+              <kbd className="super-search-kbd">ESC</kbd>
+            </div>
           </div>
         )}
 

@@ -159,7 +159,7 @@ export default function TenantsPage() {
             <Text strong style={{ display: 'block', marginBottom: 12 }}>Activity Timeline</Text>
             <AntTimeline
               items={tenantTimeline.map((e) => ({
-                color: e.type === 'success' ? '#10b981' : e.type === 'error' ? '#ef4444' : '#3b82f6',
+                color: e.type === 'success' ? '#10b981' : e.type === 'info' ? '#3b82f6' : '#6b7280',
                 children: (
                   <div>
                     <Text strong style={{ fontSize: 12 }}>{e.title}</Text>

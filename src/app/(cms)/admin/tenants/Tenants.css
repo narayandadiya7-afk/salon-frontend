@@ -49,18 +49,38 @@
   background: rgba(212, 168, 83, 0.1) !important;
 }
 
+.tenant-drawer-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.tenant-drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.tenant-drawer-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #d4a853, #c9952e);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
-  .super-page-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .super-page-title {
-    font-size: 18px !important;
-  }
+  .super-page-header { flex-direction: column; align-items: flex-start; }
+  .super-page-title { font-size: 18px !important; }
 }

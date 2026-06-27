@@ -1,0 +1,86 @@
+/* Roles Page Styles */
+
+.roles-stat-card {
+  border-radius: 12px !important;
+  background: var(--theme-surface) !important;
+  border: 1px solid var(--theme-border) !important;
+  text-align: center;
+  padding: 4px;
+}
+
+.roles-stat-value {
+  display: block;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--theme-text) !important;
+  font-family: "RobotoBold", "Roboto", monospace !important;
+}
+
+.roles-stat-label {
+  display: block;
+  font-size: 12px !important;
+  color: var(--theme-text-secondary) !important;
+  margin-top: 2px;
+}
+
+.roles-permission-tree {
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.roles-permission-tree::-webkit-scrollbar {
+  width: 3px;
+}
+
+.roles-permission-tree::-webkit-scrollbar-thumb {
+  background: var(--theme-border);
+  border-radius: 2px;
+}
+
+.roles-permission-module {
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--theme-border);
+  background: var(--theme-background);
+}
+
+.roles-permission-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.roles-permission-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.roles-permission-item {
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.roles-permission-item:hover {
+  background: var(--theme-hover);
+}
+
+.roles-permission-item .ant-checkbox-wrapper {
+  width: 100%;
+}
+
+.roles-permission-item .ant-checkbox + span {
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .roles-permission-tree {
+    max-height: none;
+  }
+}
