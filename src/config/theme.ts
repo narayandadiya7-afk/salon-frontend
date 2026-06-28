@@ -25,9 +25,9 @@ export interface ThemeColors {
 }
 
 export const lightTheme: ThemeColors = {
-  primary: '#1890ff', secondary: '#52c41a', background: '#f5f5f5', surface: '#ffffff',
+  primary: '#7C1D3E', secondary: '#C9953F', background: '#f5f5f5', surface: '#ffffff',
   text: '#000000d9', textSecondary: '#00000073', border: '#d9d9d9', hover: '#f0f0f0',
-  success: '#52c41a', warning: '#faad14', error: '#ff4d4f', info: '#1890ff',
+  success: '#2D5E3A', warning: '#C9953F', error: '#7C1D3E', info: '#7C1D3E',
 };
 export const darkTheme: ThemeColors = {
   primary: '#1890ff', secondary: '#52c41a', background: '#141414', surface: '#1f1f1f',

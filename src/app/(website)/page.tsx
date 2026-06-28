@@ -110,7 +110,7 @@ export default function HomePage() {
               <Link href="/register">
                 <Button type="primary" size="large">Get Your Salon Website →</Button>
               </Link>
-              <Link href="/salon/demo-salon">
+              <Link href="/demo-salon">
                 <Button size="large">See Live Demo</Button>
               </Link>
             </div>

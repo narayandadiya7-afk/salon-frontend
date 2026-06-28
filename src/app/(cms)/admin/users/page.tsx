@@ -2,25 +2,26 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  Button, Space, Typography, Input, Card,
-  Drawer, Tooltip, Popconfirm,
+  Button, Space, Typography, Card,
+  Drawer, Tooltip, Popconfirm, Tag, Avatar, Input,
 } from 'antd';
 import type { TablePaginationConfig } from 'antd/es/table';
 import {
   PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined,
-  UserOutlined, TeamOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import DataTable from '@/components/super-admin/DataTable';
+import StatusBadge from '@/components/super-admin/StatusBadge';
 import useFetch from '@/hooks/useFetch';
 import { TFilterModel } from '@/types/config';
 import { defaultFilterParams } from '@/utils/constants';
 import { eResultCode } from '@/utils/enum';
 import notification from '@/utils/notification';
 import UserForm from './form';
+import './Users.css';
 import { GetUserList, DeleteUser } from '@/utils/api.constant';
 
 const { Title, Text } = Typography;
-const { Search } = Input;
 
 interface TUserRow {
   id: string; userName: string;
@@ -97,52 +98,50 @@ export default function UsersPage() {
     }
   };
 
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U';
+  };
+
   const columns = [
     {
-      title: 'Sr. No.', key: 'index', width: 80, align: 'center' as const,
-      render: (_: any, __: TUserRow, index: number) =>
-        index + 1 + (filterParams.currentPage - 1) * filterParams.pageSize,
-    },
-    {
-      title: 'Name', key: 'user',
+      title: 'User', key: 'user',
       render: (_: any, record: TUserRow) => (
         <Space>
-          <span style={{ width: 28, height: 28, borderRadius: '50%', background: '#d4a853', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>
-            <UserOutlined />
-          </span>
-          <Text strong>{record.userName}</Text>
+          <Avatar size={28} style={{ background: '#d4a853', fontSize: 12, fontWeight: 600 }}>
+            {getInitials(record.userName)}
+          </Avatar>
+          <div>
+            <Text strong style={{ fontSize: 13 }}>{record.userName}</Text>
+            <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>{record.emailId}</Text>
+          </div>
         </Space>
       ),
     },
     {
-      title: 'Email', dataIndex: 'emailId', key: 'emailId',
-    },
-    {
       title: 'Mobile', dataIndex: 'mobileNumber', key: 'mobileNumber',
-      render: (mobile: string) => mobile || '-',
+      render: (mobile: string) => mobile ? <Text style={{ fontSize: 12 }}>{mobile}</Text> : <Text type="secondary" style={{ fontSize: 12 }}>—</Text>,
     },
     {
       title: 'Role', dataIndex: 'roleName', key: 'roleName',
-      render: (role: string) => (
-        <span style={{
-          display: 'inline-block', padding: '2px 10px', borderRadius: 9999, fontSize: 12,
-          fontWeight: 500, background: 'rgba(212,168,83,0.12)', color: '#b89447',
-        }}>
-          {role || '-'}
-        </span>
+      render: (role: string) => <Tag>{role || '—'}</Tag>,
+    },
+    {
+      title: 'Status', key: 'status',
+      render: (_: any, record: TUserRow) => (
+        <StatusBadge status={record.isdeleted === 1 ? 'suspended' : 'active'} />
       ),
     },
     {
-      title: 'Actions', key: 'action', width: 100, align: 'center' as const,
+      title: 'Actions', key: 'action', width: 140, align: 'center' as const,
       render: (_: any, record: TUserRow) => (
-        <Space>
+        <Space size={4}>
           <Tooltip title="Edit">
-            <Button type="text" size="small" icon={<EditOutlined />}
+            <Button type="link" size="small" icon={<EditOutlined />} className="super-action-btn"
               onClick={() => setIsEditing({ enable: true, data: record })} />
           </Tooltip>
           <Popconfirm title="Delete this user?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
             <Tooltip title="Delete">
-              <Button type="text" size="small" danger icon={<DeleteOutlined />} />
+              <Button type="link" size="small" icon={<DeleteOutlined />} className="super-action-btn" danger />
             </Tooltip>
           </Popconfirm>
         </Space>
@@ -152,31 +151,33 @@ export default function UsersPage() {
 
   return (
     <div className="super-page">
-      <Card className="super-page-card" variant="borderless">
-        <div className="super-page-header" style={{ marginBottom: 0, paddingTop: 8, paddingBottom: 8 }}>
-          <div>
-            <Title level={4} className="super-page-title">
-              <TeamOutlined className="super-page-icon" /> Users
-            </Title>
-            <Text type="secondary">Manage platform users and their roles</Text>
-          </div>
-          <Space>
-            <Button type="primary" icon={<PlusOutlined />}
-              style={{ background: '#d4a853', borderColor: '#d4a853' }}
-              onClick={() => setAddDrawerOpen(true)}>
-              Add User
-            </Button>
-            <Search
-              placeholder="Search by name or email..."
-              value={filterParams.searchText}
-              onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
-              onSearch={handleSearch} allowClear style={{ width: 250 }} />
-            <Tooltip title="Reset Filters">
-              <Button icon={<ReloadOutlined />} onClick={handleReset} />
-            </Tooltip>
-          </Space>
+      <div className="super-page-header">
+        <div>
+          <Title level={4} className="super-page-title">
+            <TeamOutlined className="super-page-icon" /> User Management
+          </Title>
+          <Text type="secondary">Manage platform administrators and their access</Text>
         </div>
+        <Space>
+          <Button type="primary" icon={<PlusOutlined />}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}
+            onClick={() => setAddDrawerOpen(true)}>
+            Add User
+          </Button>
+          <Input.Search
+            placeholder="Search users by name or email..."
+            onSearch={handleSearch}
+            allowClear
+            style={{ width: 240 }}
+          />
+          <Tooltip title="Reset">
+            <Button icon={<ReloadOutlined />} onClick={handleReset} />
+          </Tooltip>
+        </Space>
+      </div>
 
+
+      <Card className="super-page-card" variant="borderless">
         <DataTable
           columns={columns}
           dataSource={data}
@@ -206,6 +207,8 @@ export default function UsersPage() {
         styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
         <UserForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
       </Drawer>
+
+
     </div>
   );
 }

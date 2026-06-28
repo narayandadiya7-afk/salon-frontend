@@ -1,0 +1,54 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  user-select: none;
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border-light);
+  color: var(--theme-text);
+}
+
+.pill:hover {
+  border-color: rgba(124, 29, 62, 0.2);
+  background: rgba(124, 29, 62, 0.04);
+}
+
+.pill.active {
+  background: #7C1D3E;
+  border-color: transparent;
+  color: #fff;
+}
+
+.pill.sm {
+  padding: 2px 12px;
+  font-size: 11px;
+}
+
+.count {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0 6px;
+  min-width: 18px;
+  text-align: center;
+  background: var(--theme-hover);
+  color: var(--theme-text-secondary);
+}
+
+.pill.active .count {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}

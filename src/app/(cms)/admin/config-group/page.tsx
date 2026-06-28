@@ -112,14 +112,14 @@ export default function ConfigGroupPage() {
     {
       title: 'Actions', key: 'action', width: 100, align: 'center' as const,
       render: (_: any, record: TConfigGroup) => (
-        <Space>
+        <Space size={4}>
           <Tooltip title="Edit">
-            <Button type="text" size="small" icon={<EditOutlined />}
+            <Button type="link" size="small" icon={<EditOutlined />} className="super-action-btn"
               onClick={() => setIsEditing({ enable: true, data: record })} />
           </Tooltip>
           <Popconfirm title="Delete this group?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
             <Tooltip title="Delete">
-              <Button type="text" size="small" danger icon={<DeleteOutlined />} />
+              <Button type="link" size="small" icon={<DeleteOutlined />} className="super-action-btn" danger />
             </Tooltip>
           </Popconfirm>
         </Space>
@@ -129,31 +129,29 @@ export default function ConfigGroupPage() {
 
   return (
     <div className="super-page">
-      <Card className="super-page-card" variant="borderless">
-        <div className="super-page-header" style={{ marginBottom: 0, paddingTop: 8, paddingBottom: 8 }}>
-          <div>
-            <Title level={4} className="super-page-title">
-              <GroupOutlined className="super-page-icon" /> Config Groups
-            </Title>
-            <Text type="secondary">Manage configuration parameter groups</Text>
-          </div>
-          <Space>
-            <Button type="primary" icon={<PlusOutlined />}
-              style={{ background: '#d4a853', borderColor: '#d4a853' }}
-              onClick={() => setAddDrawerOpen(true)}>
-              Add Group
-            </Button>
-            <Search
-              placeholder="Search by group name or description..."
-              value={filterParams.searchText}
-              onChange={(e) => setFilterParams((prev) => ({ ...prev, searchText: e.target.value }))}
-              onSearch={handleSearch} allowClear style={{ width: 250 }} />
-            <Tooltip title="Reset Filters">
-              <Button icon={<ReloadOutlined />} onClick={handleReset} />
-            </Tooltip>
-          </Space>
+      <div className="super-page-header">
+        <div>
+          <Title level={4} className="super-page-title">
+            <GroupOutlined className="super-page-icon" /> Config Groups
+          </Title>
+          <Text type="secondary">Manage configuration parameter groups</Text>
         </div>
+        <Space>
+          <Button type="primary" icon={<PlusOutlined />}
+            style={{ background: '#d4a853', borderColor: '#d4a853' }}
+            onClick={() => setAddDrawerOpen(true)}>
+            Add Group
+          </Button>
+          <Input.Search
+            placeholder="Search by group name or description..."
+            onSearch={handleSearch} allowClear style={{ width: 250 }} />
+          <Tooltip title="Reset">
+            <Button icon={<ReloadOutlined />} onClick={handleReset} />
+          </Tooltip>
+        </Space>
+      </div>
 
+      <Card className="super-page-card" variant="borderless">
         <DataTable
           columns={columns}
           dataSource={data}

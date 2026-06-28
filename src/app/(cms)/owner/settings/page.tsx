@@ -87,7 +87,7 @@ export default function SalonSettingsPage() {
           <Text type="secondary">Customize your salon profile and branding</Text>
         </div>
         {slug && (
-          <Link href={`/salon/${slug}`} target="_blank">
+          <Link href={`/${slug}`} target="_blank">
             <Button icon={<GlobalOutlined />}>View My Salon</Button>
           </Link>
         )}
@@ -110,7 +110,7 @@ export default function SalonSettingsPage() {
                   { required: true },
                   { pattern: /^[a-z0-9-]+$/, message: 'Only lowercase letters, numbers, and hyphens' },
                 ]}
-                extra={slug ? `Current URL: /salon/${slug}` : ''}
+                extra={slug ? `Current URL: /${slug}` : ''}
               >
                 <Input placeholder="glow-beauty-studio" size="large" />
               </Form.Item>
