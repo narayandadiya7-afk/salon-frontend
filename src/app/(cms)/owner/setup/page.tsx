@@ -93,10 +93,10 @@ function SetupForm() {
                 { required: true, message: 'Please enter a URL slug' },
                 { pattern: /^[a-z0-9-]+$/, message: 'Only lowercase letters, numbers, and hyphens' },
               ]}
-              extra="Your salon will be at: salonsaas.com/salon/your-slug"
+              extra="Your salon will be at: salonsaas.com/your-slug"
             >
               <Input
-                prefix="salonsaas.com/salon/"
+                prefix="salonsaas.com/"
                 placeholder="glow-beauty-studio"
                 size="large"
                 onChange={(e) => {
@@ -145,7 +145,7 @@ function SetupForm() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
               <Text>URL</Text>
-              <Text strong>salonsaas.com/salon/{salonData?.slug}</Text>
+              <Text strong>salonsaas.com/{salonData?.slug}</Text>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
               <Text>Plan</Text>
@@ -196,7 +196,7 @@ function SetupForm() {
             <Text strong>Your salon URL:</Text>
             <div style={{ marginTop: 8 }}>
               <Text style={{ color: '#1890ff', fontSize: 16 }}>
-                salonsaas.com/salon/{salonData?.slug}
+                salonsaas.com/{salonData?.slug}
               </Text>
             </div>
           </div>
@@ -205,7 +205,7 @@ function SetupForm() {
             <Button type="primary" size="large" onClick={() => router.push('/owner/dashboard')}>
               Go to Dashboard
             </Button>
-            <Button size="large" onClick={() => router.push(`/salon/${salonData?.slug}`)}>
+            <Button size="large" onClick={() => router.push(`/${salonData?.slug}`)}>
               View My Salon
             </Button>
           </div>

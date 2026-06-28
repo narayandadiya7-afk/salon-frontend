@@ -129,7 +129,7 @@ export default function SuperAdminLayout({ children }: { children: React.ReactNo
               <span className="super-breadcrumb-item">Super Admin</span>
               <span className="super-breadcrumb-sep">/</span>
               <span className="super-breadcrumb-current">
-                {menuItems.find((m: any) => m.key === pathname)?.label as string || 'Dashboard'}
+                {(menuItems as any[])?.find((m) => m.key === pathname)?.label || 'Dashboard'}
               </span>
             </div>
           </div>

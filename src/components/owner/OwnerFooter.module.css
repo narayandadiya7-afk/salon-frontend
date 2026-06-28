@@ -1,12 +1,202 @@
-.footer { background: #fafafa; border-top: 1px solid #eee; padding: 28px 0; }
-.container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-.brand { margin-bottom: 12px; }
-.logo { font-weight: 700; text-decoration: none; color: #111; }
-.links { display:flex; gap:24px; }
-.bottom { display:flex; justify-content:space-between; margin-top:18px; font-size:13px; color:#666; }
-.container a { color: inherit; text-decoration: none; }
+.footer {
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 80px 0 0;
+}
 
-@media (max-width:800px){
-  .links{flex-direction:column}
-  .bottom{flex-direction:column;gap:8px}
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brand {
+  max-width: 320px;
+}
+
+.logo {
+  font-family: 'LexendSemiBold', sans-serif;
+  font-size: 22px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 16px 0 24px;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+}
+
+.socialLink {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  background: linear-gradient(135deg, #d4a853, #c9953f);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+.column h4 {
+  font-family: 'LexendSemiBold', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 20px;
+}
+
+.column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.column ul li a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.column ul li a:hover {
+  color: #d4a853;
+}
+
+.column ul li {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+.newsletter h4 {
+  font-family: 'LexendSemiBold', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 16px;
+}
+
+.newsletter p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 8px;
+}
+
+.newsletterForm input {
+  flex: 1;
+  height: 44px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0 16px;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'LexendRegular', sans-serif;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.newsletterForm input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.newsletterForm input:focus {
+  border-color: #d4a853;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.newsletterForm button {
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #d4a853, #c9953f);
+  border: none;
+  color: #fff;
+  font-family: 'LexendMedium', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.newsletterForm button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(201, 149, 63, 0.3);
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.bottomLinks a {
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bottomLinks a:hover {
+  color: #d4a853;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .brand { grid-column: 1 / -1; max-width: 100%; }
+  .newsletter { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; gap: 32px; }
+  .bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .bottomLinks { flex-wrap: wrap; justify-content: center; }
+  .newsletterForm { flex-direction: column; }
 }

@@ -41,7 +41,6 @@ const NAV_ITEMS: { key: string; label: string; icon: React.ReactNode; section?: 
 const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [salonName, setSalonName] = useState('');
   const router = useRouter();
   const pathname = usePathname();
@@ -54,12 +53,11 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    setMounted(true);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    const slug = salonSlug || pathname.split('/')[2] || '';
+    const slug = salonSlug || pathname.split('/')[1] || '';
     if (!slug) return;
     const base = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3005/api/';
     fetch(`${base}salons/slug/${slug}`)
@@ -68,9 +66,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
       .catch(() => {});
   }, [salonSlug, pathname]);
 
-  if (!mounted) return null;
-
-  const slug = salonSlug || pathname.split('/')[2] || '';
+  const slug = salonSlug || pathname.split('/')[1] || '';
   const currentPath = pathname.split('/').pop() || 'dashboard';
 
   const isActive = (key: string) => {
@@ -100,7 +96,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
       label: item.label,
       onClick: () => {
         const route = item.key === 'staff' ? 'team' : item.key;
-        router.push(`/salon/${slug}/${route}`);
+        router.push(`/${slug}/owner/${route}`);
         if (isMobile) setCollapsed(true);
       },
     })),
@@ -116,7 +112,7 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
       key: 'view-salon',
       icon: <GlobalOutlined />,
       label: 'View My Salon',
-      onClick: () => window.open(`/salon/${slug}`, '_blank'),
+      onClick: () => window.open(`/${slug}`, '_blank'),
     },
     { type: 'divider' },
     {

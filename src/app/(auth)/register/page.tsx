@@ -100,7 +100,7 @@ function RegisterForm() {
         notification.success('Your salon is ready! Get started with your 1-month free trial.');
 
         if (slug) {
-          router.push(`/salon/${slug}/welcome`);
+          router.push(`/${slug}/owner/welcome`);
         } else {
           router.push('/salon');
         }
@@ -176,7 +176,7 @@ function RegisterForm() {
                 },
               }),
             ]}
-            extra="Your salon will be at: salonsaas.com/salon/your-slug"
+            extra="Your salon will be at: salonsaas.com/your-slug"
           >
             <Input
               prefix={<GlobalOutlined />}

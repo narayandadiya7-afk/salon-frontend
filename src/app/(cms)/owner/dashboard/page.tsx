@@ -19,7 +19,7 @@ export default function OwnerDashboardRedirect() {
         if (code === eResultCode.SUCCESS || code === eResultCode.CREATED) {
           const slug = res.data?.slug;
           if (slug) {
-            router.replace(`/salon/${slug}/dashboard`);
+            router.replace(`/${slug}/owner/dashboard`);
             return;
           }
         }
