@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Typography, Row, Col, Button, Spin, Alert, Tag } from 'antd';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import apiUtil from '../../../../../utils/api';
+import { ApiGetSalonBySlug } from '../../../../../utils/api.constant';
+import { eResultCode } from '../../../../../utils/enum';
 
 const { Title, Paragraph } = Typography;
 

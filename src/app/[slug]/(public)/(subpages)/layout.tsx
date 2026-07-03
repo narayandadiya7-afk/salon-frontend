@@ -1,7 +1,6 @@
 import React from 'react';
-import WhatsAppFloat from '../../../components/salon/WhatsAppFloat';
-import ScrollRestoration from '../../../components/ScrollRestoration';
-import '../../../styles/luxury.css';
+import OwnerNavbar from '../../../../components/owner/OwnerNavbar';
+import OwnerFooter from '../../../../components/owner/OwnerFooter';
 
 async function fetchSalon(slug: string) {
   try {
@@ -16,15 +15,15 @@ async function fetchSalon(slug: string) {
   }
 }
 
-export default async function PublicLayout({ children, params }: { children: React.ReactNode; params: Promise<{ slug: string }> }) {
+export default async function SubPagesLayout({ children, params }: { children: React.ReactNode; params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const salon = await fetchSalon(slug);
 
   return (
     <>
-      <ScrollRestoration />
-      <main>{children}</main>
-      <WhatsAppFloat phoneNumber={salon?.phone || ''} />
+      <OwnerNavbar salon={salon} />
+      <main style={{ minHeight: '100vh', paddingTop: 72 }}>{children}</main>
+      <OwnerFooter salon={salon} />
     </>
   );
 }

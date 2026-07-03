@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Avatar, Divider, Card, Space } from 'antd';
 import { RightOutlined, TeamOutlined, StarFilled, TrophyOutlined, UserOutlined, HeartOutlined } from '@ant-design/icons';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import apiUtil from '../../../../../utils/api';
+import { ApiGetSalonBySlug } from '../../../../../utils/api.constant';
+import { eResultCode } from '../../../../../utils/enum';
 
 const { Title, Text, Paragraph } = Typography;
 const gold = '#d4a853';

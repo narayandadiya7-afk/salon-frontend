@@ -4,9 +4,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Avatar, Divider, Card, Modal, Form, Input, Select, Steps, message, Space } from 'antd';
 import { LeftOutlined, RightOutlined, CheckCircleOutlined, ClockCircleOutlined, UserOutlined, CalendarOutlined, EnvironmentOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug, ApiGetAvailableSlots, ApiBookAppointment } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import apiUtil from '../../../../../utils/api';
+import { ApiGetSalonBySlug, ApiGetAvailableSlots, ApiBookAppointment } from '../../../../../utils/api.constant';
+import { eResultCode } from '../../../../../utils/enum';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
