@@ -1,209 +1,168 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Avatar, Divider, Card, Form, Input, message, Space } from 'antd';
-import { PhoneOutlined, MailOutlined, EnvironmentOutlined, ClockCircleOutlined, RightOutlined, SendOutlined, InstagramOutlined, FacebookOutlined, TwitterOutlined, YoutubeOutlined } from '@ant-design/icons';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
-
-const { Title, Text, Paragraph } = Typography;
-const { TextArea } = Input;
-const gold = '#d4a853';
-const burgundy = '#7C1D3E';
-
-const businessHours = [
-  { day: 'Monday', hours: '9:00 AM – 7:00 PM' },
-  { day: 'Tuesday', hours: '9:00 AM – 7:00 PM' },
-  { day: 'Wednesday', hours: '9:00 AM – 7:00 PM' },
-  { day: 'Thursday', hours: '9:00 AM – 8:00 PM' },
-  { day: 'Friday', hours: '9:00 AM – 8:00 PM' },
-  { day: 'Saturday', hours: '10:00 AM – 6:00 PM' },
-  { day: 'Sunday', hours: 'Closed' },
-];
-
-const socialLinks = [
-  { icon: <InstagramOutlined />, name: 'Instagram', url: '#' },
-  { icon: <FacebookOutlined />, name: 'Facebook', url: '#' },
-  { icon: <TwitterOutlined />, name: 'Twitter', url: '#' },
-  { icon: <YoutubeOutlined />, name: 'YouTube', url: '#' },
-];
+import Link from 'next/link';
+import styles from './contact.module.css';
 
 export default function ContactPage() {
-  const router = useRouter();
   const params = useParams();
+  const router = useRouter();
   const slug = params?.slug as string;
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [form] = Form.useForm();
-  const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', service: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    apiUtil.get(ApiGetSalonBySlug(slug)).then((res: any) => {
-      if (res?.dataResponse?.returnCode === eResultCode.SUCCESS || res?.dataResponse?.returnCode === eResultCode.CREATED) {
-        setSalon(res.data || res);
-      } else {
-        setError('Salon not found');
-      }
-    }).catch(() => setError('Failed to load page')).finally(() => setLoading(false));
-  }, [slug]);
-
-  const handleSubmit = () => {
-    form.validateFields().then((values) => {
-      setSending(true);
-      setTimeout(() => {
-        setSending(false);
-        form.resetFields();
-        message.success('Your message has been sent! We will get back to you shortly.');
-      }, 1000);
-    }).catch(() => {});
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
   };
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
-  if (!salon) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title="Salon not found" type="warning" showIcon /></div>;
-
   return (
-    <div>
-      {/* HERO */}
-      <section style={{ padding: '120px 20px 80px', background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%)', textAlign: 'center' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <Title style={{ color: '#fff', fontSize: 48, fontWeight: 800, margin: 0 }}>Contact Us</Title>
-          <div style={{ width: 60, height: 3, background: gold, margin: '20px auto' }} />
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, display: 'block' }}>
-            We'd love to hear from you. Get in touch with our team.
-          </Text>
+    <>
+      <section className={`luxe-hero ${styles.heroMinHeight}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1920&q=85" alt="Contact" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContentCenter}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitleMargin}`}>Get in Touch</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitleMargin}`}>We would love to hear from you. Reach out for appointments, inquiries, or feedback.</p>
         </div>
       </section>
 
-      {/* CONTACT INFO CARDS */}
-      <section style={{ padding: '80px 20px', background: '#fff' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Row gutter={[24, 24]}>
-            {[
-              { icon: <PhoneOutlined />, title: 'Phone', value: salon?.phone || '(555) 123-4567', action: `tel:${salon?.phone || '5551234567'}`, label: 'Call Now' },
-              { icon: <MailOutlined />, title: 'Email', value: salon?.email || 'hello@salon.com', action: `mailto:${salon?.email || 'hello@salon.com'}`, label: 'Send Email' },
-              { icon: <EnvironmentOutlined />, title: 'Address', value: salon?.address || '123 Beauty Lane, Suite 100, New York, NY 10001', action: `https://maps.google.com/?q=${encodeURIComponent(salon?.address || '123 Beauty Lane, New York')}`, label: 'View on Map' },
-              { icon: <ClockCircleOutlined />, title: 'Hours', value: 'Mon–Sat 9AM–7PM', action: '#hours', label: 'View Hours' },
-            ].map((item, i) => (
-              <Col key={i} xs={24} sm={12} md={6}>
-                <Card hoverable style={{ borderRadius: 16, textAlign: 'center', height: '100%', border: '1px solid #f0f0f0', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                  <div style={{ fontSize: 36, color: gold, marginBottom: 12 }}>{item.icon}</div>
-                  <Title level={5} style={{ margin: '0 0 4px' }}>{item.title}</Title>
-                  <Paragraph style={{ color: '#666', fontSize: 14, margin: '0 0 12px' }}>{item.value}</Paragraph>
-                  <Button type="link" href={item.action} style={{ color: gold, padding: 0 }}>{item.label}</Button>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </section>
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className={styles.gridTwoCol}>
+            {/* Contact Info */}
+            <div>
+              <span className="luxe-section-overline">Contact Information</span>
+              <h2 className={`luxe-section-title ${styles.sectionTitleLeft}`}>Visit Us</h2>
+              <div className="luxe-divider-left" />
 
-      {/* BUSINESS HOURS & SOCIAL */}
-      <section style={{ padding: '80px 20px', background: '#faf8f5' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Row gutter={[40, 40]}>
-            <Col xs={24} md={12}>
-              <Title level={3} style={{ color: '#1a1a2e', marginBottom: 24 }}>Business Hours</Title>
-              <div style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                {businessHours.map((item, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < businessHours.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
-                    <Text strong style={{ color: '#333' }}>{item.day}</Text>
-                    <Text style={{ color: item.hours === 'Closed' ? '#e74c3c' : '#666' }}>{item.hours}</Text>
+              <div className="luxe-contact-info-item">
+                <div className="luxe-contact-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <p className={styles.infoLabel}>Address</p>
+                  <p className="luxe-body-text">42, MG Road, Indiranagar<br />Bengaluru, Karnataka 560038</p>
+                </div>
+              </div>
+
+              <div className="luxe-contact-info-item">
+                <div className="luxe-contact-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </div>
+                <div>
+                  <p className={styles.infoLabel}>Phone</p>
+                  <p className="luxe-body-text">+91 98765 43210<br />+91 87654 32100</p>
+                </div>
+              </div>
+
+              <div className="luxe-contact-info-item">
+                <div className="luxe-contact-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <p className={styles.infoLabel}>Email</p>
+                  <p className="luxe-body-text">hello@luxestudio.com<br />bookings@luxestudio.com</p>
+                </div>
+              </div>
+
+              <div className="luxe-contact-info-item">
+                <div className="luxe-contact-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div>
+                  <p className={styles.infoLabel}>Business Hours</p>
+                  <p className="luxe-body-text">
+                    Monday – Saturday: 9:00 AM – 8:00 PM<br />
+                    Sunday: 10:00 AM – 6:00 PM
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.socialButtons}>
+                <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="luxe-btn luxe-btn-primary luxe-btn-md">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="luxe-btn luxe-btn-outline luxe-btn-md">Instagram</a>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div>
+              {submitted ? (
+                <div className={styles.submittedContainer}>
+                  <div className={styles.submittedEmoji}>✉️</div>
+                  <h2 className={`luxe-section-title ${styles.sectionTitleCenter}`}>Thank You!</h2>
+                  <p className={`luxe-section-subtitle ${styles.subtitleMargin}`}>We have received your message and will get back to you within 24 hours.</p>
+                  <button onClick={() => setSubmitted(false)} className="luxe-btn luxe-btn-outline luxe-btn-lg">Send Another Message</button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <h3 className={styles.formHeading}>Send Us a Message</h3>
+                  <div className={styles.formRow}>
+                    <div className="luxe-input-group">
+                      <label className="luxe-input-label">Full Name</label>
+                      <input className="luxe-input" placeholder="Your name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                    </div>
+                    <div className="luxe-input-group">
+                      <label className="luxe-input-label">Email</label>
+                      <input className="luxe-input" type="email" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+                    </div>
                   </div>
-                ))}
-              </div>
-            </Col>
-            <Col xs={24} md={12}>
-              <Title level={3} style={{ color: '#1a1a2e', marginBottom: 24 }}>Follow Us</Title>
-              <div style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                <Row gutter={[16, 16]}>
-                  {socialLinks.map((social, i) => (
-                    <Col key={i} span={12}>
-                      <Button href={social.url} target="_blank" style={{ width: '100%', height: 60, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: '1px solid #f0f0f0', background: '#faf8f5' }}>
-                        <span style={{ fontSize: 24, color: gold }}>{social.icon}</span>
-                        <Text strong>{social.name}</Text>
-                      </Button>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section>
-
-      {/* INQUIRY FORM */}
-      <section style={{ padding: '80px 20px', background: '#fff' }}>
-        <div style={{ maxWidth: 700, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <Divider style={{ borderColor: gold, width: 60, minWidth: 60, margin: '0 auto 16px', borderWidth: 2 }} />
-            <Title level={2} style={{ color: '#1a1a2e', margin: 0, fontSize: 32, fontWeight: 700 }}>Send Us a Message</Title>
-            <Text style={{ color: '#666', fontSize: 16, marginTop: 8, display: 'block' }}>We'll get back to you within 24 hours</Text>
-          </div>
-          <div style={{ background: '#faf8f5', borderRadius: 16, padding: 32, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-            <Form form={form} layout="vertical">
-              <Row gutter={[16, 0]}>
-                <Col xs={24} md={12}>
-                  <Form.Item name="name" label="Your Name" rules={[{ required: true, message: 'Please enter your name' }]}>
-                    <Input placeholder="John Doe" style={{ borderRadius: 8, height: 44 }} />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={12}>
-                  <Form.Item name="email" label="Email Address" rules={[{ required: true, type: 'email', message: 'Valid email required' }]}>
-                    <Input placeholder="john@example.com" style={{ borderRadius: 8, height: 44 }} />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item name="phone" label="Phone Number">
-                <Input placeholder="(555) 123-4567" style={{ borderRadius: 8, height: 44 }} />
-              </Form.Item>
-              <Form.Item name="message" label="Your Message" rules={[{ required: true, message: 'Please enter your message' }]}>
-                <TextArea rows={5} placeholder="Tell us how we can help..." style={{ borderRadius: 8 }} />
-              </Form.Item>
-              <Button type="primary" onClick={handleSubmit} loading={sending} icon={<SendOutlined />}
-                style={{ width: '100%', height: 48, background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30, fontWeight: 600, fontSize: 16 }}>
-                Send Message
-              </Button>
-            </Form>
+                  <div className={styles.formRow}>
+                    <div className="luxe-input-group">
+                      <label className="luxe-input-label">Phone</label>
+                      <input className="luxe-input" placeholder="+91 98765 43210" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                    </div>
+                    <div className="luxe-input-group">
+                      <label className="luxe-input-label">Service Interested In</label>
+                      <select className="luxe-select" value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })}>
+                        <option value="">Select a service</option>
+                        <option value="Haircut">Signature Haircut</option>
+                        <option value="Keratin">Keratin Treatment</option>
+                        <option value="Facial">Luxury Facial</option>
+                        <option value="Bridal">Bridal Makeup</option>
+                        <option value="Nails">Manicure & Pedicure</option>
+                        <option value="Massage">Aromatherapy Massage</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className={`luxe-input-group ${styles.messageGroup}`}>
+                    <label className="luxe-input-label">Message</label>
+                    <textarea className={`luxe-input ${styles.textareaVertical}`} rows={5} placeholder="Tell us how we can help..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required />
+                  </div>
+                  <button type="submit" className={`luxe-btn luxe-btn-primary luxe-btn-xl ${styles.submitFullWidth}`}>Send Message</button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* MAP PLACEHOLDER */}
-      <section style={{ padding: '0 20px 80px', background: '#fff' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ borderRadius: 16, overflow: 'hidden', height: 400, background: '#f0f0f0', position: 'relative' }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8 }}>
-              <EnvironmentOutlined style={{ fontSize: 48, color: '#ccc' }} />
-              <Text style={{ color: '#999', fontSize: 16 }}>Interactive Map Loading...</Text>
-              <Text style={{ color: '#ccc', fontSize: 13 }}>{salon?.address || '123 Beauty Lane, Suite 100, New York, NY 10001'}</Text>
+      {/* Map */}
+      <section className={`luxe-section ${styles.mapSection}`}>
+        <div className="luxe-container-lg">
+          <div className={styles.mapContainer}>
+            <div className={styles.mapPlaceholder}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.mapSvgIcon}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <p>Google Maps Integration</p>
+              <p className={styles.mapAddress}>42, MG Road, Indiranagar, Bengaluru</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{ padding: '80px 20px', background: `linear-gradient(135deg, ${burgundy} 0%, #a02d52 100%)`, textAlign: 'center' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <Title level={2} style={{ color: '#fff', margin: 0, fontSize: 32 }}>Ready to Book Your Visit?</Title>
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16, display: 'block', margin: '16px 0 32px' }}>
-            Schedule an appointment online and experience premium service.
-          </Text>
-          <Button type="primary" size="large" onClick={() => router.push(`/${slug}/book`)}
-            style={{ height: 48, paddingInline: 36, fontSize: 16, fontWeight: 600, background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30 }}>
-            Book Appointment
-          </Button>
+      <section className="luxe-newsletter">
+        <div className="luxe-newsletter-content">
+          <h2 className="luxe-newsletter-title">Ready to Experience Luxury?</h2>
+          <p className="luxe-newsletter-subtitle">Book your appointment today and discover the LuxeStudio difference.</p>
+          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Book Appointment</button>
         </div>
       </section>
-
-      <style>{`
-        .ant-card-hoverable:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1) !important; }
-      `}</style>
-    </div>
+    </>
   );
 }

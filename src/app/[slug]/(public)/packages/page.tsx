@@ -1,160 +1,124 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Typography, Row, Col, Button, Spin, Alert, Tag } from 'antd';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
-
-const { Title, Paragraph } = Typography;
-
-const GOLD = '#d4a853';
-const BURGUNDY = '#7C1D3E';
+import styles from './packages.module.css';
 
 const packages = [
   {
-    name: 'Glow Essentials', desc: 'A perfect start for healthy, glowing skin.',
-    items: ['Facial Cleansing', 'Hydrating Mask', 'Basic Manicure', 'Hair Spa'],
-    price: '₹1,499', savings: 'Save ₹600', duration: '90 mins',
-    gradient: 'linear-gradient(135deg, #7C1D3E, #a52a5a)',
+    id: 'p1', name: 'Bridal Glow Package', category: 'Bridal',
+    desc: 'Everything you need for your special day. From hair and makeup to skincare, we ensure you look absolutely radiant.',
+    price: '₹25,000', originalPrice: '₹32,000', savings: '22%',
+    duration: 'Full Day', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80',
+    includes: ['Bridal Makeup Trial', 'HD Airbrush Makeup', 'Hair Styling', 'Luxury Facial', 'Manicure & Pedicure', 'Touch-up Kit', 'Fresh Flower Arrangement'],
   },
   {
-    name: 'Bridal Glow', desc: 'Everything you need for your special day.',
-    items: ['Bridal Facial', 'Hairstyling', 'Manicure & Pedicure', 'Makeup', 'Hair Treatment'],
-    price: '₹4,999', savings: 'Save ₹2,000', duration: '3 hours',
-    gradient: 'linear-gradient(135deg, #d4a853, #e8c47a)',
+    id: 'p2', name: 'Spa Escape Package', category: 'Spa',
+    desc: 'A full day of relaxation and rejuvenation. Unwind with our most luxurious spa treatments in a serene environment.',
+    price: '₹8,500', originalPrice: '₹11,000', savings: '23%',
+    duration: '4 Hours', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    includes: ['Aromatherapy Massage', 'Luxury Facial', 'Body Scrub & Wrap', 'Manicure & Pedicure', 'Herbal Tea & Refreshments'],
   },
   {
-    name: 'Mens Grooming', desc: 'Complete grooming package for the modern man.',
-    items: ['Haircut & Styling', 'Facial', 'Beard Trim', 'Manicure', 'Head Massage'],
-    price: '₹1,999', savings: 'Save ₹800', duration: '2 hours',
-    gradient: 'linear-gradient(135deg, #2d5a4b, #4a9e7f)',
+    id: 'p3', name: 'Hair Transformation', category: 'Hair',
+    desc: 'Complete hair makeover for those looking to dramatically change their look.',
+    price: '₹9,999', originalPrice: '₹13,500', savings: '26%',
+    duration: '3-4 Hours', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80',
+    includes: ['Consultation', 'Hair Color/Highlights', 'Keratin Treatment', 'Signature Haircut', 'Blow-Dry & Styling', 'Hair Care Products'],
   },
   {
-    name: 'Spa Retreat', desc: 'Unwind and rejuvenate with our premium spa treatments.',
-    items: ['Aromatherapy Massage', 'Body Scrub', 'Steam Bath', 'Facial', 'Foot Reflexology'],
-    price: '₹3,499', savings: 'Save ₹1,500', duration: '3 hours',
-    gradient: 'linear-gradient(135deg, #4a0d25, #7C1D3E)',
+    id: 'p4', name: 'Beauty Essentials', category: 'Beauty',
+    desc: 'Curated collection of our most popular beauty services. Perfect for a complete pampering session.',
+    price: '₹5,500', originalPrice: '₹7,000', savings: '21%',
+    duration: '2 Hours', image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800&q=80',
+    includes: ['Luxury Facial', 'Manicure', 'Pedicure', 'Eyebrow Shaping', 'Makeup Touch-up'],
   },
   {
-    name: 'Party Ready', desc: 'Get red-carpet ready for your next event.',
-    items: ['Hairstyling', 'Makeup Application', 'Nail Art', 'False Lashes'],
-    price: '₹2,999', savings: 'Save ₹1,000', duration: '2.5 hours',
-    gradient: 'linear-gradient(135deg, #b83a6b, #d4a853)',
+    id: 'p5', name: 'Grooming Package', category: 'Grooming',
+    desc: 'Designed for the modern gentleman. Grooming services for a polished, confident look.',
+    price: '₹3,500', originalPrice: '₹4,800', savings: '27%',
+    duration: '90 min', image: 'https://images.unsplash.com/photo-1503951914875-452cb67b3cbe?w=800&q=80',
+    includes: ['Signature Haircut', 'Beard Styling', 'Facial', 'Head Massage', 'Shoe Shine'],
   },
   {
-    name: 'Wellness Combo', desc: 'Nourish your body and mind from head to toe.',
-    items: ['Full Body Massage', 'Facial', 'Pedicure', 'Hair Mask', 'Steam'],
-    price: '₹3,999', savings: 'Save ₹1,800', duration: '3 hours',
-    gradient: 'linear-gradient(135deg, #1a3a5c, #2d6a8f)',
+    id: 'p6', name: 'Wellness Retreat', category: 'Wellness',
+    desc: 'Holistic wellness package combining body treatments, relaxation therapies, and mindfulness.',
+    price: '₹12,000', originalPrice: '₹15,500', savings: '23%',
+    duration: '5 Hours', image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&q=80',
+    includes: ['Full Body Massage', 'Body Scrub', 'Body Wrap', 'Luxury Facial', 'Scalp Treatment', 'Herbal Steam', 'Wellness Tea & Snacks'],
   },
 ];
 
+const categories = ['All', 'Bridal', 'Spa', 'Hair', 'Beauty', 'Grooming', 'Wellness'];
+
 export default function PackagesPage() {
-  const { slug } = useParams() as { slug: string };
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const params = useParams();
+  const router = useRouter();
+  const slug = params?.slug as string;
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await apiUtil.get(ApiGetSalonBySlug(slug));
-        if (res?.dataResponse?.returnCode === eResultCode.SUCCESS) setSalon(res.data);
-        else setError('Salon not found');
-      } catch { setError('Failed to load'); }
-      finally { setLoading(false); }
-    })();
-  }, [slug]);
-
-  if (loading) return <div style={{ textAlign: 'center', padding: 100 }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '50px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
+  const filtered = activeCategory === 'All' ? packages : packages.filter((p) => p.category === activeCategory);
 
   return (
-    <div>
-      {/* Hero */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY} 0%, #4a0d25 50%, ${GOLD} 100%)`,
-        padding: '80px 16px', textAlign: 'center',
-      }}>
-        <Title style={{ color: '#fff', fontSize: 48, margin: 0, fontWeight: 700 }}>Packages</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 18, maxWidth: 600, margin: '16px auto 0' }}>
-          Carefully curated packages designed to give you the ultimate salon experience at unbeatable value.
-        </Paragraph>
-      </div>
+    <>
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=85" alt="Packages" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Our Packages</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Curated experiences designed to give you the ultimate luxury treatment at exceptional value.</p>
+        </div>
+      </section>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 16px' }}>
-        <Row gutter={[24, 24]}>
-          {packages.map(pkg => (
-            <Col xs={24} md={8} key={pkg.name}>
-              <div style={{
-                background: '#fff', borderRadius: 16, overflow: 'hidden',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08)', height: '100%',
-                display: 'flex', flexDirection: 'column',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,168,83,0.3)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)'; }}
-              >
-                {/* Gradient Top Bar */}
-                <div style={{ height: 8, background: pkg.gradient }} />
+      <section className={`luxe-section ${styles.categoriesSection}`}>
+        <div className="luxe-container-lg">
+          <div className={styles.filterRow}>
+            {categories.map((cat) => (
+              <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</button>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <Title level={3} style={{ color: BURGUNDY, margin: 0 }}>{pkg.name}</Title>
-                  <Paragraph style={{ color: '#666', fontSize: 14, margin: '8px 0 16px' }}>{pkg.desc}</Paragraph>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <Tag color="gold" style={{ borderRadius: 4 }}>{pkg.savings}</Tag>
-                    <Tag style={{ borderRadius: 4, border: `1px solid ${GOLD}`, color: BURGUNDY }}>{pkg.duration}</Tag>
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className="luxe-grid-3">
+            {filtered.map((pkg) => (
+              <div key={pkg.id} className={`luxe-package-card ${styles.card}`}>
+                <img src={pkg.image} alt={pkg.name} className={styles.cardImage} />
+                <div className={styles.cardBody}>
+                  {pkg.savings && <span className={`luxe-badge luxe-badge-discount ${styles.badge}`}>Save {pkg.savings}</span>}
+                  <h3 className={styles.cardTitle}>{pkg.name}</h3>
+                  <p className={`luxe-body-text ${styles.cardDesc}`}>{pkg.desc}</p>
+                  <div className={styles.priceRow}>
+                    <span className={`package-price ${styles.price}`}>₹{pkg.price.replace('₹', '')}<span>/{pkg.duration}</span></span>
+                    {pkg.originalPrice && <span className={styles.originalPrice}>{pkg.originalPrice}</span>}
                   </div>
-
-                  <div style={{ flex: 1, margin: '16px 0' }}>
-                    {pkg.items.map((item, i) => (
-                      <div key={i} style={{ padding: '6px 0', borderBottom: '1px solid rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span style={{ color: GOLD, fontSize: 12 }}>●</span>
-                        <span style={{ fontSize: 14, color: '#555' }}>{item}</span>
-                      </div>
+                  <ul className={`package-perks ${styles.perksList}`}>
+                    {pkg.includes.slice(0, 4).map((item) => (
+                      <li key={item}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-emerald)" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                        {item}
+                      </li>
                     ))}
-                  </div>
-
-                  <div style={{ borderTop: '1px solid rgba(212,168,83,0.15)', paddingTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 28, fontWeight: 700, color: BURGUNDY }}>{pkg.price}</span>
-                    <Link href={`/${slug}/book`}>
-                      <Button type="primary" style={{
-                        background: `linear-gradient(135deg, ${GOLD}, ${BURGUNDY})`,
-                        border: 'none', borderRadius: 6, fontWeight: 600,
-                      }}>
-                        Book Now
-                      </Button>
-                    </Link>
-                  </div>
+                    {pkg.includes.length > 4 && <li className={styles.moreItems}>+{pkg.includes.length - 4} more items</li>}
+                  </ul>
+                  <button onClick={() => router.push(`/${slug}/book?package=${pkg.id}`)} className={`luxe-btn luxe-btn-primary luxe-btn-lg ${styles.bookBtn}`}>Book This Package</button>
                 </div>
               </div>
-            </Col>
-          ))}
-        </Row>
-      </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY}, ${GOLD})`,
-        textAlign: 'center', padding: '60px 16px',
-      }}>
-        <Title level={2} style={{ color: '#fff', margin: 0 }}>Customize Your Own Package</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16, margin: '12px 0 24px' }}>
-          Can't find what you're looking for? We'll create a bespoke package just for you.
-        </Paragraph>
-        <Link href={`/${slug}/book`}>
-          <Button type="primary" size="large" style={{
-            height: 50, padding: '0 40px', fontSize: 16, fontWeight: 600,
-            background: '#fff', color: BURGUNDY, border: 'none', borderRadius: 6,
-          }}>
-            Get Started
-          </Button>
-        </Link>
-      </div>
-    </div>
+      <section className={`luxe-section ${styles.ctaSection}`}>
+        <div className="luxe-container-sm">
+          <h2 className="luxe-newsletter-title">Looking for a Custom Package?</h2>
+          <p className="luxe-newsletter-subtitle">Contact us for personalized packages tailored to your specific needs and preferences.</p>
+          <Link href={`/${slug}/contact`} className="luxe-btn luxe-btn-secondary luxe-btn-lg">Get in Touch</Link>
+        </div>
+      </section>
+    </>
   );
 }

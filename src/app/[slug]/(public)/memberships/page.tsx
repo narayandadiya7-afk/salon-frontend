@@ -1,188 +1,175 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Typography, Row, Col, Button, Spin, Alert, Tag } from 'antd';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import styles from './memberships.module.css';
 
-const { Title, Paragraph, Text } = Typography;
-
-const GOLD = '#d4a853';
-const BURGUNDY = '#7C1D3E';
-
-const tiers = [
+const plans = [
   {
-    name: 'Silver', price: '₹999', period: '/month', color: '#8a9ba8',
-    features: ['2 free services/month', '10% off all treatments', 'Free consultation', 'Priority scheduling'],
-    popular: false,
+    name: 'Silver',
+    price: '999',
+    period: 'month',
+    desc: 'Perfect for occasional visits. Enjoy great savings and priority access.',
+    featured: false,
+    perks: ['10% off all services', 'Priority booking', 'Free annual consultation', 'Birthday bonus treatment', 'Exclusive member offers'],
   },
   {
-    name: 'Gold', price: '₹1,999', period: '/month', color: GOLD,
-    features: ['5 free services/month', '20% off all treatments', 'Free consultation', 'Priority scheduling', 'Exclusive event invites', 'Free add-ons'],
-    popular: true,
+    name: 'Gold',
+    price: '1,999',
+    period: 'month',
+    desc: 'Our most popular plan. Significant savings for regular customers with added perks.',
+    featured: true,
+    perks: ['20% off all services', 'VIP priority booking', 'Free haircut every quarter', 'Free facial every quarter', 'Birthday bonus + gift', 'Exclusive events access', 'Guest pass (1/year)'],
   },
   {
-    name: 'Platinum', price: '₹3,999', period: '/month', color: '#e8e8e8',
-    features: ['Unlimited services', '30% off all treatments', 'Free consultation', 'VIP scheduling', 'Exclusive event invites', 'Free add-ons', 'Monthly gift', 'Dedicated stylist'],
-    popular: false,
+    name: 'Platinum',
+    price: '3,999',
+    period: 'month',
+    desc: 'The ultimate luxury experience. Unlimited benefits for our most valued customers.',
+    featured: false,
+    perks: ['30% off all services', 'VIP priority booking', 'Unlimited express services', 'Free treatment monthly', 'Free haircut monthly', 'Birthday bonus + gift', 'Exclusive events + previews', 'Guest pass (2/year)', 'Complimentary add-ons', 'Dedicated concierge'],
   },
 ];
 
 const comparisonRows = [
-  { label: 'Free Services', silver: '2/mo', gold: '5/mo', platinum: 'Unlimited' },
-  { label: 'Discount on Treatments', silver: '10%', gold: '20%', platinum: '30%' },
-  { label: 'Free Consultation', silver: 'Yes', gold: 'Yes', platinum: 'Yes' },
-  { label: 'Priority Scheduling', silver: 'No', gold: 'Yes', platinum: 'Yes' },
-  { label: 'Event Invites', silver: 'No', gold: 'Yes', platinum: 'Yes' },
-  { label: 'Monthly Gift', silver: 'No', gold: 'No', platinum: 'Yes' },
-  { label: 'Dedicated Stylist', silver: 'No', gold: 'No', platinum: 'Yes' },
+  { label: 'Monthly Fee', silver: '₹999', gold: '₹1,999', platinum: '₹3,999' },
+  { label: 'Service Discount', silver: '10%', gold: '20%', platinum: '30%' },
+  { label: 'Priority Booking', silver: true, gold: true, platinum: true },
+  { label: 'Free Haircut', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
+  { label: 'Free Facial', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
+  { label: 'Free Treatment', silver: false, gold: false, platinum: 'Monthly' },
+  { label: 'Birthday Bonus', silver: 'Treatment', gold: 'Treatment + Gift', platinum: 'Gift' },
+  { label: 'Guest Pass', silver: false, gold: '1/year', platinum: '2/year' },
+  { label: 'Events Access', silver: false, gold: true, platinum: true },
+  { label: 'Dedicated Concierge', silver: false, gold: false, platinum: true },
 ];
 
 export default function MembershipsPage() {
-  const { slug } = useParams() as { slug: string };
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await apiUtil.get(ApiGetSalonBySlug(slug));
-        if (res?.dataResponse?.returnCode === eResultCode.SUCCESS) setSalon(res.data);
-        else setError('Salon not found');
-      } catch { setError('Failed to load'); }
-      finally { setLoading(false); }
-    })();
-  }, [slug]);
-
-  if (loading) return <div style={{ textAlign: 'center', padding: 100 }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '50px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
-
-  const cellStyle = (isHeader = false) => ({
-    padding: '12px 16px', fontSize: 14,
-    borderBottom: '1px solid rgba(212,168,83,0.2)',
-    fontWeight: isHeader ? 700 : 400,
-    color: isHeader ? BURGUNDY : '#333',
-    background: isHeader ? 'rgba(212,168,83,0.08)' : 'transparent',
-  });
+  const params = useParams();
+  const router = useRouter();
+  const slug = params?.slug as string;
 
   return (
-    <div>
-      {/* Hero */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY} 0%, #4a0d25 50%, ${GOLD} 100%)`,
-        padding: '80px 16px', textAlign: 'center',
-      }}>
-        <Title style={{ color: '#fff', fontSize: 48, margin: 0, fontWeight: 700 }}>Memberships</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 18, maxWidth: 600, margin: '16px auto 0' }}>
-          Join our exclusive membership program and enjoy premium benefits all year round.
-        </Paragraph>
-      </div>
+    <>
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=85" alt="Memberships" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>LuxeClub Membership</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Join our membership program and enjoy exclusive benefits, discounts, and VIP treatment all year round.</p>
+        </div>
+      </section>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 16px' }}>
-        {/* Tier Cards */}
-        <Row gutter={[24, 24]} justify="center">
-          {tiers.map(tier => (
-            <Col xs={24} md={8} key={tier.name}>
-              <div style={{
-                background: '#fff', borderRadius: 16, overflow: 'hidden',
-                boxShadow: tier.popular ? '0 8px 40px rgba(212,168,83,0.25)' : '0 4px 20px rgba(0,0,0,0.08)',
-                border: tier.popular ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.06)',
-                position: 'relative', transition: 'transform 0.3s, box-shadow 0.3s',
-                height: '100%', display: 'flex', flexDirection: 'column',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,168,83,0.35)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = tier.popular ? '0 8px 40px rgba(212,168,83,0.25)' : '0 4px 20px rgba(0,0,0,0.08)'; }}
-              >
-                {tier.popular && (
-                  <div style={{
-                    position: 'absolute', top: 16, right: -30,
-                    background: GOLD, color: '#fff', padding: '4px 36px',
-                    transform: 'rotate(45deg)', fontSize: 12, fontWeight: 700, letterSpacing: 1,
-                  }}>
-                    POPULAR
-                  </div>
-                )}
-                <div style={{ padding: '40px 24px', textAlign: 'center', borderBottom: `1px solid rgba(212,168,83,0.15)` }}>
-                  <Title level={3} style={{ color: tier.color, margin: 0 }}>{tier.name}</Title>
-                  <div style={{ margin: '16px 0' }}>
-                    <span style={{ fontSize: 36, fontWeight: 700, color: BURGUNDY }}>{tier.price}</span>
-                    <span style={{ color: '#888', fontSize: 14 }}>{tier.period}</span>
-                  </div>
-                </div>
-                <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  {tier.features.map((f, i) => (
-                    <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ color: GOLD }}>✓</span>
-                      <span style={{ fontSize: 14, color: '#555' }}>{f}</span>
-                    </div>
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className="luxe-section-header">
+            <span className="luxe-section-overline">Choose Your Plan</span>
+            <h2 className="luxe-section-title">Find Your Perfect Membership</h2>
+            <p className="luxe-section-subtitle">All plans include priority booking and exclusive member benefits. Cancel anytime.</p>
+          </div>
+          <div className={`luxe-grid-3 ${styles.cardGrid}`}>
+            {plans.map((plan) => (
+              <div key={plan.name} className={`luxe-package-card ${plan.featured ? 'featured' : ''} ${styles.packageCard}`}>
+                {plan.featured && <div className="package-badge"><span className="luxe-badge luxe-badge-gold">Most Popular</span></div>}
+                <h3 className={styles.cardName}>{plan.name}</h3>
+                <p className={`luxe-body-text ${styles.cardDesc}`}>{plan.desc}</p>
+                <div className="package-price">₹{plan.price}<span>/{plan.period}</span></div>
+                <p className={styles.cardCancelText}>Cancel anytime • No hidden fees</p>
+                <ul className={`package-perks ${styles.cardPerks}`}>
+                  {plan.perks.map((p) => (
+                    <li key={p}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-emerald)" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                      {p}
+                    </li>
                   ))}
-                  <div style={{ marginTop: 'auto', paddingTop: 24 }}>
-                    <Link href={`/${slug}/book`}>
-                      <Button type="primary" size="large" block style={{
-                        height: 48, fontSize: 15, fontWeight: 600, borderRadius: 8,
-                        background: tier.popular ? `linear-gradient(135deg, ${GOLD}, ${BURGUNDY})` : BURGUNDY,
-                        border: 'none',
-                      }}>
-                        Get {tier.name}
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+                </ul>
+                <button onClick={() => router.push(`/${slug}/book?membership=${plan.name.toLowerCase()}`)} className={`luxe-btn luxe-btn-lg ${plan.featured ? 'luxe-btn-secondary' : 'luxe-btn-outline'} ${styles.cardBtn}`}>
+                  {plan.featured ? 'Start Gold Free Trial' : `Start ${plan.name} Free Trial`}
+                </button>
               </div>
-            </Col>
-          ))}
-        </Row>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {/* Comparison Table */}
-        <div style={{ marginTop: 60 }}>
-          <Title level={2} style={{ textAlign: 'center', color: BURGUNDY, marginBottom: 32 }}>Compare Plans</Title>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
+      {/* Comparison Table */}
+      <section className={`luxe-section ${styles.tableSection}`}>
+        <div className="luxe-container-lg">
+          <div className="luxe-section-header">
+            <span className="luxe-section-overline">Compare Plans</span>
+            <h2 className="luxe-section-title">Detailed Comparison</h2>
+          </div>
+          <div className={styles.tableWrapper}>
+            <table className={styles.table}>
               <thead>
-                <tr>
-                  <th style={cellStyle(true)}>Feature</th>
-                  <th style={cellStyle(true)}>Silver</th>
-                  <th style={cellStyle(true)}>Gold</th>
-                  <th style={cellStyle(true)}>Platinum</th>
+                <tr className={styles.tableHeaderRow}>
+                  <th className={styles.tableHeaderCell}>Benefits</th>
+                  <th className={styles.tableHeaderCellCenter}>Silver</th>
+                  <th className={styles.tableHeaderCellGold}>Gold</th>
+                  <th className={styles.tableHeaderCellCenter}>Platinum</th>
                 </tr>
               </thead>
               <tbody>
-                {comparisonRows.map(row => (
-                  <tr key={row.label}>
-                    <td style={cellStyle()}>{row.label}</td>
-                    <td style={cellStyle()}>{row.silver}</td>
-                    <td style={cellStyle()}>{row.gold}</td>
-                    <td style={cellStyle()}>{row.platinum}</td>
+                {comparisonRows.map((row, i) => (
+                  <tr key={row.label} className={styles.tableRow}>
+                    <td className={styles.tableLabelCell}>{row.label}</td>
+                    <td className={styles.tableDataCell}>{renderCell(row.silver)}</td>
+                    <td className={styles.tableDataCellGold}>{renderCell(row.gold)}</td>
+                    <td className={styles.tableDataCell}>{renderCell(row.platinum)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Benefits */}
+      <section className={`luxe-section ${styles.benefitsSection}`}>
+        <div className="luxe-container-lg">
+          <div className="luxe-section-header">
+            <span className="luxe-section-overline">Why Join?</span>
+            <h2 className="luxe-section-title">Membership Benefits</h2>
+          </div>
+          <div className="luxe-why-grid">
+            {[
+              { icon: '💰', title: 'Save Big', desc: 'Members save up to 30% on every service. The more you visit, the more you save.' },
+              { icon: '⭐', title: 'Priority Booking', desc: 'Skip the wait. Members get priority access to appointments including weekends and peak hours.' },
+              { icon: '🎁', title: 'Exclusive Rewards', desc: 'Birthday treats, seasonal gifts, and exclusive members-only events throughout the year.' },
+              { icon: '🆓', title: 'Free Services', desc: 'Depending on your plan, enjoy complimentary haircuts, facials, and treatments.' },
+              { icon: '👤', title: 'Dedicated Concierge', desc: 'Platinum members receive a personal concierge for effortless booking and personalized recommendations.' },
+              { icon: '📱', title: 'App Benefits', desc: 'Manage your membership, track loyalty points, and book appointments directly from your phone.' },
+            ].map((b) => (
+              <div key={b.title} className={`luxe-why-item ${styles.benefitItem}`}>
+                <div className={`luxe-why-icon ${styles.benefitIcon}`}>{b.icon}</div>
+                <div>
+                  <h3 className={`luxe-why-item-title ${styles.benefitTitle}`}>{b.title}</h3>
+                  <p className="luxe-why-item-desc">{b.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY}, ${GOLD})`,
-        textAlign: 'center', padding: '60px 16px',
-      }}>
-        <Title level={2} style={{ color: '#fff', margin: 0 }}>Start Saving Today</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16, margin: '12px 0 24px' }}>
-          Choose the plan that fits your lifestyle and unlock premium salon benefits.
-        </Paragraph>
-        <Link href={`/${slug}/book`}>
-          <Button type="primary" size="large" style={{
-            height: 50, padding: '0 40px', fontSize: 16, fontWeight: 600,
-            background: '#fff', color: BURGUNDY, border: 'none', borderRadius: 6,
-          }}>
-            Join Now
-          </Button>
-        </Link>
-      </div>
-    </div>
+      <section className="luxe-newsletter">
+        <div className="luxe-newsletter-content">
+          <h2 className="luxe-newsletter-title">Ready to Elevate Your Experience?</h2>
+          <p className="luxe-newsletter-subtitle">Start your free trial today. No commitment, cancel anytime.</p>
+          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Start Free Trial</button>
+        </div>
+      </section>
+    </>
   );
+}
+
+function renderCell(value: string | boolean) {
+  if (typeof value === 'boolean') {
+    return value
+      ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-emerald)" strokeWidth="2.5" className={styles.cellIcon}><path d="M20 6L9 17l-5-5"/></svg>
+      : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-text-tertiary)" strokeWidth="2" className={styles.cellIcon}><path d="M18 6L6 18M6 6l12 12"/></svg>;
+  }
+  return value;
 }

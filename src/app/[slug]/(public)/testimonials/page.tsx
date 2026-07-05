@@ -1,197 +1,84 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Avatar } from 'antd';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
-
-const { Title, Paragraph } = Typography;
-
-const GOLD = '#d4a853';
-const BURGUNDY = '#7C1D3E';
+import styles from './testimonials.module.css';
 
 const reviews = [
-  { name: 'Priya Sharma', rating: 5, text: 'Absolutely stunning service! The stylist understood exactly what I wanted. My new haircut has received so many compliments.', service: 'Haircut & Styling', avatar: 'PS' },
-  { name: 'Ananya Patel', rating: 5, text: 'The bridal package was incredible. From the facial to the makeup, everything was perfect. Made me feel like a queen on my big day!', service: 'Bridal Package', avatar: 'AP' },
-  { name: 'Rahul Verma', rating: 4, text: 'Great grooming experience. The beard trim and facial were top-notch. Will definitely come back for the full grooming package.', service: 'Mens Grooming', avatar: 'RV' },
-  { name: 'Neha Gupta', rating: 5, text: 'Best spa experience in town! The aromatherapy massage was incredibly relaxing. The ambiance is so peaceful and calming.', service: 'Spa Retreat', avatar: 'NG' },
-  { name: 'Kavita Reddy', rating: 4, text: 'Loved the nail art! The artist was very creative and patient. My nails looked gorgeous for weeks. Highly recommend!', service: 'Nail Art', avatar: 'KR' },
-  { name: 'Arjun Mehta', rating: 5, text: 'Professional, punctual, and premium service. The attention to detail is remarkable. This is now my go-to salon.', service: 'Hair Treatment', avatar: 'AM' },
-  { name: 'Sneha Kapoor', rating: 4, text: 'Great facial that left my skin glowing for days. The esthetician recommended a perfect skincare routine for my skin type.', service: 'Facial', avatar: 'SK' },
-  { name: 'Vikram Singh', rating: 5, text: 'The membership program is fantastic value. I save so much every month and the priority scheduling is a game-changer.', service: 'Membership', avatar: 'VS' },
+  { id: 'r1', name: 'Neha Gupta', text: 'Absolutely stunning results! The team at LuxeStudio transformed my look completely. The attention to detail is remarkable. I have never felt more confident.', rating: 5, service: 'Signature Haircut', date: '2 weeks ago', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80' },
+  { id: 'r2', name: 'Sneha Reddy', text: 'I have been coming here for years. The consistency in quality and service is unmatched. Best salon in the city. Priya is a magician with scissors!', rating: 5, service: 'Hair Color & Highlights', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80' },
+  { id: 'r3', name: 'Arjun Mehta', text: 'As a groom, I wanted to look my best on my wedding day. Rohit gave me the perfect cut and beard style. The hot towel shave was incredible. Highly recommend!', rating: 5, service: 'Classic Cut & Shave', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80' },
+  { id: 'r4', name: 'Kavita Desai', text: 'The bridal package was worth every penny. My makeup lasted all day and I felt like a queen. Sophia understood exactly what I wanted. Thank you, LuxeStudio!', rating: 5, service: 'Bridal Makeup', date: '2 months ago', avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&q=80' },
+  { id: 'r5', name: 'Ritu Agarwal', text: 'The keratin treatment changed my hair completely. So smooth and manageable now. The staff is incredibly professional and the salon ambiance is top-notch.', rating: 5, service: 'Keratin Treatment', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80' },
+  { id: 'r6', name: 'Divya Kumar', text: 'Ananya gave me the best facial I have ever had. My skin was glowing for weeks. The organic products they use make a noticeable difference.', rating: 5, service: 'Luxury Facial', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80' },
+  { id: 'r7', name: 'Vikram Joshi', text: 'Great barber shop experience. Rohit really knows his craft. The attention to detail in the beard shaping is exceptional. Will definitely be coming back.', rating: 5, service: 'Beard Styling', date: '1 week ago', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80' },
+  { id: 'r8', name: 'Pooja Sharma', text: 'Maya did incredible nail art for my sister\'s wedding. Everyone was asking where I got them done. The gel extensions looked so natural and lasted for weeks.', rating: 5, service: 'Gel Extensions', date: '2 weeks ago', avatar: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=100&q=80' },
+  { id: 'r9', name: 'Anita Menon', text: 'The spa escape package was exactly what I needed. A full day of pure relaxation. The massage was heavenly and the facial left my skin radiant.', rating: 5, service: 'Spa Escape Package', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1598346762291-aee88549193f?w=100&q=80' },
+  { id: 'r10', name: 'Rahul Kapoor', text: 'I am particular about my hair and Vikram exceeded my expectations. The balayage looks natural and the color is perfect. Finally found my go-to salon.', rating: 5, service: 'Balayage', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80' },
 ];
-
-const ratingDistribution = [
-  { stars: 5, count: 45, pct: 56 },
-  { stars: 4, count: 22, pct: 28 },
-  { stars: 3, count: 8, pct: 10 },
-  { stars: 2, count: 3, pct: 4 },
-  { stars: 1, count: 2, pct: 2 },
-];
-
-const videoTestimonials = [
-  { name: 'Client Story 1', desc: '"I found my forever salon!"', color: BURGUNDY },
-  { name: 'Client Story 2', desc: '"The bridal team is magical"', color: GOLD },
-  { name: 'Client Story 3', desc: '"Best grooming experience"', color: '#2d5a4b' },
-];
-
-const totalReviews = 80;
-const avgRating = 4.6;
 
 export default function TestimonialsPage() {
-  const { slug } = useParams() as { slug: string };
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await apiUtil.get(ApiGetSalonBySlug(slug));
-        if (res?.dataResponse?.returnCode === eResultCode.SUCCESS) setSalon(res.data);
-        else setError('Salon not found');
-      } catch { setError('Failed to load'); }
-      finally { setLoading(false); }
-    })();
-  }, [slug]);
-
-  if (loading) return <div style={{ textAlign: 'center', padding: 100 }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '50px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
+  const [showAll, setShowAll] = useState(false);
+  const displayed = showAll ? reviews : reviews.slice(0, 6);
 
   return (
-    <div>
-      {/* Hero with Stats */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY} 0%, #4a0d25 50%, ${GOLD} 100%)`,
-        padding: '80px 16px', textAlign: 'center',
-      }}>
-        <Title style={{ color: '#fff', fontSize: 48, margin: 0, fontWeight: 700 }}>Testimonials</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 18, maxWidth: 600, margin: '16px auto 32px' }}>
-          Hear what our clients have to say about their salon experience.
-        </Paragraph>
-        <Row gutter={48} justify="center">
-          <Col>
-            <div style={{ fontSize: 40, fontWeight: 700, color: GOLD }}>{totalReviews}</div>
-            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14 }}>Total Reviews</div>
-          </Col>
-          <Col>
-            <div style={{ fontSize: 40, fontWeight: 700, color: GOLD }}>{avgRating}</div>
-            <Rate disabled value={Math.round(avgRating)} style={{ fontSize: 16, color: GOLD }} />
-            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14 }}>Average Rating</div>
-          </Col>
-          <Col>
-            <div style={{ fontSize: 40, fontWeight: 700, color: GOLD }}>98%</div>
-            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14 }}>Satisfaction Rate</div>
-          </Col>
-        </Row>
-      </div>
-
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 16px' }}>
-        {/* Rating Summary */}
-        <Row gutter={[48, 32]} style={{ marginBottom: 48 }}>
-          <Col xs={24} md={10}>
-            <Title level={2} style={{ color: BURGUNDY }}>Rating Breakdown</Title>
-            {ratingDistribution.map(r => (
-              <div key={r.stars} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                <span style={{ width: 40, fontSize: 14, color: '#555' }}>{r.stars} ★</span>
-                <div style={{ flex: 1, height: 10, background: '#f0f0f0', borderRadius: 5, overflow: 'hidden' }}>
-                  <div style={{ width: `${r.pct}%`, height: '100%', background: GOLD, borderRadius: 5 }} />
-                </div>
-                <span style={{ width: 40, fontSize: 13, color: '#888', textAlign: 'right' }}>{r.count}</span>
-              </div>
-            ))}
-          </Col>
-          <Col xs={24} md={14}>
-            <div style={{ background: 'rgba(212,168,83,0.08)', borderRadius: 16, padding: 32, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <Title level={3} style={{ color: BURGUNDY, margin: 0 }}>What Our Clients Say</Title>
-              <Paragraph style={{ color: '#555', fontSize: 16, fontStyle: 'italic', margin: '16px 0 8px' }}>
-                "The attention to detail and quality of service is unmatched. Every visit leaves me feeling pampered and refreshed. I wouldn't trust anyone else with my hair and skincare needs."
-              </Paragraph>
-              <div style={{ color: GOLD, fontWeight: 600 }}>— Verified Client</div>
-            </div>
-          </Col>
-        </Row>
-
-        {/* Review Cards Grid */}
-        <Title level={2} style={{ color: BURGUNDY, textAlign: 'center', marginBottom: 32 }}>Client Reviews</Title>
-        <Row gutter={[24, 24]}>
-          {reviews.map((review, i) => (
-            <Col xs={24} md={12} lg={6} key={i}>
-              <div style={{
-                background: '#fff', borderRadius: 12, padding: 24,
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)', height: '100%',
-                border: '1px solid rgba(212,168,83,0.1)',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(212,168,83,0.2)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.06)'; }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                  <Avatar style={{ background: GOLD, color: '#fff', fontWeight: 700 }}>{review.avatar}</Avatar>
-                  <div>
-                    <div style={{ fontWeight: 600, color: BURGUNDY, fontSize: 14 }}>{review.name}</div>
-                    <Rate disabled value={review.rating} style={{ fontSize: 12, color: GOLD }} />
-                  </div>
-                </div>
-                <Paragraph style={{ color: '#555', fontSize: 13, margin: '8px 0', lineHeight: 1.6 }}>
-                  "{review.text}"
-                </Paragraph>
-                <Tag style={{ borderRadius: 4, border: `1px solid ${GOLD}`, color: BURGUNDY, fontSize: 11 }}>{review.service}</Tag>
-              </div>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Video Testimonials */}
-        <div style={{ marginTop: 60 }}>
-          <Title level={2} style={{ color: BURGUNDY, textAlign: 'center', marginBottom: 32 }}>Video Testimonials</Title>
-          <Row gutter={[24, 24]} justify="center">
-            {videoTestimonials.map((v, i) => (
-              <Col xs={24} md={8} key={i}>
-                <div style={{
-                  height: 220, borderRadius: 16, display: 'flex',
-                  flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  background: v.color, cursor: 'pointer', position: 'relative',
-                  transition: 'transform 0.3s',
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-                >
-                  <div style={{
-                    width: 60, height: 60, borderRadius: '50%',
-                    background: 'rgba(255,255,255,0.25)', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center', marginBottom: 16,
-                  }}>
-                    <span style={{ color: '#fff', fontSize: 24 }}>▶</span>
-                  </div>
-                  <div style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>{v.name}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, marginTop: 4 }}>{v.desc}</div>
-                </div>
-              </Col>
-            ))}
-          </Row>
+    <>
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=1920&q=85" alt="Testimonials" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Customer Testimonials</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Hear from our customers about their LuxeStudio experience.</p>
         </div>
-      </div>
+      </section>
 
-      {/* Google Reviews CTA */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY}, ${GOLD})`,
-        textAlign: 'center', padding: '60px 16px',
-      }}>
-        <Title level={2} style={{ color: '#fff', margin: 0 }}>Leave Us a Review</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16, margin: '12px 0 24px' }}>
-          Loved your experience? Share it on Google and help others discover us!
-        </Paragraph>
-        <Button type="primary" size="large" style={{
-          height: 50, padding: '0 40px', fontSize: 16, fontWeight: 600,
-          background: '#fff', color: BURGUNDY, border: 'none', borderRadius: 6,
-        }}>
-          Write a Google Review
-        </Button>
-      </div>
-    </div>
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className={styles.grid}>
+            {displayed.map((review) => (
+              <div key={review.id} className="luxe-review-card">
+                <div className="review-stars">
+                  {Array.from({ length: review.rating }).map((_, i) => (
+                    <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  ))}
+                </div>
+                <div className="review-text">&ldquo;{review.text}&rdquo;</div>
+                <div className="review-author">
+                  <img src={review.avatar} alt={review.name} className="review-avatar" />
+                  <div>
+                    <div className="review-name">{review.name}</div>
+                    <div className="review-service">{review.service} • {review.date}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {!showAll && reviews.length > 6 && (
+            <div className={styles.showAllWrapper}>
+              <button className="luxe-btn luxe-btn-outline luxe-btn-lg" onClick={() => setShowAll(true)}>
+                Show All Reviews ({reviews.length})
+              </button>
+            </div>
+          )}
+
+          {/* Stats */}
+          <div className={styles.statsGrid}>
+            <div>
+              <div className={styles.statNumber}>4.9★</div>
+              <div className="luxe-caption">Average Rating</div>
+            </div>
+            <div>
+              <div className={styles.statNumber}>2.5K+</div>
+              <div className="luxe-caption">Verified Reviews</div>
+            </div>
+            <div>
+              <div className={styles.statNumber}>98%</div>
+              <div className="luxe-caption">Would Recommend</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

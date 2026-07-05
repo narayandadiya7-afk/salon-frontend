@@ -1,164 +1,226 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Divider, Card, Space } from 'antd';
-import { RightOutlined, ClockCircleOutlined, ShoppingCartOutlined, StarFilled } from '@ant-design/icons';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import Link from 'next/link';
+import styles from './services.module.css';
 
-const { Title, Text, Paragraph } = Typography;
-const gold = '#d4a853';
-const burgundy = '#7C1D3E';
+const allServices = [
+  { id: '1', category: 'Hair', name: 'Signature Haircut', desc: 'Precision cut tailored to your face shape and hair texture with a relaxing shampoo and blow-dry.', duration: '60 min', price: '₹2,500', rating: 4.9, reviews: 128, image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80' },
+  { id: '2', category: 'Hair', name: 'Keratin Treatment', desc: 'Professional smoothing treatment that eliminates frizz and adds incredible shine for up to 3 months.', duration: '120 min', price: '₹5,500', rating: 4.8, reviews: 96, image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80' },
+  { id: '3', category: 'Hair', name: 'Hair Color & Highlights', desc: 'Professional color application for vibrant, long-lasting results.', duration: '150 min', price: '₹4,500', rating: 4.7, reviews: 203, image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80' },
+  { id: '4', category: 'Hair', name: 'Hair Spa Treatment', desc: 'Deep conditioning treatment with hot oil massage for damaged and dry hair.', duration: '45 min', price: '₹1,800', rating: 4.8, reviews: 167, image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?w=600&q=80' },
+  { id: '5', category: 'Hair', name: 'Blow-Dry & Styling', desc: 'Professional blow-dry with volumizing products and heat protection.', duration: '45 min', price: '₹1,200', rating: 4.9, reviews: 342, image: 'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=600&q=80' },
+  { id: '6', category: 'Skin', name: 'Luxury Facial', desc: 'Deep-cleansing facial tailored to your skin type.', duration: '75 min', price: '₹3,200', rating: 4.9, reviews: 214, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80' },
+  { id: '7', category: 'Skin', name: 'Chemical Peel', desc: 'Medical-grade chemical peel to reduce fine lines, acne scars, and hyperpigmentation.', duration: '60 min', price: '₹4,000', rating: 4.8, reviews: 89, image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80' },
+  { id: '8', category: 'Skin', name: 'Microdermabrasion', desc: 'Non-invasive exfoliation treatment for smoother, brighter skin.', duration: '45 min', price: '₹2,800', rating: 4.7, reviews: 156, image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80' },
+  { id: '9', category: 'Nails', name: 'Manicure & Pedicure', desc: 'Luxury nail care with paraffin wax treatment and essential oil massage.', duration: '90 min', price: '₹1,800', rating: 4.7, reviews: 342, image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80' },
+  { id: '10', category: 'Nails', name: 'Gel Extension', desc: 'Professional gel nail extensions with custom art and design.', duration: '120 min', price: '₹2,500', rating: 4.8, reviews: 198, image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80' },
+  { id: '11', category: 'Makeup', name: 'Bridal Makeup', desc: 'Complete bridal look with trial session, HD makeup, and touch-up kit.', duration: '180 min', price: '₹12,000', rating: 5.0, reviews: 67, image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80' },
+  { id: '12', category: 'Makeup', name: 'Party Makeup', desc: 'Glamorous evening makeup with long-wear products.', duration: '60 min', price: '₹3,500', rating: 4.9, reviews: 234, image: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80' },
+  { id: '13', category: 'Spa', name: 'Aromatherapy Massage', desc: 'Full-body massage with essential oils to relieve stress and tension.', duration: '90 min', price: '₹4,000', rating: 4.9, reviews: 178, image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80' },
+  { id: '14', category: 'Spa', name: 'Body Scrub & Wrap', desc: 'Exfoliating body treatment with seaweed wrap and hydrating mask.', duration: '75 min', price: '₹3,500', rating: 4.8, reviews: 123, image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80' },
+];
 
-const servicesData = [
-  { id: 's1', name: 'Classic Haircut', price: 45, duration: 45, description: 'Precision cut tailored to your face shape and style preferences. Includes consultation, wash, and styling.', rating: 4.8, category: 'Hair', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop' },
-  { id: 's2', name: 'Color & Highlights', price: 120, duration: 120, description: 'Professional color services with premium products for vibrant, long-lasting results.', rating: 4.9, category: 'Color', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=400&fit=crop' },
-  { id: 's3', name: 'Luxury Facial', price: 85, duration: 60, description: 'Rejuvenating facial treatment using organic products for radiant, glowing skin.', rating: 4.7, category: 'Skin', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=400&fit=crop' },
-  { id: 's4', name: 'Spa Manicure', price: 55, duration: 45, description: 'Luxurious hand treatment with exfoliation, mask, and premium polish finish.', rating: 4.6, category: 'Nails', image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=400&fit=crop' },
-  { id: 's5', name: 'Blowout & Styling', price: 65, duration: 50, description: 'Professional blow-dry and styling for any occasion — from everyday chic to red carpet glam.', rating: 4.8, category: 'Hair', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=400&fit=crop' },
-  { id: 's6', name: 'Keratin Treatment', price: 200, duration: 150, description: 'Smoothing treatment that eliminates frizz, reduces volume, and adds brilliant shine for weeks.', rating: 4.9, category: 'Hair', image: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&h=400&fit=crop' },
-  { id: 's7', name: 'Deep Tissue Massage', price: 110, duration: 60, description: 'Therapeutic massage targeting muscle tension and stress relief for total relaxation.', rating: 4.8, category: 'Wellness', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop' },
-  { id: 's8', name: 'Bridal Package', price: 350, duration: 240, description: 'Complete bridal package including trial, hair, makeup, and nail services for your special day.', rating: 5.0, category: 'Packages', image: 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&h=400&fit=crop' },
+const categories = ['All', 'Hair', 'Skin', 'Nails', 'Makeup', 'Spa'];
+
+const packagesData = [
+  {
+    id: 'pk1', name: 'Date Night Ready', price: 175, original: 210, popular: false,
+    services: [
+      { name: 'Blowout & Styling', duration: '50 min', price: 65, image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&h=200&fit=crop' },
+      { name: 'Gel Manicure', duration: '45 min', price: 55, image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=200&h=200&fit=crop' },
+      { name: 'Lip & Brow Wax', duration: '20 min', price: 35, image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=200&h=200&fit=crop' },
+    ],
+  },
+  {
+    id: 'pk2', name: 'Total Transformation', price: 320, original: 395, popular: true,
+    services: [
+      { name: 'Haircut & Color', duration: '150 min', price: 165, image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=200&h=200&fit=crop' },
+      { name: 'Luxury Facial', duration: '60 min', price: 85, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&h=200&fit=crop' },
+      { name: 'Spa Manicure & Pedicure', duration: '90 min', price: 95, image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=200&h=200&fit=crop' },
+    ],
+  },
+  {
+    id: 'pk3', name: 'Ultimate Spa Day', price: 495, original: 620, popular: false,
+    services: [
+      { name: 'Signature Massage', duration: '60 min', price: 110, image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=200&h=200&fit=crop' },
+      { name: 'Luxury Facial', duration: '60 min', price: 85, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&h=200&fit=crop' },
+      { name: 'Spa Pedicure', duration: '60 min', price: 75, image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=200&h=200&fit=crop' },
+      { name: 'Scalp Treatment', duration: '45 min', price: 65, image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?w=200&h=200&fit=crop' },
+      { name: 'Champagne Service', duration: '30 min', price: 45, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c1fce?w=200&h=200&fit=crop' },
+    ],
+  },
 ];
 
 export default function ServicesPage() {
-  const router = useRouter();
   const params = useParams();
+  const router = useRouter();
   const slug = params?.slug as string;
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    apiUtil.get(ApiGetSalonBySlug(slug)).then((res: any) => {
-      if (res?.dataResponse?.returnCode === eResultCode.SUCCESS || res?.dataResponse?.returnCode === eResultCode.CREATED) {
-        setSalon(res.data || res);
-      } else {
-        setError('Salon not found');
-      }
-    }).catch(() => setError('Failed to load page')).finally(() => setLoading(false));
-  }, [slug]);
-
-  const categories = useMemo(() => {
-    return ['All', ...new Set(servicesData.map((s) => s.category))];
-  }, []);
-
-  const filteredServices = useMemo(() => {
-    if (activeCategory === 'All') return servicesData;
-    return servicesData.filter((s) => s.category === activeCategory);
-  }, [activeCategory]);
-
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
-  if (!salon) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title="Salon not found" type="warning" showIcon /></div>;
+  const filtered = allServices.filter((s) => {
+    const matchCategory = activeCategory === 'All' || s.category === activeCategory;
+    const matchSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.desc.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchCategory && matchSearch;
+  });
 
   return (
-    <div>
-      {/* HERO */}
-      <section style={{ padding: '120px 20px 80px', background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%)', textAlign: 'center' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <Title style={{ color: '#fff', fontSize: 48, fontWeight: 800, margin: 0 }}>Our Services</Title>
-          <div style={{ width: 60, height: 3, background: gold, margin: '20px auto' }} />
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, display: 'block', marginBottom: 32 }}>
-            Premium beauty and grooming services tailored to your needs
-          </Text>
-          <Button type="primary" size="large" onClick={() => router.push(`/${slug}/book`)}
-            style={{ height: 48, paddingInline: 36, fontSize: 16, fontWeight: 600, background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30 }}>
-            Book Appointment
-          </Button>
+    <>
+      {/* Hero */}
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=85" alt="Services" />
+        </div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Our Services</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Discover our comprehensive range of beauty services</p>
         </div>
       </section>
 
-      {/* CATEGORY FILTER */}
-      <section style={{ padding: '40px 20px', background: '#fff' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
-          <Space wrap>
-            {categories.map((cat) => (
-              <Tag key={cat} onClick={() => setActiveCategory(cat)}
-                style={{
-                  padding: '6px 20px',
-                  borderRadius: 20,
-                  fontSize: 14,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  background: activeCategory === cat ? gold : '#f5f5f5',
-                  color: activeCategory === cat ? '#1a1a2e' : '#666',
-                  border: 'none',
-                }}>
-                {cat}
-              </Tag>
-            ))}
-          </Space>
+      {/* Filters */}
+      <section className={`luxe-section ${styles.filters}`}>
+        <div className="luxe-container-lg">
+          <div className={styles.filterBar}>
+            <div className={styles.filterChips}>
+              {categories.map((cat) => (
+                <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <div className={`luxe-search ${styles.searchWrapper}`}>
+              <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input className={`luxe-input ${styles.searchInputField}`} placeholder="Search services..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* SERVICES GRID */}
-      <section style={{ padding: '40px 20px 100px', background: '#faf8f5' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Row gutter={[24, 24]}>
-            {filteredServices.map((svc) => (
-              <Col key={svc.id} xs={24} sm={12} md={6}>
-                <Card
-                  hoverable
-                  style={{ borderRadius: 16, overflow: 'hidden', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', height: '100%' }}
-                  cover={
-                    <div style={{ height: 180, background: `url(${svc.image}) center/cover`, position: 'relative' }}>
-                      <div style={{ position: 'absolute', top: 12, right: 12, background: gold, color: '#1a1a2e', padding: '4px 14px', borderRadius: 20, fontSize: 14, fontWeight: 700 }}>${svc.price}</div>
-                      <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '4px 10px', borderRadius: 20, fontSize: 12 }}>
-                        <ClockCircleOutlined /> {svc.duration} min
-                      </div>
+      {/* Services Grid */}
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          {filtered.length > 0 ? (
+            <div className="luxe-grid-3">
+              {filtered.map((s) => (
+                <div key={s.id} className="luxe-service-card" onClick={() => router.push(`/${slug}/services/${s.id}`)}>
+                  <div className="card-image-wrap">
+                    <img src={s.image} alt={s.name} />
+                    <div className="card-price-badge">{s.price}</div>
+                    <div className="card-quick-book">
+                      <button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?service=${s.id}`); }} className="luxe-btn luxe-btn-primary luxe-btn-sm">
+                        Book Now
+                      </button>
                     </div>
-                  }
-                >
-                  <div style={{ marginBottom: 6 }}>
-                    <Tag style={{ borderRadius: 12, fontSize: 11, border: 'none', background: '#f0f0f0', color: '#666' }}>{svc.category}</Tag>
                   </div>
-                  <Title level={5} style={{ margin: '0 0 4px' }}>{svc.name}</Title>
-                  <div style={{ marginBottom: 6 }}>
-                    <Rate disabled value={svc.rating} style={{ fontSize: 13 }} />
-                    <Text style={{ color: '#999', fontSize: 12, marginLeft: 4 }}>{svc.rating}</Text>
+                  <div className="luxe-card-body">
+                    <span className={`luxe-badge luxe-badge-light ${styles.cardBadge}`}>{s.category}</span>
+                    <h3 className={styles.cardTitle}>{s.name}</h3>
+                    <p className={`luxe-body-text ${styles.cardDesc}`}>{s.desc}</p>
+                    <div className={styles.cardFooter}>
+                      <span className="luxe-card-duration">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        {s.duration}
+                      </span>
+                      <span className="luxe-card-rating">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        {s.rating} <span className={styles.reviewCount}>({s.reviews})</span>
+                      </span>
+                    </div>
                   </div>
-                  <Paragraph style={{ color: '#666', fontSize: 13, margin: '0 0 12px' }} ellipsis={{ rows: 2 }}>
-                    {svc.description}
-                  </Paragraph>
-                  <Button type="primary" block onClick={() => router.push(`/${slug}/book?service=${svc.id}`)}
-                    style={{ background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-                    Book Now <RightOutlined />
-                  </Button>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          {filteredServices.length === 0 && (
-            <div style={{ textAlign: 'center', padding: 60 }}>
-              <Text style={{ color: '#999', fontSize: 16 }}>No services found in this category.</Text>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="luxe-empty">
+              <div className="luxe-empty-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              </div>
+              <h3 className="luxe-empty-title">No services found</h3>
+              <p className="luxe-empty-desc">Try adjusting your search or filter to find what you are looking for.</p>
+              <button className="luxe-btn luxe-btn-outline" onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}>Clear Filters</button>
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: '80px 20px', background: `linear-gradient(135deg, ${burgundy} 0%, #a02d52 100%)`, textAlign: 'center' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <Title level={2} style={{ color: '#fff', margin: 0, fontSize: 32 }}>Ready to Experience Luxury?</Title>
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16, display: 'block', margin: '16px 0 32px' }}>
-            Book your appointment today and let our experts take care of the rest.
-          </Text>
-          <Button type="primary" size="large" onClick={() => router.push(`/${slug}/book`)}
-            style={{ height: 48, paddingInline: 36, fontSize: 16, fontWeight: 600, background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30 }}>
-            Book Appointment
-          </Button>
+      {/* Packages */}
+      <section className={`luxe-section ${styles.sectionAlt}`}>
+        <div className="luxe-container-lg">
+          <div className="luxe-section-header">
+            <span className="luxe-section-overline">Curated Collections</span>
+            <h2 className="luxe-section-title">Luxury Packages</h2>
+            <p className="luxe-section-subtitle">Handpicked combinations for the ultimate salon experience. Save more when you bundle.</p>
+            <div className="luxe-divider" />
+          </div>
+          <div className="luxe-grid-3">
+            {packagesData.map((pkg) => {
+              const savings = Math.round((1 - pkg.price / pkg.original) * 100);
+              return (
+                <div key={pkg.id} className="luxe-package-card" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+                  {pkg.popular && <span className="package-badge"><span className="luxe-badge luxe-badge-gold">Best Value</span></span>}
+
+                  <div style={{ marginBottom: 'var(--space-5)' }}>
+                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 600, margin: 0 }}>{pkg.name}</h4>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
+                    {pkg.services.map((svc, i) => (
+                      <div key={i} style={{
+                        display: 'flex', alignItems: 'center', gap: 'var(--space-3)',
+                        padding: 'var(--space-2) var(--space-3)', borderRadius: 'var(--radius-xl)',
+                        background: 'var(--luxe-ivory)',
+                      }}>
+                        <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-lg)', overflow: 'hidden', flexShrink: 0 }}>
+                          <img src={svc.image} alt={svc.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--luxe-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{svc.name}</div>
+                          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--luxe-text-tertiary)', display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            {svc.duration}
+                          </div>
+                        </div>
+                        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--luxe-text)', flexShrink: 0 }}>${svc.price}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 'var(--space-2)', justifyContent: 'flex-end',
+                    padding: 'var(--space-2) var(--space-3)', marginBottom: 'var(--space-4)',
+                    fontSize: 'var(--text-sm)', color: 'var(--luxe-text-tertiary)',
+                    borderTop: '1px solid var(--luxe-border-light)',
+                    marginTop: 'auto',
+                  }}>
+                    <span>Total value</span>
+                    <span style={{ textDecoration: 'line-through', color: 'var(--luxe-text-tertiary)' }}>${pkg.original}</span>
+                    <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--luxe-gold)' }}>${pkg.price}</span>
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: '#fff', background: 'var(--luxe-emerald)', padding: '2px 8px', borderRadius: 'var(--radius-full)' }}>Save {savings}%</span>
+                  </div>
+
+                  <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-primary luxe-btn-md" style={{ width: '100%' }}>
+                    Select Package
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <style>{`
-        .ant-card-hoverable:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1) !important; }
-      `}</style>
-    </div>
+      {/* CTA */}
+      <section className={`luxe-section ${styles.ctaSection}`}>
+        <div className={`luxe-container-sm ${styles.ctaContent}`}>
+          <h2 className="luxe-section-title">Ready to Transform?</h2>
+          <p className={`luxe-section-subtitle ${styles.ctaSubtitle}`}>Book your appointment today and experience the difference.</p>
+          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">
+            Book Appointment
+          </button>
+        </div>
+      </section>
+    </>
   );
 }

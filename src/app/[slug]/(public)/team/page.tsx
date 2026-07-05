@@ -1,177 +1,120 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import styles from './team.module.css';
 import { useParams, useRouter } from 'next/navigation';
-import { Typography, Row, Col, Button, Spin, Alert, Rate, Tag, Avatar, Divider, Card, Space } from 'antd';
-import { RightOutlined, TeamOutlined, StarFilled, TrophyOutlined, UserOutlined, HeartOutlined } from '@ant-design/icons';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import Link from 'next/link';
 
-const { Title, Text, Paragraph } = Typography;
-const gold = '#d4a853';
-const burgundy = '#7C1D3E';
-
-const teamData = [
-  {
-    id: 't1', name: 'Sophia Williams', role: 'Master Stylist', rating: 4.9,
-    bio: 'With 15+ years of experience, Sophia specializes in precision cuts and creative coloring. Her artistic eye and meticulous attention to detail have made her one of the most sought-after stylists in the city.',
-    specialties: ['Precision Cuts', 'Creative Color', 'Editorial Styling'],
-    avatar: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't2', name: 'James Rodriguez', role: 'Senior Colorist', rating: 4.8,
-    bio: 'James is an award-winning colorist known for his innovative techniques and balayage mastery. He stays at the forefront of global color trends and brings fresh perspectives to every client.',
-    specialties: ['Balayage', 'Ombre', 'Color Correction', ' fashion colors'],
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't3', name: 'Emily Chen', role: 'Lead Esthetician', rating: 4.7,
-    bio: 'Emily brings holistic skincare expertise with training from top luxury spas worldwide. Her customized facials and treatments deliver visible, lasting results.',
-    specialties: ['Custom Facials', 'Chemical Peels', 'Microdermabrasion', 'Waxing'],
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't4', name: 'Marcus Johnson', role: 'Master Barber', rating: 4.9,
-    bio: 'Marcus has been perfecting his craft for over a decade, specializing in precision fades, traditional hot towel shaves, and modern barbering techniques.',
-    specialties: ['Fade Cuts', 'Beard Sculpting', 'Hot Towel Shave', 'Clipper Work'],
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't5', name: 'Olivia Martinez', role: 'Nail Artist', rating: 4.8,
-    bio: 'Olivia is a creative nail artist who transforms fingertips into works of art. She specializes in intricate nail art, gel extensions, and luxury manicures.',
-    specialties: ['Nail Art', 'Gel Extensions', 'Spa Manicure', '3D Design'],
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't6', name: 'David Kim', role: 'Massage Therapist', rating: 4.7,
-    bio: 'David is a licensed massage therapist with expertise in deep tissue, sports massage, and aromatherapy. He helps clients find relief from tension and stress.',
-    specialties: ['Deep Tissue', 'Sports Massage', 'Aromatherapy', 'Hot Stone'],
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't7', name: 'Amara Okafor', role: 'Makeup Artist', rating: 4.9,
-    bio: 'Amara is a professional makeup artist with experience in bridal, editorial, and special effects makeup. Her ability to enhance natural beauty is unmatched.',
-    specialties: ['Bridal Makeup', 'Airbrush', 'Editorial', 'Skincare Prep'],
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop',
-  },
-  {
-    id: 't8', name: 'Ryan Thompson', role: 'Stylist & Educator', rating: 4.8,
-    bio: 'Ryan combines his passion for teaching with his love for styling. He leads our education program and specializes in transformative haircuts for all hair types.',
-    specialties: ['Transformative Cuts', 'Texture Specialist', 'Education', 'Men\'s Grooming'],
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop',
-  },
+const teamMembers = [
+  { id: '1', name: 'Priya Sharma', role: 'Master Stylist & Founder', experience: '12 years', bio: 'Priya is the visionary behind LuxeStudio. With extensive training and a passion for precision cutting, she brings a refined approach to every customer.', specialties: ['Hair Cutting', 'Color', 'Bridal', 'Editorial'], rating: 4.9, reviews: 412, image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80', languages: ['English', 'Hindi', 'French'], instagram: '@priyasharma' },
+  { id: '2', name: 'Ananya Patel', role: 'Lead Esthetician', experience: '8 years', bio: 'Ananya specializes in advanced skincare treatments. She creates personalized skincare regimens tailored to each customer\'s unique needs.', specialties: ['Facials', 'Chemical Peel', 'Microdermabrasion', 'Skin Analysis'], rating: 4.8, reviews: 289, image: 'https://images.unsplash.com/photo-1598346762291-aee88549193f?w=400&q=80', languages: ['English', 'Hindi', 'Kannada'], instagram: '@ananya.skin' },
+  { id: '3', name: 'Rohit Verma', role: 'Master Barber', experience: '15 years', bio: 'With 15 years of experience, Rohit is a master of classic and contemporary barbering. His precision fades and traditional straight-razor shaves have made him a favorite among our customers.', specialties: ['Classic Cuts', 'Beard Styling', 'Straight Razor', 'Hot Towel Shave'], rating: 4.9, reviews: 534, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', languages: ['English', 'Hindi'], instagram: '@rohitbarber' },
+  { id: '4', name: 'Maya Krishnan', role: 'Nail Artist', experience: '6 years', bio: 'Maya is a talented nail artist known for her intricate designs and attention to detail. She specializes in gel extensions, nail art, and paraffin treatments.', specialties: ['Nail Art', 'Gel Extensions', 'Paraffin', '3D Design'], rating: 4.7, reviews: 198, image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', languages: ['English', 'Tamil', 'Kannada'], instagram: '@maya.nails' },
+  { id: '5', name: 'Vikram Singh', role: 'Hair Color Specialist', experience: '10 years', bio: 'Vikram is a skilled colorist who creates beautiful color transformations using techniques like balayage, ombre, and foiling.', specialties: ['Balayage', 'Ombre', 'Color Correction', 'Highlights'], rating: 4.8, reviews: 267, image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', languages: ['English', 'Hindi'], instagram: '@vikramcolor' },
+  { id: '6', name: 'Sophia D\'Souza', role: 'Makeup Artist', experience: '9 years', bio: 'Sophia has extensive experience in bridal and editorial makeup. She creates stunning looks for every occasion with meticulous attention to detail.', specialties: ['Bridal', 'Editorial', 'Airbrush', 'Special Effects'], rating: 4.9, reviews: 178, image: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&q=80', languages: ['English', 'Hindi', 'Konkani'], instagram: '@sophiamakeup' },
 ];
 
 export default function TeamPage() {
-  const router = useRouter();
   const params = useParams();
+  const router = useRouter();
   const slug = params?.slug as string;
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    apiUtil.get(ApiGetSalonBySlug(slug)).then((res: any) => {
-      if (res?.dataResponse?.returnCode === eResultCode.SUCCESS || res?.dataResponse?.returnCode === eResultCode.CREATED) {
-        setSalon(res.data || res);
-      } else {
-        setError('Salon not found');
-      }
-    }).catch(() => setError('Failed to load page')).finally(() => setLoading(false));
-  }, [slug]);
-
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
-  if (!salon) return <div style={{ maxWidth: 1100, margin: '100px auto', padding: '0 16px' }}><Alert title="Salon not found" type="warning" showIcon /></div>;
+  const [selectedMember, setSelectedMember] = useState<string | null>(null);
+  const member = selectedMember ? teamMembers.find((m) => m.id === selectedMember) : null;
 
   return (
-    <div>
-      {/* HERO */}
-      <section style={{ padding: '120px 20px 80px', background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%)', textAlign: 'center' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <Title style={{ color: '#fff', fontSize: 48, fontWeight: 800, margin: 0 }}>Meet Our Team</Title>
-          <div style={{ width: 60, height: 3, background: gold, margin: '20px auto' }} />
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, display: 'block' }}>
-            Talented professionals dedicated to making you look and feel your absolute best
-          </Text>
+    <>
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=85" alt="Our Team" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Meet Our Experts</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Talented professionals dedicated to bringing out your best. Each member of our team is carefully selected for their expertise, creativity, and passion.</p>
         </div>
       </section>
 
-      {/* STATS BAR */}
-      <section style={{ padding: '60px 20px', background: '#fff' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Row gutter={[24, 24]} justify="center">
-            {[
-              { icon: <TeamOutlined />, value: '8', label: 'Team Members' },
-              { icon: <StarFilled />, value: '4.8', label: 'Avg. Rating' },
-              { icon: <TrophyOutlined />, value: '85+', label: 'Years Combined Exp.' },
-              { icon: <HeartOutlined />, value: '15K+', label: 'Happy Clients' },
-            ].map((stat, i) => (
-              <Col key={i} xs={12} md={6} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 36, color: gold, marginBottom: 8 }}>{stat.icon}</div>
-                <Title level={2} style={{ color: '#1a1a2e', margin: 0, fontSize: 36, fontWeight: 800 }}>{stat.value}</Title>
-                <Text style={{ color: '#999', fontSize: 14, textTransform: 'uppercase', letterSpacing: 1 }}>{stat.label}</Text>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </section>
-
-      {/* TEAM GRID */}
-      <section style={{ padding: '40px 20px 100px', background: '#faf8f5' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Row gutter={[24, 24]}>
-            {teamData.map((member) => (
-              <Col key={member.id} xs={24} sm={12} md={6}>
-                <Card
-                  hoverable
-                  style={{ borderRadius: 16, textAlign: 'center', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', height: '100%', overflow: 'hidden' }}
-                >
-                  <div style={{ position: 'relative', marginBottom: 16 }}>
-                    <Avatar src={member.avatar} size={100} style={{ border: `3px solid ${gold}`, boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }} />
-                  </div>
-                  <Title level={5} style={{ margin: '0 0 2px' }}>{member.name}</Title>
-                  <Text style={{ color: gold, fontWeight: 600, fontSize: 13, display: 'block', marginBottom: 8 }}>{member.role}</Text>
-                  <Rate disabled value={member.rating} style={{ fontSize: 14, marginBottom: 8 }} />
-                  <Paragraph style={{ color: '#666', fontSize: 13, margin: '0 0 12px', lineHeight: 1.6 }} ellipsis={{ rows: 3 }}>
-                    {member.bio}
-                  </Paragraph>
-                  <div style={{ marginBottom: 16 }}>
-                    {member.specialties.map((sp, i) => (
-                      <Tag key={i} style={{ borderRadius: 12, fontSize: 11, margin: 2, border: 'none', background: '#f0e8e0', color: '#666' }}>{sp}</Tag>
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className="luxe-grid-3">
+            {teamMembers.map((st) => (
+              <div key={st.id} className={`luxe-stylist-card ${styles.stylistCard}`} onClick={() => setSelectedMember(st.id)}>
+                <img src={st.image} alt={st.name} className={`stylist-image ${styles.stylistImage}`} />
+                <div className={`luxe-card-body ${styles.cardBody}`}>
+                  <h3 className={styles.memberName}>{st.name}</h3>
+                  <p className={styles.memberRole}>{st.role}</p>
+                  <p className={styles.memberMeta}>{st.experience} • {st.reviews} reviews</p>
+                  <div className="stylist-specialties">
+                    {st.specialties.slice(0, 3).map((sp) => (
+                      <span key={sp} className="stylist-specialty-tag">{sp}</span>
                     ))}
+                    {st.specialties.length > 3 && <span className="stylist-specialty-tag">+{st.specialties.length - 3}</span>}
                   </div>
-                  <Button type="primary" block onClick={() => router.push(`/${slug}/book`)}
-                    style={{ background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30, fontWeight: 600 }}>
-                    Book {member.name.split(' ')[0]}
-                  </Button>
-                </Card>
-              </Col>
+                  <div className={styles.cardActions}>
+                    <button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?staff=${st.id}`); }} className="luxe-btn luxe-btn-primary luxe-btn-sm">
+                      Book {st.name.split(' ')[0]}
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
-          </Row>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: '80px 20px', background: `linear-gradient(135deg, ${burgundy} 0%, #a02d52 100%)`, textAlign: 'center' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <Title level={2} style={{ color: '#fff', margin: 0, fontSize: 32 }}>Work With Our Experts</Title>
-          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16, display: 'block', margin: '16px 0 32px' }}>
-            Book an appointment with your preferred team member today.
-          </Text>
-          <Button type="primary" size="large" onClick={() => router.push(`/${slug}/book`)}
-            style={{ height: 48, paddingInline: 36, fontSize: 16, fontWeight: 600, background: gold, borderColor: gold, color: '#1a1a2e', borderRadius: 30 }}>
-            Book Appointment
-          </Button>
+      {/* Modal */}
+      {member && (
+        <div className="luxe-modal-overlay" onClick={() => setSelectedMember(null)}>
+          <div className={`luxe-modal ${styles.modal}`} onClick={(e) => e.stopPropagation()}>
+            <div className="luxe-modal-header">
+              <h3 className="luxe-modal-title">{member.name}</h3>
+              <button className="luxe-modal-close" onClick={() => setSelectedMember(null)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div className="luxe-modal-body">
+              <div className={styles.modalGrid}>
+                <div>
+                  <img src={member.image} alt={member.name} className={styles.modalImage} />
+                  <div className={styles.modalRatingWrapper}>
+                    <div className={`luxe-rating ${styles.modalRating}`}>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill={i < Math.floor(member.rating) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      ))}
+                      <span className="luxe-rating-value">{member.rating}</span>
+                      <span className="luxe-rating-count">({member.reviews})</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className={styles.modalRole}>{member.role}</p>
+                  <p className={styles.modalExperience}>{member.experience}</p>
+                  <p className={`luxe-body-text ${styles.modalBio}`}>{member.bio}</p>
+                  <div className={styles.sectionBlock}>
+                    <p className={styles.sectionLabel}>Specialties</p>
+                    <div className={styles.tagGroup}>
+                      {member.specialties.map((sp) => (
+                        <span key={sp} className="luxe-tag luxe-tag-gold">{sp}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.sectionBlock}>
+                    <p className={styles.sectionLabel}>Languages</p>
+                    <div className={styles.tagGroup}>
+                      {member.languages.map((l) => (
+                        <span key={l} className="luxe-tag">{l}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.modalBookWrapper}>
+                    <button onClick={() => { setSelectedMember(null); router.push(`/${slug}/book?staff=${member.id}`); }} className={`luxe-btn luxe-btn-primary luxe-btn-lg ${styles.bookButton}`}>
+                      Book with {member.name.split(' ')[0]}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <style>{`
-        .ant-card-hoverable:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1) !important; }
-      `}</style>
-    </div>
+      )}
+    </>
   );
 }

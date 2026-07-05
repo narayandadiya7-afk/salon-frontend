@@ -1,0 +1,147 @@
+.hero {
+  min-height: 50vh;
+}
+
+.heroContent {
+  text-align: center;
+}
+
+.heroTitle {
+  margin: 0 auto var(--space-6);
+}
+
+.heroSubtitle {
+  margin: 0 auto;
+}
+
+.categoriesSection {
+  padding-bottom: 0;
+}
+
+.filterRow {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  text-align: left;
+  padding: 0;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.cardBody {
+  padding: var(--space-6);
+}
+
+.badge {
+  margin-bottom: var(--space-3);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.cardDesc {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.price {
+  font-size: var(--text-3xl);
+}
+
+.originalPrice {
+  font-size: var(--text-sm);
+  color: var(--luxe-text-tertiary);
+  text-decoration: line-through;
+}
+
+.perksList {
+  margin-bottom: var(--space-6);
+}
+
+.moreItems {
+  color: var(--luxe-gold);
+  font-size: var(--text-xs);
+}
+
+.bookBtn {
+  width: 100%;
+}
+
+.ctaSection {
+  background: var(--luxe-charcoal);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 40vh;
+  }
+
+  .cardTitle {
+    font-size: var(--text-lg);
+  }
+
+  .price {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 35vh;
+  }
+
+  .filterRow {
+    gap: var(--space-1-5);
+  }
+
+  .cardBody {
+    padding: var(--space-4);
+  }
+
+  .cardTitle {
+    font-size: var(--text-lg);
+  }
+
+  .price {
+    font-size: var(--text-2xl);
+  }
+
+  .perksList {
+    margin-bottom: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 30vh;
+  }
+
+  .heroTitle {
+    margin: 0 auto var(--space-4);
+  }
+
+  .cardBody {
+    padding: var(--space-3);
+  }
+}

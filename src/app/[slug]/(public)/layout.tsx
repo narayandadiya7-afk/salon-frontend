@@ -3,6 +3,7 @@ import OwnerNavbar from '../../../components/owner/OwnerNavbar';
 import OwnerFooter from '../../../components/owner/OwnerFooter';
 import WhatsAppFloat from '../../../components/salon/WhatsAppFloat';
 import ScrollRestoration from '../../../components/ScrollRestoration';
+import '../../../styles/luxury.css';
 
 async function fetchSalon(slug: string) {
   try {
@@ -25,9 +26,9 @@ export default async function PublicLayout({ children, params }: { children: Rea
     <>
       <ScrollRestoration />
       <OwnerNavbar salon={salon} />
-      <main style={{ minHeight: '100vh', paddingTop: 72 }}>{children}</main>
+      <main>{children}</main>
       <OwnerFooter salon={salon} />
-      <WhatsAppFloat phoneNumber="" />
+      <WhatsAppFloat phoneNumber={salon?.phone || ''} />
     </>
   );
 }

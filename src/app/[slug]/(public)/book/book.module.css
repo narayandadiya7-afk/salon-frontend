@@ -1,0 +1,303 @@
+/* ── Confirmed Section ── */
+.confirmedSection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.confirmedContainer {
+  text-align: center;
+}
+
+.confirmedEmoji {
+  font-size: 80px;
+  margin-bottom: var(--space-6);
+}
+
+.confirmedHeading {
+  margin-bottom: var(--space-4);
+}
+
+.confirmedSubtitle {
+  margin-bottom: var(--space-8);
+}
+
+.confirmedSummary {
+  text-align: left;
+  margin-bottom: var(--space-8);
+}
+
+.summaryRowNoBorder {
+  border: none;
+}
+
+.confirmedActions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Main Section ── */
+.mainSection {
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+/* ── Stepper ── */
+.stepper {
+  margin-bottom: var(--space-12);
+}
+
+/* ── Shared Step Header ── */
+.stepHeader {
+  margin-bottom: var(--space-8);
+}
+
+/* ── Step 0: Services ── */
+.searchWrapper {
+  margin-bottom: var(--space-6);
+}
+
+.searchInput {
+  padding-left: 36px;
+}
+
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.serviceBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--luxe-border);
+  background: var(--luxe-surface);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.serviceBtnSelected {
+  border-color: var(--luxe-gold);
+  background: rgba(200, 164, 107, 0.05);
+}
+
+.serviceName {
+  font-weight: 600;
+  color: var(--luxe-text);
+  margin-bottom: 2px;
+}
+
+.serviceMeta {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--luxe-text-tertiary);
+}
+
+.servicePrice {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  color: var(--luxe-gold);
+  font-size: var(--text-lg);
+}
+
+/* ── Step 1: Staff ── */
+.staffList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.staffBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--luxe-border);
+  background: var(--luxe-surface);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.staffBtnSelected {
+  border-color: var(--luxe-gold);
+  background: rgba(200, 164, 107, 0.05);
+}
+
+.staffImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.staffInfo {
+  flex: 1;
+}
+
+.staffName {
+  font-weight: 600;
+  color: var(--luxe-text);
+  margin-bottom: 2px;
+}
+
+.staffRole {
+  font-size: var(--text-xs);
+  color: var(--luxe-text-tertiary);
+}
+
+.skipWrapper {
+  text-align: center;
+  margin-top: var(--space-6);
+}
+
+/* ── Step 2: Date & Time ── */
+.calendar {
+  margin-bottom: var(--space-8);
+}
+
+.availableTimesHeading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.periodGroup {
+  margin-bottom: var(--space-6);
+}
+
+.periodLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--luxe-text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+/* ── Step 3: Details ── */
+.detailsForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.textarea {
+  resize: vertical;
+}
+
+/* ── Step 4: Confirm ── */
+.summary {
+  margin-bottom: var(--space-8);
+}
+
+.checkboxRow {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.checkboxLabel {
+  font-size: var(--text-xs);
+}
+
+.confirmBtn {
+  width: 100%;
+}
+
+/* ── Navigation ── */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-8);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .confirmedEmoji {
+    font-size: 60px;
+  }
+
+  .mainSection {
+    padding-top: 80px;
+  }
+
+  .serviceBtn,
+  .staffBtn {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .servicePrice {
+    font-size: var(--text-base);
+  }
+
+  .staffImage {
+    width: 40px;
+    height: 40px;
+  }
+
+  .availableTimesHeading {
+    font-size: var(--text-lg);
+  }
+
+  .confirmedActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .confirmedActions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainSection {
+    padding-top: 70px;
+  }
+
+  .confirmedEmoji {
+    font-size: 48px;
+  }
+
+  .stepper {
+    margin-bottom: var(--space-8);
+  }
+
+  .serviceBtn,
+  .staffBtn {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .serviceMeta {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .staffImage {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav {
+    flex-direction: column-reverse;
+    gap: var(--space-3);
+  }
+
+  .nav button {
+    width: 100%;
+  }
+}

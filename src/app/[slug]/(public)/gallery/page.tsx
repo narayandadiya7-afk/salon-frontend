@@ -1,149 +1,88 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import { Typography, Row, Col, Button, Spin, Alert, Tag } from 'antd';
-import apiUtil from '../../../../utils/api';
-import { ApiGetSalonBySlug } from '../../../../utils/api.constant';
-import { eResultCode } from '../../../../utils/enum';
+import styles from './gallery.module.css';
 
-const { Title, Paragraph } = Typography;
-
-const GOLD = '#d4a853';
-const BURGUNDY = '#7C1D3E';
-const categories = ['All', 'Hair', 'Skin', 'Nails', 'Spa', 'Bridal'];
-const galleryImages = [
-  { id: 1, cat: 'Hair', h: 360 },
-  { id: 2, cat: 'Skin', h: 280 },
-  { id: 3, cat: 'Nails', h: 320 },
-  { id: 4, cat: 'Spa', h: 260 },
-  { id: 5, cat: 'Bridal', h: 380 },
-  { id: 6, cat: 'Hair', h: 300 },
-  { id: 7, cat: 'Skin', h: 340 },
-  { id: 8, cat: 'Nails', h: 270 },
-  { id: 9, cat: 'Spa', h: 350 },
-  { id: 10, cat: 'Bridal', h: 290 },
-  { id: 11, cat: 'Hair', h: 310 },
-  { id: 12, cat: 'Skin', h: 370 },
+const galleryItems = [
+  { id: '1', category: 'Hair', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80', title: 'Balayage Transformation', type: 'image' },
+  { id: '2', category: 'Hair', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80', title: 'Precision Haircut', type: 'image' },
+  { id: '3', category: 'Skin', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80', title: 'Glowing Skin Facial', type: 'image' },
+  { id: '4', category: 'Nails', image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80', title: 'Artistic Nail Design', type: 'image' },
+  { id: '5', category: 'Bridal', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80', title: 'Bridal Elegance', type: 'image' },
+  { id: '6', category: 'Spa', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80', title: 'Luxury Spa Treatment', type: 'image' },
+  { id: '7', category: 'Hair', image: 'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=600&q=80', title: 'Voluminous Blow-Dry', type: 'image' },
+  { id: '8', category: 'Skin', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80', title: 'Skincare Results', type: 'image' },
+  { id: '9', category: 'Nails', image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80', title: 'Gel Extension Art', type: 'image' },
+  { id: '10', category: 'Hair', image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?w=600&q=80', title: 'Hair Spa Treatment', type: 'image' },
+  { id: '11', category: 'Bridal', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80', title: 'Bridal Makeup Look', type: 'image' },
+  { id: '12', category: 'Spa', image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80', title: 'Wellness Retreat', type: 'image' },
 ];
 
-const catGradients: Record<string, string> = {
-  Hair: 'linear-gradient(135deg, #7C1D3E, #a52a5a)',
-  Skin: 'linear-gradient(135deg, #d4a853, #e8c47a)',
-  Nails: 'linear-gradient(135deg, #7C1D3E, #b83a6b)',
-  Spa: 'linear-gradient(135deg, #2d5a4b, #4a9e7f)',
-  Bridal: 'linear-gradient(135deg, #d4a853, #f0d68a)',
-};
+const categories = ['All', 'Hair', 'Skin', 'Nails', 'Bridal', 'Spa'];
 
 export default function GalleryPage() {
-  const { slug } = useParams() as { slug: string };
-  const [salon, setSalon] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [activeCat, setActiveCat] = useState('All');
+  const params = useParams();
+  const slug = params?.slug as string;
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await apiUtil.get(ApiGetSalonBySlug(slug));
-        if (res?.dataResponse?.returnCode === eResultCode.SUCCESS) setSalon(res.data);
-        else setError('Salon not found');
-      } catch { setError('Failed to load'); }
-      finally { setLoading(false); }
-    })();
-  }, [slug]);
-
-  if (loading) return <div style={{ textAlign: 'center', padding: 100 }}><Spin size="large" /></div>;
-  if (error) return <div style={{ maxWidth: 1100, margin: '50px auto', padding: '0 16px' }}><Alert title={error} type="error" showIcon /></div>;
-
-  const filtered = activeCat === 'All' ? galleryImages : galleryImages.filter(i => i.cat === activeCat);
+  const filtered = activeCategory === 'All' ? galleryItems : galleryItems.filter((g) => g.category === activeCategory);
 
   return (
-    <div>
-      {/* Hero */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY} 0%, #4a0d25 50%, ${GOLD} 100%)`,
-        padding: '80px 16px', textAlign: 'center',
-      }}>
-        <Title style={{ color: '#fff', fontSize: 48, margin: 0, fontWeight: 700 }}>Our Gallery</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 18, maxWidth: 600, margin: '16px auto 0' }}>
-          Explore the artistry and elegance behind every style we create.
-        </Paragraph>
-      </div>
+    <>
+      <section className={`luxe-hero ${styles.hero}`}>
+        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1920&q=85" alt="Gallery" /></div>
+        <div className="luxe-hero-overlay" />
+        <div className={`luxe-hero-content ${styles.heroContent}`}>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Our Gallery</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Explore our portfolio of transformations, creative work, and the LuxeStudio experience.</p>
+        </div>
+      </section>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 16px' }}>
-        {/* Category Filter */}
-        <Row gutter={[12, 12]} justify="center" style={{ marginBottom: 40 }}>
-          {categories.map(cat => (
-            <Col key={cat}>
-              <Tag
-                onClick={() => setActiveCat(cat)}
-                style={{
-                  padding: '8px 24px', fontSize: 15, borderRadius: 24, cursor: 'pointer',
-                  border: activeCat === cat ? 'none' : `1px solid ${GOLD}`,
-                  background: activeCat === cat ? GOLD : 'transparent',
-                  color: activeCat === cat ? '#fff' : GOLD,
-                  fontWeight: 500, transition: 'all 0.3s',
-                }}
-              >
-                {cat}
-              </Tag>
-            </Col>
-          ))}
-        </Row>
+      <section className={`luxe-section ${styles.sectionNoPadding}`}>
+        <div className="luxe-container-lg">
+          <div className={styles.filterRow}>
+            {categories.map((cat) => (
+              <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</button>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {/* Masonry Grid */}
-        <Row gutter={[16, 16]}>
-          {filtered.map(img => (
-            <Col xs={24} sm={12} md={8} lg={6} key={img.id} style={{ display: 'flex' }}>
-              <div style={{
-                width: '100%', height: img.h, borderRadius: 12,
-                background: catGradients[img.cat] || `linear-gradient(135deg, ${BURGUNDY}, ${GOLD})`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                position: 'relative', overflow: 'hidden', cursor: 'pointer',
-                transition: 'transform 0.4s, box-shadow 0.4s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.3)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
+      <section className="luxe-section">
+        <div className="luxe-container-lg">
+          <div className={styles.masonry}>
+            {filtered.map((item) => (
+              <div
+                key={item.id}
+                className={`luxe-gallery-card ${styles.galleryCard}`}
+                onClick={() => setLightbox(item.image)}
               >
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: 'rgba(0,0,0,0.4)', opacity: 0,
-                  transition: 'opacity 0.3s', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8,
-                }}
-                  className="hover-overlay"
-                  onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
-                >
-                  <span style={{ color: '#fff', fontSize: 24, fontWeight: 600 }}>{img.cat}</span>
-                  <span style={{ color: GOLD, fontSize: 14 }}>View Gallery</span>
+                <img src={item.image} alt={item.title} className={`${styles.galleryImage} ${item.id === '2' || item.id === '7' ? styles.galleryImagePortrait : styles.galleryImageSquare}`} />
+                <div className="gallery-overlay">
+                  <div className={styles.overlayText}>
+                    <p className={styles.overlayTitle}>{item.title}</p>
+                    <span className="luxe-badge luxe-badge-gold">{item.category}</span>
+                  </div>
                 </div>
-                <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: 48, fontWeight: 700, userSelect: 'none' }}>{img.cat}</span>
               </div>
-            </Col>
-          ))}
-        </Row>
-      </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <div style={{
-        background: `linear-gradient(135deg, ${BURGUNDY}, ${GOLD})`,
-        textAlign: 'center', padding: '60px 16px',
-      }}>
-        <Title level={2} style={{ color: '#fff', margin: 0 }}>Ready to Create Your Look?</Title>
-        <Paragraph style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16, margin: '12px 0 24px' }}>
-          Book an appointment today and let our experts craft your perfect style.
-        </Paragraph>
-        <Link href={`/${slug}/book`}>
-          <Button type="primary" size="large" style={{
-            height: 50, padding: '0 40px', fontSize: 16, fontWeight: 600,
-            background: '#fff', color: BURGUNDY, border: 'none', borderRadius: 6,
-          }}>
-            Book Now
-          </Button>
-        </Link>
-      </div>
-    </div>
+      {/* Lightbox */}
+      {lightbox && (
+        <div className={`luxe-modal-overlay ${styles.modalOverlay}`} onClick={() => setLightbox(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <img src={lightbox} alt="Gallery preview" className={styles.modalImage} />
+            <button onClick={() => setLightbox(null)} className={styles.modalClose}>
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
