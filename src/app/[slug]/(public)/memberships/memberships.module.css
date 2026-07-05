@@ -1,0 +1,219 @@
+/* ── Hero ── */
+.hero {
+  min-height: 50vh;
+}
+
+.heroContent {
+  text-align: center;
+}
+
+.heroTitle {
+  margin: 0 auto var(--space-6);
+}
+
+.heroSubtitle {
+  margin: 0 auto;
+}
+
+/* ── Card Grid ── */
+.cardGrid {
+  align-items: stretch;
+}
+
+.packageCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.cardDesc {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
+}
+
+.cardCancelText {
+  font-size: var(--text-xs);
+  color: var(--luxe-text-tertiary);
+  margin-bottom: var(--space-6);
+}
+
+.cardPerks {
+  flex: 1;
+}
+
+.cardBtn {
+  width: 100%;
+  margin-top: var(--space-6);
+}
+
+/* ── Comparison Table ── */
+.tableSection {
+  background: var(--luxe-white);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-2xl);
+  border: var(--border-subtle);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.tableHeaderRow {
+  background: var(--luxe-ivory);
+}
+
+.tableHeaderCell {
+  padding: var(--space-4) var(--space-6);
+  text-align: left;
+  font-weight: 600;
+  color: var(--luxe-text);
+}
+
+.tableHeaderCellCenter {
+  padding: var(--space-4) var(--space-6);
+  text-align: center;
+  font-weight: 600;
+  color: var(--luxe-text);
+}
+
+.tableHeaderCellGold {
+  padding: var(--space-4) var(--space-6);
+  text-align: center;
+  font-weight: 600;
+  color: var(--luxe-gold);
+  background: rgba(200, 164, 107, 0.05);
+}
+
+.tableRow {
+  border-top: var(--border-light);
+}
+
+.tableLabelCell {
+  padding: var(--space-3) var(--space-6);
+  color: var(--luxe-text);
+  font-weight: 500;
+}
+
+.tableDataCell {
+  padding: var(--space-3) var(--space-6);
+  text-align: center;
+  color: var(--luxe-text-secondary);
+}
+
+.tableDataCellGold {
+  padding: var(--space-3) var(--space-6);
+  text-align: center;
+  color: var(--luxe-text-secondary);
+  background: rgba(200, 164, 107, 0.03);
+}
+
+/* ── Benefits Section ── */
+.benefitsSection {
+  background: linear-gradient(135deg, var(--luxe-ivory) 0%, var(--luxe-beige) 100%);
+}
+
+.benefitItem {
+  text-align: left;
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.benefitIcon {
+  width: 48px;
+  height: 48px;
+  font-size: var(--text-xl);
+  margin: 0;
+  flex-shrink: 0;
+  background: rgba(200, 164, 107, 0.1);
+}
+
+.benefitTitle {
+  margin-bottom: var(--space-2);
+}
+
+/* ── Shared ── */
+.cellIcon {
+  margin: 0 auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .tableWrapper {
+    border-radius: var(--radius-xl);
+  }
+
+  .tableHeaderCell,
+  .tableHeaderCellCenter,
+  .tableHeaderCellGold {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .tableLabelCell,
+  .tableDataCell,
+  .tableDataCellGold {
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 40vh;
+  }
+
+  .heroTitle {
+    margin: 0 auto var(--space-4);
+  }
+
+  .cardName {
+    font-size: var(--text-xl);
+  }
+
+  .benefitItem {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .benefitIcon {
+    width: 40px;
+    height: 40px;
+    font-size: var(--text-lg);
+  }
+
+  .tableHeaderCell,
+  .tableHeaderCellCenter,
+  .tableHeaderCellGold {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .tableLabelCell,
+  .tableDataCell,
+  .tableDataCellGold {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 35vh;
+  }
+
+  .cardName {
+    font-size: var(--text-lg);
+  }
+}

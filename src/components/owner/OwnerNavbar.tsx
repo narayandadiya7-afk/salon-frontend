@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import { MenuOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import Utils from '../../utils';
@@ -10,44 +10,60 @@ import styles from './OwnerNavbar.module.css';
 
 export default function OwnerNavbar({ salon }: { salon?: any }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [role, setRole] = useState<string | null>(null);
   const params = useParams();
   const router = useRouter();
+  const pathname = usePathname();
   const slug = (params?.slug as string) || salon?.slug || '';
-
 
   useEffect(() => {
     const decoded = Utils.decodeToken();
     setRole(decoded?.role || null);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navLinks = [
     { label: 'Home', href: `/${slug}` },
+    { label: 'About', href: `/${slug}/about` },
     { label: 'Services', href: `/${slug}/services` },
     { label: 'Team', href: `/${slug}/team` },
     { label: 'Gallery', href: `/${slug}/gallery` },
-    { label: 'Packages', href: `/${slug}/packages` },
-    { label: 'About', href: `/${slug}/about` },
+    { label: 'Testimonials', href: `/${slug}/testimonials` },
+    { label: 'Blog', href: `/${slug}/blog` },
     { label: 'Contact', href: `/${slug}/contact` },
-    { label: 'Book', href: `/${slug}/book` },
   ];
 
-  const headerLinks = navLinks.slice(0, 6);
   const isOwner = role === 'SALON_OWNER' || role === 'SALON_STAFF' || role === 'ADMIN' || role === 'SUPER_ADMIN';
 
   return (
-    <header className={styles.navbar}>
+    <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <Link href={`/${slug}`} className={styles.logo}>
+          <span className={styles.logoMark}>✦</span>
           {salon?.name || 'Salon'}
         </Link>
 
         <nav className={styles.nav}>
-          {headerLinks.map((l) => (
-            <Link key={l.href} href={l.href} className={styles.navLink} onClick={() => setOpen(false)}>
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const isActive = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className={styles.actions}>
@@ -72,16 +88,19 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
 
       {open && (
         <div className={`${styles.mobileMenu} ${styles.open}`}>
-          {navLinks.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={styles.mobileLink}
-              onClick={() => setOpen(false)}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const isActive = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`${styles.mobileLink} ${isActive ? styles.mobileLinkActive : ''}`}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
           <div className={styles.mobileActions}>
             {isOwner ? (
               <Button

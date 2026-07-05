@@ -1,0 +1,231 @@
+/* ── Hero Section ── */
+
+.heroMinHeight {
+  min-height: 50vh;
+}
+
+.heroContentCenter {
+  text-align: center;
+}
+
+.heroTitleMargin {
+  margin: 0 auto var(--space-6);
+}
+
+.heroSubtitleMargin {
+  margin: 0 auto;
+}
+
+/* ── Story Section ── */
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .storyGrid {
+    gap: var(--space-10);
+  }
+}
+
+@media (max-width: 768px) {
+  .storyGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.sectionTitleLeft {
+  text-align: left;
+}
+
+.bodyMarginBottom {
+  margin-bottom: var(--space-6);
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .imageGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageFull {
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.imageSquare {
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.imageSquareMargin {
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin-bottom: var(--space-4);
+}
+
+.imageGridOffset {
+  margin-top: var(--space-8);
+}
+
+/* ── Mission & Vision Section ── */
+
+.sectionWhiteBg {
+  background: var(--luxe-white);
+}
+
+.missionVisionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+
+@media (max-width: 768px) {
+  .missionVisionGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.cardIvory {
+  padding: var(--space-10);
+  background: var(--luxe-ivory);
+  border-radius: var(--radius-3xl);
+}
+
+.iconLarge {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-4);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-3);
+}
+
+/* ── Timeline Section ── */
+
+.timelineWrapper {
+  position: relative;
+}
+
+.timelineItem {
+  display: flex;
+  gap: var(--space-6);
+  padding-bottom: var(--space-8);
+  position: relative;
+  padding-left: var(--space-8);
+}
+
+@media (max-width: 640px) {
+  .timelineItem {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-left: var(--space-10);
+  }
+}
+
+.timelineDotBase {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.timelineDotActive {
+  background: var(--luxe-gold);
+}
+
+.timelineDotInactive {
+  background: var(--luxe-border);
+}
+
+.timelineLine {
+  position: absolute;
+  left: 5px;
+  top: 16px;
+  width: 2px;
+  height: calc(100% - 12px);
+  background: var(--luxe-border);
+}
+
+.timelineYear {
+  min-width: 80px;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--luxe-gold);
+}
+
+@media (max-width: 640px) {
+  .timelineYear {
+    min-width: auto;
+  }
+}
+
+/* ── Values Section ── */
+
+.sectionDarkBg {
+  background: var(--luxe-charcoal);
+}
+
+.overlineGold {
+  color: var(--luxe-gold);
+}
+
+.titleWhite {
+  color: var(--luxe-white);
+}
+
+.valueIcon {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-4);
+}
+
+/* ── Team Section ── */
+
+.teamGrid {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cardBodyNoPadding {
+  padding-top: 0;
+}
+
+.teamMemberName {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.teamMemberRole {
+  font-size: var(--text-sm);
+  color: var(--luxe-gold);
+}
+
+.ctaCenter {
+  text-align: center;
+  margin-top: var(--space-10);
+}
