@@ -12,18 +12,18 @@ const team = [
 ];
 
 const values = [
-  { icon: '🎯', title: 'Excellence', desc: 'We strive for perfection in every service, using only the finest products and techniques.' },
-  { icon: '🤝', title: 'Integrity', desc: 'Honest consultations, transparent pricing, and genuine care for our clients.' },
+  { icon: '🎯', title: 'Quality', desc: 'We are dedicated to providing quality service with attention to every detail.' },
+  { icon: '🤝', title: 'Integrity', desc: 'Honest consultations, transparent pricing, and genuine care for our customers.' },
   { icon: '💡', title: 'Innovation', desc: 'Continuous learning and adoption of the latest trends and technologies in beauty.' },
   { icon: '❤️', title: 'Passion', desc: 'A genuine love for what we do, reflected in every haircut, facial, and treatment.' },
-  { icon: '🌿', title: 'Sustainability', desc: 'Eco-friendly practices, cruelty-free products, and responsible waste management.' },
-  { icon: '👥', title: 'Community', desc: 'Building lasting relationships with our clients and supporting local initiatives.' },
+  { icon: '🌿', title: 'Sustainability', desc: 'Mindful practices and responsible choices in our daily operations.' },
+  { icon: '👥', title: 'Community', desc: 'Building lasting relationships with our customers and supporting local initiatives.' },
 ];
 
 const milestones = [
   { year: '2010', event: 'LuxeStudio founded by Priya Sharma in Bengaluru' },
   { year: '2013', event: 'Expanded to a 2,000 sq ft premium salon space' },
-  { year: '2016', event: 'Awarded "Best Salon" by Beauty & Style Magazine' },
+  { year: '2016', event: 'Expanded services to include advanced skincare treatments' },
   { year: '2018', event: 'Launched LuxeClub membership program' },
   { year: '2020', event: 'Introduced advanced skincare treatments' },
   { year: '2023', event: 'Opened second location, expanded team to 25+ experts' },
@@ -41,7 +41,7 @@ export default function AboutPage() {
         <div className="luxe-hero-overlay" />
         <div className={`luxe-hero-content ${styles.heroContentCenter}`}>
           <h1 className={`luxe-hero-title ${styles.heroTitleMargin}`}>Our Story</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitleMargin}`}>A journey of passion, precision, and the pursuit of beauty.</p>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitleMargin}`}>A journey of passion and dedication to the art of beauty.</p>
         </div>
       </section>
 
@@ -55,18 +55,17 @@ export default function AboutPage() {
               <div className="luxe-divider-left" />
               <p className={`luxe-body-text ${styles.bodyMarginBottom}`}>
                 LuxeStudio was born from a simple belief: that everyone deserves to look and feel their best.
-                Founded by Priya Sharma, a globally trained stylist with a vision to bring world-class beauty
-                services to Bengaluru, our salon has grown from a small studio to one of the city&apos;s most
-                prestigious beauty destinations.
+                Founded by Priya Sharma, a trained stylist with a vision to bring quality beauty
+                services to Bengaluru, our salon has grown steadily through the years.
               </p>
               <p className={`luxe-body-text ${styles.bodyMarginBottom}`}>
-                Over the past 15 years, we have built a team of exceptionally talented professionals who share
-                our commitment to excellence. Each member of the LuxeStudio family is carefully selected for
-                their skill, creativity, and dedication to client satisfaction.
+                Over the past 15 years, we have built a team of talented professionals who share
+                our commitment to customer satisfaction. Each member of the LuxeStudio family is carefully selected for
+                their skill, creativity, and dedication.
               </p>
               <p className="luxe-body-text">
-                Today, LuxeStudio is recognized as a leader in the beauty industry, known for our innovative
-                techniques, premium products, and unforgettable client experiences.
+                Today, LuxeStudio continues to grow, serving our community with a focus on
+                quality service and genuine care for every customer.
               </p>
             </div>
             <div className={styles.imageGrid}>
@@ -87,12 +86,12 @@ export default function AboutPage() {
             <div className={styles.cardIvory}>
               <div className={styles.iconLarge}>🎯</div>
               <h3 className={styles.cardTitle}>Our Mission</h3>
-              <p className="luxe-body-text">To empower every client with confidence through exceptional beauty services that enhance their natural beauty and create unforgettable experiences.</p>
+              <p className="luxe-body-text">To help every customer feel confident and cared for through quality beauty services tailored to their needs.</p>
             </div>
             <div className={styles.cardIvory}>
               <div className={styles.iconLarge}>👁️</div>
               <h3 className={styles.cardTitle}>Our Vision</h3>
-              <p className="luxe-body-text">To be the most trusted and admired beauty brand in India, setting the standard for quality, innovation, and client care in the salon industry.</p>
+              <p className="luxe-body-text">To be a trusted beauty destination known for quality, consistency, and genuine care in everything we do.</p>
             </div>
           </div>
         </div>

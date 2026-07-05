@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Typography, Spin, Alert, Form, Modal } from 'antd';
 import apiUtil from '../../../utils/api';
 import { ApiGetSalonBySlug } from '../../../utils/api.constant';
@@ -13,9 +14,9 @@ const { Text, Paragraph } = Typography;
 /* ── Data ── */
 const servicesData = [
   { id: 's1', name: 'Classic Haircut', price: 45, duration: 45, description: 'Precision cut tailored to your face shape and style preferences.', rating: 4.8, reviews: 124, image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=450&fit=crop' },
-  { id: 's2', name: 'Color & Highlights', price: 120, duration: 120, description: 'Professional color services with premium products for vibrant, long-lasting results.', rating: 4.9, reviews: 89, image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=450&fit=crop' },
+  { id: 's2', name: 'Color & Highlights', price: 120, duration: 120, description: 'Professional color services for vibrant, long-lasting results.', rating: 4.9, reviews: 89, image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=450&fit=crop' },
   { id: 's3', name: 'Luxury Facial', price: 85, duration: 60, description: 'Rejuvenating facial treatment using organic products for radiant skin.', rating: 4.7, reviews: 156, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=450&fit=crop' },
-  { id: 's4', name: 'Spa Manicure', price: 55, duration: 45, description: 'Luxurious hand treatment with exfoliation, mask, and premium polish.', rating: 4.6, reviews: 203, image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=450&fit=crop' },
+  { id: 's4', name: 'Spa Manicure', price: 55, duration: 45, description: 'Luxurious hand treatment with exfoliation, mask, and polish.', rating: 4.6, reviews: 203, image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=450&fit=crop' },
   { id: 's5', name: 'Blowout & Styling', price: 65, duration: 50, description: 'Professional blow-dry and styling for any occasion.', rating: 4.8, reviews: 178, image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=450&fit=crop' },
   { id: 's6', name: 'Keratin Treatment', price: 200, duration: 150, description: 'Smoothing treatment that eliminates frizz and adds shine for weeks.', rating: 4.9, reviews: 67, image: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&h=450&fit=crop' },
 ];
@@ -23,7 +24,7 @@ const servicesData = [
 
 
 const teamData = [
-  { id: 't1', name: 'Sophia Williams', role: 'Master Stylist', experience: '15 years', rating: 4.9, reviews: 312, specialties: ['Precision Cuts', 'Creative Color', 'Editorial Styling'], avatar: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=300&h=300&fit=crop', bio: 'Award-winning stylist with a passion for transformative haircuts.' },
+  { id: 't1', name: 'Sophia Williams', role: 'Master Stylist', experience: '15 years', rating: 4.9, reviews: 312, specialties: ['Precision Cuts', 'Creative Color', 'Editorial Styling'], avatar: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=300&h=300&fit=crop', bio: 'Experienced stylist with a passion for transformative haircuts.' },
   { id: 't2', name: 'James Rodriguez', role: 'Senior Colorist', experience: '12 years', rating: 4.8, reviews: 267, specialties: ['Balayage', 'Ombre', 'Color Correction'], avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop', bio: 'Known for innovative color techniques and balayage mastery.' },
   { id: 't3', name: 'Emily Chen', role: 'Lead Esthetician', experience: '10 years', rating: 4.7, reviews: 198, specialties: ['Advanced Facials', 'Skin Care', 'Waxing'], avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop', bio: 'Holistic skincare expertise from top spas worldwide.' },
   { id: 't4', name: 'Marcus Johnson', role: 'Barber & Grooming', experience: '8 years', rating: 4.8, reviews: 145, specialties: ['Beard Styling', 'Hot Towel Shave', 'Men\'s Cuts'], avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop', bio: 'Specializing in precision barbering and traditional grooming.' },
@@ -44,7 +45,7 @@ const galleryData = [
   { id: 'g4', src: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=600&fit=crop', alt: 'Spa Manicure' },
   { id: 'g5', src: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=600&fit=crop', alt: 'Editorial Styling' },
   { id: 'g6', src: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&h=600&fit=crop', alt: 'Keratin Treatment' },
-  { id: 'g7', src: 'https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=600&h=600&fit=crop', alt: 'Makeup Artistry' },
+  { id: 'g7', src: 'https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=600&h=600&fit=crop', alt: 'Makeup' },
   { id: 'g8', src: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&h=600&fit=crop', alt: 'Nail Art' },
 ];
 
@@ -59,21 +60,20 @@ const faqData = [
   { q: 'How early should I arrive?', a: 'We recommend arriving 10-15 minutes early to check in, complete any paperwork, and discuss your preferences with your stylist over complimentary refreshments.' },
   { q: 'What is your cancellation policy?', a: 'We kindly request 24-hour notice for cancellations or rescheduling. Late cancellations may result in a 50% service fee.' },
   { q: 'Do you offer gift certificates?', a: 'Yes! We offer digital and physical gift certificates in any denomination, beautifully packaged and perfect for any occasion.' },
-  { q: 'Are your products cruelty-free?', a: 'Absolutely. We are committed to using only cruelty-free, ethically sourced, and environmentally responsible professional products.' },
-  { q: 'Do you offer parking?', a: 'Yes, we offer complimentary valet parking for all our clients. There is also a public parking garage adjacent to our building.' },
+  { q: 'Are your products cruelty-free?', a: 'Yes, we carefully select products that align with our commitment to quality and responsible practices.' },
+  { q: 'Do you offer parking?', a: 'Yes, we offer complimentary valet parking for all our customers. There is also a public parking garage adjacent to our building.' },
 ];
 
 const whyChooseData = [
-  { icon: '✦', title: 'Expert Artisans', desc: 'Our team comprises award-winning professionals with decades of combined experience in the beauty industry.', color: '#f0ebe3' },
-  { icon: '✧', title: 'Premium Products', desc: 'We use only the finest cruelty-free products from leading luxury brands worldwide.', color: '#e8e0d5' },
+  { icon: '✦', title: 'Expert Team', desc: 'Our team comprises skilled professionals dedicated to providing exceptional beauty services.', color: '#f0ebe3' },
+  { icon: '✧', title: 'Quality Products', desc: 'We use carefully selected products to ensure the best results for our customers.', color: '#e8e0d5' },
   { icon: '◈', title: 'Personalized Experience', desc: 'Every service is tailored to your unique needs, preferences, and beauty goals.', color: '#f0ebe3' },
 ];
 
 const statsData = [
-  { value: '15+', label: 'Years of Excellence' },
-  { value: '25K+', label: 'Happy Clients' },
+  { value: '15+', label: 'Years of Experience' },
+  { value: '25K+', label: 'Happy Customers' },
   { value: '50K+', label: 'Appointments' },
-  { value: '8', label: 'Industry Awards' },
 ];
 
 const instagramData = galleryData.slice(0, 6);
@@ -173,19 +173,23 @@ const ReviewCard = ({ review }: { review: typeof testimonialsData[0] }) => (
 
 
 /* ── Blog Card ── */
-const BlogCard = ({ post }: { post: typeof blogData[0] }) => (
-  <div className="luxe-blog-card">
-    <img src={post.image} alt={post.title} loading="lazy" />
-    <div className="blog-body">
-      <div className="blog-category">{post.category}</div>
-      <h3 className="blog-title">{post.title}</h3>
-      <p className="blog-excerpt">{post.excerpt}</p>
-      <div className={styles.blogCardFooter}>
-        <span className={styles.blogCardDate}>{post.date}</span>
-        <span className={styles.blogCardReadMore}>Read More →</span>
+const BlogCard = ({ post, slug }: { post: typeof blogData[0]; slug: string }) => (
+  <Link href={`/${slug}/blog/${post.id}`} className={styles.blogCardLink}>
+    <div className={styles.blogCard}>
+      <div className={styles.blogCardImageWrap}>
+        <img src={post.image} alt={post.title} loading="lazy" />
+        <span className={styles.blogCardCategory}>{post.category}</span>
+      </div>
+      <div className={styles.blogCardBody}>
+        <h3 className={styles.blogCardTitle}>{post.title}</h3>
+        <p className={styles.blogCardExcerpt}>{post.excerpt}</p>
+        <div className={styles.blogCardMeta}>
+          <span className={styles.blogCardAuthor}>{post.author}</span>
+          <span className={styles.blogCardDate}>{post.date}</span>
+        </div>
       </div>
     </div>
-  </div>
+  </Link>
 );
 
 /* ── Main Page ── */
@@ -255,12 +259,12 @@ export default function SalonLuxuryPage() {
   if (error) return <div className={styles.errorContainer}><Alert title={error} type="error" showIcon /></div>;
 
   const salonName = salon?.name || 'Luxury Salon';
-  const salonTagline = salon?.tagline || 'Where beauty meets excellence';
+  const salonTagline = salon?.tagline || 'Where beauty meets style';
 
   /* ── Hero content from CMS (with *accent* convention) ── */
-  const heroOverline    = salon?.heroOverline    || 'Premium Beauty & Wellness';
+  const heroOverline    = salon?.heroOverline    || 'Beauty & Wellness';
   const heroHeading     = salon?.heroHeading     || 'Where Luxury Meets Your Style';
-  const heroDescription = salon?.heroDescription || 'Experience precision artistry and premium care in a sanctuary designed to inspire confidence.';
+  const heroDescription = salon?.heroDescription || 'Experience exceptional care in a space designed to help you look and feel your best.';
 
   function renderHeading(text: string) {
     const words = text.split(' ');
@@ -314,7 +318,7 @@ export default function SalonLuxuryPage() {
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
               <span className={styles.heroStatValue}>15+</span>
-              <span className={styles.heroStatLabel}>Years of Excellence</span>
+              <span className={styles.heroStatLabel}>Years of Experience</span>
             </div>
             <div className={styles.heroStatSep} />
             <div className={styles.heroStat}>
@@ -342,8 +346,8 @@ export default function SalonLuxuryPage() {
               <span className={styles.servicesOrnamentIcon}>✦</span>
               <span className={styles.servicesOrnamentLine} />
             </div>
-            <h2 className="luxe-section-title">Premium Experiences</h2>
-            <p className="luxe-section-subtitle">Discover our curated selection of luxury beauty services designed to pamper and transform.</p>
+            <h2 className="luxe-section-title">Our Services</h2>
+            <p className="luxe-section-subtitle">Explore our range of beauty services designed to help you look and feel your best.</p>
           </div>
 
           <div className={`luxe-grid-3 ${styles.gridGap6}`}>
@@ -378,11 +382,11 @@ export default function SalonLuxuryPage() {
             <div className={styles.aboutContent}>
               <span className="luxe-section-overline">Our Story</span>
               <h2 className={`luxe-section-title ${styles.aboutTitle}`}>
-                {renderHeading('Where Beauty Meets Artistry')}
+                {renderHeading('Where Beauty Meets Style')}
               </h2>
               <div className={styles.aboutDivider} />
               <p className={styles.aboutText}>
-                Founded with a passion for beauty and a commitment to excellence, we have been transforming looks and boosting confidence for over a decade. Our team of skilled professionals combines artistry with the latest techniques to deliver exceptional results in an environment of unparalleled luxury.
+                Founded with a passion for beauty, we have been helping our customers look and feel their best for over a decade. Our team of skilled professionals combines technical expertise with personalized attention to deliver results that exceed expectations.
               </p>
               <button onClick={() => router.push(`/${slug}/about`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
                 Learn More →
@@ -424,7 +428,7 @@ export default function SalonLuxuryPage() {
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Portfolio</span>
             <h2 className="luxe-section-title">Our Work</h2>
-            <p className="luxe-section-subtitle">A curated selection of our finest transformations and salon ambiance.</p>
+            <p className="luxe-section-subtitle">A look inside our salon and some of the work we've done.</p>
             <div className="luxe-divider" />
           </div>
           <div className={styles.portfolioGrid}>
@@ -446,36 +450,49 @@ export default function SalonLuxuryPage() {
       </section>
 
       {/* =============================================
-          06 — TESTIMONIALS CAROUSEL
-          ============================================= */}
+           06 — TESTIMONIALS
+           ============================================= */}
       <section className={`luxe-section ${styles.sectionIvory}`} id="testimonials">
         <div className="luxe-container-sm">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Testimonials</span>
-            <h2 className="luxe-section-title">Client Stories</h2>
-            <p className="luxe-section-subtitle">Hear from our cherished clients about their experiences.</p>
-            <div className="luxe-divider" />
+            <div className={styles.servicesOrnament}>
+              <span className={styles.servicesOrnamentLine} />
+              <span className={styles.servicesOrnamentIcon}>✦</span>
+              <span className={styles.servicesOrnamentLine} />
+            </div>
+            <h2 className="luxe-section-title">Customer Stories</h2>
+            <p className="luxe-section-subtitle">Hear from our customers about their experiences.</p>
           </div>
-          <div className="luxe-testimonials">
-            <div key={testimonialsData[testimonialIndex].id} className="luxe-testimonial-card animate-fade-in-up">
-              <p className="luxe-testimonial-text">"{testimonialsData[testimonialIndex].text}"</p>
-              <div className={`review-author ${styles.testimonialAuthor}`}>
-                <img src={testimonialsData[testimonialIndex].avatar} alt={testimonialsData[testimonialIndex].name} className="review-avatar" loading="lazy" />
-                <div>
-                  <p className={`review-name ${styles.testimonialName}`}>{testimonialsData[testimonialIndex].name}</p>
-                  <p className={`review-service ${styles.testimonialService}`}>{testimonialsData[testimonialIndex].service}</p>
-                </div>
+          <div className={styles.testimonialCard}>
+            <div className={styles.testimonialQuoteIcon}>"</div>
+            <p className={styles.testimonialText}>{testimonialsData[testimonialIndex].text}</p>
+            <div className={styles.testimonialDivider} />
+            <div className={styles.testimonialAuthor}>
+              <img
+                src={testimonialsData[testimonialIndex].avatar}
+                alt={testimonialsData[testimonialIndex].name}
+                className={styles.testimonialAvatar}
+              />
+              <div className={styles.testimonialAuthorInfo}>
+                <span className={styles.testimonialName}>{testimonialsData[testimonialIndex].name}</span>
+                <span className={styles.testimonialService}>{testimonialsData[testimonialIndex].service}</span>
+              </div>
+              <div className={styles.testimonialStars}>
+                {[1,2,3,4,5].map(s => (
+                  <svg key={s} width="12" height="12" viewBox="0 0 24 24" fill="#d4a853" stroke="#d4a853" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                ))}
               </div>
             </div>
-            <div className="luxe-testimonial-dots">
-              {testimonialsData.map((_, i) => (
-                <button
-                  key={i}
-                  className={`luxe-testimonial-dot ${i === testimonialIndex ? 'active' : ''}`}
-                  onClick={() => setTestimonialIndex(i)}
-                />
-              ))}
-            </div>
+          </div>
+          <div className={styles.testimonialDots}>
+            {testimonialsData.map((_, i) => (
+              <button
+                key={i}
+                className={`${styles.testimonialDot} ${i === testimonialIndex ? styles.testimonialDotActive : ''}`}
+                onClick={() => setTestimonialIndex(i)}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -525,45 +542,27 @@ export default function SalonLuxuryPage() {
       </section>
 
       {/* =============================================
-          09 — INSTAGRAM FEED
-          ============================================= */}
-      <section className={styles.instagramSection}>
-        <div className={styles.instagramHeader}>
-          <span className="luxe-section-overline">Follow Us</span>
-          <h2 className={`luxe-section-title ${styles.instagramTitle}`}>@{salonName.replace(/\s+/g, '').toLowerCase()}</h2>
-        </div>
-        <div className="luxe-instagram-grid">
-          {instagramData.map((img) => (
-            <div key={img.id} className="luxe-instagram-item">
-              <img src={img.src} alt={img.alt} loading="lazy" />
-              <div className="ig-overlay">
-                <svg className="ig-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* =============================================
-          10 — LATEST BLOG
+           10 — LATEST BLOG
           ============================================= */}
       <section className={`luxe-section ${styles.sectionIvory}`} id="blog">
         <div className="luxe-container">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Journal</span>
+            <div className={styles.servicesOrnament}>
+              <span className={styles.servicesOrnamentLine} />
+              <span className={styles.servicesOrnamentIcon}>✦</span>
+              <span className={styles.servicesOrnamentLine} />
+            </div>
             <h2 className="luxe-section-title">Latest from Our Blog</h2>
             <p className="luxe-section-subtitle">Beauty tips, trends, and insights from our experts.</p>
-            <div className="luxe-divider" />
           </div>
           <div className={`luxe-grid-3 ${styles.gridGap6}`}>
             {blogData.map((post) => (
-              <BlogCard key={post.id} post={post} />
+              <BlogCard key={post.id} post={post} slug={slug} />
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <button className="luxe-btn luxe-btn-gold-outline luxe-btn-md">Read More Articles →</button>
+            <button onClick={() => router.push(`/${slug}/blog`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">Read More Articles →</button>
           </div>
         </div>
       </section>

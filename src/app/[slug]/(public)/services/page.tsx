@@ -8,10 +8,10 @@ import styles from './services.module.css';
 const allServices = [
   { id: '1', category: 'Hair', name: 'Signature Haircut', desc: 'Precision cut tailored to your face shape and hair texture with a relaxing shampoo and blow-dry.', duration: '60 min', price: '₹2,500', rating: 4.9, reviews: 128, image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80' },
   { id: '2', category: 'Hair', name: 'Keratin Treatment', desc: 'Professional smoothing treatment that eliminates frizz and adds incredible shine for up to 3 months.', duration: '120 min', price: '₹5,500', rating: 4.8, reviews: 96, image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80' },
-  { id: '3', category: 'Hair', name: 'Hair Color & Highlights', desc: 'Premium color application with Olaplex for vibrant, long-lasting results.', duration: '150 min', price: '₹4,500', rating: 4.7, reviews: 203, image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80' },
+  { id: '3', category: 'Hair', name: 'Hair Color & Highlights', desc: 'Professional color application for vibrant, long-lasting results.', duration: '150 min', price: '₹4,500', rating: 4.7, reviews: 203, image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80' },
   { id: '4', category: 'Hair', name: 'Hair Spa Treatment', desc: 'Deep conditioning treatment with hot oil massage for damaged and dry hair.', duration: '45 min', price: '₹1,800', rating: 4.8, reviews: 167, image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?w=600&q=80' },
   { id: '5', category: 'Hair', name: 'Blow-Dry & Styling', desc: 'Professional blow-dry with volumizing products and heat protection.', duration: '45 min', price: '₹1,200', rating: 4.9, reviews: 342, image: 'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=600&q=80' },
-  { id: '6', category: 'Skin', name: 'Luxury Facial', desc: 'Deep-cleansing facial with premium organic products tailored to your skin type.', duration: '75 min', price: '₹3,200', rating: 4.9, reviews: 214, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80' },
+  { id: '6', category: 'Skin', name: 'Luxury Facial', desc: 'Deep-cleansing facial tailored to your skin type.', duration: '75 min', price: '₹3,200', rating: 4.9, reviews: 214, image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80' },
   { id: '7', category: 'Skin', name: 'Chemical Peel', desc: 'Medical-grade chemical peel to reduce fine lines, acne scars, and hyperpigmentation.', duration: '60 min', price: '₹4,000', rating: 4.8, reviews: 89, image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80' },
   { id: '8', category: 'Skin', name: 'Microdermabrasion', desc: 'Non-invasive exfoliation treatment for smoother, brighter skin.', duration: '45 min', price: '₹2,800', rating: 4.7, reviews: 156, image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80' },
   { id: '9', category: 'Nails', name: 'Manicure & Pedicure', desc: 'Luxury nail care with paraffin wax treatment and essential oil massage.', duration: '90 min', price: '₹1,800', rating: 4.7, reviews: 342, image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80' },
@@ -76,7 +76,7 @@ export default function ServicesPage() {
         <div className="luxe-hero-overlay" />
         <div className={`luxe-hero-content ${styles.heroContent}`}>
           <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Our Services</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Discover our comprehensive range of premium beauty treatments</p>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Discover our comprehensive range of beauty services</p>
         </div>
       </section>
 

@@ -18,7 +18,7 @@ const plans = [
     name: 'Gold',
     price: '1,999',
     period: 'month',
-    desc: 'Our most popular plan. Significant savings for regular clients with premium perks.',
+    desc: 'Our most popular plan. Significant savings for regular customers with added perks.',
     featured: true,
     perks: ['20% off all services', 'VIP priority booking', 'Free haircut every quarter', 'Free facial every quarter', 'Birthday bonus + gift', 'Exclusive events access', 'Guest pass (1/year)'],
   },
@@ -26,9 +26,9 @@ const plans = [
     name: 'Platinum',
     price: '3,999',
     period: 'month',
-    desc: 'The ultimate luxury experience. Unlimited benefits for our most valued clients.',
+    desc: 'The ultimate luxury experience. Unlimited benefits for our most valued customers.',
     featured: false,
-    perks: ['30% off all services', 'VIP priority booking', 'Unlimited express services', 'Free premium treatment monthly', 'Free haircut monthly', 'Birthday bonus + premium gift', 'Exclusive events + previews', 'Guest pass (2/year)', 'Complimentary add-ons', 'Dedicated concierge'],
+    perks: ['30% off all services', 'VIP priority booking', 'Unlimited express services', 'Free treatment monthly', 'Free haircut monthly', 'Birthday bonus + gift', 'Exclusive events + previews', 'Guest pass (2/year)', 'Complimentary add-ons', 'Dedicated concierge'],
   },
 ];
 
@@ -38,8 +38,8 @@ const comparisonRows = [
   { label: 'Priority Booking', silver: true, gold: true, platinum: true },
   { label: 'Free Haircut', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
   { label: 'Free Facial', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
-  { label: 'Free Premium Treatment', silver: false, gold: false, platinum: 'Monthly' },
-  { label: 'Birthday Bonus', silver: 'Treatment', gold: 'Treatment + Gift', platinum: 'Premium Gift' },
+  { label: 'Free Treatment', silver: false, gold: false, platinum: 'Monthly' },
+  { label: 'Birthday Bonus', silver: 'Treatment', gold: 'Treatment + Gift', platinum: 'Gift' },
   { label: 'Guest Pass', silver: false, gold: '1/year', platinum: '2/year' },
   { label: 'Events Access', silver: false, gold: true, platinum: true },
   { label: 'Dedicated Concierge', silver: false, gold: false, platinum: true },
@@ -57,7 +57,7 @@ export default function MembershipsPage() {
         <div className="luxe-hero-overlay" />
         <div className={`luxe-hero-content ${styles.heroContent}`}>
           <h1 className={`luxe-hero-title ${styles.heroTitle}`}>LuxeClub Membership</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Join the most exclusive beauty membership. Enjoy premium benefits, exclusive discounts, and VIP treatment all year round.</p>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Join our membership program and enjoy exclusive benefits, discounts, and VIP treatment all year round.</p>
         </div>
       </section>
 
@@ -137,7 +137,7 @@ export default function MembershipsPage() {
               { icon: '💰', title: 'Save Big', desc: 'Members save up to 30% on every service. The more you visit, the more you save.' },
               { icon: '⭐', title: 'Priority Booking', desc: 'Skip the wait. Members get priority access to appointments including weekends and peak hours.' },
               { icon: '🎁', title: 'Exclusive Rewards', desc: 'Birthday treats, seasonal gifts, and exclusive members-only events throughout the year.' },
-              { icon: '🆓', title: 'Free Services', desc: 'Depending on your plan, enjoy complimentary haircuts, facials, and premium treatments.' },
+              { icon: '🆓', title: 'Free Services', desc: 'Depending on your plan, enjoy complimentary haircuts, facials, and treatments.' },
               { icon: '👤', title: 'Dedicated Concierge', desc: 'Platinum members receive a personal concierge for effortless booking and personalized recommendations.' },
               { icon: '📱', title: 'App Benefits', desc: 'Manage your membership, track loyalty points, and book appointments directly from your phone.' },
             ].map((b) => (

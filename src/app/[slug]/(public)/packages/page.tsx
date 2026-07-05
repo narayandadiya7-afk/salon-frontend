@@ -22,7 +22,7 @@ const packages = [
   },
   {
     id: 'p3', name: 'Hair Transformation', category: 'Hair',
-    desc: 'Complete hair makeover with premium products. Perfect for those looking to dramatically change their look.',
+    desc: 'Complete hair makeover for those looking to dramatically change their look.',
     price: '₹9,999', originalPrice: '₹13,500', savings: '26%',
     duration: '3-4 Hours', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80',
     includes: ['Consultation', 'Hair Color/Highlights', 'Keratin Treatment', 'Signature Haircut', 'Blow-Dry & Styling', 'Hair Care Products'],
@@ -36,7 +36,7 @@ const packages = [
   },
   {
     id: 'p5', name: 'Grooming Package', category: 'Grooming',
-    desc: 'Designed for the modern gentleman. Premium grooming services for a polished, confident look.',
+    desc: 'Designed for the modern gentleman. Grooming services for a polished, confident look.',
     price: '₹3,500', originalPrice: '₹4,800', savings: '27%',
     duration: '90 min', image: 'https://images.unsplash.com/photo-1503951914875-452cb67b3cbe?w=800&q=80',
     includes: ['Signature Haircut', 'Beard Styling', 'Facial', 'Head Massage', 'Shoe Shine'],

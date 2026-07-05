@@ -27,8 +27,8 @@ export default function TestimonialsPage() {
         <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=1920&q=85" alt="Testimonials" /></div>
         <div className="luxe-hero-overlay" />
         <div className={`luxe-hero-content ${styles.heroContent}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Client Testimonials</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Hear from our clients about their LuxeStudio experience.</p>
+          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Customer Testimonials</h1>
+          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Hear from our customers about their LuxeStudio experience.</p>
         </div>
       </section>
 
