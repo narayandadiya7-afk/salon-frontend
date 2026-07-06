@@ -19,7 +19,6 @@ import {
   ShopOutlined, CheckCircleOutlined, AlertOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 import apiUtil from '../../../../utils/api';
 import { ApiOwnerSalon, ApiOwnerAppointments, ApiAuthProfile } from '../../../../utils/api.constant';
 import { eResultCode } from '../../../../utils/enum';
@@ -42,12 +41,12 @@ interface Appointment {
 }
 
 const STATUS_STYLE: Record<string, { color: string; bg: string; label: string }> = {
-  BOOKED: { color: '#4A2D5E', bg: 'rgba(74,45,94,0.08)', label: 'Booked' },
-  CONFIRMED: { color: '#7C1D3E', bg: 'rgba(124,29,62,0.08)', label: 'Confirmed' },
-  COMPLETED: { color: '#2D5E3A', bg: 'rgba(45,94,58,0.08)', label: 'Completed' },
-  CANCELLED: { color: '#5C3A1E', bg: 'rgba(92,58,30,0.08)', label: 'Cancelled' },
-  NO_SHOW: { color: '#C9953F', bg: 'rgba(201,149,63,0.08)', label: 'No Show' },
-  IN_PROGRESS: { color: '#C9953F', bg: 'rgba(201,149,63,0.08)', label: 'In Progress' },
+  BOOKED: { color: '#8B7D6B', bg: 'color-mix(in srgb, #8B7D6B 8%, transparent)', label: 'Booked' },
+  CONFIRMED: { color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', label: 'Confirmed' },
+  COMPLETED: { color: '#5B8C5A', bg: 'color-mix(in srgb, #5B8C5A 8%, transparent)', label: 'Completed' },
+  CANCELLED: { color: '#8B7A6B', bg: 'color-mix(in srgb, #8B7A6B 8%, transparent)', label: 'Cancelled' },
+  NO_SHOW: { color: '#B8986B', bg: 'color-mix(in srgb, #B8986B 8%, transparent)', label: 'No Show' },
+  IN_PROGRESS: { color: '#B8986B', bg: 'color-mix(in srgb, #B8986B 8%, transparent)', label: 'In Progress' },
 };
 
 const weeklyData = [
@@ -61,10 +60,10 @@ const weeklyData = [
 ];
 
 const staffPerformance = [
-  { name: 'Ananya', role: 'Senior Stylist', bookings: 45, revenue: 67500, rating: 4.9, avatar: 'A', color: '#7C1D3E' },
-  { name: 'Rahul', role: 'Barber', bookings: 38, revenue: 45600, rating: 4.7, avatar: 'R', color: '#C9953F' },
+  { name: 'Ananya', role: 'Senior Stylist', bookings: 45, revenue: 67500, rating: 4.9, avatar: 'A', color: 'var(--salon-primary)' },
+  { name: 'Rahul', role: 'Barber', bookings: 38, revenue: 45600, rating: 4.7, avatar: 'R', color: '#8B7D6B' },
   { name: 'Priya', role: 'Esthetician', bookings: 32, revenue: 51200, rating: 4.8, avatar: 'P', color: '#4A2D5E' },
-  { name: 'Vikram', role: 'Colorist', bookings: 28, revenue: 50400, rating: 4.6, avatar: 'V', color: '#1A5C5C' },
+  { name: 'Vikram', role: 'Colorist', bookings: 28, revenue: 50400, rating: 4.6, avatar: 'V', color: '#A0886B' },
 ];
 
 const popularServices = [
@@ -84,14 +83,14 @@ const recentActivities = [
 ];
 
 const quickActions = [
-  { icon: <PlusOutlined />, label: 'New Booking', href: '#', color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)' },
-  { icon: <UserOutlined />, label: 'Add Customer', href: '#', color: '#C9953F', bg: 'rgba(201,149,63,0.1)' },
-  { icon: <ScissorOutlined />, label: 'Add Service', href: '#', color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)' },
-  { icon: <GiftOutlined />, label: 'Promotions', href: '#', color: '#C9953F', bg: 'rgba(201,149,63,0.1)' },
+  { icon: <PlusOutlined />, label: 'New Booking', href: '#', color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)' },
+  { icon: <UserOutlined />, label: 'Add Customer', href: '#', color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)' },
+  { icon: <ScissorOutlined />, label: 'Add Service', href: '#', color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)' },
+  { icon: <GiftOutlined />, label: 'Promotions', href: '#', color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)' },
 ];
 
 function StatusBadge({ status }: { status: string }) {
-  const s = STATUS_STYLE[status] || { color: '#5C3A4A', bg: 'rgba(92,58,74,0.08)', label: status };
+  const s = STATUS_STYLE[status] || { color: '#7A6B5A', bg: 'color-mix(in srgb, #7A6B5A 8%, transparent)', label: status };
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: s.bg, color: s.color }}>
       <span style={{ width: 5, height: 5, borderRadius: '50%', background: s.color }} />
@@ -163,13 +162,13 @@ function DashboardContent() {
   const appointmentColumns = [
     { title: 'Customer', dataIndex: 'customerName', key: 'customerName',
         render: (name: string) => (
-          <Space><Avatar size={28} style={{ background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', fontSize: 11, flexShrink: 0 }}>{name?.charAt(0) || '?'}</Avatar><Text strong style={{ fontSize: 13 }}>{name}</Text></Space>
+          <Space><Avatar size={28} style={{ background: 'var(--salon-primary)', fontSize: 11, flexShrink: 0 }}>{name?.charAt(0) || '?'}</Avatar><Text strong style={{ fontSize: 13 }}>{name}</Text></Space>
         ),
     },
     { title: 'Service', dataIndex: ['service', 'name'], key: 'service', render: (n: string) => <Text style={{ fontSize: 13 }}>{n}</Text> },
     { title: 'Time', dataIndex: 'startTime', key: 'startTime', render: (t: string) => <Text style={{ fontSize: 13 }}>{t}</Text> },
     { title: 'Status', dataIndex: 'status', key: 'status', render: (s: string) => <StatusBadge status={s} /> },
-    { title: 'Price', dataIndex: ['service', 'price'], key: 'price', render: (p: number) => <Text strong style={{ fontSize: 13, color: '#1A5C5C' }}>₹{p?.toLocaleString() || 0}</Text> },
+    { title: 'Price', dataIndex: ['service', 'price'], key: 'price', render: (p: number) => <Text strong style={{ fontSize: 13, color: '#5B7A6B' }}>₹{p?.toLocaleString() || 0}</Text> },
     { key: 'actions', width: 48, render: () => <Button type="text" size="small" icon={<MoreOutlined />} style={{ borderRadius: 6 }} /> },
   ];
 
@@ -178,12 +177,12 @@ function DashboardContent() {
       {isExpired && (
         <Alert type="error" title={<Space><ExclamationCircleOutlined /><span><strong>Subscription Expired</strong> — Renew to reactivate your salon website.</span></Space>}
           action={<Link href={`/${slug}/subscription`}><Button type="primary" danger size="small" ghost>Renew Now</Button></Link>}
-          showIcon={false} style={{ marginBottom: 20, borderRadius: 12, border: '1px solid rgba(124,29,62,0.25)', background: 'rgba(124,29,62,0.05)' }} />
+          showIcon={false} style={{ marginBottom: 20, borderRadius: 12, border: '1px solid color-mix(in srgb, var(--salon-primary) 25%, transparent)', background: 'color-mix(in srgb, var(--salon-primary) 5%, transparent)' }} />
       )}
       {!isExpired && daysLeft <= 7 && daysLeft > 0 && (
         <Alert type="warning" title={<Space><ClockCircleOutlined /><span>Subscription expires in <strong>{daysLeft} days</strong></span></Space>}
           action={<Link href={`/${slug}/subscription`}><Button size="small" type="primary" ghost>Renew Plan</Button></Link>}
-          showIcon={false} style={{ marginBottom: 20, borderRadius: 12, border: '1px solid rgba(201,149,63,0.3)', background: 'rgba(201,149,63,0.06)' }} />
+          showIcon={false} style={{ marginBottom: 20, borderRadius: 12, border: '1px solid color-mix(in srgb, var(--salon-secondary) 30%, transparent)', background: 'color-mix(in srgb, var(--salon-secondary) 6%, transparent)' }} />
       )}
 
       <div className="page-header-row">
@@ -196,7 +195,7 @@ function DashboardContent() {
             <Button icon={<GlobalOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }}>View Salon</Button>
           </Link>
           <Link href={`/${slug}/appointments`}>
-            <Button type="primary" icon={<CalendarOutlined />} style={{ borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)' }}>
+            <Button type="primary" icon={<CalendarOutlined />} style={{ borderRadius: 10 }}>
               Manage Bookings
             </Button>
           </Link>
@@ -205,14 +204,14 @@ function DashboardContent() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         {[
-          { value: `₹${totalRevenue.toLocaleString()}`, label: 'Today\'s Revenue', icon: <WalletOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', trend: '+12%', accent: '#7C1D3E' },
-          { value: appointments.length.toString(), label: 'Appointments', icon: <CalendarOutlined />, color: '#C9953F', bg: 'rgba(201,149,63,0.1)', trend: `${completedCount} completed`, accent: '#C9953F' },
-          { value: '3', label: 'Walk-ins', icon: <UserOutlined />, color: '#2D5E3A', bg: 'rgba(45,94,58,0.1)', trend: '+2 today', accent: '#2D5E3A' },
-          { value: '₹350', label: 'Avg. Ticket', icon: <ShoppingCartOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', trend: '+8%', accent: '#7C1D3E' },
-          { value: '1,284', label: 'Total Customers', icon: <TeamOutlined />, color: '#C9953F', bg: 'rgba(201,149,63,0.1)', trend: '+12 this week', accent: '#C9953F' },
-          { value: '68%', label: 'Retention Rate', icon: <PercentageOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', trend: '+5%', accent: '#7C1D3E' },
-          { value: '₹10.2K', label: 'Monthly Revenue', icon: <RiseOutlined />, color: '#C9953F', bg: 'rgba(201,149,63,0.1)', trend: '+18% vs last month', accent: '#C9953F' },
-          { value: '42', label: 'Memberships', icon: <GiftOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', trend: '+3 this month', accent: '#7C1D3E' },
+          { value: `₹${totalRevenue.toLocaleString()}`, label: 'Today\'s Revenue', icon: <WalletOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', trend: '+12%', accent: 'var(--salon-primary)' },
+          { value: appointments.length.toString(), label: 'Appointments', icon: <CalendarOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)', trend: `${completedCount} completed`, accent: 'var(--salon-secondary)' },
+          { value: '3', label: 'Walk-ins', icon: <UserOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', trend: '+2 today', accent: 'var(--salon-primary)' },
+          { value: '₹350', label: 'Avg. Ticket', icon: <ShoppingCartOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', trend: '+8%', accent: 'var(--salon-primary)' },
+          { value: '1,284', label: 'Total Customers', icon: <TeamOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)', trend: '+12 this week', accent: 'var(--salon-secondary)' },
+          { value: '68%', label: 'Retention Rate', icon: <PercentageOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', trend: '+5%', accent: 'var(--salon-primary)' },
+          { value: '₹10.2K', label: 'Monthly Revenue', icon: <RiseOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)', trend: '+18% vs last month', accent: 'var(--salon-secondary)' },
+          { value: '42', label: 'Memberships', icon: <GiftOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', trend: '+3 this month', accent: 'var(--salon-primary)' },
         ].map((kpi, i) => (
           <Col xs={12} sm={12} md={6} lg={3} key={i}>
             <div className="stat-widget" style={{ borderTop: `3px solid ${kpi.accent}` }}>
@@ -221,7 +220,7 @@ function DashboardContent() {
               </div>
               <div className="stat-widget-label">{kpi.label}</div>
               <div className="stat-widget-value">{kpi.value}</div>
-              <div className="stat-widget-trend" style={{ color: kpi.trend.startsWith('+') ? '#2D5E3A' : '#7C1D3E', background: kpi.trend.startsWith('+') ? 'rgba(45,94,58,0.1)' : 'rgba(124,29,62,0.1)', marginTop: 6 }}>{kpi.trend}</div>
+              <div className="stat-widget-trend" style={{ color: kpi.trend.startsWith('+') ? '#5B8C5A' : 'var(--salon-primary)', background: kpi.trend.startsWith('+') ? 'color-mix(in srgb, #5B8C5A 10%, transparent)' : 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', marginTop: 6 }}>{kpi.trend}</div>
             </div>
           </Col>
         ))}
@@ -255,10 +254,10 @@ function DashboardContent() {
                         <div style={{
                           width: '100%', maxWidth: 40, height: `${heightPct}%`, minHeight: 6,
                           borderRadius: '8px 8px 4px 4px',
-                          background: isToday ? 'linear-gradient(180deg, #7C1D3E 0%, #C9953F 100%)' : 'linear-gradient(180deg, rgba(124,29,62,0.35) 0%, rgba(124,29,62,0.12) 100%)',
+                          background: isToday ? 'linear-gradient(180deg, var(--salon-primary) 0%, var(--salon-secondary) 100%)' : 'linear-gradient(180deg, color-mix(in srgb, var(--salon-primary) 35%, transparent) 0%, color-mix(in srgb, var(--salon-primary) 12%, transparent) 100%)',
                           transition: 'height 0.3s ease', position: 'relative',
                         }}>
-                          {isToday && <div style={{ position: 'absolute', top: -22, left: '50%', transform: 'translateX(-50%)', background: '#7C1D3E', color: '#fff', fontSize: 9, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', fontWeight: 600 }}>₹{d.revenue.toLocaleString()}</div>}
+                          {isToday && <div style={{ position: 'absolute', top: -22, left: '50%', transform: 'translateX(-50%)', background: 'var(--salon-primary)', color: '#fff', fontSize: 9, padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', fontWeight: 600 }}>₹{d.revenue.toLocaleString()}</div>}
                         </div>
                         <Text style={{ fontSize: 10, color: 'var(--theme-text-secondary)', fontWeight: isToday ? 600 : 400 }}>{d.day}</Text>
                       </div>
@@ -296,7 +295,7 @@ function DashboardContent() {
 
       <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
         <Col xs={24} lg={16}>
-          <Card className="premium-card" title={<Space><CalendarOutlined style={{ color: '#7C1D3E' }} /><span>Today's Schedule</span></Space>}
+          <Card className="premium-card" title={<Space><CalendarOutlined style={{ color: 'var(--salon-primary)' }} /><span>Today's Schedule</span></Space>}
             extra={
               <PillFilter
                 options={[{ key: 'today', label: 'All' }, { key: 'upcoming', label: 'Upcoming' }, { key: 'completed', label: 'Completed' }]}
@@ -308,7 +307,7 @@ function DashboardContent() {
               <div style={{ textAlign: 'center', padding: '32px 0' }}>
                 <CalendarOutlined style={{ fontSize: 36, color: 'var(--theme-text-tertiary)', marginBottom: 12 }} />
                 <div style={{ color: 'var(--theme-text-secondary)', fontSize: 14, marginBottom: 16 }}>No appointments today</div>
-                <Button type="primary" icon={<PlusOutlined />} style={{ borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none' }}>Create Booking</Button>
+                <Button type="primary" icon={<PlusOutlined />} style={{ borderRadius: 10 }}>Create Booking</Button>
               </div>
             ) : (
               <Table columns={appointmentColumns} dataSource={appointments} rowKey="id" pagination={false} size="small" />
@@ -317,7 +316,7 @@ function DashboardContent() {
         </Col>
 
         <Col xs={24} lg={8}>
-          <Card className="premium-card" title={<Space><UserOutlined style={{ color: '#C9953F' }} /><span>Staff Performance</span></Space>}>
+          <Card className="premium-card" title={<Space><UserOutlined style={{ color: 'var(--salon-secondary)' }} /><span>Staff Performance</span></Space>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {staffPerformance.map((staff, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -325,19 +324,19 @@ function DashboardContent() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Text strong style={{ fontSize: 13 }}>{staff.name}</Text>
-                      <Space size={4}><StarOutlined style={{ fontSize: 11, color: '#C9953F' }} /><Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.rating}</Text></Space>
+                      <Space size={4}><StarOutlined style={{ fontSize: 11, color: 'var(--salon-secondary)' }} /><Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.rating}</Text></Space>
                     </div>
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.role}</Text>
                     <div style={{ marginTop: 6, display: 'flex', gap: 12 }}>
-                      <Text style={{ fontSize: 11, color: '#2D5E3A' }}>{staff.bookings} bookings</Text>
-                      <Text style={{ fontSize: 11, color: '#2D5E3A' }}>₹{staff.revenue.toLocaleString()}</Text>
+                      <Text style={{ fontSize: 11, color: '#5B8C5A' }}>{staff.bookings} bookings</Text>
+                      <Text style={{ fontSize: 11, color: '#5B8C5A' }}>₹{staff.revenue.toLocaleString()}</Text>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
             <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--theme-border-light)' }}>
-              <Link href={`/${slug}/owner/dashboard/team`}><Button type="link" style={{ padding: 0, fontSize: 13, color: '#7C1D3E' }}>View All Staff <RightOutlined /></Button></Link>
+              <Link href={`/${slug}/owner/dashboard/team`}><Button type="link" style={{ padding: 0, fontSize: 13, color: 'var(--salon-primary)' }}>View All Staff <RightOutlined /></Button></Link>
             </div>
           </Card>
         </Col>
@@ -345,8 +344,8 @@ function DashboardContent() {
 
       <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
         <Col xs={24} lg={8}>
-          <Card className="premium-card" title={<Space><ScissorOutlined style={{ color: '#C9953F' }} /><span>Popular Services</span></Space>}
-            extra={<Link href={`/${slug}/owner/dashboard/services`}><Button type="link" style={{ fontSize: 12, color: '#7C1D3E' }}>View All</Button></Link>}>
+          <Card className="premium-card" title={<Space><ScissorOutlined style={{ color: 'var(--salon-secondary)' }} /><span>Popular Services</span></Space>}
+            extra={<Link href={`/${slug}/owner/dashboard/services`}><Button type="link" style={{ fontSize: 12, color: 'var(--salon-primary)' }}>View All</Button></Link>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {popularServices.map((svc, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0', borderBottom: i < popularServices.length - 1 ? '1px solid var(--theme-border-light)' : 'none' }}>
@@ -354,13 +353,13 @@ function DashboardContent() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Text strong style={{ fontSize: 13 }}>{svc.name}</Text>
                       <Space size={4}>
-                        {svc.growth >= 0 ? <ArrowUpOutlined style={{ fontSize: 10, color: '#2D5E3A' }} /> : <ArrowDownOutlined style={{ fontSize: 10, color: '#7C1D3E' }} />}
-                        <Text style={{ fontSize: 11, color: svc.growth >= 0 ? '#2D5E3A' : '#7C1D3E' }}>{Math.abs(svc.growth)}%</Text>
+                        {svc.growth >= 0 ? <ArrowUpOutlined style={{ fontSize: 10, color: '#5B8C5A' }} /> : <ArrowDownOutlined style={{ fontSize: 10, color: 'var(--salon-primary)' }} />}
+                        <Text style={{ fontSize: 11, color: svc.growth >= 0 ? '#5B8C5A' : 'var(--salon-primary)' }}>{Math.abs(svc.growth)}%</Text>
                       </Space>
                     </div>
                     <div style={{ display: 'flex', gap: 16, marginTop: 2 }}>
                       <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{svc.bookings} bookings</Text>
-                      <Text style={{ fontSize: 11, color: svc.growth >= 0 ? '#2D5E3A' : '#7C1D3E', fontWeight: 600 }}>₹{svc.revenue.toLocaleString()}</Text>
+                      <Text style={{ fontSize: 11, color: svc.growth >= 0 ? '#5B8C5A' : 'var(--salon-primary)', fontWeight: 600 }}>₹{svc.revenue.toLocaleString()}</Text>
                     </div>
                   </div>
                 </div>
@@ -370,8 +369,8 @@ function DashboardContent() {
         </Col>
 
         <Col xs={24} lg={8}>
-          <Card className="premium-card" title={<Space><GiftOutlined style={{ color: '#C9953F' }} /><span>Membership & Packages</span></Space>}
-            extra={<Button type="link" style={{ fontSize: 12, color: '#7C1D3E' }}>View All</Button>}>
+          <Card className="premium-card" title={<Space><GiftOutlined style={{ color: 'var(--salon-secondary)' }} /><span>Membership & Packages</span></Space>}
+            extra={<Button type="link" style={{ fontSize: 12, color: 'var(--salon-primary)' }}>View All</Button>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
                 { name: 'Gold Membership', active: 18, revenue: 54000, growth: 12 },
@@ -386,8 +385,8 @@ function DashboardContent() {
                     </div>
                   </div>
                     <div style={{ textAlign: 'right' }}>
-                      <Text strong style={{ fontSize: 13, color: item.growth >= 0 ? '#2D5E3A' : '#7C1D3E' }}>₹{item.revenue.toLocaleString()}</Text>
-                      <div><Text style={{ fontSize: 11, color: item.growth >= 0 ? '#2D5E3A' : '#7C1D3E' }}>{item.growth >= 0 ? '+' : ''}{item.growth}%</Text></div>
+                      <Text strong style={{ fontSize: 13, color: item.growth >= 0 ? '#5B8C5A' : 'var(--salon-primary)' }}>₹{item.revenue.toLocaleString()}</Text>
+                      <div><Text style={{ fontSize: 11, color: item.growth >= 0 ? '#5B8C5A' : 'var(--salon-primary)' }}>{item.growth >= 0 ? '+' : ''}{item.growth}%</Text></div>
                   </div>
                 </div>
               ))}
@@ -396,8 +395,8 @@ function DashboardContent() {
         </Col>
 
         <Col xs={24} lg={8}>
-          <Card className="premium-card" title={<Space><AlertOutlined style={{ color: '#7C1D3E' }} /><span>Low Stock Alerts</span></Space>}
-            extra={<Button type="link" style={{ fontSize: 12, color: '#7C1D3E' }}>Manage</Button>}>
+          <Card className="premium-card" title={<Space><AlertOutlined style={{ color: 'var(--salon-primary)' }} /><span>Low Stock Alerts</span></Space>}
+            extra={<Button type="link" style={{ fontSize: 12, color: 'var(--salon-primary)' }}>Manage</Button>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
                 { name: 'Shampoo Pro Series', stock: 3, min: 10, unit: 'bottles' },
@@ -407,9 +406,9 @@ function DashboardContent() {
                 <div key={i}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                     <Text style={{ fontSize: 13 }}>{item.name}</Text>
-                    <Text style={{ fontSize: 12, color: '#7C1D3E', fontWeight: 600 }}>{item.stock}/{item.min} {item.unit}</Text>
+                    <Text style={{ fontSize: 12, color: 'var(--salon-primary)', fontWeight: 600 }}>{item.stock}/{item.min} {item.unit}</Text>
                   </div>
-                  <Progress percent={Math.round((item.stock / item.min) * 100)} size="small" strokeColor="#7C1D3E" trailColor="rgba(124,29,62,0.08)" showInfo={false} />
+                  <Progress percent={Math.round((item.stock / item.min) * 100)} size="small" strokeColor="var(--salon-primary)" trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)" showInfo={false} />
                 </div>
               ))}
             </div>
@@ -419,14 +418,14 @@ function DashboardContent() {
 
       <Row gutter={[20, 20]}>
         <Col xs={24} lg={12}>
-          <Card className="premium-card" title={<Space><ClockCircleOutlined style={{ color: '#7C1D3E' }} /><span>Recent Activity</span></Space>}>
+          <Card className="premium-card" title={<Space><ClockCircleOutlined style={{ color: 'var(--salon-primary)' }} /><span>Recent Activity</span></Space>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {recentActivities.map((act, i) => {
-                const colors: Record<string, string> = { booking: '#7C1D3E', payment: '#2D5E3A', customer: '#C9953F', staff: '#C9953F', cancel: '#7C1D3E' };
+                const colors: Record<string, string> = { booking: 'var(--salon-primary)', payment: '#5B8C5A', customer: '#B8986B', staff: '#B8986B', cancel: '#7A6B5A' };
                 const icons: Record<string, React.ReactNode> = { booking: <CalendarOutlined />, payment: <WalletOutlined />, customer: <UserOutlined />, staff: <TeamOutlined />, cancel: <CloseCircleOutlined /> };
                 return (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '10px 0', borderBottom: i < recentActivities.length - 1 ? '1px solid var(--theme-border-light)' : 'none' }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 8, background: `${colors[act.type] || '#5C3A4A'}15`, color: colors[act.type] || '#5C3A4A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: `${colors[act.type] || '#7A6B5A'}15`, color: colors[act.type] || '#7A6B5A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0 }}>
                       {icons[act.type] || <ClockCircleOutlined />}
                     </div>
                     <div style={{ flex: 1 }}>
@@ -441,15 +440,15 @@ function DashboardContent() {
         </Col>
 
         <Col xs={24} lg={12}>
-          <Card className="premium-card" title={<Space><TeamOutlined style={{ color: '#7C1D3E' }} /><span>Customer Insights</span></Space>}
-            extra={<Button type="link" style={{ fontSize: 12, color: '#7C1D3E' }}>View All</Button>}>
+          <Card className="premium-card" title={<Space><TeamOutlined style={{ color: 'var(--salon-primary)' }} /><span>Customer Insights</span></Space>}
+            extra={<Button type="link" style={{ fontSize: 12, color: 'var(--salon-primary)' }}>View All</Button>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                { name: 'Sarah Johnson', visits: 24, spent: 28800, lastVisit: 'Today', avatar: 'S', color: '#7C1D3E' },
-                { name: 'Priya Sharma', visits: 18, spent: 21600, lastVisit: 'Yesterday', avatar: 'P', color: '#C9953F' },
-                { name: 'Amrita Singh', visits: 3, spent: 5400, lastVisit: '2 days ago', avatar: 'A', color: '#4A2D5E' },
-                { name: 'Meera Patel', visits: 12, spent: 15600, lastVisit: '1 week ago', avatar: 'M', color: '#1A5C5C' },
-                { name: 'Ravi Kumar', visits: 8, spent: 9600, lastVisit: '3 days ago', avatar: 'R', color: '#8B6F47' },
+                { name: 'Sarah Johnson', visits: 24, spent: 28800, lastVisit: 'Today', avatar: 'S', color: 'var(--salon-primary)' },
+                { name: 'Priya Sharma', visits: 18, spent: 21600, lastVisit: 'Yesterday', avatar: 'P', color: '#B8986B' },
+                { name: 'Amrita Singh', visits: 3, spent: 5400, lastVisit: '2 days ago', avatar: 'A', color: '#8B7D6B' },
+                { name: 'Meera Patel', visits: 12, spent: 15600, lastVisit: '1 week ago', avatar: 'M', color: '#5B7A6B' },
+                { name: 'Ravi Kumar', visits: 8, spent: 9600, lastVisit: '3 days ago', avatar: 'R', color: '#A0886B' },
               ].map((c, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', borderBottom: i < 4 ? '1px solid var(--theme-border-light)' : 'none' }}>
                   <Avatar size={32} style={{ background: c.color, borderRadius: 8, fontSize: 12, fontWeight: 600, flexShrink: 0 }}>{c.avatar}</Avatar>
@@ -472,9 +471,5 @@ function DashboardContent() {
 }
 
 export default function SalonDashboardPage() {
-  return (
-    <OwnerLayout>
-      <DashboardContent />
-    </OwnerLayout>
-  );
+  return <DashboardContent />;
 }

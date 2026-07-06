@@ -72,29 +72,29 @@
    CSS THEME VARIABLES & DESIGN SYSTEM
    ========================================== */
 :root {
-  --theme-primary: #1890ff;
-  --theme-primary-hover: #40a9ff;
-  --theme-primary-active: #096dd9;
-  --theme-primary-light: #e6f7ff;
-  --theme-secondary: #52c41a;
-  --theme-background: #f0f2f5;
+  --theme-primary: #C8A46B;
+  --theme-primary-hover: #D4B88A;
+  --theme-primary-active: #A8864A;
+  --theme-primary-light: #F5F0EB;
+  --theme-secondary: #1A1A1A;
+  --theme-background: #FAF8F5;
   --theme-surface: #ffffff;
   --theme-surface-elevated: #ffffff;
-  --theme-text: #000000d9;
-  --theme-text-secondary: #00000073;
-  --theme-text-tertiary: #00000040;
-  --theme-border: #d9d9d9;
-  --theme-border-light: #f0f0f0;
-  --theme-hover: #f5f5f5;
-  --theme-active: #e6e6e6;
-  --theme-success: #52c41a;
-  --theme-success-bg: #f6ffed;
-  --theme-warning: #faad14;
-  --theme-warning-bg: #fffbe6;
-  --theme-error: #ff4d4f;
-  --theme-error-bg: #fff2f0;
-  --theme-info: #1890ff;
-  --theme-info-bg: #e6f7ff;
+  --theme-text: #1A1A1A;
+  --theme-text-secondary: #6A6A6A;
+  --theme-text-tertiary: #9A9A9A;
+  --theme-border: #E8E0D5;
+  --theme-border-light: #F0EBE3;
+  --theme-hover: #F5F0EB;
+  --theme-active: #EBE3D8;
+  --theme-success: #2D6A4F;
+  --theme-success-bg: #EDF7F2;
+  --theme-warning: #D4A843;
+  --theme-warning-bg: #FDF8ED;
+  --theme-error: #C44545;
+  --theme-error-bg: #FDEDED;
+  --theme-info: #6B4F8A;
+  --theme-info-bg: #F0EDF5;
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;

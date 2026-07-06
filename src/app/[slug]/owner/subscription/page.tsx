@@ -9,7 +9,6 @@ import {
   ArrowRightOutlined, ClockCircleOutlined, FileTextOutlined, DownloadOutlined, GiftOutlined,
   SafetyOutlined, RocketOutlined, StarOutlined, TeamOutlined, SettingOutlined, MoreOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 
 const { Text } = Typography;
 
@@ -29,8 +28,8 @@ const plans = [
     period: '/month',
     description: 'Perfect for small salons getting started',
     features: ['100 bookings/mo', '3 staff members', 'Basic analytics', 'Email support'],
-    color: '#7C1D3E',
-    gradient: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+    color: 'var(--salon-primary)',
+    gradient: 'none',
   },
   {
     name: 'Pro',
@@ -38,8 +37,8 @@ const plans = [
     period: '/month',
     description: 'Best for growing salons',
     features: ['Unlimited bookings', '10 staff members', 'Full analytics', 'Website CMS', 'Marketing tools', 'Priority support'],
-    color: '#7C1D3E',
-    gradient: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+    color: 'var(--salon-primary)',
+    gradient: 'none',
     highlighted: true,
   },
   {
@@ -75,7 +74,7 @@ const columns = [
     key: 'invoice',
     render: (val: string) => (
       <Space>
-        <FileTextOutlined style={{ color: '#7C1D3E', fontSize: 13 }} />
+        <FileTextOutlined style={{ color: 'var(--salon-primary)', fontSize: 13 }} />
         <Text style={{ fontSize: 13, fontWeight: 600 }}>{val}</Text>
       </Space>
     ),
@@ -134,8 +133,7 @@ function SubscriptionContent() {
             Refer & Earn
           </Button>
           <Button type="primary" icon={<RocketOutlined />} style={{
-            borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-            border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
+            borderRadius: 10,
           }}>
             Upgrade Plan
           </Button>
@@ -148,8 +146,8 @@ function SubscriptionContent() {
           <Card
             className="premium-card"
             style={{
-            background: 'linear-gradient(135deg, rgba(124,29,62,0.03), rgba(201,149,63,0.03))',
-            border: '1px solid rgba(124,29,62,0.12)',
+            background: 'linear-gradient(135deg, color-mix(in srgb, var(--salon-primary) 3%, transparent), color-mix(in srgb, var(--salon-secondary) 3%, transparent))',
+            border: '1px solid color-mix(in srgb, var(--salon-primary) 12%, transparent)',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
@@ -157,7 +155,7 @@ function SubscriptionContent() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: 12,
-                    background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+                    background: 'var(--salon-primary)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: '#fff', fontSize: 20,
                   }}>
@@ -175,7 +173,7 @@ function SubscriptionContent() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
-                  <Text style={{ fontSize: 28, fontWeight: 700, color: '#7C1D3E' }}>₹2,499</Text>
+                  <Text style={{ fontSize: 28, fontWeight: 700, color: 'var(--salon-primary)' }}>₹2,499</Text>
                   <Text style={{ fontSize: 14, color: 'var(--theme-text-secondary)' }}>/month</Text>
                 </div>
                 <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>
@@ -185,8 +183,7 @@ function SubscriptionContent() {
 
               <Space style={{ alignSelf: 'flex-end' }}>
                 <Button icon={<RocketOutlined />} type="primary" style={{
-                  borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-                  border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
+                  borderRadius: 10,
                 }}>
                   Upgrade Plan
                 </Button>
@@ -209,10 +206,10 @@ function SubscriptionContent() {
                     percent={Math.round((daysUsed / billingPeriodDays) * 100)}
                     showInfo={false}
                     strokeColor={{
-                      from: '#7C1D3E',
-                      to: '#C9953F',
+                      from: 'var(--salon-primary)',
+                      to: 'var(--salon-secondary)',
                     }}
-                    trailColor="rgba(124,29,62,0.08)"
+                    trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
                     size="small"
                     style={{ margin: 0 }}
                   />
@@ -226,7 +223,7 @@ function SubscriptionContent() {
                   </div>
                   <div>
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)', display: 'block' }}>Amount</Text>
-                    <Text style={{ fontSize: 14, fontWeight: 600, color: '#7C1D3E' }}>₹2,499</Text>
+                    <Text style={{ fontSize: 14, fontWeight: 600, color: 'var(--salon-primary)' }}>₹2,499</Text>
                   </div>
                 </div>
               </Col>
@@ -255,14 +252,14 @@ function SubscriptionContent() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div className="stat-widget">
               <div className="stat-widget-header">
-                <div className="stat-widget-icon" style={{ background: 'rgba(124,29,62,0.1)', color: '#7C1D3E', borderRadius: 10 }}>
+                <div className="stat-widget-icon" style={{ background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', color: 'var(--salon-primary)', borderRadius: 10 }}>
                   <SafetyOutlined />
                 </div>
                 <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(16,185,129,0.08)', color: '#10B981' }}>Secure</Tag>
               </div>
               <div className="stat-widget-label">Payment Method</div>
-              <div className="stat-widget-value" style={{ fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <CreditCardOutlined style={{ color: '#7C1D3E' }} />
+                <div className="stat-widget-value" style={{ fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <CreditCardOutlined style={{ color: 'var(--salon-primary)' }} />
                 •••• 4242
               </div>
               <Button type="link" style={{ padding: 0, fontSize: 12, color: 'var(--theme-text-secondary)' }}>
@@ -286,10 +283,10 @@ function SubscriptionContent() {
 
             <div className="stat-widget">
               <div className="stat-widget-header">
-                <div className="stat-widget-icon" style={{ background: 'rgba(124,29,62,0.1)', color: '#7C1D3E', borderRadius: 10 }}>
+                <div className="stat-widget-icon" style={{ background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', color: 'var(--salon-primary)', borderRadius: 10 }}>
                   <StarOutlined />
                 </div>
-                <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>Account</Tag>
+                <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Account</Tag>
               </div>
               <div className="stat-widget-label">Account Age</div>
               <div className="stat-widget-value">8 months</div>
@@ -315,7 +312,7 @@ function SubscriptionContent() {
             <Col xs={24} md={8} key={i}>
               <div style={{
                 background: plan.highlighted
-                  ? 'linear-gradient(135deg, rgba(124,29,62,0.04), rgba(201,149,63,0.04))'
+                  ? 'color-mix(in srgb, var(--salon-primary) 4%, transparent)'
                   : 'var(--theme-surface)',
                 borderRadius: 16,
                 border: plan.highlighted
@@ -325,15 +322,15 @@ function SubscriptionContent() {
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: plan.highlighted ? '0 8px 32px rgba(124,29,62,0.12)' : 'none',
+                boxShadow: plan.highlighted ? '0 8px 32px color-mix(in srgb, var(--salon-primary) 12%, transparent)' : 'none',
                 ...(plan.highlighted ? {
-                  borderImage: 'linear-gradient(135deg, #7C1D3E, #C9953F) 1',
+                  borderColor: 'var(--salon-primary)',
                 } : {}),
               }}>
                 {plan.highlighted && (
                   <div style={{
                     position: 'absolute', top: 16, right: -32,
-                    background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+                    background: 'var(--salon-primary)',
                     color: '#fff', fontSize: 10, fontWeight: 700,
                     padding: '2px 36px', transform: 'rotate(45deg)',
                     textTransform: 'uppercase',
@@ -346,8 +343,8 @@ function SubscriptionContent() {
                 <div style={{
                   width: 44, height: 44, borderRadius: 12, marginBottom: 12,
                   background: plan.highlighted
-                    ? 'linear-gradient(135deg, #7C1D3E, #C9953F)'
-                    : `${plan.color}12`,
+                    ? 'var(--salon-primary)'
+                    : `color-mix(in srgb, ${plan.color} 12%, transparent)`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: plan.highlighted ? '#fff' : plan.color,
                   fontSize: 20,
@@ -358,13 +355,13 @@ function SubscriptionContent() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                   <Text style={{ fontSize: 18, fontWeight: 700 }}>{plan.name}</Text>
                   {plan.highlighted && (
-                    <Tag style={{
-                      borderRadius: 6, fontSize: 9, fontWeight: 600, border: 'none',
-                      background: 'rgba(124,29,62,0.1)', color: '#7C1D3E', margin: 0,
-                      padding: '0 6px', lineHeight: '18px',
-                    }}>
-                      Current Plan
-                    </Tag>
+              <Tag style={{
+                    borderRadius: 6, fontSize: 9, fontWeight: 600, border: 'none',
+                    background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', color: 'var(--salon-primary)', margin: 0,
+                    padding: '0 6px', lineHeight: '18px',
+                  }}>
+                    Current Plan
+                  </Tag>
                   )}
                 </div>
 
@@ -373,7 +370,7 @@ function SubscriptionContent() {
                 </Text>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 16 }}>
-                  <Text style={{ fontSize: 28, fontWeight: 700, color: plan.highlighted ? '#7C1D3E' : 'var(--theme-text)' }}>
+                  <Text style={{ fontSize: 28, fontWeight: 700, color: plan.highlighted ? 'var(--salon-primary)' : 'var(--theme-text)' }}>
                     {plan.price}
                   </Text>
                   <Text style={{ fontSize: 13, color: 'var(--theme-text-secondary)' }}>{plan.period}</Text>
@@ -387,7 +384,7 @@ function SubscriptionContent() {
                   renderItem={(feature) => (
                     <List.Item style={{ padding: '5px 0', border: 'none' }}>
                       <Space size={8}>
-                        <CheckCircleOutlined style={{ color: plan.highlighted ? '#7C1D3E' : '#10B981', fontSize: 12 }} />
+                        <CheckCircleOutlined style={{ color: plan.highlighted ? 'var(--salon-primary)' : '#10B981', fontSize: 12 }} />
                         <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>{feature}</Text>
                       </Space>
                     </List.Item>
@@ -402,9 +399,6 @@ function SubscriptionContent() {
                     block
                     style={{
                       borderRadius: 10,
-                      background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-                      border: 'none',
-                      boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
                       height: 40,
                     }}
                   >
@@ -416,7 +410,7 @@ function SubscriptionContent() {
                     block
                     style={{
                       borderRadius: 10,
-                      border: `1.5px solid ${plan.color}30`,
+                      border: `1.5px solid color-mix(in srgb, ${plan.color} 30%, transparent)`,
                       color: plan.color,
                       height: 40,
                     }}
@@ -437,7 +431,7 @@ function SubscriptionContent() {
             className="premium-card"
             title={
               <Space>
-                <FileTextOutlined style={{ color: '#7C1D3E' }} />
+                <FileTextOutlined style={{ color: 'var(--salon-primary)' }} />
                 <span>Billing History</span>
               </Space>
             }
@@ -457,7 +451,7 @@ function SubscriptionContent() {
             className="premium-card"
             title={
               <Space>
-                <CreditCardOutlined style={{ color: '#7C1D3E' }} />
+                <CreditCardOutlined style={{ color: 'var(--salon-primary)' }} />
                 <span>Payment Method</span>
               </Space>
             }
@@ -466,8 +460,8 @@ function SubscriptionContent() {
               <div style={{
                 display: 'flex', alignItems: 'center', gap: 14,
                 padding: 14, borderRadius: 12,
-                background: 'rgba(124,29,62,0.04)',
-                border: '1px solid rgba(124,29,62,0.1)',
+                background: 'color-mix(in srgb, var(--salon-primary) 4%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--salon-primary) 10%, transparent)',
               }}>
                 <div style={{
                   width: 44, height: 30, borderRadius: 6,
@@ -500,7 +494,7 @@ function SubscriptionContent() {
                 </Space>
                 <br />
                 <Space size={8}>
-                  <SafetyOutlined style={{ color: '#7C1D3E', fontSize: 12 }} />
+                  <SafetyOutlined style={{ color: 'var(--salon-primary)', fontSize: 12 }} />
                   <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>Powered by Stripe</Text>
                 </Space>
               </div>
@@ -513,9 +507,5 @@ function SubscriptionContent() {
 }
 
 export default function SubscriptionPage() {
-  return (
-    <OwnerLayout>
-      <SubscriptionContent />
-    </OwnerLayout>
-  );
+  return <SubscriptionContent />;
 }

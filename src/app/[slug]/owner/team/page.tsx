@@ -11,7 +11,6 @@ import {
   StarOutlined, ClockCircleOutlined, CalendarOutlined, PhoneOutlined, MailOutlined,
   CheckCircleOutlined, CloseCircleOutlined, RightOutlined, RiseOutlined, TeamOutlined, SettingOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '@/components/layout/OwnerLayout';
 import PillFilter from '@/components/pill-filter';
 import dayjs from 'dayjs';
 
@@ -35,32 +34,32 @@ interface StaffMember {
 }
 
 const staffMembers: StaffMember[] = [
-  { id: 1, name: 'Ananya Sharma', role: 'Senior Stylist', rating: 4.9, bookings: 45, revenue: 67500, utilization: 85, status: 'Active', avatar: 'AS', color: '#7C1D3E', phone: '+91 98765 43210', email: 'ananya@salon.com', specialty: 'Haircut & Styling', reviews: 128 },
-  { id: 2, name: 'Rahul Verma', role: 'Master Barber', rating: 4.7, bookings: 38, revenue: 45600, utilization: 72, status: 'Active', avatar: 'RV', color: '#C9953F', phone: '+91 98765 43211', email: 'rahul@salon.com', specialty: 'Beard & Shave', reviews: 96 },
-  { id: 3, name: 'Priya Patel', role: 'Esthetician', rating: 4.8, bookings: 32, revenue: 51200, utilization: 68, status: 'Active', avatar: 'PP', color: '#4A2D5E', phone: '+91 98765 43212', email: 'priya@salon.com', specialty: 'Facial Treatments', reviews: 84 },
-  { id: 4, name: 'Vikram Singh', role: 'Colorist', rating: 4.6, bookings: 28, revenue: 50400, utilization: 60, status: 'Active', avatar: 'VS', color: '#1A5C5C', phone: '+91 98765 43213', email: 'vikram@salon.com', specialty: 'Hair Coloring', reviews: 72 },
-  { id: 5, name: 'Meera Kapoor', role: 'Nail Technician', rating: 4.9, bookings: 24, revenue: 28800, utilization: 55, status: 'Offline', avatar: 'MK', color: '#8B6F47', phone: '+91 98765 43214', email: 'meera@salon.com', specialty: 'Manicure & Pedicure', reviews: 62 },
-  { id: 6, name: 'Amit Joshi', role: 'Massage Therapist', rating: 4.5, bookings: 18, revenue: 32400, utilization: 45, status: 'Active', avatar: 'AJ', color: '#5C3A4A', phone: '+91 98765 43215', email: 'amit@salon.com', specialty: 'Massage Therapy', reviews: 48 },
-  { id: 7, name: 'Neha Gupta', role: 'Hair Stylist', rating: 4.7, bookings: 35, revenue: 45500, utilization: 78, status: 'Active', avatar: 'NG', color: '#2D5E3A', phone: '+91 98765 43216', email: 'neha@salon.com', specialty: 'Blow-dry & Styling', reviews: 92 },
-  { id: 8, name: 'Raj Khanna', role: 'Barber', rating: 4.4, bookings: 15, revenue: 18000, utilization: 38, status: 'Active', avatar: 'RK', color: '#5C3A1E', phone: '+91 98765 43217', email: 'raj@salon.com', specialty: 'Classic Cuts', reviews: 36 },
+  { id: 1, name: 'Ananya Sharma', role: 'Senior Stylist', rating: 4.9, bookings: 45, revenue: 67500, utilization: 85, status: 'Active', avatar: 'AS', color: 'var(--salon-primary)', phone: '+91 98765 43210', email: 'ananya@salon.com', specialty: 'Haircut & Styling', reviews: 128 },
+  { id: 2, name: 'Rahul Verma', role: 'Master Barber', rating: 4.7, bookings: 38, revenue: 45600, utilization: 72, status: 'Active', avatar: 'RV', color: '#B8986B', phone: '+91 98765 43211', email: 'rahul@salon.com', specialty: 'Beard & Shave', reviews: 96 },
+  { id: 3, name: 'Priya Patel', role: 'Esthetician', rating: 4.8, bookings: 32, revenue: 51200, utilization: 68, status: 'Active', avatar: 'PP', color: '#8B7D6B', phone: '+91 98765 43212', email: 'priya@salon.com', specialty: 'Facial Treatments', reviews: 84 },
+  { id: 4, name: 'Vikram Singh', role: 'Colorist', rating: 4.6, bookings: 28, revenue: 50400, utilization: 60, status: 'Active', avatar: 'VS', color: '#5B7A6B', phone: '+91 98765 43213', email: 'vikram@salon.com', specialty: 'Hair Coloring', reviews: 72 },
+  { id: 5, name: 'Meera Kapoor', role: 'Nail Technician', rating: 4.9, bookings: 24, revenue: 28800, utilization: 55, status: 'Offline', avatar: 'MK', color: '#A0886B', phone: '+91 98765 43214', email: 'meera@salon.com', specialty: 'Manicure & Pedicure', reviews: 62 },
+  { id: 6, name: 'Amit Joshi', role: 'Massage Therapist', rating: 4.5, bookings: 18, revenue: 32400, utilization: 45, status: 'Active', avatar: 'AJ', color: '#7A6B5A', phone: '+91 98765 43215', email: 'amit@salon.com', specialty: 'Massage Therapy', reviews: 48 },
+  { id: 7, name: 'Neha Gupta', role: 'Hair Stylist', rating: 4.7, bookings: 35, revenue: 45500, utilization: 78, status: 'Active', avatar: 'NG', color: '#5B8C5A', phone: '+91 98765 43216', email: 'neha@salon.com', specialty: 'Blow-dry & Styling', reviews: 92 },
+  { id: 8, name: 'Raj Khanna', role: 'Barber', rating: 4.4, bookings: 15, revenue: 18000, utilization: 38, status: 'Active', avatar: 'RK', color: '#8B7A6B', phone: '+91 98765 43217', email: 'raj@salon.com', specialty: 'Classic Cuts', reviews: 36 },
 ];
 
 const todayStaff = staffMembers.filter(s => s.status === 'Active').slice(0, 6);
 const avgRating = (staffMembers.reduce((sum, s) => sum + s.rating, 0) / staffMembers.length);
 
 function getStatusColor(status: string) {
-  return status === 'Active' ? '#2D5E3A' : '#5C3A4A';
+  return status === 'Active' ? '#5B8C5A' : '#7A6B5A';
 }
 
 function getStatusBg(status: string) {
-  return status === 'Active' ? 'rgba(45,94,58,0.1)' : 'rgba(92,58,74,0.1)';
+  return status === 'Active' ? 'color-mix(in srgb, #5B8C5A 10%, transparent)' : 'color-mix(in srgb, #7A6B5A 10%, transparent)';
 }
 
 function getUtilizationColor(val: number) {
-  if (val >= 80) return '#2D5E3A';
-  if (val >= 60) return '#7C1D3E';
-  if (val >= 40) return '#C9953F';
-  return '#7C1D3E';
+  if (val >= 80) return '#5B8C5A';
+  if (val >= 60) return 'var(--salon-primary)';
+  if (val >= 40) return '#B8986B';
+  return 'var(--salon-primary)';
 }
 
 function StaffContent() {
@@ -113,13 +112,13 @@ function StaffContent() {
     },
     {
       title: 'Revenue', dataIndex: 'revenue', key: 'revenue',
-      render: (val: number) => <Text strong style={{ fontSize: 13, color: '#1A5C5C' }}>₹{val.toLocaleString()}</Text>,
+      render: (val: number) => <Text strong style={{ fontSize: 13, color: '#5B7A6B' }}>₹{val.toLocaleString()}</Text>,
     },
     {
       title: 'Rating', dataIndex: 'rating', key: 'rating',
       render: (val: number) => (
         <Space size={4}>
-          <StarOutlined style={{ fontSize: 12, color: '#C9953F' }} />
+          <StarOutlined style={{ fontSize: 12, color: 'var(--salon-secondary)' }} />
           <Text style={{ fontSize: 13, fontWeight: 600 }}>{val}</Text>
         </Space>
       ),
@@ -177,9 +176,6 @@ function StaffContent() {
             icon={<PlusOutlined />}
             style={{
               borderRadius: 10,
-              background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-              border: 'none',
-              boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
             }}
           >
             Add Staff Member
@@ -193,7 +189,7 @@ function StaffContent() {
           <div className="stat-widget stat-widget-staff">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-staff"><TeamOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(201,149,63,0.08)', color: '#C9953F' }}>Total</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', color: 'var(--salon-secondary)' }}>Total</Tag>
             </div>
             <div className="stat-widget-label">Active Staff</div>
             <div className="stat-widget-value">{staffMembers.filter(s => s.status === 'Active').length}</div>
@@ -206,7 +202,7 @@ function StaffContent() {
           <div className="stat-widget stat-widget-bookings">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-bookings"><CalendarOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>Today</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Today</Tag>
             </div>
             <div className="stat-widget-label">Today&apos;s Staff</div>
             <div className="stat-widget-value">{todayStaff.length}</div>
@@ -219,7 +215,7 @@ function StaffContent() {
           <div className="stat-widget stat-widget-customers">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-customers"><ClockCircleOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(45,94,58,0.08)', color: '#2D5E3A' }}>Pending</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Pending</Tag>
             </div>
             <div className="stat-widget-label">Pending Leave</div>
             <div className="stat-widget-value">1</div>
@@ -232,7 +228,7 @@ function StaffContent() {
           <div className="stat-widget stat-widget-revenue">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-revenue"><StarOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>Overall</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Overall</Tag>
             </div>
             <div className="stat-widget-label">Avg. Rating</div>
             <div className="stat-widget-value">{avgRating.toFixed(1)}★</div>
@@ -249,7 +245,7 @@ function StaffContent() {
         style={{ marginBottom: 24 }}
         title={
           <Space>
-            <TeamOutlined style={{ color: '#7C1D3E' }} />
+            <TeamOutlined style={{ color: 'var(--salon-primary)' }} />
             <span>Team Members</span>
           </Space>
         }
@@ -274,7 +270,7 @@ function StaffContent() {
                 position: 'relative',
                 overflow: 'hidden',
               }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,29,62,0.2)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.06)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--salon-primary) 20%, transparent)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.06)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--theme-border-light)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
                 onClick={() => handleViewProfile(staff)}
               >
@@ -336,7 +332,7 @@ function StaffContent() {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)', display: 'block' }}>Revenue</Text>
-                    <Text strong style={{ fontSize: 15, color: '#1A5C5C' }}>₹{staff.revenue.toLocaleString()}</Text>
+                    <Text strong style={{ fontSize: 15, color: '#5B7A6B' }}>₹{staff.revenue.toLocaleString()}</Text>
                   </div>
                 </div>
 
@@ -380,7 +376,7 @@ function StaffContent() {
         className="premium-card"
         title={
           <Space>
-            <RiseOutlined style={{ color: '#7C1D3E' }} />
+            <RiseOutlined style={{ color: 'var(--salon-primary)' }} />
             <span>Performance Overview</span>
           </Space>
         }
@@ -460,7 +456,7 @@ function StaffContent() {
             {/* Contact Info */}
             <div style={{ padding: '20px 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
               <Space>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(124,29,62,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7C1D3E', fontSize: 14, flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--salon-primary)', fontSize: 14, flexShrink: 0 }}>
                   <PhoneOutlined />
                 </div>
                 <div>
@@ -469,7 +465,7 @@ function StaffContent() {
                 </div>
               </Space>
               <Space>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(201,149,63,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9953F', fontSize: 14, flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--salon-secondary)', fontSize: 14, flexShrink: 0 }}>
                   <MailOutlined />
                 </div>
                 <div>
@@ -478,7 +474,7 @@ function StaffContent() {
                 </div>
               </Space>
               <Space>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(201,149,63,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9953F', fontSize: 14, flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--salon-secondary)', fontSize: 14, flexShrink: 0 }}>
                   <StarOutlined />
                 </div>
                 <div>
@@ -501,7 +497,7 @@ function StaffContent() {
               <Col span={8}>
                 <div style={{ textAlign: 'center', padding: '8px 0', background: 'var(--theme-hover)', borderRadius: 10 }}>
                   <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)', display: 'block' }}>Revenue</Text>
-                  <Text strong style={{ fontSize: 22, color: '#1A5C5C' }}>₹{(selectedStaff.revenue / 1000).toFixed(1)}k</Text>
+                  <Text strong style={{ fontSize: 22, color: '#5B7A6B' }}>₹{(selectedStaff.revenue / 1000).toFixed(1)}k</Text>
                 </div>
               </Col>
               <Col span={8}>
@@ -528,7 +524,7 @@ function StaffContent() {
 
             {/* Actions */}
             <div style={{ marginTop: 20, display: 'flex', gap: 8 }}>
-              <Button type="primary" icon={<CalendarOutlined />} block style={{ borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)' }}>
+              <Button type="primary" icon={<CalendarOutlined />} block style={{ borderRadius: 10 }}>
                 Manage Schedule
               </Button>
               <Button icon={<SettingOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border-light)' }}>
@@ -543,9 +539,5 @@ function StaffContent() {
 }
 
 export default function StaffManagementPage() {
-  return (
-    <OwnerLayout>
-      <StaffContent />
-    </OwnerLayout>
-  );
+  return <StaffContent />;
 }

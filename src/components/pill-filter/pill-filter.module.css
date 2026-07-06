@@ -22,12 +22,12 @@
 }
 
 .pill:hover {
-  border-color: rgba(124, 29, 62, 0.2);
-  background: rgba(124, 29, 62, 0.04);
+  border-color: color-mix(in srgb, var(--salon-primary) 25%, transparent);
+  background: color-mix(in srgb, var(--salon-primary) 6%, transparent);
 }
 
 .pill.active {
-  background: #7C1D3E;
+  background: var(--salon-primary);
   border-color: transparent;
   color: #fff;
 }
@@ -49,6 +49,6 @@
 }
 
 .pill.active .count {
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, #fff 20%, transparent);
   color: #fff;
 }

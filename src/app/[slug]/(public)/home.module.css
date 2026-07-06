@@ -690,26 +690,27 @@
   grid-row: span 2;
 }
 
-.portfolioItem img {
+.portfolioItem :global(.ant-image) {
+  width: 100%;
+  height: 100%;
+}
+
+.portfolioItem :global(.ant-image-img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-slow);
 }
 
-.portfolioItem:hover img {
+.portfolioItem:hover :global(.ant-image-img) {
   transform: scale(1.08);
 }
 
-.portfolioOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26, 26, 26, 0.7) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+.portfolioPreviewMask {
   display: flex;
-  align-items: flex-end;
-  padding: var(--space-5);
+  align-items: center;
+  justify-content: center;
+  color: var(--luxe-white);
 }
 
 .portfolioOverlay span {
@@ -853,12 +854,132 @@
 }
 
 /* ===== FAQ ===== */
-.faqDetails {
-  border-bottom: none !important;
+.faqOrnament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: var(--space-3);
 }
 
-.faqSummary {
+.faqOrnamentLine {
+  width: 36px;
+  height: 1px;
+  background: var(--luxe-gold);
+  opacity: 0.25;
+}
+
+.faqOrnamentIcon {
+  font-size: 9px;
+  color: var(--luxe-gold);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.faqContainer {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  background: var(--luxe-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--luxe-border-light);
+  transition: background var(--transition-fast);
+}
+
+.faqItem:last-child {
+  border-bottom: none;
+}
+
+.faqItem:hover {
+  background: var(--luxe-hover);
+}
+
+.faqItemOpen {
+  background: var(--luxe-ivory);
+  box-shadow: inset 3px 0 0 0 var(--luxe-gold);
+}
+
+.faqTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-sans);
   font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--luxe-text);
+  line-height: var(--leading-normal);
+  transition: color var(--transition-fast);
+}
+
+.faqTrigger:hover {
+  color: var(--luxe-gold);
+}
+
+.faqQuestion {
+  flex: 1;
+  min-width: 0;
+}
+
+.faqChevron {
+  flex-shrink: 0;
+  color: var(--luxe-text-tertiary);
+  transition: transform var(--transition-base), color var(--transition-fast);
+}
+
+.faqChevronOpen {
+  transform: rotate(180deg);
+  color: var(--luxe-gold);
+}
+
+.faqAnswerWrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-base);
+}
+
+.faqAnswerOpen {
+  max-height: 500px;
+}
+
+.faqAnswerInner {
+  overflow: hidden;
+}
+
+.faqAnswerContent {
+  padding: 0 var(--space-6) var(--space-6);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--luxe-text-secondary);
+}
+
+.faqAnswerDecor {
+  color: var(--luxe-gold);
+  opacity: 0.5;
+  margin-right: var(--space-2);
+  font-weight: var(--weight-bold);
+}
+
+.faqCta {
+  text-align: center;
+  padding-top: var(--space-10);
+}
+
+.faqCtaText {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--luxe-text-secondary);
+  margin-bottom: var(--space-4);
 }
 
 /* ===== Testimonials ===== */
@@ -963,15 +1084,80 @@
 }
 
 /* ===== Contact ===== */
+.contactInfoCol {
+  max-width: 480px;
+}
+
+.contactOrnament {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-3);
+}
+
+.contactOrnamentLine {
+  width: 28px;
+  height: 1px;
+  background: var(--luxe-gold);
+  opacity: 0.25;
+}
+
+.contactOrnamentIcon {
+  font-size: 8px;
+  color: var(--luxe-gold);
+  opacity: 0.5;
+  line-height: 1;
+}
+
 .contactTitle {
-  max-width: 350px;
+  max-width: 420px;
+}
+
+.contactDesc {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--luxe-text-secondary);
+  line-height: var(--leading-relaxed);
+  margin: var(--space-4) 0 0;
 }
 
 .contactInfoList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
   margin-top: var(--space-8);
+}
+
+.contactInfoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-xl);
+  transition: background var(--transition-fast);
+}
+
+.contactInfoItem:hover {
+  background: var(--luxe-beige);
+}
+
+.contactInfoIcon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-xl);
+  background: var(--luxe-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--luxe-gold);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.contactInfoItem:hover .contactInfoIcon {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
 }
 
 .contactLabel {
@@ -980,39 +1166,62 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--luxe-text-tertiary);
-  margin: 0;
+  margin: 0 0 2px;
 }
 
 .contactValue {
   font-size: var(--text-base);
   font-weight: var(--weight-medium);
+  color: var(--luxe-text);
   margin: 0;
 }
 
 .contactCtaCard {
+  position: relative;
   background: var(--luxe-charcoal);
-  border-radius: var(--radius-3xl);
-  padding: var(--space-10);
+  border-radius: var(--radius-4xl);
+  padding: var(--space-12) var(--space-10);
   text-align: center;
+  overflow: hidden;
+}
+
+.contactCtaGlow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(200, 164, 107, 0.12) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .contactCtaIcon {
-  margin-bottom: var(--space-4);
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-5);
+  border-radius: var(--radius-full);
+  background: rgba(200, 164, 107, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contactCtaHeading {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
   color: var(--luxe-white);
   margin: 0 0 var(--space-3);
 }
 
 .contactCtaText {
   font-size: var(--text-base);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
   line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-6);
+  max-width: 320px;
+  margin: 0 auto var(--space-7);
 }
 
 /* ===== Loading ===== */
@@ -1297,10 +1506,6 @@
 }
 
 @media (max-width: 768px) {
-  :global(.luxe-contact-preview > div:first-child > div:last-child .luxe-contact-info-item) {
-    flex-direction: column;
-  }
-
   .portfolioGrid {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;

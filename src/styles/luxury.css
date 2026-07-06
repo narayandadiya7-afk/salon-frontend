@@ -25,22 +25,22 @@
   --luxe-purple: #6b4f8a;
   --luxe-purple-light: #8b6fa8;
 
-  /* Semantic */
-  --luxe-bg: var(--luxe-ivory);
-  --luxe-surface: var(--luxe-white);
-  --luxe-surface-elevated: var(--luxe-white);
-  --luxe-text: var(--luxe-charcoal);
-  --luxe-text-secondary: var(--luxe-charcoal-light);
-  --luxe-text-tertiary: #9a9a9a;
-  --luxe-border: #e8e0d5;
-  --luxe-border-light: #f0ebe3;
-  --luxe-hover: var(--luxe-ivory);
-  --luxe-active: var(--luxe-beige);
+  /* Semantic — fall back to theme variables for global consistency */
+  --luxe-bg: var(--theme-background, var(--luxe-ivory));
+  --luxe-surface: var(--theme-surface, var(--luxe-white));
+  --luxe-surface-elevated: var(--theme-surface-elevated, var(--luxe-white));
+  --luxe-text: var(--theme-text, var(--luxe-charcoal));
+  --luxe-text-secondary: var(--theme-text-secondary, var(--luxe-charcoal-light));
+  --luxe-text-tertiary: var(--theme-text-tertiary, #9a9a9a);
+  --luxe-border: var(--theme-border, #e8e0d5);
+  --luxe-border-light: var(--theme-border-light, #f0ebe3);
+  --luxe-hover: var(--theme-hover, var(--luxe-ivory));
+  --luxe-active: var(--theme-active, var(--luxe-beige));
 
-  --luxe-success: #2d6a4f;
-  --luxe-warning: #c8a46b;
-  --luxe-error: #c44545;
-  --luxe-info: #6b4f8a;
+  --luxe-success: var(--theme-success, #2d6a4f);
+  --luxe-warning: var(--theme-warning, #c8a46b);
+  --luxe-error: var(--theme-error, #c44545);
+  --luxe-info: var(--theme-info, #6b4f8a);
 
   /* 8px Spacing System */
   --space-1: 4px;

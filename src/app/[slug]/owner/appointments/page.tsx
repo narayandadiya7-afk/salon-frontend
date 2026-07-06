@@ -16,7 +16,6 @@ import {
   FileTextOutlined, WalletOutlined, TeamOutlined,
   StarOutlined, PhoneOutlined, MailOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 import dayjs from 'dayjs';
 
 const { Text } = Typography;
@@ -31,24 +30,24 @@ const STATUSES = [
 ];
 
 const bookings = [
-  { id: 'B001', customer: 'Sarah Johnson', service: 'Haircut & Styling', staff: 'Ananya', time: '09:00', endTime: '10:00', date: '2024-01-15', status: 'confirmed', amount: 1500, avatar: 'SJ', color: '#7C1D3E', phone: '+91 98765 43210', email: 'sarah@email.com' },
-  { id: 'B002', customer: 'Priya Sharma', service: 'Facial Treatment', staff: 'Priya', time: '10:00', endTime: '11:30', date: '2024-01-15', status: 'confirmed', amount: 2200, avatar: 'PS', color: '#C9953F', phone: '+91 98765 43211', email: 'priya@email.com' },
-  { id: 'B003', customer: 'Amrita Singh', service: 'Manicure & Pedicure', staff: 'Ananya', time: '10:30', endTime: '11:30', date: '2024-01-15', status: 'in-progress', amount: 1800, avatar: 'AS', color: '#4A2D5E', phone: '+91 98765 43212', email: 'amrita@email.com' },
-  { id: 'B004', customer: 'Neha Gupta', service: 'Hair Coloring', staff: 'Vikram', time: '11:30', endTime: '13:30', date: '2024-01-15', status: 'pending', amount: 3500, avatar: 'NG', color: '#1A5C5C', phone: '+91 98765 43213', email: 'neha@email.com' },
-  { id: 'B005', customer: 'Ritu Patel', service: 'Massage Therapy', staff: 'Priya', time: '13:00', endTime: '14:00', date: '2024-01-15', status: 'pending', amount: 2500, avatar: 'RP', color: '#8B6F47', phone: '+91 98765 43214', email: 'ritu@email.com' },
-  { id: 'B006', customer: 'Deepa Verma', service: 'Bridal Makeup', staff: 'Ananya', time: '14:00', endTime: '16:00', date: '2024-01-15', status: 'confirmed', amount: 5000, avatar: 'DV', color: '#5C3A4A', phone: '+91 98765 43215', email: 'deepa@email.com' },
-  { id: 'B007', customer: 'Kavita Reddy', service: 'Haircut & Styling', staff: 'Rahul', time: '15:00', endTime: '16:00', date: '2024-01-15', status: 'pending', amount: 1200, avatar: 'KR', color: '#2D5E3A', phone: '+91 98765 43216', email: 'kavita@email.com' },
-  { id: 'B008', customer: 'Meera Nair', service: 'Facial Treatment', staff: 'Priya', time: '16:00', endTime: '17:00', date: '2024-01-15', status: 'confirmed', amount: 2000, avatar: 'MN', color: '#5C3A1E', phone: '+91 98765 43217', email: 'meera@email.com' },
-  { id: 'B011', customer: 'Rohit Malhotra', service: 'Beard Trim', staff: 'Rahul', time: '14:30', endTime: '15:00', date: '2024-01-15', status: 'cancelled', amount: 400, avatar: 'RM', color: '#4A2D5E', phone: '+91 98765 43220', email: 'rohit@email.com' },
-  { id: 'B012', customer: 'Pooja Mehta', service: 'Facial & Cleanup', staff: 'Priya', time: '17:00', endTime: '18:30', date: '2024-01-15', status: 'in-progress', amount: 2800, avatar: 'PM', color: '#1A5C5C', phone: '+91 98765 43221', email: 'pooja@email.com' },
+  { id: 'B001', customer: 'Sarah Johnson', service: 'Haircut & Styling', staff: 'Ananya', time: '09:00', endTime: '10:00', date: '2024-01-15', status: 'confirmed', amount: 1500, avatar: 'SJ', color: 'var(--salon-primary)', phone: '+91 98765 43210', email: 'sarah@email.com' },
+  { id: 'B002', customer: 'Priya Sharma', service: 'Facial Treatment', staff: 'Priya', time: '10:00', endTime: '11:30', date: '2024-01-15', status: 'confirmed', amount: 2200, avatar: 'PS', color: '#B8986B', phone: '+91 98765 43211', email: 'priya@email.com' },
+  { id: 'B003', customer: 'Amrita Singh', service: 'Manicure & Pedicure', staff: 'Ananya', time: '10:30', endTime: '11:30', date: '2024-01-15', status: 'in-progress', amount: 1800, avatar: 'AS', color: '#8B7D6B', phone: '+91 98765 43212', email: 'amrita@email.com' },
+  { id: 'B004', customer: 'Neha Gupta', service: 'Hair Coloring', staff: 'Vikram', time: '11:30', endTime: '13:30', date: '2024-01-15', status: 'pending', amount: 3500, avatar: 'NG', color: '#5B7A6B', phone: '+91 98765 43213', email: 'neha@email.com' },
+  { id: 'B005', customer: 'Ritu Patel', service: 'Massage Therapy', staff: 'Priya', time: '13:00', endTime: '14:00', date: '2024-01-15', status: 'pending', amount: 2500, avatar: 'RP', color: '#A0886B', phone: '+91 98765 43214', email: 'ritu@email.com' },
+  { id: 'B006', customer: 'Deepa Verma', service: 'Bridal Makeup', staff: 'Ananya', time: '14:00', endTime: '16:00', date: '2024-01-15', status: 'confirmed', amount: 5000, avatar: 'DV', color: '#7A6B5A', phone: '+91 98765 43215', email: 'deepa@email.com' },
+  { id: 'B007', customer: 'Kavita Reddy', service: 'Haircut & Styling', staff: 'Rahul', time: '15:00', endTime: '16:00', date: '2024-01-15', status: 'pending', amount: 1200, avatar: 'KR', color: '#5B8C5A', phone: '+91 98765 43216', email: 'kavita@email.com' },
+  { id: 'B008', customer: 'Meera Nair', service: 'Facial Treatment', staff: 'Priya', time: '16:00', endTime: '17:00', date: '2024-01-15', status: 'confirmed', amount: 2000, avatar: 'MN', color: '#8B7A6B', phone: '+91 98765 43217', email: 'meera@email.com' },
+  { id: 'B011', customer: 'Rohit Malhotra', service: 'Beard Trim', staff: 'Rahul', time: '14:30', endTime: '15:00', date: '2024-01-15', status: 'cancelled', amount: 400, avatar: 'RM', color: '#8B7D6B', phone: '+91 98765 43220', email: 'rohit@email.com' },
+  { id: 'B012', customer: 'Pooja Mehta', service: 'Facial & Cleanup', staff: 'Priya', time: '17:00', endTime: '18:30', date: '2024-01-15', status: 'in-progress', amount: 2800, avatar: 'PM', color: '#5B7A6B', phone: '+91 98765 43221', email: 'pooja@email.com' },
 ];
 
 const statusStyles: Record<string, { label: string; color: string; bg: string }> = {
-  pending: { label: 'Pending', color: '#7C1D3E', bg: 'rgba(124,29,62,0.08)' },
-  confirmed: { label: 'Confirmed', color: '#4A2D5E', bg: 'rgba(74,45,94,0.08)' },
-  'in-progress': { label: 'In Progress', color: '#C9953F', bg: 'rgba(201,149,63,0.08)' },
-  completed: { label: 'Completed', color: '#1A5C5C', bg: 'rgba(26,92,92,0.08)' },
-  cancelled: { label: 'Cancelled', color: '#5C3A4A', bg: 'rgba(92,58,74,0.08)' },
+  pending: { label: 'Pending', color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)' },
+  confirmed: { label: 'Confirmed', color: '#8B7D6B', bg: 'color-mix(in srgb, #8B7D6B 8%, transparent)' },
+  'in-progress': { label: 'In Progress', color: '#B8986B', bg: 'color-mix(in srgb, #B8986B 8%, transparent)' },
+  completed: { label: 'Completed', color: '#5B7A6B', bg: 'color-mix(in srgb, #5B7A6B 8%, transparent)' },
+  cancelled: { label: 'Cancelled', color: '#7A6B5A', bg: 'color-mix(in srgb, #7A6B5A 8%, transparent)' },
 };
 
 const staffList = ['All Staff', 'Ananya', 'Rahul', 'Priya', 'Vikram'];
@@ -83,7 +82,7 @@ function BookingCard({ booking, compact }: { booking: typeof bookings[0]; compac
         <div style={{ display: 'flex', gap: compact ? 8 : 12, fontSize: 11, color: 'var(--theme-text-secondary)', flexWrap: 'wrap' }}>
           <span><ClockCircleOutlined style={{ marginRight: 3 }} />{booking.time} - {booking.endTime}</span>
           {!compact && <span><UserOutlined style={{ marginRight: 3 }} />{booking.staff}</span>}
-          {!compact && <span style={{ color: '#7C1D3E', fontWeight: 600 }}>₹{booking.amount.toLocaleString()}</span>}
+          {!compact && <span style={{ color: 'var(--salon-primary)', fontWeight: 600 }}>₹{booking.amount.toLocaleString()}</span>}
         </div>
       </div>
 
@@ -117,7 +116,7 @@ function BookingCard({ booking, compact }: { booking: typeof bookings[0]; compac
                 { icon: <UserOutlined />, label: 'Staff', value: booking.staff },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div style={{ width: 24, color: '#7C1D3E', fontSize: 13 }}>{item.icon}</div>
+                  <div style={{ width: 24, color: 'var(--salon-primary)', fontSize: 13 }}>{item.icon}</div>
                   <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)', width: 50 }}>{item.label}</Text>
                   <Text style={{ fontSize: 13 }}>{item.value}</Text>
                 </div>
@@ -137,7 +136,7 @@ function BookingCard({ booking, compact }: { booking: typeof bookings[0]; compac
                 { icon: <WalletOutlined />, label: 'Amount', value: `₹${booking.amount.toLocaleString()}` },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div style={{ width: 24, color: '#7C1D3E', fontSize: 13 }}>{item.icon}</div>
+                  <div style={{ width: 24, color: 'var(--salon-primary)', fontSize: 13 }}>{item.icon}</div>
                   <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)', width: 50 }}>{item.label}</Text>
                   <Text strong style={{ fontSize: 13 }}>{item.value}</Text>
                 </div>
@@ -150,7 +149,7 @@ function BookingCard({ booking, compact }: { booking: typeof bookings[0]; compac
           <div>
             <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)', display: 'block', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>Actions</Text>
             <Row gutter={8}>
-              <Col span={12}><Button block type="primary" style={{ borderRadius: 8, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none' }}>Confirm</Button></Col>
+              <Col span={12}>              <Button block type="primary" style={{ borderRadius: 8 }}>Confirm</Button></Col>
               <Col span={12}><Button block style={{ borderRadius: 8 }}>Reschedule</Button></Col>
               <Col span={24} style={{ marginTop: 8 }}><Button block danger style={{ borderRadius: 8 }} icon={<CloseCircleOutlined />}>Cancel Booking</Button></Col>
             </Row>
@@ -161,9 +160,9 @@ function BookingCard({ booking, compact }: { booking: typeof bookings[0]; compac
           <div>
             <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)', display: 'block', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>Timeline</Text>
             <Timeline items={[
-              { color: '#2D5E3A', children: <><Text strong style={{ fontSize: 13 }}>Confirmed</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>2 hours ago</div></> },
-              { color: '#7C1D3E', children: <><Text strong style={{ fontSize: 13 }}>Payment Verified</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>3 hours ago</div></> },
-              { color: '#7C1D3E', children: <><Text strong style={{ fontSize: 13 }}>Booking Created</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Yesterday at 4:30 PM</div></> },
+              { color: '#5B8C5A', children: <><Text strong style={{ fontSize: 13 }}>Confirmed</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>2 hours ago</div></> },
+              { color: 'var(--salon-primary)', children: <><Text strong style={{ fontSize: 13 }}>Payment Verified</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>3 hours ago</div></> },
+              { color: 'var(--salon-primary)', children: <><Text strong style={{ fontSize: 13 }}>Booking Created</Text><div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Yesterday at 4:30 PM</div></> },
             ]} />
           </div>
         </div>
@@ -206,14 +205,14 @@ function AppointmentContent() {
             options={serviceList.map(s => ({ value: s, label: s }))} />
           <div style={{ display: 'flex', background: 'var(--theme-hover)', borderRadius: 10, padding: 2 }}>
             <Button size="small"
-              style={{ borderRadius: 8, border: 'none', background: view === 'kanban' ? '#7C1D3E' : 'transparent', color: view === 'kanban' ? '#fff' : 'var(--theme-text-secondary)' }}
+              style={{ borderRadius: 8, border: 'none', background: view === 'kanban' ? 'var(--salon-primary)' : 'transparent', color: view === 'kanban' ? '#fff' : 'var(--theme-text-secondary)' }}
               onClick={() => setView('kanban')}>Kanban</Button>
             <Button size="small"
-              style={{ borderRadius: 8, border: 'none', background: view === 'calendar' ? '#7C1D3E' : 'transparent', color: view === 'calendar' ? '#fff' : 'var(--theme-text-secondary)' }}
+              style={{ borderRadius: 8, border: 'none', background: view === 'calendar' ? 'var(--salon-primary)' : 'transparent', color: view === 'calendar' ? '#fff' : 'var(--theme-text-secondary)' }}
               onClick={() => setView('calendar')}>Calendar</Button>
           </div>
           <Button type="primary" icon={<PlusOutlined />}
-            style={{ borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)' }}>
+            style={{ borderRadius: 10 }}>
             New Booking
           </Button>
         </Space>
@@ -221,10 +220,10 @@ function AppointmentContent() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         {[
-          { value: `₹${todayTotal.toLocaleString()}`, label: 'Today\'s Revenue', icon: <WalletOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)' },
-          { value: bookings.length.toString(), label: 'Total Bookings', icon: <CalendarOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)' },
-          { value: bookings.filter(b => b.status === 'completed').length.toString(), label: 'Completed', icon: <CheckCircleOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)' },
-          { value: bookings.filter(b => b.status === 'pending').length.toString(), label: 'Awaiting', icon: <ClockCircleOutlined />, color: '#C9953F', bg: 'rgba(201,149,63,0.1)' },
+          { value: `₹${todayTotal.toLocaleString()}`, label: 'Today\'s Revenue', icon: <WalletOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)' },
+          { value: bookings.length.toString(), label: 'Total Bookings', icon: <CalendarOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)' },
+          { value: bookings.filter(b => b.status === 'completed').length.toString(), label: 'Completed', icon: <CheckCircleOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)' },
+          { value: bookings.filter(b => b.status === 'pending').length.toString(), label: 'Awaiting', icon: <ClockCircleOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)' },
         ].map((kpi, i) => (
           <Col xs={12} sm={6} lg={3} key={i}>
             <div className="stat-widget" style={{ borderTop: `3px solid ${kpi.color}` }}>
@@ -283,13 +282,13 @@ function AppointmentContent() {
                 cellRender={(date) => {
                   const count = bookings.filter(b => dayjs(b.date).isSame(date, 'day')).length;
                   return count > 0 ? (
-                    <div style={{ textAlign: 'center', background: 'rgba(124,29,62,0.1)', borderRadius: '50%', width: 24, height: 24, lineHeight: '24px', margin: 'auto', color: '#7C1D3E', fontWeight: 600, fontSize: 12 }}>{count}</div>
+                    <div style={{ textAlign: 'center', background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', borderRadius: '50%', width: 24, height: 24, lineHeight: '24px', margin: 'auto', color: 'var(--salon-primary)', fontWeight: 600, fontSize: 12 }}>{count}</div>
                   ) : null;
                 }} />
             </Card>
           </Col>
           <Col xs={24} lg={8}>
-            <Card className="premium-card" title={<Space><ClockCircleOutlined style={{ color: '#C9953F' }} /><span>Day Schedule</span></Space>}>
+            <Card className="premium-card" title={<Space><ClockCircleOutlined style={{ color: 'var(--salon-secondary)' }} /><span>Day Schedule</span></Space>}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {bookings
                   .sort((a, b) => a.time.localeCompare(b.time))
@@ -317,9 +316,5 @@ function AppointmentContent() {
 }
 
 export default function AppointmentPage() {
-  return (
-    <OwnerLayout>
-      <AppointmentContent />
-    </OwnerLayout>
-  );
+  return <AppointmentContent />;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useParams } from 'next/navigation';
 import styles from './gallery.module.css';
 
@@ -44,7 +45,7 @@ export default function GalleryPage() {
         <div className="luxe-container-lg">
           <div className={styles.filterRow}>
             {categories.map((cat) => (
-              <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</button>
+              <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
             ))}
           </div>
         </div>
@@ -77,9 +78,9 @@ export default function GalleryPage() {
         <div className={`luxe-modal-overlay ${styles.modalOverlay}`} onClick={() => setLightbox(null)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <img src={lightbox} alt="Gallery preview" className={styles.modalImage} />
-            <button onClick={() => setLightbox(null)} className={styles.modalClose}>
+            <Button onClick={() => setLightbox(null)} className={styles.modalClose}>
               ✕
-            </button>
+            </Button>
           </div>
         </div>
       )}

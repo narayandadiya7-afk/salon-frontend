@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './services.module.css';
@@ -86,9 +87,9 @@ export default function ServicesPage() {
           <div className={styles.filterBar}>
             <div className={styles.filterChips}>
               {categories.map((cat) => (
-                <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>
+                <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>
                   {cat}
-                </button>
+                </Button>
               ))}
             </div>
             <div className={`luxe-search ${styles.searchWrapper}`}>
@@ -110,9 +111,9 @@ export default function ServicesPage() {
                     <img src={s.image} alt={s.name} />
                     <div className="card-price-badge">{s.price}</div>
                     <div className="card-quick-book">
-                      <button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?service=${s.id}`); }} className="luxe-btn luxe-btn-primary luxe-btn-sm">
+                      <Button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?service=${s.id}`); }} type="primary" className="luxe-btn luxe-btn-sm">
                         Book Now
-                      </button>
+                      </Button>
                     </div>
                   </div>
                   <div className="luxe-card-body">
@@ -140,7 +141,7 @@ export default function ServicesPage() {
               </div>
               <h3 className="luxe-empty-title">No services found</h3>
               <p className="luxe-empty-desc">Try adjusting your search or filter to find what you are looking for.</p>
-              <button className="luxe-btn luxe-btn-outline" onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}>Clear Filters</button>
+              <Button className="luxe-btn" onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}>Clear Filters</Button>
             </div>
           )}
         </div>
@@ -201,9 +202,9 @@ export default function ServicesPage() {
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: '#fff', background: 'var(--luxe-emerald)', padding: '2px 8px', borderRadius: 'var(--radius-full)' }}>Save {savings}%</span>
                   </div>
 
-                  <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-primary luxe-btn-md" style={{ width: '100%' }}>
+                  <Button onClick={() => router.push(`/${slug}/book`)} type="primary" className="luxe-btn luxe-btn-md" style={{ width: '100%' }}>
                     Select Package
-                  </button>
+                  </Button>
                 </div>
               );
             })}
@@ -216,9 +217,9 @@ export default function ServicesPage() {
         <div className={`luxe-container-sm ${styles.ctaContent}`}>
           <h2 className="luxe-section-title">Ready to Transform?</h2>
           <p className={`luxe-section-subtitle ${styles.ctaSubtitle}`}>Book your appointment today and experience the difference.</p>
-          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">
+          <Button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">
             Book Appointment
-          </button>
+          </Button>
         </div>
       </section>
     </>

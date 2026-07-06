@@ -3,7 +3,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Typography, Spin, Alert, Form, Modal } from 'antd';
+import { Typography, Spin, Alert, Form, Modal, Image, Button } from 'antd';
+import { FiEye, FiCalendar, FiClock, FiStar, FiArrowRight, FiChevronDown, FiMapPin, FiPhone, FiMail, FiMessageCircle, FiPlus } from 'react-icons/fi';
 import apiUtil from '../../../utils/api';
 import { ApiGetSalonBySlug } from '../../../utils/api.constant';
 import { eResultCode } from '../../../utils/enum';
@@ -82,9 +83,7 @@ const instagramData = galleryData.slice(0, 6);
 const Stars = ({ rating, size = 14 }: { rating: number; size?: number }) => (
   <span className={`luxe-rating ${styles.stars}`}>
     {[1, 2, 3, 4, 5].map((i) => (
-      <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill={i <= Math.round(rating) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
+      <FiStar key={i} size={size} fill={i <= Math.round(rating) ? 'currentColor' : 'none'} color="currentColor" strokeWidth={2} />
     ))}
   </span>
 );
@@ -97,22 +96,21 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       <div className={styles.serviceCardImageOverlay} />
       <div className={styles.serviceCardPrice}>${service.price}</div>
       <div className={styles.serviceCardQuickBook}>
-        <button onClick={onBook} className={styles.serviceCardQuickBookBtn}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <Button onClick={onBook} className={styles.serviceCardQuickBookBtn} icon={<FiCalendar size={15} />}>
           Book Now
-        </button>
+        </Button>
       </div>
     </div>
     <div className={styles.serviceCardBody}>
       <h4 className={styles.serviceCardTitle}>{service.name}</h4>
       <div className={styles.serviceCardMeta}>
         <span className={styles.serviceCardDuration}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <FiClock size={13} />
           {service.duration} min
         </span>
         <span className={styles.serviceCardStars}>
           {[1, 2, 3, 4, 5].map((s) => (
-            <svg key={s} width="12" height="12" viewBox="0 0 24 24" fill={s <= Math.round(service.rating) ? '#d4a853' : 'none'} stroke="#d4a853" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <FiStar key={s} size={12} fill={s <= Math.round(service.rating) ? '#d4a853' : 'none'} color="#d4a853" strokeWidth={2} />
           ))}
           <span className={styles.serviceCardRating}>{service.rating}</span>
         </span>
@@ -120,10 +118,9 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       </div>
       <p className={styles.serviceCardDesc}>{service.description}</p>
       <div className={styles.serviceCardFooter}>
-        <button onClick={onBook} className={styles.serviceCardBookBtn}>
-          Book Appointment
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
+        <Button onClick={onBook} className={styles.serviceCardBookBtn}>
+          Book Appointment <FiArrowRight size={14} />
+        </Button>
       </div>
     </div>
   </div>
@@ -145,7 +142,7 @@ const StylistCard = ({ stylist, onBook }: { stylist: typeof teamData[0]; onBook:
       ))}
     </div>
     <p className={`luxe-body-text ${styles.stylistBio}`}>{stylist.bio}</p>
-    <button onClick={onBook} className="luxe-btn luxe-btn-gold-outline luxe-btn-sm">Book with {stylist.name.split(' ')[0]}</button>
+    <Button onClick={onBook} className="luxe-btn luxe-btn-gold-outline luxe-btn-sm">Book with {stylist.name.split(' ')[0]}</Button>
   </div>
 );
 
@@ -154,9 +151,7 @@ const ReviewCard = ({ review }: { review: typeof testimonialsData[0] }) => (
   <div className="luxe-review-card">
     <div className="review-stars">
       {[1, 2, 3, 4, 5].map((i) => (
-        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
+        <FiStar key={i} size={16} fill="currentColor" color="currentColor" strokeWidth={2} />
       ))}
     </div>
     <p className="review-text">"{review.text}"</p>
@@ -201,6 +196,7 @@ export default function SalonLuxuryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [quickBookOpen, setQuickBookOpen] = useState(false);
   const [quickForm] = Form.useForm();
   const intervalRef = useRef<any>(null);
@@ -305,13 +301,12 @@ export default function SalonLuxuryPage() {
               <h1 className={styles.heroTitle}>{renderHeading(heroHeading)}</h1>
               <p className={styles.heroDesc}>{heroDescription}</p>
               <div className={styles.heroActions}>
-                <button onClick={handleBook} className={styles.heroBtnPrimary}>
-                  Book Appointment
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </button>
-                <button onClick={() => scrollToSection('services')} className={styles.heroBtnSecondary}>
+                <Button onClick={handleBook} className={styles.heroBtnPrimary}>
+                  Book Appointment <FiArrowRight size={16} />
+                </Button>
+                <Button onClick={() => scrollToSection('services')} className={styles.heroBtnSecondary}>
                   Explore Services
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -357,9 +352,9 @@ export default function SalonLuxuryPage() {
           </div>
 
           <div className={styles.sectionCenterCta}>
-            <button onClick={() => router.push(`/${slug}/services`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
+            <Button onClick={() => router.push(`/${slug}/services`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
               View All Services →
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -388,9 +383,9 @@ export default function SalonLuxuryPage() {
               <p className={styles.aboutText}>
                 Founded with a passion for beauty, we have been helping our customers look and feel their best for over a decade. Our team of skilled professionals combines technical expertise with personalized attention to deliver results that exceed expectations.
               </p>
-              <button onClick={() => router.push(`/${slug}/about`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
+              <Button onClick={() => router.push(`/${slug}/about`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
                 Learn More →
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -413,9 +408,9 @@ export default function SalonLuxuryPage() {
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <button onClick={() => router.push(`/${slug}/team`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
+            <Button onClick={() => router.push(`/${slug}/team`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
               View Full Team →
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -431,20 +426,19 @@ export default function SalonLuxuryPage() {
             <p className="luxe-section-subtitle">A look inside our salon and some of the work we've done.</p>
             <div className="luxe-divider" />
           </div>
-          <div className={styles.portfolioGrid}>
-            {galleryData.map((img, i) => (
-              <div key={img.id} className={`${styles.portfolioItem} ${i === 0 || i === 3 ? styles.portfolioItemWide : ''}`}>
-                <img src={img.src} alt={img.alt} loading="lazy" />
-                <div className={styles.portfolioOverlay}>
-                  <span>{img.alt}</span>
+          <Image.PreviewGroup>
+            <div className={styles.portfolioGrid}>
+              {galleryData.map((img, i) => (
+                <div key={img.id} className={`${styles.portfolioItem} ${i === 0 || i === 3 ? styles.portfolioItemWide : ''}`}>
+                  <Image src={img.src} alt={img.alt} loading="lazy" preview={{ mask: <div className={styles.portfolioPreviewMask}><FiEye size={22} /></div> }} />
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Image.PreviewGroup>
           <div className={styles.sectionCenter}>
-            <button onClick={() => router.push(`/${slug}/gallery`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
+            <Button onClick={() => router.push(`/${slug}/gallery`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
               View Full Gallery →
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -480,7 +474,7 @@ export default function SalonLuxuryPage() {
               </div>
               <div className={styles.testimonialStars}>
                 {[1,2,3,4,5].map(s => (
-                  <svg key={s} width="12" height="12" viewBox="0 0 24 24" fill="#d4a853" stroke="#d4a853" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <FiStar key={s} size={12} fill="#d4a853" color="#d4a853" strokeWidth={2} />
                 ))}
               </div>
             </div>
@@ -562,7 +556,7 @@ export default function SalonLuxuryPage() {
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <button onClick={() => router.push(`/${slug}/blog`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">Read More Articles →</button>
+            <Button onClick={() => router.push(`/${slug}/blog`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">Read More Articles →</Button>
           </div>
         </div>
       </section>
@@ -574,24 +568,41 @@ export default function SalonLuxuryPage() {
         <div className="luxe-container-sm">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">FAQ</span>
+            <div className={styles.faqOrnament}>
+              <span className={styles.faqOrnamentLine} />
+              <span className={styles.faqOrnamentIcon}>✦</span>
+              <span className={styles.faqOrnamentLine} />
+            </div>
             <h2 className="luxe-section-title">Frequently Asked Questions</h2>
             <p className="luxe-section-subtitle">Everything you need to know before your visit.</p>
-            <div className="luxe-divider" />
           </div>
-          <div className="luxe-faq-grid">
+          <div className={styles.faqContainer}>
             {faqData.map((faq, i) => (
-              <div key={i} className="luxe-accordion-item">
-                <details className={`luxe-accordion-details ${styles.faqDetails}`}>
-                  <summary className={`luxe-accordion-trigger ${styles.faqSummary}`}>
-                    {faq.q}
-                    <svg className="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
-                  </summary>
-                  <div className="luxe-accordion-content-inner">
-                    {faq.a}
+              <div key={i} className={`${styles.faqItem} ${openIndex === i ? styles.faqItemOpen : ''}`}>
+                <button
+                  className={styles.faqTrigger}
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  aria-expanded={openIndex === i}
+                >
+                  <span className={styles.faqQuestion}>{faq.q}</span>
+                  <FiChevronDown className={`${styles.faqChevron} ${openIndex === i ? styles.faqChevronOpen : ''}`} size={18} />
+                </button>
+                <div className={`${styles.faqAnswerWrapper} ${openIndex === i ? styles.faqAnswerOpen : ''}`}>
+                  <div className={styles.faqAnswerInner}>
+                    <div className={styles.faqAnswerContent}>
+                      <span className={styles.faqAnswerDecor}>—</span>
+                      {faq.a}
+                    </div>
                   </div>
-                </details>
+                </div>
               </div>
             ))}
+          </div>
+          <div className={styles.faqCta}>
+            <p className={styles.faqCtaText}>Still have questions? We're here to help.</p>
+            <a href={`/${slug}/contact`} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
+              Contact Us →
+            </a>
           </div>
         </div>
       </section>
@@ -602,19 +613,28 @@ export default function SalonLuxuryPage() {
       <section className={`luxe-section ${styles.sectionIvory}`} id="contact">
         <div className="luxe-container">
           <div className="luxe-contact-preview">
-            <div>
+            <div className={styles.contactInfoCol}>
               <span className="luxe-section-overline">Get in Touch</span>
-              <h2 className={`luxe-section-title ${styles.contactTitle}`}>We'd Love to <br />Hear from You</h2>
-              <div className="luxe-divider-left" />
+              <div className={styles.contactOrnament}>
+                <span className={styles.contactOrnamentLine} />
+                <span className={styles.contactOrnamentIcon}>✦</span>
+                <span className={styles.contactOrnamentLine} />
+              </div>
+              <h2 className={`luxe-section-title ${styles.contactTitle}`}>We'd Love to Hear from You</h2>
+              <p className={styles.contactDesc}>
+                Our team is here to help with any questions or to schedule your next appointment.
+              </p>
               <div className={styles.contactInfoList}>
                 {[
-                  { icon: '📍', label: 'Address', value: '123 Luxury Avenue, Beverly Hills, CA 90210' },
-                  { icon: '📞', label: 'Phone', value: '+1 (310) 555-0123' },
-                  { icon: '✉️', label: 'Email', value: 'hello@luxestudio.com' },
-                  { icon: '🕐', label: 'Hours', value: 'Mon-Sat: 9am-8pm, Sun: 10am-6pm' },
+                  { icon: <FiMapPin size={18} />, label: 'Address', value: '123 Luxury Avenue, Beverly Hills, CA 90210' },
+                  { icon: <FiPhone size={18} />, label: 'Phone', value: '+1 (310) 555-0123' },
+                  { icon: <FiMail size={18} />, label: 'Email', value: 'hello@luxestudio.com' },
+                  { icon: <FiClock size={18} />, label: 'Hours', value: 'Mon–Sat: 9am–8pm · Sun: 10am–6pm' },
                 ].map((item, i) => (
-                  <div key={i} className="luxe-contact-info-item">
-                    <div className="luxe-contact-info-icon">{item.icon}</div>
+                  <div key={i} className={styles.contactInfoItem}>
+                    <div className={styles.contactInfoIcon}>
+                      {item.icon}
+                    </div>
                     <div>
                       <p className={styles.contactLabel}>{item.label}</p>
                       <p className={styles.contactValue}>{item.value}</p>
@@ -624,16 +644,17 @@ export default function SalonLuxuryPage() {
               </div>
             </div>
             <div className={styles.contactCtaCard}>
+              <div className={styles.contactCtaGlow} />
               <div className={styles.contactCtaIcon}>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-gold)" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <FiMessageCircle size={36} stroke="var(--luxe-gold)" />
               </div>
               <h3 className={styles.contactCtaHeading}>Have a Question?</h3>
               <p className={styles.contactCtaText}>
-                We'd love to hear from you. Reach out to us and our team will get back to you promptly.
+                We'd love to hear from you. Reach out and our team will get back to you promptly.
               </p>
-              <button onClick={() => router.push(`/${slug}/contact`)} className="luxe-btn luxe-btn-primary luxe-btn-lg" style={{ borderRadius: 100 }}>
+              <Button onClick={() => router.push(`/${slug}/contact`)} type="primary" className="luxe-btn luxe-btn-lg" style={{ borderRadius: 100 }}>
                 Get in Touch →
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -648,7 +669,7 @@ export default function SalonLuxuryPage() {
           <p className="luxe-newsletter-subtitle">Subscribe to receive exclusive offers, beauty tips, and early access to new services.</p>
           <form className="luxe-newsletter-form" onSubmit={(e) => e.preventDefault()}>
             <input type="email" placeholder="Enter your email address" required />
-            <button type="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</button>
+            <Button htmlType="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</Button>
           </form>
         </div>
       </section>
@@ -657,15 +678,12 @@ export default function SalonLuxuryPage() {
           FLOATING BOOK BUTTON
           ============================================= */}
       <div className={styles.floatingBookBtn}>
-        <button
+        <Button
           onClick={() => setQuickBookOpen(true)}
           className={styles.floatingBtn}
           aria-label="Quick book"
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-charcoal)" strokeWidth="2.5">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-        </button>
+          icon={<FiPlus size={28} />}
+        />
       </div>
 
       {/* =============================================
@@ -702,8 +720,8 @@ export default function SalonLuxuryPage() {
             <textarea className={`luxe-input ${styles.modalTextarea}`} rows={3} placeholder="Preferred date, time, or special requests" />
           </Form.Item>
           <div className={styles.modalButtons}>
-            <button onClick={() => setQuickBookOpen(false)} className="luxe-btn luxe-btn-ghost luxe-btn-md">Cancel</button>
-            <button onClick={handleQuickBook} className="luxe-btn luxe-btn-primary luxe-btn-md">Send Request</button>
+            <Button onClick={() => setQuickBookOpen(false)} type="text">Cancel</Button>
+            <Button onClick={handleQuickBook} type="primary" className="luxe-btn luxe-btn-md">Send Request</Button>
           </div>
         </Form>
       </Modal>
