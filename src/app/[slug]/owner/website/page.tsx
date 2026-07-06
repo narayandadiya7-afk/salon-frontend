@@ -11,7 +11,6 @@ import {
   SettingOutlined, SaveOutlined, UploadOutlined, DeleteOutlined,
   StarOutlined, RightOutlined, HomeOutlined, InfoCircleOutlined, CheckCircleOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 
 const { Text, Title } = Typography;
 const { TextArea } = Input;
@@ -63,11 +62,11 @@ const mockTestimonials: Testimonial[] = [
 ];
 
 const sectionColors: Record<string, string> = {
-  'Hero Banner': '#7C1D3E',
-  'About Section': '#7C1D3E',
-  'Team': '#C9953F',
-  'Gallery': '#2D5E3A',
-  'Testimonials': '#C9953F',
+  'Hero Banner': 'var(--salon-primary)',
+  'About Section': 'var(--salon-primary)',
+  'Team': '#B8986B',
+  'Gallery': '#5B8C5A',
+  'Testimonials': '#8B7D6B',
 };
 
 function WebsiteCMSContent() {
@@ -227,19 +226,19 @@ function WebsiteCMSContent() {
                 }}>
                   <div style={{
                     width: 48, height: 48, borderRadius: 12,
-                    background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+                    background: 'var(--salon-primary)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     marginBottom: 16, fontSize: 20, color: '#fff',
                   }}>
                     <EyeOutlined />
                   </div>
-                  <Text style={{ fontSize: 11, color: 'rgba(201,149,63,0.5)', textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 8 }}>Preview</Text>
+                  <Text style={{ fontSize: 11, color: 'color-mix(in srgb, #B8986B 50%, transparent)', textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 8 }}>Preview</Text>
                   <div style={{ fontSize: 22, fontWeight: 700, color: '#fff', marginBottom: 8 }}>{heroData.headline || 'Headline'}</div>
                   <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', maxWidth: 280, marginBottom: 16, lineHeight: 1.5 }}>{heroData.subtitle || 'Subtitle'}</div>
                   <div style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     padding: '8px 20px', borderRadius: 8,
-                    background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+                    background: 'var(--salon-primary)',
                     color: '#fff', fontSize: 13, fontWeight: 600,
                   }}>
                     {heroData.ctaText || 'CTA Button'}
@@ -321,7 +320,7 @@ function WebsiteCMSContent() {
                 }}>
                   <div style={{
                     width: 36, height: 36, borderRadius: 10,
-                    background: 'rgba(124,29,62,0.1)', color: '#7C1D3E',
+                    background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', color: 'var(--salon-primary)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <GlobalOutlined />
@@ -367,8 +366,7 @@ function WebsiteCMSContent() {
               type="primary"
               icon={<PlusOutlined />}
               style={{
-                borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-                border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
+                borderRadius: 10,
               }}
               onClick={() => {
                 setEditingMember({ id: '', name: '', role: '', bio: '', image: '' });
@@ -397,7 +395,7 @@ function WebsiteCMSContent() {
                       size={72}
                       style={{
                         borderRadius: 16,
-                        background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+                        background: 'var(--salon-primary)',
                         fontSize: 28, fontWeight: 600, border: '3px solid rgba(255,255,255,0.2)',
                       }}
                     >
@@ -429,7 +427,7 @@ function WebsiteCMSContent() {
                           icon={<DeleteOutlined />}
                           style={{
                             borderRadius: 6, width: 28, height: 28,
-                            background: 'rgba(255,255,255,0.1)', color: 'rgba(124,29,62,0.7)',
+                            background: 'rgba(255,255,255,0.1)', color: 'color-mix(in srgb, var(--salon-primary) 70%, transparent)',
                           }}
                           onClick={() => handleDeleteMember(member.id)}
                         />
@@ -441,7 +439,7 @@ function WebsiteCMSContent() {
                     <Tag
                       style={{
                         borderRadius: 6, fontSize: 11, padding: '0 8px', marginTop: 4,
-                        border: 'none', background: 'rgba(201,149,63,0.08)', color: '#C9953F',
+                        border: 'none', background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', color: 'var(--salon-secondary)',
                       }}
                     >
                       {member.role}
@@ -458,7 +456,7 @@ function WebsiteCMSContent() {
           <Modal
             title={
               <Space>
-                <TeamOutlined style={{ color: '#7C1D3E' }} />
+                <TeamOutlined style={{ color: 'var(--salon-primary)' }} />
                 <span>{editingMember?.id ? 'Edit Team Member' : 'Add Team Member'}</span>
               </Space>
             }
@@ -467,7 +465,7 @@ function WebsiteCMSContent() {
             onOk={handleSaveMember}
             okText="Save"
             okButtonProps={{
-              style: { borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none' },
+              style: { borderRadius: 10 },
             }}
             cancelButtonProps={{ style: { borderRadius: 10 } }}
             width={520}
@@ -560,7 +558,7 @@ function WebsiteCMSContent() {
                   position: 'relative',
                   transition: 'all 0.2s ease',
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,29,62,0.3)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,29,62,0.1)'; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--salon-primary) 30%, transparent)'; e.currentTarget.style.boxShadow = '0 4px 20px color-mix(in srgb, var(--salon-primary) 10%, transparent)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--theme-border-light)'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   <div style={{
@@ -568,7 +566,7 @@ function WebsiteCMSContent() {
                     background: 'linear-gradient(135deg, #1A0A12, #2C1020)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    <PictureOutlined style={{ fontSize: 32, color: 'rgba(201,149,63,0.3)' }} />
+                    <PictureOutlined style={{ fontSize: 32, color: 'color-mix(in srgb, var(--salon-secondary) 30%, transparent)' }} />
                   </div>
                   <div style={{ padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ fontSize: 12, fontWeight: 600 }}>{image.caption}</Text>
@@ -625,7 +623,7 @@ function WebsiteCMSContent() {
                         style={{
                           borderRadius: 12,
                           background: testimonial.active
-                            ? 'linear-gradient(135deg, #C9953F, #7C1D3E)'
+                            ? 'var(--salon-primary)'
                             : 'var(--theme-text-tertiary)',
                           fontSize: 16, fontWeight: 600,
                         }}
@@ -653,7 +651,7 @@ function WebsiteCMSContent() {
                           checked={testimonial.active}
                           onChange={() => handleToggleTestimonial(testimonial.id)}
                           style={{
-                            background: testimonial.active ? 'linear-gradient(135deg, #C9953F, #7C1D3E)' : undefined,
+                            background: testimonial.active ? 'var(--salon-primary)' : undefined,
                           }}
                         />
                       </Tooltip>
@@ -682,7 +680,7 @@ function WebsiteCMSContent() {
                       <Tag
                         style={{
                           borderRadius: 6, fontSize: 10,
-                          border: 'none', background: 'rgba(45,94,58,0.08)', color: '#2D5E3A',
+                          border: 'none', background: 'color-mix(in srgb, #5B8C5A 8%, transparent)', color: '#5B8C5A',
                         }}
                       >
                         <CheckCircleOutlined style={{ marginRight: 4 }} />
@@ -692,7 +690,7 @@ function WebsiteCMSContent() {
                       <Tag
                         style={{
                           borderRadius: 6, fontSize: 10,
-                          border: 'none', background: 'rgba(92,58,74,0.08)', color: '#5C3A4A',
+                          border: 'none', background: 'color-mix(in srgb, #7A6B5A 8%, transparent)', color: '#7A6B5A',
                         }}
                       >
                         Draft
@@ -716,8 +714,8 @@ function WebsiteCMSContent() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
             <div style={{
               width: 40, height: 40, borderRadius: 12,
-              background: 'linear-gradient(135deg, rgba(124,29,62,0.1), rgba(201,149,63,0.1))',
-              color: '#7C1D3E', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+              background: 'linear-gradient(135deg, color-mix(in srgb, var(--salon-primary) 10%, transparent), color-mix(in srgb, var(--salon-secondary) 10%, transparent))',
+              color: 'var(--salon-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
             }}>
               <CodeSandboxOutlined />
             </div>
@@ -736,8 +734,7 @@ function WebsiteCMSContent() {
             type="primary"
             icon={<CheckCircleOutlined />}
             style={{
-              borderRadius: 10, background: '#7C1D3E', border: 'none',
-              boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
+              borderRadius: 10,
             }}
           >
             Publish Changes
@@ -746,8 +743,7 @@ function WebsiteCMSContent() {
             type="primary"
             icon={<SaveOutlined />}
             style={{
-              borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-              border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
+              borderRadius: 10,
             }}
           >
             Save Draft
@@ -788,9 +784,5 @@ function WebsiteCMSContent() {
 }
 
 export default function WebsiteCMSPage() {
-  return (
-    <OwnerLayout>
-      <WebsiteCMSContent />
-    </OwnerLayout>
-  );
+  return <WebsiteCMSContent />;
 }

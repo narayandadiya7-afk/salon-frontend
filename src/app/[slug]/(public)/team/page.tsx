@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import styles from './team.module.css';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -49,9 +50,9 @@ export default function TeamPage() {
                     {st.specialties.length > 3 && <span className="stylist-specialty-tag">+{st.specialties.length - 3}</span>}
                   </div>
                   <div className={styles.cardActions}>
-                    <button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?staff=${st.id}`); }} className="luxe-btn luxe-btn-primary luxe-btn-sm">
+                    <Button onClick={(e) => { e.stopPropagation(); router.push(`/${slug}/book?staff=${st.id}`); }} type="primary" className="luxe-btn luxe-btn-sm">
                       Book {st.name.split(' ')[0]}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -66,9 +67,9 @@ export default function TeamPage() {
           <div className={`luxe-modal ${styles.modal}`} onClick={(e) => e.stopPropagation()}>
             <div className="luxe-modal-header">
               <h3 className="luxe-modal-title">{member.name}</h3>
-              <button className="luxe-modal-close" onClick={() => setSelectedMember(null)}>
+              <Button className="luxe-modal-close" onClick={() => setSelectedMember(null)}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </button>
+              </Button>
             </div>
             <div className="luxe-modal-body">
               <div className={styles.modalGrid}>
@@ -105,9 +106,9 @@ export default function TeamPage() {
                     </div>
                   </div>
                   <div className={styles.modalBookWrapper}>
-                    <button onClick={() => { setSelectedMember(null); router.push(`/${slug}/book?staff=${member.id}`); }} className={`luxe-btn luxe-btn-primary luxe-btn-lg ${styles.bookButton}`}>
+                    <Button onClick={() => { setSelectedMember(null); router.push(`/${slug}/book?staff=${member.id}`); }} type="primary" className={`luxe-btn luxe-btn-lg ${styles.bookButton}`}>
                       Book with {member.name.split(' ')[0]}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>

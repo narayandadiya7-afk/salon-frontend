@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './service-detail.module.css';
@@ -48,7 +49,7 @@ export default function ServiceDetailPage() {
           <h1 className="luxe-hero-title animate-fade-in-up delay-2">{service.name}</h1>
           <p className="luxe-hero-subtitle animate-fade-in-up delay-3">{service.desc}</p>
           <div className="luxe-hero-actions animate-fade-in-up delay-4">
-            <button onClick={() => router.push(`/${slug}/book?service=${service.id}`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Book Now — {service.price}</button>
+            <Button onClick={() => router.push(`/${slug}/book?service=${service.id}`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Book Now — {service.price}</Button>
             <div className={styles.heroDuration}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
               {service.duration}
@@ -126,12 +127,12 @@ export default function ServiceDetailPage() {
                   </div>
                 </div>
 
-                <button onClick={() => router.push(`/${slug}/book?service=${service.id}`)} className={`luxe-btn luxe-btn-secondary luxe-btn-xl ${styles.fullWidthBtn} ${styles.bookBtnMargin}`}>
+                <Button onClick={() => router.push(`/${slug}/book?service=${service.id}`)} className={`luxe-btn luxe-btn-secondary luxe-btn-xl ${styles.fullWidthBtn} ${styles.bookBtnMargin}`}>
                   Book Appointment
-                </button>
-                <button onClick={() => router.push(`/${slug}/services`)} className={`luxe-btn luxe-btn-outline luxe-btn-lg ${styles.fullWidthBtn}`}>
+                </Button>
+                <Button onClick={() => router.push(`/${slug}/services`)} className={`luxe-btn luxe-btn-lg ${styles.fullWidthBtn}`}>
                   View All Services
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -167,10 +168,10 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = React.useState(false);
   return (
     <div className="luxe-accordion-item">
-      <button className={`luxe-accordion-trigger ${open ? 'open' : ''}`} onClick={() => setOpen(!open)}>
+      <Button className={`luxe-accordion-trigger ${open ? 'open' : ''}`} onClick={() => setOpen(!open)}>
         {question}
         <svg className="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
+      </Button>
       <div className={`luxe-accordion-content ${open ? 'open' : ''}`}>
         <div className="luxe-accordion-content-inner">{answer}</div>
       </div>

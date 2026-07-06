@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './contact.module.css';
@@ -96,7 +97,7 @@ export default function ContactPage() {
                   <div className={styles.submittedEmoji}>✉️</div>
                   <h2 className={`luxe-section-title ${styles.sectionTitleCenter}`}>Thank You!</h2>
                   <p className={`luxe-section-subtitle ${styles.subtitleMargin}`}>We have received your message and will get back to you within 24 hours.</p>
-                  <button onClick={() => setSubmitted(false)} className="luxe-btn luxe-btn-outline luxe-btn-lg">Send Another Message</button>
+                  <Button onClick={() => setSubmitted(false)} className="luxe-btn luxe-btn-lg">Send Another Message</Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -134,7 +135,7 @@ export default function ContactPage() {
                     <label className="luxe-input-label">Message</label>
                     <textarea className={`luxe-input ${styles.textareaVertical}`} rows={5} placeholder="Tell us how we can help..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required />
                   </div>
-                  <button type="submit" className={`luxe-btn luxe-btn-primary luxe-btn-xl ${styles.submitFullWidth}`}>Send Message</button>
+                  <Button htmlType="submit" type="primary" className={`luxe-btn luxe-btn-xl ${styles.submitFullWidth}`}>Send Message</Button>
                 </form>
               )}
             </div>
@@ -160,7 +161,7 @@ export default function ContactPage() {
         <div className="luxe-newsletter-content">
           <h2 className="luxe-newsletter-title">Ready to Experience Luxury?</h2>
           <p className="luxe-newsletter-subtitle">Book your appointment today and discover the LuxeStudio difference.</p>
-          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Book Appointment</button>
+          <Button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Book Appointment</Button>
         </div>
       </section>
     </>

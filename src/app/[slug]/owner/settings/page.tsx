@@ -13,7 +13,6 @@ import {
   InstagramOutlined, FacebookOutlined, TwitterOutlined, YoutubeOutlined,
   MailOutlined, PhoneOutlined, EnvironmentOutlined, EditOutlined, CheckCircleOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 import dayjs from 'dayjs';
 
 const { Text } = Typography;
@@ -83,8 +82,8 @@ function SettingsContent() {
   });
 
   const [branding, setBranding] = useState({
-    salonColor: '#7C1D3E',
-    accentColor: '#C9953F',
+    salonColor: '#C8A46B',
+    accentColor: '#B8986B',
     websiteUrl: 'https://luxesalon.com',
     logo: null as string | null,
   });
@@ -132,9 +131,6 @@ function SettingsContent() {
       onClick={handleSave}
       style={{
         borderRadius: 10, height: 42,
-        background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-        border: 'none',
-        boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
         paddingInline: 24,
       }}
     >
@@ -148,7 +144,7 @@ function SettingsContent() {
       style={{ marginBottom: 24 }}
       title={
         <Space>
-          <span style={{ color: '#7C1D3E', fontSize: 16 }}>{icon}</span>
+          <span style={{ color: 'var(--salon-primary)', fontSize: 16 }}>{icon}</span>
           <span>{title}</span>
         </Space>
       }
@@ -277,8 +273,8 @@ function SettingsContent() {
                 style={{
                   display: 'flex', alignItems: 'center', gap: 16,
                   padding: '12px 16px', borderRadius: 12,
-                  background: d.enabled ? 'rgba(124,29,62,0.03)' : 'transparent',
-                  border: `1px solid ${d.enabled ? 'rgba(124,29,62,0.08)' : 'var(--theme-border-light)'}`,
+                  background: d.enabled ? 'color-mix(in srgb, var(--salon-primary) 3%, transparent)' : 'transparent',
+                  border: `1px solid ${d.enabled ? 'color-mix(in srgb, var(--salon-primary) 8%, transparent)' : 'var(--theme-border-light)'}`,
                   transition: 'all 0.2s ease', marginBottom: 8,
                 }}
               >
@@ -292,7 +288,7 @@ function SettingsContent() {
                   checked={d.enabled}
                   onChange={v => updateDay(day.key, 'enabled', v)}
                   style={{
-                    background: d.enabled ? 'linear-gradient(135deg, #7C1D3E, #C9953F)' : undefined,
+                    background: d.enabled ? 'var(--salon-primary)' : undefined,
                   }}
                 />
 
@@ -366,7 +362,7 @@ function SettingsContent() {
               <Switch
                 checked={tax.inclusive}
                 onChange={v => setTax(prev => ({ ...prev, inclusive: v }))}
-                style={{ background: tax.inclusive ? 'linear-gradient(135deg, #7C1D3E, #C9953F)' : undefined }}
+                style={{ background: tax.inclusive ? 'var(--salon-primary)' : undefined }}
               />
               <div>
                 <Text style={{ fontSize: 13, fontWeight: 600, display: 'block' }}>Tax Inclusive Pricing</Text>
@@ -401,7 +397,7 @@ function SettingsContent() {
               <div style={{ textAlign: 'center' }}>
                 <PictureOutlined style={{ fontSize: 36, color: 'var(--theme-text-tertiary)' }} />
                 <div style={{ marginTop: 8 }}>
-                  <Text style={{ color: '#7C1D3E', fontWeight: 600 }}>Click or drag</Text>
+                  <Text style={{ color: 'var(--salon-primary)', fontWeight: 600 }}>Click or drag</Text>
                   <Text style={{ color: 'var(--theme-text-tertiary)' }}> to upload logo</Text>
                 </div>
                 <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)' }}>
@@ -537,7 +533,7 @@ function SettingsContent() {
         <div>
           <h1 className="page-header-title">
             <Space>
-              <SettingOutlined style={{ color: '#7C1D3E' }} />
+              <SettingOutlined style={{ color: 'var(--salon-primary)' }} />
               <span>Settings</span>
             </Space>
           </h1>
@@ -548,8 +544,9 @@ function SettingsContent() {
       <Tabs
         activeKey={activeTab}
         onChange={setActiveTab}
-        type="card"
+        className="salon-tabs"
         style={{ marginBottom: 0 }}
+        tabBarStyle={{ paddingLeft: 0, marginBottom: 16 }}
         items={[
           {
             key: 'general',
@@ -608,9 +605,5 @@ function SettingsContent() {
 }
 
 export default function SettingsPage() {
-  return (
-    <OwnerLayout>
-      <SettingsContent />
-    </OwnerLayout>
-  );
+  return <SettingsContent />;
 }

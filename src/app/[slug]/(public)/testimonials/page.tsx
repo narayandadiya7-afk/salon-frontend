@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import Link from 'next/link';
 import styles from './testimonials.module.css';
 
@@ -56,9 +57,9 @@ export default function TestimonialsPage() {
 
           {!showAll && reviews.length > 6 && (
             <div className={styles.showAllWrapper}>
-              <button className="luxe-btn luxe-btn-outline luxe-btn-lg" onClick={() => setShowAll(true)}>
+              <Button className="luxe-btn luxe-btn-lg" onClick={() => setShowAll(true)}>
                 Show All Reviews ({reviews.length})
-              </button>
+              </Button>
             </div>
           )}
 

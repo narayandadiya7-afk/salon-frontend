@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import styles from './blog.module.css';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -79,7 +80,7 @@ export default function BlogPage() {
           <div className={styles.filterBar}>
             <div className={styles.filterChips}>
               {categories.map((cat) => (
-                <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</button>
+                <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
               ))}
             </div>
             <div className={`luxe-search ${styles.searchWrapper}`}>
@@ -119,7 +120,7 @@ export default function BlogPage() {
           <p className="luxe-newsletter-subtitle">Get the latest beauty tips and trends delivered to your inbox.</p>
           <form className="luxe-newsletter-form" onSubmit={(e) => e.preventDefault()}>
             <input type="email" placeholder="Your email address" required />
-            <button type="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</button>
+            <Button htmlType="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</Button>
           </form>
         </div>
       </section>

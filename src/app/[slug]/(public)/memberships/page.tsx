@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './memberships.module.css';
@@ -84,9 +85,9 @@ export default function MembershipsPage() {
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => router.push(`/${slug}/book?membership=${plan.name.toLowerCase()}`)} className={`luxe-btn luxe-btn-lg ${plan.featured ? 'luxe-btn-secondary' : 'luxe-btn-outline'} ${styles.cardBtn}`}>
+                <Button onClick={() => router.push(`/${slug}/book?membership=${plan.name.toLowerCase()}`)} className={`luxe-btn luxe-btn-lg ${plan.featured ? 'luxe-btn-secondary' : ''} ${styles.cardBtn}`}>
                   {plan.featured ? 'Start Gold Free Trial' : `Start ${plan.name} Free Trial`}
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -158,7 +159,7 @@ export default function MembershipsPage() {
         <div className="luxe-newsletter-content">
           <h2 className="luxe-newsletter-title">Ready to Elevate Your Experience?</h2>
           <p className="luxe-newsletter-subtitle">Start your free trial today. No commitment, cancel anytime.</p>
-          <button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Start Free Trial</button>
+          <Button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Start Free Trial</Button>
         </div>
       </section>
     </>

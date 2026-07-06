@@ -1,5 +1,6 @@
-import React from 'react';
+import OwnerLayout from '../../../components/layout/OwnerLayout';
 
-export default function OwnerLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default async function SalonOwnerLayout({ children, params }: { children: React.ReactNode; params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <OwnerLayout salonSlug={slug}>{children}</OwnerLayout>;
 }

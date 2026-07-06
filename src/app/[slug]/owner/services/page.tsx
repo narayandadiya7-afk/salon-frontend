@@ -11,7 +11,6 @@ import {
   ClockCircleOutlined, DollarOutlined, EditOutlined, DeleteOutlined,
   FolderOutlined, TagOutlined, RightOutlined, StarOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '@/components/layout/OwnerLayout';
 import PillFilter from '@/components/pill-filter';
 
 const { Text } = Typography;
@@ -31,15 +30,15 @@ interface Service {
 }
 
 const servicesData: Service[] = [
-  { id: 1, name: 'Haircut & Styling', category: 'Hair', duration: 45, price: 1500, description: 'Professional haircut and blow-dry styling tailored to your preference', bookings: 128, rating: 4.8, active: true, icon: '✂', color: '#7C1D3E' },
-  { id: 2, name: 'Facial Treatment', category: 'Skin', duration: 60, price: 2200, description: 'Deep cleansing facial with exfoliation, extraction, and hydration mask', bookings: 94, rating: 4.7, active: true, icon: '💆', color: '#C9953F' },
-  { id: 3, name: 'Manicure & Pedicure', category: 'Nails', duration: 45, price: 1800, description: 'Luxury nail care including shaping, cuticle work, and polish application', bookings: 76, rating: 4.6, active: true, icon: '💅', color: '#4A2D5E' },
-  { id: 4, name: 'Hair Coloring', category: 'Hair', duration: 120, price: 3500, description: 'Full hair color application with premium products and toning treatment', bookings: 62, rating: 4.9, active: true, icon: '🎨', color: '#1A5C5C' },
-  { id: 5, name: 'Massage Therapy', category: 'Massage', duration: 60, price: 2500, description: 'Swedish deep tissue massage to relieve tension and improve circulation', bookings: 48, rating: 4.8, active: true, icon: '🧘', color: '#8B6F47' },
-  { id: 6, name: 'Bridal Makeup', category: 'Makeup', duration: 90, price: 5000, description: 'Complete bridal makeup package with trial session and touch-up kit', bookings: 36, rating: 4.9, active: true, icon: '💄', color: '#5C3A4A' },
-  { id: 7, name: 'Hair Treatment', category: 'Hair', duration: 45, price: 2000, description: 'Deep conditioning keratin treatment for damaged and frizzy hair', bookings: 42, rating: 4.5, active: false, icon: '✨', color: '#2D5E3A' },
-  { id: 8, name: 'Body Polish', category: 'Skin', duration: 75, price: 3000, description: 'Full body exfoliation scrub followed by moisturizing wrap treatment', bookings: 28, rating: 4.7, active: true, icon: '🌸', color: '#5C3A1E' },
-  { id: 9, name: 'Gel Nails', category: 'Nails', duration: 60, price: 1200, description: 'Long-lasting gel nail application with your choice of color and design', bookings: 54, rating: 4.5, active: true, icon: '💎', color: '#7C1D3E' },
+  { id: 1, name: 'Haircut & Styling', category: 'Hair', duration: 45, price: 1500, description: 'Professional haircut and blow-dry styling tailored to your preference', bookings: 128, rating: 4.8, active: true, icon: '✂', color: 'var(--salon-primary)' },
+  { id: 2, name: 'Facial Treatment', category: 'Skin', duration: 60, price: 2200, description: 'Deep cleansing facial with exfoliation, extraction, and hydration mask', bookings: 94, rating: 4.7, active: true, icon: '💆', color: '#B8986B' },
+  { id: 3, name: 'Manicure & Pedicure', category: 'Nails', duration: 45, price: 1800, description: 'Luxury nail care including shaping, cuticle work, and polish application', bookings: 76, rating: 4.6, active: true, icon: '💅', color: '#8B7D6B' },
+  { id: 4, name: 'Hair Coloring', category: 'Hair', duration: 120, price: 3500, description: 'Full hair color application with premium products and toning treatment', bookings: 62, rating: 4.9, active: true, icon: '🎨', color: '#5B7A6B' },
+  { id: 5, name: 'Massage Therapy', category: 'Massage', duration: 60, price: 2500, description: 'Swedish deep tissue massage to relieve tension and improve circulation', bookings: 48, rating: 4.8, active: true, icon: '🧘', color: '#A0886B' },
+  { id: 6, name: 'Bridal Makeup', category: 'Makeup', duration: 90, price: 5000, description: 'Complete bridal makeup package with trial session and touch-up kit', bookings: 36, rating: 4.9, active: true, icon: '💄', color: '#7A6B5A' },
+  { id: 7, name: 'Hair Treatment', category: 'Hair', duration: 45, price: 2000, description: 'Deep conditioning keratin treatment for damaged and frizzy hair', bookings: 42, rating: 4.5, active: false, icon: '✨', color: '#5B8C5A' },
+  { id: 8, name: 'Body Polish', category: 'Skin', duration: 75, price: 3000, description: 'Full body exfoliation scrub followed by moisturizing wrap treatment', bookings: 28, rating: 4.7, active: true, icon: '🌸', color: '#8B7A6B' },
+  { id: 9, name: 'Gel Nails', category: 'Nails', duration: 60, price: 1200, description: 'Long-lasting gel nail application with your choice of color and design', bookings: 54, rating: 4.5, active: true, icon: '💎', color: 'var(--salon-primary)' },
 ];
 
 const categories = [
@@ -92,7 +91,7 @@ function ServicesContent() {
       rating: 0,
       active: formData.active,
       icon: '✨',
-      color: '#7C1D3E',
+      color: 'var(--salon-primary)',
     };
     setServices(prev => [...prev, newService]);
     setModalOpen(false);
@@ -124,9 +123,6 @@ function ServicesContent() {
             onClick={() => setModalOpen(true)}
             style={{
               borderRadius: 10,
-              background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-              border: 'none',
-              boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
             }}
           >
             Add Service
@@ -140,7 +136,7 @@ function ServicesContent() {
           <div className="stat-widget stat-widget-revenue">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-revenue"><ScissorOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>Active</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Active</Tag>
             </div>
             <div className="stat-widget-label">Active Services</div>
             <div className="stat-widget-value">{activeServices}</div>
@@ -153,7 +149,7 @@ function ServicesContent() {
           <div className="stat-widget stat-widget-bookings">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-bookings"><DollarOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(124,29,62,0.08)', color: '#7C1D3E' }}>Avg</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Avg</Tag>
             </div>
             <div className="stat-widget-label">Average Price</div>
             <div className="stat-widget-value">₹{avgPrice.toLocaleString()}</div>
@@ -166,7 +162,7 @@ function ServicesContent() {
           <div className="stat-widget stat-widget-customers">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-customers"><ClockCircleOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(45,94,58,0.08)', color: '#2D5E3A' }}>Total</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>Total</Tag>
             </div>
             <div className="stat-widget-label">Total Bookings</div>
             <div className="stat-widget-value">{totalBookings.toLocaleString()}</div>
@@ -179,7 +175,7 @@ function ServicesContent() {
           <div className="stat-widget stat-widget-staff">
             <div className="stat-widget-header">
               <div className="stat-widget-icon stat-widget-icon-staff"><StarOutlined /></div>
-              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'rgba(201,149,63,0.08)', color: '#C9953F' }}>Avg</Tag>
+              <Tag style={{ borderRadius: 6, margin: 0, fontSize: 11, border: 'none', background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', color: 'var(--salon-secondary)' }}>Avg</Tag>
             </div>
             <div className="stat-widget-label">Avg. Rating</div>
             <div className="stat-widget-value">{avgRating.toFixed(1)}★</div>
@@ -255,8 +251,8 @@ function ServicesContent() {
                     style={{
                       fontSize: 10, fontWeight: 600, padding: '0 8px', lineHeight: '20px',
                       borderRadius: 10, border: 'none',
-                      background: service.active ? 'rgba(45,94,58,0.1)' : 'rgba(92,58,74,0.1)',
-                      color: service.active ? '#2D5E3A' : '#5C3A4A',
+                      background: service.active ? 'color-mix(in srgb, #5B8C5A 10%, transparent)' : 'color-mix(in srgb, #7A6B5A 10%, transparent)',
+                      color: service.active ? '#5B8C5A' : '#7A6B5A',
                       boxShadow: 'none',
                     }}
                   />
@@ -274,8 +270,8 @@ function ServicesContent() {
                     <Text style={{ fontSize: 13, color: 'var(--theme-text-secondary)' }}>{service.duration} min</Text>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <DollarOutlined style={{ fontSize: 13, color: '#1A5C5C' }} />
-                    <Text strong style={{ fontSize: 15, color: '#1A5C5C' }}>₹{service.price.toLocaleString()}</Text>
+                    <DollarOutlined style={{ fontSize: 13, color: '#5B7A6B' }} />
+                    <Text strong style={{ fontSize: 15, color: '#5B7A6B' }}>₹{service.price.toLocaleString()}</Text>
                   </div>
                 </div>
 
@@ -288,7 +284,7 @@ function ServicesContent() {
                       <Space size={4}>
                         <div style={{
                           width: 24, height: 24, borderRadius: 6,
-                          background: 'rgba(124,29,62,0.08)', color: '#7C1D3E',
+                          background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)',
                           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11,
                         }}>
                           <ClockCircleOutlined />
@@ -300,7 +296,7 @@ function ServicesContent() {
                       <Space size={4}>
                         <div style={{
                           width: 24, height: 24, borderRadius: 6,
-                          background: 'rgba(201,149,63,0.08)', color: '#C9953F',
+                          background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', color: 'var(--salon-secondary)',
                           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11,
                         }}>
                           <StarOutlined />
@@ -327,7 +323,7 @@ function ServicesContent() {
                         type="text"
                         size="small"
                         icon={<DeleteOutlined />}
-                        style={{ borderRadius: 8, color: '#7C1D3E' }}
+                        style={{ borderRadius: 8, color: 'var(--salon-primary)' }}
                         onClick={() => deleteService(service.id)}
                       />
                     </Tooltip>
@@ -337,7 +333,7 @@ function ServicesContent() {
                     onChange={() => toggleStatus(service.id)}
                     size="small"
                     style={{
-                      background: service.active ? 'linear-gradient(135deg, #7C1D3E, #C9953F)' : undefined,
+                      background: service.active ? 'var(--salon-primary)' : undefined,
                     }}
                   />
                 </div>
@@ -369,7 +365,7 @@ function ServicesContent() {
           <Space>
             <div style={{
               width: 40, height: 40, borderRadius: 10,
-              background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+              background: 'var(--salon-primary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 18, color: '#fff',
             }}>
@@ -442,7 +438,7 @@ function ServicesContent() {
             <Switch
               checked={formData.active}
               onChange={val => setFormData(prev => ({ ...prev, active: val }))}
-              style={{ background: formData.active ? 'linear-gradient(135deg, #7C1D3E, #C9953F)' : undefined }}
+              style={{ background: formData.active ? 'var(--salon-primary)' : undefined }}
             />
           </div>
         </div>
@@ -459,9 +455,6 @@ function ServicesContent() {
             onClick={handleAddService}
             style={{
               borderRadius: 10, height: 40,
-              background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-              border: 'none',
-              boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
             }}
           >
             Add Service
@@ -473,9 +466,5 @@ function ServicesContent() {
 }
 
 export default function ServicesPage() {
-  return (
-    <OwnerLayout>
-      <ServicesContent />
-    </OwnerLayout>
-  );
+  return <ServicesContent />;
 }

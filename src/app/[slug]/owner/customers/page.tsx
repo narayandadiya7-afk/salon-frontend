@@ -14,24 +14,23 @@ import {
   TeamOutlined, DownloadOutlined, MessageOutlined,
   HeartOutlined, GoldOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 import PillFilter from '@/components/pill-filter';
 
 const { Text } = Typography;
 
 const customers = [
-  { id: 'C001', name: 'Sarah Johnson', email: 'sarah.j@email.com', phone: '+91 98765 43210', visits: 24, totalSpent: 72000, lastVisit: '2024-01-15', segment: 'vip', birthday: '15 Mar', notes: 'Prefers morning appointments. Allergic to certain fragrances.', avatar: 'SJ', color: '#7C1D3E', points: 2400, tier: 'Gold' },
-  { id: 'C002', name: 'Priya Sharma', email: 'priya.s@email.com', phone: '+91 98765 43211', visits: 18, totalSpent: 54000, lastVisit: '2024-01-14', segment: 'regular', birthday: '22 Jul', notes: 'Likes the same stylist every time.', avatar: 'PS', color: '#C9953F', points: 1800, tier: 'Silver' },
-  { id: 'C003', name: 'Amrita Singh', email: 'amrita.s@email.com', phone: '+91 98765 43212', visits: 32, totalSpent: 96000, lastVisit: '2024-01-15', segment: 'vip', birthday: '5 Jan', notes: 'VIP client. Prefers weekend slots.', avatar: 'AS', color: '#4A2D5E', points: 3200, tier: 'Platinum' },
-  { id: 'C004', name: 'Neha Gupta', email: 'neha.g@email.com', phone: '+91 98765 43213', visits: 6, totalSpent: 18000, lastVisit: '2024-01-10', segment: 'new', birthday: '12 Sep', notes: 'New customer. Introduced by Priya.', avatar: 'NG', color: '#1A5C5C', points: 600, tier: 'Bronze' },
-  { id: 'C005', name: 'Ritu Patel', email: 'ritu.p@email.com', phone: '+91 98765 43214', visits: 15, totalSpent: 45000, lastVisit: '2024-01-13', segment: 'regular', birthday: '3 Nov', notes: 'Loyal customer. Books monthly facials.', avatar: 'RP', color: '#8B6F47', points: 1500, tier: 'Silver' },
-  { id: 'C006', name: 'Deepa Verma', email: 'deepa.v@email.com', phone: '+91 98765 43215', visits: 2, totalSpent: 7000, lastVisit: '2024-01-08', segment: 'new', birthday: '28 Feb', notes: 'Came for bridal trial. Potential wedding booking.', avatar: 'DV', color: '#5C3A4A', points: 200, tier: 'Bronze' },
-  { id: 'C007', name: 'Kavita Reddy', email: 'kavita.r@email.com', phone: '+91 98765 43216', visits: 42, totalSpent: 126000, lastVisit: '2024-01-12', segment: 'vip', birthday: '19 Aug', notes: 'Highest spender. Books family packages.', avatar: 'KR', color: '#2D5E3A', points: 4200, tier: 'Platinum' },
-  { id: 'C008', name: 'Meera Nair', email: 'meera.n@email.com', phone: '+91 98765 43217', visits: 9, totalSpent: 27000, lastVisit: '2024-01-09', segment: 'regular', birthday: '7 Jun', notes: '', avatar: 'MN', color: '#5C3A1E', points: 900, tier: 'Silver' },
+  { id: 'C001', name: 'Sarah Johnson', email: 'sarah.j@email.com', phone: '+91 98765 43210', visits: 24, totalSpent: 72000, lastVisit: '2024-01-15', segment: 'vip', birthday: '15 Mar', notes: 'Prefers morning appointments. Allergic to certain fragrances.', avatar: 'SJ', color: 'var(--salon-primary)', points: 2400, tier: 'Gold' },
+  { id: 'C002', name: 'Priya Sharma', email: 'priya.s@email.com', phone: '+91 98765 43211', visits: 18, totalSpent: 54000, lastVisit: '2024-01-14', segment: 'regular', birthday: '22 Jul', notes: 'Likes the same stylist every time.', avatar: 'PS', color: '#B8986B', points: 1800, tier: 'Silver' },
+  { id: 'C003', name: 'Amrita Singh', email: 'amrita.s@email.com', phone: '+91 98765 43212', visits: 32, totalSpent: 96000, lastVisit: '2024-01-15', segment: 'vip', birthday: '5 Jan', notes: 'VIP client. Prefers weekend slots.', avatar: 'AS', color: '#8B7D6B', points: 3200, tier: 'Platinum' },
+  { id: 'C004', name: 'Neha Gupta', email: 'neha.g@email.com', phone: '+91 98765 43213', visits: 6, totalSpent: 18000, lastVisit: '2024-01-10', segment: 'new', birthday: '12 Sep', notes: 'New customer. Introduced by Priya.', avatar: 'NG', color: '#5B7A6B', points: 600, tier: 'Bronze' },
+  { id: 'C005', name: 'Ritu Patel', email: 'ritu.p@email.com', phone: '+91 98765 43214', visits: 15, totalSpent: 45000, lastVisit: '2024-01-13', segment: 'regular', birthday: '3 Nov', notes: 'Loyal customer. Books monthly facials.', avatar: 'RP', color: '#A0886B', points: 1500, tier: 'Silver' },
+  { id: 'C006', name: 'Deepa Verma', email: 'deepa.v@email.com', phone: '+91 98765 43215', visits: 2, totalSpent: 7000, lastVisit: '2024-01-08', segment: 'new', birthday: '28 Feb', notes: 'Came for bridal trial. Potential wedding booking.', avatar: 'DV', color: '#7A6B5A', points: 200, tier: 'Bronze' },
+  { id: 'C007', name: 'Kavita Reddy', email: 'kavita.r@email.com', phone: '+91 98765 43216', visits: 42, totalSpent: 126000, lastVisit: '2024-01-12', segment: 'vip', birthday: '19 Aug', notes: 'Highest spender. Books family packages.', avatar: 'KR', color: '#5B8C5A', points: 4200, tier: 'Platinum' },
+  { id: 'C008', name: 'Meera Nair', email: 'meera.n@email.com', phone: '+91 98765 43217', visits: 9, totalSpent: 27000, lastVisit: '2024-01-09', segment: 'regular', birthday: '7 Jun', notes: '', avatar: 'MN', color: '#8B7A6B', points: 900, tier: 'Silver' },
 ];
 
-const segmentColors: Record<string, string> = { vip: '#7C1D3E', regular: '#4A2D5E', new: '#2D5E3A', 'at-risk': '#5C3A4A' };
-const tierColors: Record<string, string> = { Platinum: '#7C1D3E', Gold: '#C9953F', Silver: '#4A2D5E', Bronze: '#8B6F47' };
+const segmentColors: Record<string, string> = { vip: 'var(--salon-primary)', regular: '#8B7D6B', new: '#5B8C5A', 'at-risk': '#7A6B5A' };
+const tierColors: Record<string, string> = { Platinum: 'var(--salon-primary)', Gold: '#B8986B', Silver: '#8B7D6B', Bronze: '#A0886B' };
 const segments = [
   { key: 'all', label: 'All Customers', count: 1284 },
   { key: 'vip', label: 'VIP', count: 86 },
@@ -52,7 +51,7 @@ function CustomerProfileModal({ customer, open, onClose }: { customer: typeof cu
       styles={{ body: { padding: 0 } }}
     >
       <div style={{
-        background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
+        background: 'var(--salon-primary)',
         padding: '32px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden',
       }}>
         <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
@@ -73,19 +72,19 @@ function CustomerProfileModal({ customer, open, onClose }: { customer: typeof cu
           <Col span={8}>
             <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
               <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Visits</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#7C1D3E' }}>{customer.visits}</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--salon-primary)' }}>{customer.visits}</div>
             </div>
           </Col>
           <Col span={8}>
             <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
               <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Spent</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#1A5C5C' }}>₹{customer.totalSpent.toLocaleString()}</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: '#5B7A6B' }}>₹{customer.totalSpent.toLocaleString()}</div>
             </div>
           </Col>
           <Col span={8}>
             <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
               <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Loyalty Points</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#C9953F' }}>{customer.points}</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--salon-secondary)' }}>{customer.points}</div>
             </div>
           </Col>
         </Row>
@@ -121,7 +120,7 @@ function CustomerProfileModal({ customer, open, onClose }: { customer: typeof cu
         <Row gutter={8}>
           <Col span={8}><Button block icon={<MessageOutlined />} style={{ borderRadius: 8 }}>Message</Button></Col>
           <Col span={8}><Button block icon={<CalendarOutlined />} style={{ borderRadius: 8 }}>Book Now</Button></Col>
-          <Col span={8}><Button block type="primary" style={{ borderRadius: 8, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none' }} icon={<GiftOutlined />}>Send Offer</Button></Col>
+          <Col span={8}><Button block type="primary" style={{ borderRadius: 8 }} icon={<GiftOutlined />}>Send Offer</Button></Col>
         </Row>
       </div>
     </Modal>
@@ -161,14 +160,14 @@ function CustomerContent() {
     },
     {
       title: 'Total Spent', dataIndex: 'totalSpent', key: 'totalSpent',
-      render: (v: number) => <Text strong style={{ fontSize: 13, color: '#1A5C5C' }}>₹{v.toLocaleString()}</Text>,
+      render: (v: number) => <Text strong style={{ fontSize: 13, color: '#5B7A6B' }}>₹{v.toLocaleString()}</Text>,
     },
     {
       title: 'Segment', dataIndex: 'segment', key: 'segment',
       render: (s: string) => (
         <span style={{
           padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600,
-          background: `${segmentColors[s] || '#5C3A4A'}12`, color: segmentColors[s] || '#5C3A4A',
+          background: `${segmentColors[s] || '#7A6B5A'}12`, color: segmentColors[s] || '#7A6B5A',
         }}>{s.toUpperCase()}</span>
       ),
     },
@@ -176,8 +175,8 @@ function CustomerContent() {
       title: 'Tier', dataIndex: 'tier', key: 'tier',
       render: (t: string) => (
         <Space size={4}>
-          <CrownOutlined style={{ color: t === 'Platinum' ? '#7C1D3E' : t === 'Gold' ? '#C9953F' : t === 'Silver' ? '#5C3A4A' : '#8B6F47', fontSize: 12 }} />
-          <Text style={{ fontSize: 12, fontWeight: 600, color: tierColors[t] || '#5C3A4A' }}>{t}</Text>
+          <CrownOutlined style={{ color: t === 'Platinum' ? 'var(--salon-primary)' : t === 'Gold' ? '#B8986B' : t === 'Silver' ? '#8B7D6B' : '#A0886B', fontSize: 12 }} />
+          <Text style={{ fontSize: 12, fontWeight: 600, color: tierColors[t] || '#7A6B5A' }}>{t}</Text>
         </Space>
       ),
     },
@@ -185,7 +184,7 @@ function CustomerContent() {
       title: 'Points', dataIndex: 'points', key: 'points',
       render: (p: number) => (
         <Space size={4}>
-          <GoldOutlined style={{ color: '#C9953F', fontSize: 12 }} />
+          <GoldOutlined style={{ color: 'var(--salon-secondary)', fontSize: 12 }} />
           <Text style={{ fontSize: 13 }}>{p}</Text>
         </Space>
       ),
@@ -208,7 +207,7 @@ function CustomerContent() {
         <Space>
           <Input prefix={<SearchOutlined />} placeholder="Search customers..." style={{ width: 240, borderRadius: 10 }} value={search} onChange={e => setSearch(e.target.value)} />
           <Button icon={<DownloadOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }}>Export</Button>
-          <Button type="primary" icon={<PlusOutlined />} style={{ borderRadius: 10, background: 'linear-gradient(135deg, #7C1D3E, #C9953F)', border: 'none', boxShadow: '0 4px 14px rgba(124,29,62,0.3)' }}>
+          <Button type="primary" icon={<PlusOutlined />} style={{ borderRadius: 10 }}>
             Add Customer
           </Button>
         </Space>
@@ -216,10 +215,10 @@ function CustomerContent() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         {[
-          { label: 'Total Customers', value: '1,284', icon: <TeamOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', change: '+12 this week' },
-          { label: 'Active (30 days)', value: '842', icon: <RiseOutlined />, color: '#2D5E3A', bg: 'rgba(45,94,58,0.1)', change: '65.6% retention' },
-          { label: 'Avg. Spend', value: '₹3,200', icon: <WalletOutlined />, color: '#7C1D3E', bg: 'rgba(124,29,62,0.1)', change: '+8% vs last month' },
-          { label: 'VIP Customers', value: '86', icon: <CrownOutlined />, color: '#C9953F', bg: 'rgba(201,149,63,0.1)', change: '6.7% of total' },
+          { label: 'Total Customers', value: '1,284', icon: <TeamOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '+12 this week' },
+          { label: 'Active (30 days)', value: '842', icon: <RiseOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '65.6% retention' },
+          { label: 'Avg. Spend', value: '₹3,200', icon: <WalletOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '+8% vs last month' },
+          { label: 'VIP Customers', value: '86', icon: <CrownOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)', change: '6.7% of total' },
         ].map((stat, i) => (
           <Col xs={12} sm={6} key={i}>
             <div className="stat-widget" style={{ borderTop: 'none' }}>
@@ -230,7 +229,7 @@ function CustomerContent() {
                 </div>
                 <div style={{ width: 40, height: 40, borderRadius: 12, background: stat.bg, color: stat.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>{stat.icon}</div>
               </div>
-              <div style={{ fontSize: 12, color: '#2D5E3A' }}>{stat.change}</div>
+              <div style={{ fontSize: 12, color: '#5B8C5A' }}>{stat.change}</div>
             </div>
           </Col>
         ))}
@@ -259,9 +258,5 @@ function CustomerContent() {
 }
 
 export default function CustomerPage() {
-  return (
-    <OwnerLayout>
-      <CustomerContent />
-    </OwnerLayout>
-  );
+  return <CustomerContent />;
 }

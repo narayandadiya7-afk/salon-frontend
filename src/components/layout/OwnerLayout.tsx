@@ -1,24 +1,23 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Dropdown, Button, Tooltip, Badge } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button, Badge, Typography, Space, Tooltip } from 'antd';
 import type { MenuProps } from 'antd';
 import {
   DashboardOutlined, ScissorOutlined, CalendarOutlined,
   SettingOutlined, CreditCardOutlined, ClockCircleOutlined,
   LogoutOutlined, UserOutlined, GlobalOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined,
-  TeamOutlined, ShoppingCartOutlined,
-  BarChartOutlined, CodeSandboxOutlined, NotificationOutlined,
-  CustomerServiceOutlined, GiftOutlined, MessageOutlined,
-  FileTextOutlined, PictureOutlined,
+  TeamOutlined, BarChartOutlined, CodeSandboxOutlined, NotificationOutlined,
+  SearchOutlined, QuestionCircleOutlined, BellOutlined,
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
-import Link from 'next/link';
 import AuthUtil from '../../utils/auth';
+import ThemeToggle from './ThemeToggle';
 import './OwnerLayout.css';
 
 const { Sider, Header, Content } = Layout;
+const { Text } = Typography;
 
 interface OwnerLayoutProps {
   children: React.ReactNode;
@@ -29,7 +28,7 @@ const NAV_ITEMS: { key: string; label: string; icon: React.ReactNode; section?: 
   { key: 'dashboard', label: 'Dashboard', icon: <DashboardOutlined />, section: 'Main' },
   { key: 'appointments', label: 'Appointments', icon: <CalendarOutlined />, section: 'Main' },
   { key: 'customers', label: 'Customers', icon: <TeamOutlined />, section: 'Management' },
-  { key: 'staff', label: 'Staff', icon: <TeamOutlined />, section: 'Management' },
+  { key: 'team', label: 'Staff', icon: <UserOutlined />, section: 'Management' },
   { key: 'services', label: 'Services', icon: <ScissorOutlined />, section: 'Management' },
   { key: 'website', label: 'Website CMS', icon: <CodeSandboxOutlined />, section: 'Online' },
   { key: 'analytics', label: 'Analytics', icon: <BarChartOutlined />, section: 'Insights' },
@@ -41,7 +40,9 @@ const NAV_ITEMS: { key: string; label: string; icon: React.ReactNode; section?: 
 const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [searchVisible, setSearchVisible] = useState(false);
   const [salonName, setSalonName] = useState('');
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -52,28 +53,25 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
       if (mobile) setCollapsed(true);
     };
     handleResize();
+    setMounted(true);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    const slug = salonSlug || pathname.split('/')[1] || '';
-    if (!slug) return;
+    if (!salonSlug) return;
     const base = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3005/api/';
-    fetch(`${base}salons/slug/${slug}`)
+    fetch(`${base}salons/slug/${salonSlug}`)
       .then(res => res.ok ? res.json() : null)
       .then(payload => { if (payload?.data?.name) setSalonName(payload.data.name); })
       .catch(() => {});
-  }, [salonSlug, pathname]);
+  }, [salonSlug]);
 
-  const slug = salonSlug || pathname.split('/')[1] || '';
-  const currentPath = pathname.split('/').pop() || 'dashboard';
+  if (!mounted) return null;
 
-  const isActive = (key: string) => {
-    if (key === 'dashboard' && currentPath === 'dashboard') return true;
-    if (key === 'staff' && (currentPath === 'team' || currentPath === 'staff')) return true;
-    return currentPath === key;
-  };
+  const currentSlug = salonSlug || (pathname.startsWith('/') ? pathname.split('/')[1] : '') || '';
+  const basePath = currentSlug ? `/${currentSlug}/owner` : '/owner';
+  const toggleSidebar = () => setCollapsed(!collapsed);
 
   const sections = NAV_ITEMS.reduce<Record<string, typeof NAV_ITEMS>>((acc, item) => {
     const s = item.section || 'Main';
@@ -83,24 +81,34 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
   }, {});
 
   const menuItems: MenuProps['items'] = Object.entries(sections).flatMap(([section, items], idx) => [
-    ...(idx > 0 ? [{ type: 'divider' as const, style: { margin: '4px 16px', borderColor: 'rgba(124,29,62,0.08)' } }] : []),
+    ...(idx > 0 ? [{ type: 'divider' as const, style: { margin: '4px 16px', borderColor: 'var(--theme-border)' } }] : []),
     {
       key: `section-${section}`,
-      label: <span className="sidebar-section-label">{section}</span>,
+      label: <span className="owner-section-label">{section}</span>,
       disabled: true,
-      style: { cursor: 'default', height: 28, opacity: 1, color: 'rgba(167,139,250,0.4)' },
+      style: { cursor: 'default', height: 28, opacity: 1 },
     },
     ...items.map(item => ({
       key: item.key,
       icon: item.icon,
       label: item.label,
       onClick: () => {
-        const route = item.key === 'staff' ? 'team' : item.key;
-        router.push(`/${slug}/owner/${route}`);
+        router.push(`${basePath}/${item.key}`);
         if (isMobile) setCollapsed(true);
       },
     })),
   ]);
+
+  const currentPageLabel = (() => {
+    const currentKey = pathname.split('/').pop() || 'dashboard';
+    const item = NAV_ITEMS.find(i => i.key === currentKey);
+    return item?.label || 'Dashboard';
+  })();
+
+  const handleLogout = () => {
+    AuthUtil.logout();
+    setTimeout(() => { window.location.href = '/login'; }, 500);
+  };
 
   const userMenuItems: MenuProps['items'] = [
     {
@@ -108,124 +116,131 @@ const OwnerLayout: React.FC<OwnerLayoutProps> = ({ children, salonSlug }) => {
       icon: <UserOutlined />,
       label: 'My Profile',
     },
-    {
-      key: 'view-salon',
+    ...(salonSlug ? [{
+      key: 'view-salon' as const,
       icon: <GlobalOutlined />,
       label: 'View My Salon',
-      onClick: () => window.open(`/${slug}`, '_blank'),
-    },
+      onClick: () => window.open(`/${salonSlug}`, '_blank'),
+    }] : []),
     { type: 'divider' },
-    {
-      key: 'logout',
-      icon: <LogoutOutlined />,
-      label: 'Logout',
-      danger: true,
-      onClick: () => AuthUtil.logout(),
-    },
+    { key: 'logout', icon: <LogoutOutlined />, label: 'Logout', danger: true, onClick: handleLogout },
   ];
-
-  const headerStyle: React.CSSProperties = {
-    left: isMobile ? 0 : (collapsed ? 72 : 260),
-  };
-
-  const contentStyle: React.CSSProperties = {
-    marginLeft: isMobile ? 0 : (collapsed ? 72 : 260),
-  };
 
   return (
     <Layout className="owner-layout">
-      {isMobile && !collapsed && <div className="mobile-backdrop" onClick={() => setCollapsed(true)} />}
+      {isMobile && !collapsed && (
+        <div className="owner-sidebar-backdrop" onClick={() => setCollapsed(true)} />
+      )}
 
       <Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
-        width={260}
+        width={240}
         collapsedWidth={isMobile ? 0 : 72}
         className="owner-sider"
       >
-        <div className="sidebar-logo">
-          <div className="sidebar-logo-icon"><ScissorOutlined /></div>
+        <div className="owner-sider-logo">
+          <div className="owner-logo-icon">
+            <ScissorOutlined style={{ fontSize: collapsed ? 20 : 22, color: '#fff' }} />
+          </div>
           {!collapsed && (
-            <div className="sidebar-logo-text">
-              <div className="sidebar-logo-name">{salonName || 'Salon'}</div>
-              <div className="sidebar-logo-sub">Owner Portal</div>
+            <div className="owner-logo-text">
+              <Text className="owner-logo-name">{salonName || 'Salon'}</Text>
+              <Text className="owner-logo-sub">Owner Portal</Text>
             </div>
           )}
         </div>
 
-        <div className="sidebar-menu">
+        <div className="owner-sider-menu-scroll">
           <Menu
-            theme="dark"
             mode="inline"
-            selectedKeys={[isActive('dashboard') ? 'dashboard' : NAV_ITEMS.find(i => isActive(i.key))?.key || 'dashboard']}
+            selectedKeys={[pathname.split('/').pop() || 'dashboard']}
             items={menuItems}
-            style={{ background: 'transparent', borderRight: 0 }}
+            className="owner-sider-menu"
           />
         </div>
-
-        {!collapsed && (
-          <div className="sidebar-footer">
-            <Dropdown menu={{ items: userMenuItems }} placement="topRight" trigger={['click']}>
-              <div className="sidebar-user-card">
-                <div className="sidebar-user-avatar">A</div>
-                <div className="sidebar-user-info">
-                  <div className="sidebar-user-name">Admin</div>
-                  <div className="sidebar-user-role">Salon Owner</div>
-                </div>
-              </div>
-            </Dropdown>
-          </div>
-        )}
       </Sider>
 
-      <Layout>
-        <Header className="owner-header" style={headerStyle}>
+      <Layout className={`owner-site-layout ${collapsed ? 'owner-site-collapsed' : ''}`}>
+        <Header className="owner-header">
           <div className="owner-header-left">
-            <Tooltip title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
-              <Button
-                className="collapse-btn"
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => setCollapsed(!collapsed)}
-              />
-            </Tooltip>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={toggleSidebar}
+              className="owner-header-toggle"
+            />
+            <div className="owner-header-breadcrumb">
+              <span className="owner-breadcrumb-item">Owner Portal</span>
+              <span className="owner-breadcrumb-sep">/</span>
+              <span className="owner-breadcrumb-current">{currentPageLabel}</span>
+            </div>
           </div>
 
           <div className="owner-header-right">
-            <Button className="header-action-btn" icon={<GiftOutlined />} />
-            <Button className="header-action-btn" icon={<MessageOutlined />}>
-              <span className="header-badge">3</span>
-            </Button>
-            <Button className="header-action-btn" icon={<BellIcon />}>
-              <span className="header-badge">5</span>
-            </Button>
-            <div style={{ width: 1, height: 24, background: 'var(--theme-border-light)', margin: '0 4px' }} />
-            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-              <div className="user-avatar-trigger">
-                <div className="user-avatar">A</div>
-              </div>
-            </Dropdown>
+            <Space size={8}>
+              <Tooltip title="Search">
+                <Button
+                  type="text"
+                  icon={<SearchOutlined style={{ fontSize: 18 }} />}
+                  className="owner-header-icon"
+                  onClick={() => setSearchVisible(!searchVisible)}
+                />
+              </Tooltip>
+              <Tooltip title="Help Center">
+                <Button
+                  type="text"
+                  icon={<QuestionCircleOutlined style={{ fontSize: 18 }} />}
+                  className="owner-header-icon"
+                />
+              </Tooltip>
+              <Badge count={5} size="small" offset={[-2, 2]}>
+                <Tooltip title="Notifications">
+                  <Button
+                    type="text"
+                    icon={<BellOutlined style={{ fontSize: 18 }} />}
+                    className="owner-header-icon"
+                  />
+                </Tooltip>
+              </Badge>
+              <div className="owner-header-divider" />
+              <ThemeToggle />
+              <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={['click']}>
+                <Space className="owner-user-menu">
+                  <Avatar size={32} icon={<UserOutlined />} style={{ background: 'var(--salon-primary, #C8A46B)', cursor: 'pointer' }} />
+                  {!isMobile && (
+                    <div className="owner-user-info">
+                      <Text className="owner-user-name">Owner</Text>
+                      <Text className="owner-user-role">Salon Owner</Text>
+                    </div>
+                  )}
+                </Space>
+              </Dropdown>
+            </Space>
           </div>
         </Header>
 
-        <Content className="owner-content" style={contentStyle}>
-          <div className="owner-content-inner">
-            {children}
+        {searchVisible && (
+          <div className="owner-search-bar">
+            <div className="owner-search-input-wrap">
+              <SearchOutlined className="owner-search-input-icon" />
+              <input
+                className="owner-search-input-field"
+                placeholder="Search appointments, customers, settings..."
+                autoFocus
+              />
+              <kbd className="owner-search-kbd">ESC</kbd>
+            </div>
           </div>
+        )}
+
+        <Content className="owner-content">
+          {children}
         </Content>
       </Layout>
     </Layout>
   );
 };
-
-function BellIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-    </svg>
-  );
-}
 
 export default OwnerLayout;

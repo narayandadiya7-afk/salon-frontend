@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './packages.module.css';
@@ -75,7 +76,7 @@ export default function PackagesPage() {
         <div className="luxe-container-lg">
           <div className={styles.filterRow}>
             {categories.map((cat) => (
-              <button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</button>
+              <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
             ))}
           </div>
         </div>
@@ -104,7 +105,7 @@ export default function PackagesPage() {
                     ))}
                     {pkg.includes.length > 4 && <li className={styles.moreItems}>+{pkg.includes.length - 4} more items</li>}
                   </ul>
-                  <button onClick={() => router.push(`/${slug}/book?package=${pkg.id}`)} className={`luxe-btn luxe-btn-primary luxe-btn-lg ${styles.bookBtn}`}>Book This Package</button>
+                  <Button onClick={() => router.push(`/${slug}/book?package=${pkg.id}`)} type="primary" className={`luxe-btn luxe-btn-lg ${styles.bookBtn}`}>Book This Package</Button>
                 </div>
               </div>
             ))}

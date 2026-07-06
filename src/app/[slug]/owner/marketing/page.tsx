@@ -14,15 +14,14 @@ import {
   DeleteOutlined, BellOutlined, WhatsAppOutlined, CheckCircleOutlined,
   CopyOutlined, MoreOutlined, BarChartOutlined,
 } from '@ant-design/icons';
-import OwnerLayout from '../../../../components/layout/OwnerLayout';
 
 const { Text } = Typography;
 
 const kpis = [
-  { icon: <NotificationOutlined />, label: 'Active Campaigns', value: '4', color: '#7C1D3E' },
-  { icon: <GiftOutlined />, label: 'Coupons Redeemed', value: '186', color: '#C9953F' },
-  { icon: <RiseOutlined />, label: 'Conversion Rate', value: '24.8%', color: '#7C1D3E' },
-  { icon: <WalletOutlined />, label: 'Revenue from Marketing', value: '₹72,400', color: '#C9953F' },
+  { icon: <NotificationOutlined />, label: 'Active Campaigns', value: '4', color: 'var(--salon-primary)' },
+  { icon: <GiftOutlined />, label: 'Coupons Redeemed', value: '186', color: 'var(--salon-secondary)' },
+  { icon: <RiseOutlined />, label: 'Conversion Rate', value: '24.8%', color: 'var(--salon-primary)' },
+  { icon: <WalletOutlined />, label: 'Revenue from Marketing', value: '₹72,400', color: 'var(--salon-secondary)' },
 ];
 
 const couponData = [
@@ -55,10 +54,7 @@ function MarketingContent() {
   const [campaignForm] = Form.useForm();
 
   const gradientBtnStyle: React.CSSProperties = {
-    background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-    border: 'none',
     borderRadius: 10,
-    boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
     color: '#fff',
     height: 40,
     fontWeight: 600,
@@ -72,14 +68,14 @@ function MarketingContent() {
       title: 'Code', dataIndex: 'code', key: 'code',
       render: (code: string) => (
         <Space>
-          <GiftOutlined style={{ color: '#7C1D3E', fontSize: 14 }} />
+          <GiftOutlined style={{ color: 'var(--salon-primary)', fontSize: 14 }} />
           <Text strong style={{ fontFamily: 'monospace', fontSize: 13 }}>{code}</Text>
         </Space>
       ),
     },
     {
       title: 'Discount', dataIndex: 'discount', key: 'discount',
-      render: (val: string) => <Text style={{ color: '#1A5C5C', fontWeight: 600, fontSize: 13 }}>{val}</Text>,
+      render: (val: string) => <Text style={{ color: '#5B7A6B', fontWeight: 600, fontSize: 13 }}>{val}</Text>,
     },
     {
       title: 'Type', dataIndex: 'type', key: 'type',
@@ -94,11 +90,11 @@ function MarketingContent() {
       render: (_: any, record: typeof couponData[0]) => {
         const ratio = record.used / (record.max === Infinity ? record.used : record.max);
         const barColor = ratio > 0.8
-          ? 'linear-gradient(90deg, #C9953F, #7C1D3E)'
-          : 'linear-gradient(90deg, #7C1D3E, #4A2D5E)';
+          ? 'linear-gradient(90deg, var(--salon-secondary), var(--salon-primary))'
+          : 'linear-gradient(90deg, var(--salon-primary), color-mix(in srgb, var(--salon-primary) 60%, var(--salon-secondary) 40%))';
         return (
           <Space size={8}>
-            <div style={{ width: 64, height: 6, background: 'rgba(124,29,62,0.08)', borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{ width: 64, height: 6, background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', borderRadius: 3, overflow: 'hidden' }}>
               <div style={{ width: `${Math.min(ratio * 100, 100)}%`, height: '100%', borderRadius: 3, background: barColor }} />
             </div>
             <Text style={{ fontSize: 12, fontWeight: 600 }}>
@@ -125,9 +121,9 @@ function MarketingContent() {
       title: '', key: 'actions', width: 100,
       render: () => (
         <Space size={4}>
-          <Tooltip title="Edit"><Button type="text" size="small" icon={<EditOutlined />} style={{ color: '#7C1D3E' }} /></Tooltip>
-          <Tooltip title="Duplicate"><Button type="text" size="small" icon={<CopyOutlined />} style={{ color: '#7C1D3E' }} /></Tooltip>
-          <Tooltip title="Delete"><Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: '#7C1D3E' }} /></Tooltip>
+          <Tooltip title="Edit"><Button type="text" size="small" icon={<EditOutlined />} style={{ color: 'var(--salon-primary)' }} /></Tooltip>
+          <Tooltip title="Duplicate"><Button type="text" size="small" icon={<CopyOutlined />} style={{ color: 'var(--salon-primary)' }} /></Tooltip>
+          <Tooltip title="Delete"><Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: 'var(--salon-primary)' }} /></Tooltip>
           <Tooltip title="More"><Button type="text" size="small" icon={<MoreOutlined />} style={{ color: 'var(--theme-text-tertiary)' }} /></Tooltip>
         </Space>
       ),
@@ -176,7 +172,7 @@ function MarketingContent() {
             className="premium-card"
             title={
               <Space>
-                <GiftOutlined style={{ color: '#C9953F' }} />
+                <GiftOutlined style={{ color: 'var(--salon-secondary)' }} />
                 <Text strong style={{ fontSize: 15 }}>Coupons &amp; Promotions</Text>
               </Space>
             }
@@ -205,7 +201,7 @@ function MarketingContent() {
             className="premium-card"
             title={
               <Space>
-                <StarOutlined style={{ color: '#C9953F' }} />
+                <StarOutlined style={{ color: 'var(--salon-secondary)' }} />
                 <Text strong style={{ fontSize: 15 }}>Loyalty Program</Text>
               </Space>
             }
@@ -217,7 +213,7 @@ function MarketingContent() {
                 <Switch
                   checked={loyaltyActive}
                   onChange={setLoyaltyActive}
-                  style={{ background: loyaltyActive ? '#7C1D3E' : undefined }}
+                  style={{ background: loyaltyActive ? 'var(--salon-primary)' : undefined }}
                   size="small"
                 />
               </Space>
@@ -228,8 +224,8 @@ function MarketingContent() {
                 type="circle"
                 percent={loyaltyActive ? 100 : 0}
                 size={64}
-                strokeColor={{ '0%': '#7C1D3E', '100%': '#C9953F' }}
-                trailColor="rgba(124,29,62,0.08)"
+                strokeColor={{ '0%': 'var(--salon-primary)', '100%': 'var(--salon-secondary)' }}
+                trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
                 format={() => loyaltyActive ? 'ON' : 'OFF'}
               />
               <div style={{ marginTop: 6 }}>
@@ -244,22 +240,22 @@ function MarketingContent() {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>Redemption</Text>
-                <Text strong style={{ fontSize: 13, color: '#1A5C5C' }}>100 pts = ₹500 off</Text>
+                <Text strong style={{ fontSize: 13, color: '#5B7A6B' }}>100 pts = ₹500 off</Text>
               </div>
               <Divider style={{ margin: '4px 0' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Space>
-                  <TeamOutlined style={{ color: '#7C1D3E', fontSize: 14 }} />
+                  <TeamOutlined style={{ color: 'var(--salon-primary)', fontSize: 14 }} />
                   <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>Enrolled Customers</Text>
                 </Space>
-                <Text strong style={{ fontSize: 22, color: '#7C1D3E' }}>328</Text>
+                <Text strong style={{ fontSize: 22, color: 'var(--salon-primary)' }}>328</Text>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Space>
-                  <RiseOutlined style={{ color: '#2D5E3A', fontSize: 14 }} />
+                  <RiseOutlined style={{ color: '#5B8C5A', fontSize: 14 }} />
                   <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>Points This Month</Text>
                 </Space>
-                <Text strong style={{ fontSize: 18, color: '#2D5E3A' }}>12,450</Text>
+                <Text strong style={{ fontSize: 18, color: '#5B8C5A' }}>12,450</Text>
               </div>
             </div>
           </Card>
@@ -272,7 +268,7 @@ function MarketingContent() {
             className="premium-card"
             title={
               <Space>
-                <BellOutlined style={{ color: '#7C1D3E' }} />
+                <BellOutlined style={{ color: 'var(--salon-primary)' }} />
                 <Text strong style={{ fontSize: 15 }}>Push Notifications</Text>
               </Space>
             }
@@ -280,11 +276,7 @@ function MarketingContent() {
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                style={{
-                  ...gradientBtnStyle,
-                  background: 'linear-gradient(135deg, #7C1D3E, #C9953F)',
-                  boxShadow: '0 4px 14px rgba(124,29,62,0.3)',
-                }}
+                style={gradientBtnStyle}
                 onClick={() => { setCampaignType('notification'); setCampaignModalOpen(true); }}
               >
                 New Campaign
@@ -315,7 +307,7 @@ function MarketingContent() {
                       Sent to: <Text strong style={{ color: 'var(--theme-text)', fontSize: 12 }}>{camp.sentTo.toLocaleString()}</Text>
                     </Text>
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)' }}>
-                      Open rate: <Text strong style={{ color: '#2D5E3A', fontSize: 12 }}>{camp.openRate}</Text>
+                      Open rate: <Text strong style={{ color: '#5B8C5A', fontSize: 12 }}>{camp.openRate}</Text>
                     </Text>
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)' }}>{camp.date}</Text>
                   </div>
@@ -340,6 +332,7 @@ function MarketingContent() {
                 style={{
                   ...gradientBtnStyle,
                   background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                  border: 'none',
                   boxShadow: '0 4px 14px rgba(37,211,102,0.3)',
                 }}
                 onClick={() => { setCampaignType('whatsapp'); setCampaignModalOpen(true); }}
@@ -389,7 +382,7 @@ function MarketingContent() {
                     <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)' }}>
                       Sent: <Text strong style={{ color: 'var(--theme-text)', fontSize: 12 }}>{camp.sent.toLocaleString()}</Text>
                     </Text>
-                    <Button type="link" size="small" style={{ fontSize: 11, padding: 0, height: 'auto', color: '#7C1D3E' }}>
+                    <Button type="link" size="small" style={{ fontSize: 11, padding: 0, height: 'auto', color: 'var(--salon-primary)' }}>
                       View Details <RightOutlined style={{ fontSize: 10 }} />
                     </Button>
                   </div>
@@ -403,7 +396,7 @@ function MarketingContent() {
       <Modal
         title={
           <Space>
-            <GiftOutlined style={{ color: '#C9953F' }} />
+            <GiftOutlined style={{ color: 'var(--salon-secondary)' }} />
             <Text strong style={{ fontSize: 16 }}>Create Coupon</Text>
           </Space>
         }
@@ -491,7 +484,7 @@ function MarketingContent() {
         title={
           <Space>
             {campaignType === 'notification'
-              ? <BellOutlined style={{ color: '#7C1D3E' }} />
+              ? <BellOutlined style={{ color: 'var(--salon-primary)' }} />
               : <MessageOutlined style={{ color: '#25D366' }} />
             }
             <Text strong style={{ fontSize: 16 }}>
@@ -570,10 +563,11 @@ function MarketingContent() {
                 style={{
                   ...gradientBtnStyle,
                   background: campaignType === 'notification'
-                    ? 'linear-gradient(135deg, #7C1D3E, #C9953F)'
+                    ? undefined
                     : 'linear-gradient(135deg, #25D366, #128C7E)',
+                  border: 'none',
                   boxShadow: campaignType === 'notification'
-                    ? '0 4px 14px rgba(124,29,62,0.3)'
+                    ? undefined
                     : '0 4px 14px rgba(37,211,102,0.3)',
                 }}
               >
@@ -588,9 +582,5 @@ function MarketingContent() {
 }
 
 export default function MarketingPage() {
-  return (
-    <OwnerLayout>
-      <MarketingContent />
-    </OwnerLayout>
-  );
+  return <MarketingContent />;
 }

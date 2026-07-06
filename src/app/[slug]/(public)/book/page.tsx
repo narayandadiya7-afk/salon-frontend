@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './book.module.css';
@@ -91,8 +92,8 @@ export default function BookingPage() {
             </div>
           </div>
           <div className={styles.confirmedActions}>
-            <button className="luxe-btn luxe-btn-primary luxe-btn-lg" onClick={() => router.push(`/${slug}`)}>Back to Home</button>
-            <button className="luxe-btn luxe-btn-outline luxe-btn-lg" onClick={() => { setConfirmed(false); setStep(0); setSelectedService(null); setSelectedStaff(null); setSelectedDate(null); setSelectedTime(null); }}>Book Another</button>
+            <Button type="primary" className="luxe-btn luxe-btn-lg" onClick={() => router.push(`/${slug}`)}>Back to Home</Button>
+            <Button className="luxe-btn luxe-btn-lg" onClick={() => { setConfirmed(false); setStep(0); setSelectedService(null); setSelectedStaff(null); setSelectedDate(null); setSelectedTime(null); }}>Book Another</Button>
           </div>
         </div>
       </section>
@@ -125,7 +126,7 @@ export default function BookingPage() {
             </div>
             <div className={styles.servicesList}>
               {services.map((s) => (
-                  <button
+                  <Button
                     key={s.id}
                     onClick={() => { setSelectedService(s.id); handleNext(); }}
                     className={`${styles.serviceBtn} ${selectedService === s.id ? styles.serviceBtnSelected : ''}`}
@@ -141,7 +142,7 @@ export default function BookingPage() {
                       </div>
                     </div>
                     <div className={styles.servicePrice}>{s.price}</div>
-                  </button>
+                  </Button>
               ))}
             </div>
           </div>
@@ -156,7 +157,7 @@ export default function BookingPage() {
             </div>
             <div className={styles.staffList}>
               {staff.map((st) => (
-                  <button
+                  <Button
                     key={st.id}
                     onClick={() => { setSelectedStaff(st.id); handleNext(); }}
                     className={`${styles.staffBtn} ${selectedStaff === st.id ? styles.staffBtnSelected : ''}`}
@@ -170,11 +171,11 @@ export default function BookingPage() {
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     {st.rating}
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
             <div className={styles.skipWrapper}>
-              <button className="luxe-btn luxe-btn-ghost luxe-btn-lg" onClick={handleNext}>Skip — Any Available</button>
+              <Button type="text" className="luxe-btn luxe-btn-lg" onClick={handleNext}>Skip — Any Available</Button>
             </div>
           </div>
         )}
@@ -188,13 +189,13 @@ export default function BookingPage() {
             </div>
             <div className={`luxe-calendar ${styles.calendar}`}>
               <div className="luxe-calendar-header">
-                <button className="luxe-calendar-nav">
+                <Button className="luxe-calendar-nav">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
+                </Button>
                 <span className="luxe-calendar-month">{monthName}</span>
-                <button className="luxe-calendar-nav">
+                <Button className="luxe-calendar-nav">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
+                </Button>
               </div>
               <div className="luxe-calendar-grid">
                 <div className="luxe-calendar-weekdays">
@@ -209,14 +210,14 @@ export default function BookingPage() {
                   {calendarDays.map((day) => {
                     const isPast = day < today.getDate() && today.getMonth() === new Date().getMonth();
                     return (
-                      <button
+                      <Button
                         key={day}
                         className={`luxe-calendar-day ${selectedDate === day ? 'selected' : ''} ${day === today.getDate() ? 'today' : ''} ${isPast ? 'disabled' : ''}`}
                         onClick={() => !isPast && setSelectedDate(day)}
                         disabled={isPast}
                       >
                         {day}
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
@@ -235,13 +236,13 @@ export default function BookingPage() {
                     </p>
                     <div className="luxe-time-slot">
                       {timeSlots[period].map((time) => (
-                        <button
+                        <Button
                           key={time}
                           className={`luxe-time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
                           onClick={() => setSelectedTime(time)}
                         >
                           {time}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </div>
@@ -333,29 +334,29 @@ export default function BookingPage() {
               </label>
             </div>
 
-            <button
+            <Button
               className={`luxe-btn luxe-btn-secondary luxe-btn-xl ${styles.confirmBtn}`}
               onClick={() => setConfirmed(true)}
               disabled={!name || !email || !phone}
             >
               Confirm Booking — {selectedServiceData?.price}
-            </button>
+            </Button>
           </div>
         )}
 
         {/* Navigation */}
         {step < 4 && (
           <div className={styles.nav}>
-            <button
-              className="luxe-btn luxe-btn-ghost luxe-btn-lg"
+            <Button
+              type="text" className="luxe-btn luxe-btn-lg"
               onClick={step === 0 ? () => router.push(`/${slug}`) : handleBack}
             >
               {step === 0 ? 'Cancel' : 'Back'}
-            </button>
+            </Button>
             {(step === 2 && selectedDate && selectedTime) && (
-              <button className="luxe-btn luxe-btn-primary luxe-btn-lg" onClick={handleNext}>
+              <Button type="primary" className="luxe-btn luxe-btn-lg" onClick={handleNext}>
                 Continue
-              </button>
+              </Button>
             )}
           </div>
         )}
