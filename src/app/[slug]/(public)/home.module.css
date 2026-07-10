@@ -190,28 +190,10 @@
 .serviceCardFooter {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-top: 14px;
   margin-top: 14px;
   border-top: 1px solid var(--luxe-border);
-}
-
-.serviceCardBookBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'LexendMedium', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--luxe-gold);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: gap 0.25s ease;
-}
-
-.serviceCardBookBtn:hover {
-  gap: 10px;
 }
 
 /* ===== Popular Card ===== */
@@ -556,54 +538,6 @@
   animation: fadeInUp 0.6s ease;
   animation-delay: 0.24s;
   animation-fill-mode: both;
-}
-
-.heroBtnPrimary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'LexendMedium', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #d4a853, #c9953f);
-  border: none;
-  padding: 14px 32px;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 24px rgba(201, 149, 63, 0.35);
-  min-width: 200px;
-  justify-content: center;
-}
-
-.heroBtnPrimary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(201, 149, 63, 0.45);
-}
-
-.heroBtnSecondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'LexendMedium', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 14px 28px;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 180px;
-  justify-content: center;
-}
-
-.heroBtnSecondary:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 /* ===== Stats ===== */
@@ -1297,18 +1231,11 @@
 }
 
 /* ===== Blog Card ===== */
-.blogCardLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
 .blogCard {
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
   display: flex;
   flex-direction: column;
 }
@@ -1379,9 +1306,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 14px;
-  margin-top: 14px;
+  padding-top: 16px;
+  margin-top: auto;
   border-top: 1px solid var(--luxe-border);
+}
+
+.blogCardMetaLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.blogCardMetaDot {
+  font-size: 12px;
+  color: var(--luxe-text-tertiary);
 }
 
 .blogCardAuthor {
