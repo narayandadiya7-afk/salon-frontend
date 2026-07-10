@@ -3,8 +3,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Typography, Spin, Alert, Form, Modal, Image, Button } from 'antd';
+import { Typography, Spin, Alert, Form, Modal, Image, Button as AntButton } from 'antd';
 import { FiEye, FiCalendar, FiClock, FiStar, FiArrowRight, FiChevronDown, FiMapPin, FiPhone, FiMail, FiMessageCircle, FiPlus } from 'react-icons/fi';
+import Button from '../../../components/button/button';
 import apiUtil from '../../../utils/api';
 import { ApiGetSalonBySlug } from '../../../utils/api.constant';
 import { eResultCode } from '../../../utils/enum';
@@ -96,9 +97,9 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       <div className={styles.serviceCardImageOverlay} />
       <div className={styles.serviceCardPrice}>${service.price}</div>
       <div className={styles.serviceCardQuickBook}>
-        <Button onClick={onBook} className={styles.serviceCardQuickBookBtn} icon={<FiCalendar size={15} />}>
+        <AntButton onClick={onBook} className={styles.serviceCardQuickBookBtn} icon={<FiCalendar size={15} />}>
           Book Now
-        </Button>
+        </AntButton>
       </div>
     </div>
     <div className={styles.serviceCardBody}>
@@ -118,7 +119,7 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       </div>
       <p className={styles.serviceCardDesc}>{service.description}</p>
       <div className={styles.serviceCardFooter}>
-        <Button onClick={onBook} className={styles.serviceCardBookBtn}>
+        <Button variant="text" size="md" onClick={onBook}>
           Book Appointment <FiArrowRight size={14} />
         </Button>
       </div>
@@ -142,7 +143,7 @@ const StylistCard = ({ stylist, onBook }: { stylist: typeof teamData[0]; onBook:
       ))}
     </div>
     <p className={`luxe-body-text ${styles.stylistBio}`}>{stylist.bio}</p>
-    <Button onClick={onBook} className="luxe-btn luxe-btn-gold-outline luxe-btn-sm">Book with {stylist.name.split(' ')[0]}</Button>
+    <Button variant="gold-outline" size="sm" onClick={onBook}>Book with {stylist.name.split(' ')[0]}</Button>
   </div>
 );
 
@@ -169,22 +170,24 @@ const ReviewCard = ({ review }: { review: typeof testimonialsData[0] }) => (
 
 /* ── Blog Card ── */
 const BlogCard = ({ post, slug }: { post: typeof blogData[0]; slug: string }) => (
-  <Link href={`/${slug}/blog/${post.id}`} className={styles.blogCardLink}>
-    <div className={styles.blogCard}>
-      <div className={styles.blogCardImageWrap}>
-        <img src={post.image} alt={post.title} loading="lazy" />
-        <span className={styles.blogCardCategory}>{post.category}</span>
-      </div>
+  <div className={styles.blogCard}>
+    <div className={styles.blogCardImageWrap}>
+      <img src={post.image} alt={post.title} loading="lazy" />
+      <span className={styles.blogCardCategory}>{post.category}</span>
+    </div>
       <div className={styles.blogCardBody}>
         <h3 className={styles.blogCardTitle}>{post.title}</h3>
         <p className={styles.blogCardExcerpt}>{post.excerpt}</p>
         <div className={styles.blogCardMeta}>
-          <span className={styles.blogCardAuthor}>{post.author}</span>
-          <span className={styles.blogCardDate}>{post.date}</span>
+          <div className={styles.blogCardMetaLeft}>
+            <span className={styles.blogCardAuthor}>{post.author}</span>
+            <span className={styles.blogCardMetaDot}>·</span>
+            <span className={styles.blogCardDate}>{post.date}</span>
+          </div>
+          <Button variant="gold-outline" size="sm" href={`/${slug}/blog/${post.id}`}>Read More <span>→</span></Button>
         </div>
       </div>
-    </div>
-  </Link>
+  </div>
 );
 
 /* ── Main Page ── */
@@ -301,10 +304,10 @@ export default function SalonLuxuryPage() {
               <h1 className={styles.heroTitle}>{renderHeading(heroHeading)}</h1>
               <p className={styles.heroDesc}>{heroDescription}</p>
               <div className={styles.heroActions}>
-                <Button onClick={handleBook} className={styles.heroBtnPrimary}>
+                <Button variant="secondary" size="lg" onClick={handleBook}>
                   Book Appointment <FiArrowRight size={16} />
                 </Button>
-                <Button onClick={() => scrollToSection('services')} className={styles.heroBtnSecondary}>
+                <Button variant="gold-outline" size="lg" onClick={() => scrollToSection('services')}>
                   Explore Services
                 </Button>
               </div>
@@ -352,8 +355,8 @@ export default function SalonLuxuryPage() {
           </div>
 
           <div className={styles.sectionCenterCta}>
-            <Button onClick={() => router.push(`/${slug}/services`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
-              View All Services →
+            <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/services`)}>
+              View All Services <span>→</span>
             </Button>
           </div>
         </div>
@@ -383,8 +386,8 @@ export default function SalonLuxuryPage() {
               <p className={styles.aboutText}>
                 Founded with a passion for beauty, we have been helping our customers look and feel their best for over a decade. Our team of skilled professionals combines technical expertise with personalized attention to deliver results that exceed expectations.
               </p>
-              <Button onClick={() => router.push(`/${slug}/about`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
-                Learn More →
+              <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/about`)}>
+                Learn More <span>→</span>
               </Button>
             </div>
           </div>
@@ -408,8 +411,8 @@ export default function SalonLuxuryPage() {
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <Button onClick={() => router.push(`/${slug}/team`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
-              View Full Team →
+            <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/team`)}>
+              View Full Team <span>→</span>
             </Button>
           </div>
         </div>
@@ -436,8 +439,8 @@ export default function SalonLuxuryPage() {
             </div>
           </Image.PreviewGroup>
           <div className={styles.sectionCenter}>
-            <Button onClick={() => router.push(`/${slug}/gallery`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
-              View Full Gallery →
+            <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/gallery`)}>
+              View Full Gallery <span>→</span>
             </Button>
           </div>
         </div>
@@ -556,7 +559,7 @@ export default function SalonLuxuryPage() {
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <Button onClick={() => router.push(`/${slug}/blog`)} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">Read More Articles →</Button>
+            <Button variant="text" size="md" onClick={() => router.push(`/${slug}/blog`)}>Read More Articles <span>→</span></Button>
           </div>
         </div>
       </section>
@@ -600,9 +603,9 @@ export default function SalonLuxuryPage() {
           </div>
           <div className={styles.faqCta}>
             <p className={styles.faqCtaText}>Still have questions? We're here to help.</p>
-            <a href={`/${slug}/contact`} className="luxe-btn luxe-btn-gold-outline luxe-btn-md">
-              Contact Us →
-            </a>
+            <Button variant="gold-outline" size="md" href={`/${slug}/contact`}>
+              Contact Us <span>→</span>
+            </Button>
           </div>
         </div>
       </section>
@@ -652,8 +655,8 @@ export default function SalonLuxuryPage() {
               <p className={styles.contactCtaText}>
                 We'd love to hear from you. Reach out and our team will get back to you promptly.
               </p>
-              <Button onClick={() => router.push(`/${slug}/contact`)} type="primary" className="luxe-btn luxe-btn-lg" style={{ borderRadius: 100 }}>
-                Get in Touch →
+              <Button variant="secondary" size="lg" onClick={() => router.push(`/${slug}/contact`)}>
+                Get in Touch <span>→</span>
               </Button>
             </div>
           </div>
@@ -669,7 +672,7 @@ export default function SalonLuxuryPage() {
           <p className="luxe-newsletter-subtitle">Subscribe to receive exclusive offers, beauty tips, and early access to new services.</p>
           <form className="luxe-newsletter-form" onSubmit={(e) => e.preventDefault()}>
             <input type="email" placeholder="Enter your email address" required />
-            <Button htmlType="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</Button>
+            <Button variant="secondary" size="lg" htmlType="submit">Subscribe</Button>
           </form>
         </div>
       </section>
@@ -678,7 +681,7 @@ export default function SalonLuxuryPage() {
           FLOATING BOOK BUTTON
           ============================================= */}
       <div className={styles.floatingBookBtn}>
-        <Button
+        <AntButton
           onClick={() => setQuickBookOpen(true)}
           className={styles.floatingBtn}
           aria-label="Quick book"
@@ -720,8 +723,8 @@ export default function SalonLuxuryPage() {
             <textarea className={`luxe-input ${styles.modalTextarea}`} rows={3} placeholder="Preferred date, time, or special requests" />
           </Form.Item>
           <div className={styles.modalButtons}>
-            <Button onClick={() => setQuickBookOpen(false)} type="text">Cancel</Button>
-            <Button onClick={handleQuickBook} type="primary" className="luxe-btn luxe-btn-md">Send Request</Button>
+            <AntButton onClick={() => setQuickBookOpen(false)} type="text">Cancel</AntButton>
+            <Button variant="secondary" size="md" onClick={handleQuickBook}>Send Request</Button>
           </div>
         </Form>
       </Modal>
