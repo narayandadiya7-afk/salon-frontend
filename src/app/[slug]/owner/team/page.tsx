@@ -347,7 +347,7 @@ function StaffContent() {
                     showInfo={false}
                     size="small"
                     strokeColor={getUtilizationColor(staff.utilization)}
-                    trailColor="var(--theme-border-light)"
+                    railColor="var(--theme-border-light)"
                     style={{ margin: 0 }}
                   />
                 </div>
@@ -518,7 +518,7 @@ function StaffContent() {
                 percent={selectedStaff.utilization}
                 showInfo={false}
                 strokeColor={getUtilizationColor(selectedStaff.utilization)}
-                trailColor="var(--theme-border-light)"
+                railColor="var(--theme-border-light)"
               />
             </div>
 

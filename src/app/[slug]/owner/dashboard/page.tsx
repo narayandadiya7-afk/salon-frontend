@@ -228,7 +228,7 @@ function DashboardContent() {
 
       <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
         <Col xs={24} lg={16}>
-          <Card className="premium-card" bodyStyle={{ padding: 0 }}>
+          <Card className="premium-card" styles={{ body: { padding: 0 } }}>
             <div style={{ padding: '18px 20px', borderBottom: '1px solid var(--theme-border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <Text strong style={{ fontSize: 15 }}>Revenue Overview</Text>
@@ -408,7 +408,7 @@ function DashboardContent() {
                     <Text style={{ fontSize: 13 }}>{item.name}</Text>
                     <Text style={{ fontSize: 12, color: 'var(--salon-primary)', fontWeight: 600 }}>{item.stock}/{item.min} {item.unit}</Text>
                   </div>
-                  <Progress percent={Math.round((item.stock / item.min) * 100)} size="small" strokeColor="var(--salon-primary)" trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)" showInfo={false} />
+                  <Progress percent={Math.round((item.stock / item.min) * 100)} size="small" strokeColor="var(--salon-primary)" railColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)" showInfo={false} />
                 </div>
               ))}
             </div>

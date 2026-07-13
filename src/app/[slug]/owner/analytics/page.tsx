@@ -400,7 +400,7 @@ function AnalyticsContent() {
                         showInfo={false}
                         size="small"
                         strokeColor={staff.color}
-                        trailColor="rgba(0,0,0,0.06)"
+                        railColor="rgba(0,0,0,0.06)"
                         style={{ margin: 0 }}
                       />
                     </div>

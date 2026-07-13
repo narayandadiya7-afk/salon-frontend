@@ -277,7 +277,7 @@ function AppointmentContent() {
       ) : (
         <Row gutter={[20, 20]}>
           <Col xs={24} lg={16}>
-            <Card className="premium-card" bodyStyle={{ padding: 16 }}>
+            <Card className="premium-card" styles={{ body: { padding: 16 } }}>
               <Calendar fullscreen={false} style={{ borderRadius: 12 }}
                 cellRender={(date) => {
                   const count = bookings.filter(b => dayjs(b.date).isSame(date, 'day')).length;

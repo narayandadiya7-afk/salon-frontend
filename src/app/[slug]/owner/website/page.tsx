@@ -149,7 +149,7 @@ function WebsiteCMSContent() {
 
           <Row gutter={[24, 24]}>
             <Col xs={24} lg={14}>
-              <Card className="premium-card" bodyStyle={{ padding: 24 }}>
+              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
                 <Space direction="vertical" size={20} style={{ width: '100%' }}>
                   <div>
                     <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Headline</Text>
@@ -217,7 +217,7 @@ function WebsiteCMSContent() {
             </Col>
 
             <Col xs={24} lg={10}>
-              <Card className="premium-card" bodyStyle={{ padding: 0, overflow: 'hidden' }}>
+              <Card className="premium-card" styles={{ body: { padding: 0, overflow: 'hidden' } }}>
                 <div style={{
                   background: 'linear-gradient(135deg, #1A0A12, #2C1020)',
                   padding: 32, minHeight: 320,
@@ -264,7 +264,7 @@ function WebsiteCMSContent() {
 
           <Row gutter={[24, 24]}>
             <Col xs={24} lg={14}>
-              <Card className="premium-card" bodyStyle={{ padding: 24 }}>
+              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
                 <Space direction="vertical" size={20} style={{ width: '100%' }}>
                   <div>
                     <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Our Story</Text>
@@ -313,7 +313,7 @@ function WebsiteCMSContent() {
             </Col>
 
             <Col xs={24} lg={10}>
-              <Card className="premium-card" bodyStyle={{ padding: 24 }}>
+              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16,
                   paddingBottom: 16, borderBottom: '1px solid var(--theme-border-light)',
@@ -382,7 +382,7 @@ function WebsiteCMSContent() {
               <Col xs={24} sm={12} lg={6} key={member.id}>
                 <Card
                   className="premium-card"
-                  bodyStyle={{ padding: 0 }}
+                  styles={{ body: { padding: 0 } }}
                   style={{ height: '100%' }}
                 >
                   <div style={{
@@ -610,7 +610,7 @@ function WebsiteCMSContent() {
               <Col xs={24} sm={12} lg={12} key={testimonial.id}>
                 <Card
                   className="premium-card"
-                  bodyStyle={{ padding: 20 }}
+                  styles={{ body: { padding: 20 } }}
                   style={{
                     opacity: testimonial.active ? 1 : 0.5,
                     transition: 'opacity 0.3s ease',
@@ -754,7 +754,7 @@ function WebsiteCMSContent() {
       {/* Tabs */}
       <Card
         className="premium-card"
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
         style={{ border: 'none' }}
       >
         <Tabs
