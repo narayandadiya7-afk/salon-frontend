@@ -9,8 +9,32 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        {/* Google Translate hidden mount point */}
+        <div id="google_translate_element" style={{ display: 'none' }} />
+
+        {/* Init script — must come before the loader */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                  pageLanguage: 'en',
+                  includedLanguages: '',
+                  autoDisplay: false,
+                }, 'google_translate_element');
+              }
+            `,
+          }}
+        />
+
+        {/* Google Translate loader */}
+        <script
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          async
+        />
+
         <AppProviders>
           {children}
         </AppProviders>

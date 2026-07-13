@@ -242,7 +242,7 @@ function CustomerContent() {
         style={{ marginBottom: 20 }}
       />
 
-      <Card className="premium-card" bodyStyle={{ padding: 0 }}>
+      <Card className="premium-card" styles={{ body: { padding: 0 } }}>
         <Table
           columns={columns}
           dataSource={filtered}

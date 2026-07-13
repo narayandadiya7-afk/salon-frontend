@@ -647,3 +647,28 @@ body {
 nextjs-portal {
   display: none !important;
 }
+
+/* ── Google Translate: hide native banner, bar & balloon ── */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+body > .skiptranslate {
+  display: none !important;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+.goog-te-menu-frame {
+  display: none !important;
+}

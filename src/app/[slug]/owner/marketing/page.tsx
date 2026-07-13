@@ -225,7 +225,7 @@ function MarketingContent() {
                 percent={loyaltyActive ? 100 : 0}
                 size={64}
                 strokeColor={{ '0%': 'var(--salon-primary)', '100%': 'var(--salon-secondary)' }}
-                trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
+                railColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
                 format={() => loyaltyActive ? 'ON' : 'OFF'}
               />
               <div style={{ marginTop: 6 }}>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from 'antd';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import LanguageSwitcher from '../language-switcher/LanguageSwitcher';
 import styles from './Navbar.module.css';
 
 const navLinks = [
@@ -45,6 +46,7 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.actions}>
+          <LanguageSwitcher />
           <Link href="/login">
             <Button variant="outlined" className={styles.loginBtn}>Sign In</Button>
           </Link>
@@ -75,6 +77,9 @@ export default function Navbar() {
             </Link>
           ))}
           <div className={styles.mobileActions}>
+            <div className={styles.mobileLangRow}>
+              <LanguageSwitcher />
+            </div>
             <Link href="/login" onClick={() => setMenuOpen(false)}>
               <Button variant="outlined" block>Sign In</Button>
             </Link>

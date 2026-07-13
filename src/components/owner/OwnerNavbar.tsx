@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams, useRouter, usePathname } from 'next/navigation';
 import { MenuOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import LanguageSwitcher from '../language-switcher/LanguageSwitcher';
 import Utils from '../../utils';
 import styles from './OwnerNavbar.module.css';
 
@@ -67,6 +68,7 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
         </nav>
 
         <div className={styles.actions}>
+          <LanguageSwitcher />
           {isOwner ? (
             <Button type="default" icon={<UserOutlined />} className={styles.dashBtn} onClick={() => router.push(`/${slug}/owner/dashboard`)}>
               Dashboard
@@ -102,6 +104,9 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
             );
           })}
           <div className={styles.mobileActions}>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '8px 0', borderBottom: '1px solid rgba(0,0,0,0.08)', marginBottom: 4 }}>
+              <LanguageSwitcher />
+            </div>
             {isOwner ? (
               <Button
                 block

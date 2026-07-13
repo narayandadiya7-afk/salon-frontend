@@ -209,7 +209,7 @@ function SubscriptionContent() {
                       from: 'var(--salon-primary)',
                       to: 'var(--salon-secondary)',
                     }}
-                    trailColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
+                    railColor="color-mix(in srgb, var(--salon-primary) 8%, transparent)"
                     size="small"
                     style={{ margin: 0 }}
                   />

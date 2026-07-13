@@ -8,6 +8,7 @@ import {
   MenuFoldOutlined, MenuUnfoldOutlined, PictureOutlined,
 } from '@ant-design/icons';
 import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from '../language-switcher/LanguageSwitcher';
 import AuthUtil from '../../utils/auth';
 import { notification } from '../../utils/notification';
 import LogoSettings from '../logo/LogoSettings';
@@ -71,6 +72,7 @@ const Header: React.FC<HeaderProps> = ({ collapsed, onToggle }) => {
 
         <div className="app-header-right">
           <Space size="middle">
+            <LanguageSwitcher />
             <Button
               type="text"
               icon={<BellOutlined style={{ fontSize: '18px' }} />}
