@@ -433,7 +433,7 @@ export default function SalonLuxuryPage() {
             <div className={styles.portfolioGrid}>
               {galleryData.map((img, i) => (
                 <div key={img.id} className={`${styles.portfolioItem} ${i === 0 || i === 3 ? styles.portfolioItemWide : ''}`}>
-                  <Image src={img.src} alt={img.alt} loading="lazy" preview={{ mask: <div className={styles.portfolioPreviewMask}><FiEye size={22} /></div> }} />
+                  <Image src={img.src} alt={img.alt} loading="lazy" preview={{ cover: <div className={styles.portfolioPreviewMask}><FiEye size={22} /></div> }} />
                 </div>
               ))}
             </div>

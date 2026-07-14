@@ -22,7 +22,7 @@ const PROTECTED_PATTERNS = [
 // Auth routes — redirect to dashboard if already logged in
 const AUTH_ROUTES = ['/login', '/register', '/forgot-password'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const token = request.cookies.get(ACCESS_TOKEN_KEY)?.value;
