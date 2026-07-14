@@ -2546,10 +2546,10 @@
 }
 
 .luxe-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-8);
   text-align: center;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .luxe-stat-value {
