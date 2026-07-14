@@ -119,7 +119,7 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       </div>
       <p className={styles.serviceCardDesc}>{service.description}</p>
       <div className={styles.serviceCardFooter}>
-        <Button variant="text" size="md" onClick={onBook}>
+        <Button variant="gold-outline" size="md" onClick={onBook}>
           Book Appointment <FiArrowRight size={14} />
         </Button>
       </div>
@@ -143,7 +143,7 @@ const StylistCard = ({ stylist, onBook }: { stylist: typeof teamData[0]; onBook:
       ))}
     </div>
     <p className={`luxe-body-text ${styles.stylistBio}`}>{stylist.bio}</p>
-    <Button variant="gold-outline" size="sm" onClick={onBook}>Book with {stylist.name.split(' ')[0]}</Button>
+    <Button variant="gold-outline" size="sm" onClick={onBook}>Book with {stylist.name.split(' ')[0]} <FiArrowRight size={12} /></Button>
   </div>
 );
 
@@ -184,7 +184,7 @@ const BlogCard = ({ post, slug }: { post: typeof blogData[0]; slug: string }) =>
             <span className={styles.blogCardMetaDot}>·</span>
             <span className={styles.blogCardDate}>{post.date}</span>
           </div>
-          <Button variant="gold-outline" size="sm" href={`/${slug}/blog/${post.id}`}>Read More <span>→</span></Button>
+          <Button variant="gold-outline" size="sm" href={`/${slug}/blog/${post.id}`}>              Read More <FiArrowRight size={14} /></Button>
         </div>
       </div>
   </div>
@@ -356,7 +356,7 @@ export default function SalonLuxuryPage() {
 
           <div className={styles.sectionCenterCta}>
             <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/services`)}>
-              View All Services <span>→</span>
+              View All Services <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
@@ -387,7 +387,7 @@ export default function SalonLuxuryPage() {
                 Founded with a passion for beauty, we have been helping our customers look and feel their best for over a decade. Our team of skilled professionals combines technical expertise with personalized attention to deliver results that exceed expectations.
               </p>
               <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/about`)}>
-                Learn More <span>→</span>
+                Learn More <FiArrowRight size={14} />
               </Button>
             </div>
           </div>
@@ -412,7 +412,7 @@ export default function SalonLuxuryPage() {
           </div>
           <div className={styles.sectionCenterCta}>
             <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/team`)}>
-              View Full Team <span>→</span>
+              View Full Team <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
@@ -440,7 +440,7 @@ export default function SalonLuxuryPage() {
           </Image.PreviewGroup>
           <div className={styles.sectionCenter}>
             <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/gallery`)}>
-              View Full Gallery <span>→</span>
+              View Full Gallery <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
@@ -559,7 +559,7 @@ export default function SalonLuxuryPage() {
             ))}
           </div>
           <div className={styles.sectionCenterCta}>
-            <Button variant="text" size="md" onClick={() => router.push(`/${slug}/blog`)}>Read More Articles <span>→</span></Button>
+            <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/blog`)}>Read More Articles <FiArrowRight size={14} /></Button>
           </div>
         </div>
       </section>
@@ -604,7 +604,7 @@ export default function SalonLuxuryPage() {
           <div className={styles.faqCta}>
             <p className={styles.faqCtaText}>Still have questions? We're here to help.</p>
             <Button variant="gold-outline" size="md" href={`/${slug}/contact`}>
-              Contact Us <span>→</span>
+              Contact Us <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
@@ -656,7 +656,7 @@ export default function SalonLuxuryPage() {
                 We'd love to hear from you. Reach out and our team will get back to you promptly.
               </p>
               <Button variant="secondary" size="lg" onClick={() => router.push(`/${slug}/contact`)}>
-                Get in Touch <span>→</span>
+                Get in Touch <FiArrowRight size={16} />
               </Button>
             </div>
           </div>
