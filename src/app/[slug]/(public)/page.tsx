@@ -412,26 +412,30 @@ export default function SalonLuxuryPage() {
           </div>
           <div className={styles.sectionCenterCta}>
             <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/team`)}>
-              View Full Team <FiArrowRight size={14} />
+              View All Team <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
       </section>
 
       {/* =============================================
-          05 — SALON PORTFOLIO
-          ============================================= */}
+           05 — SALON PORTFOLIO
+           ============================================= */}
       <section className={`luxe-section ${styles.sectionIvory}`} id="gallery">
         <div className="luxe-container">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Portfolio</span>
+            <div className={styles.servicesOrnament}>
+              <span className={styles.servicesOrnamentLine} />
+              <span className={styles.servicesOrnamentIcon}>✦</span>
+              <span className={styles.servicesOrnamentLine} />
+            </div>
             <h2 className="luxe-section-title">Our Work</h2>
             <p className="luxe-section-subtitle">A look inside our salon and some of the work we've done.</p>
-            <div className="luxe-divider" />
           </div>
           <Image.PreviewGroup>
             <div className={styles.portfolioGrid}>
-              {galleryData.map((img, i) => (
+              {galleryData.slice(0, 6).map((img, i) => (
                 <div key={img.id} className={`${styles.portfolioItem} ${i === 0 || i === 3 ? styles.portfolioItemWide : ''}`}>
                   <Image src={img.src} alt={img.alt} loading="lazy" preview={{ cover: <div className={styles.portfolioPreviewMask}><FiEye size={22} /></div> }} />
                 </div>
@@ -440,7 +444,7 @@ export default function SalonLuxuryPage() {
           </Image.PreviewGroup>
           <div className={styles.sectionCenter}>
             <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/gallery`)}>
-              View Full Gallery <FiArrowRight size={14} />
+              View All Gallery <FiArrowRight size={14} />
             </Button>
           </div>
         </div>
@@ -449,7 +453,7 @@ export default function SalonLuxuryPage() {
       {/* =============================================
            06 — TESTIMONIALS
            ============================================= */}
-      <section className={`luxe-section ${styles.sectionIvory}`} id="testimonials">
+      <section className={`luxe-section ${styles.sectionSurface}`} id="testimonials">
         <div className="luxe-container-sm">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Testimonials</span>
@@ -491,13 +495,18 @@ export default function SalonLuxuryPage() {
               />
             ))}
           </div>
+          <div className={styles.sectionCenterCta}>
+            <Button variant="gold-outline" size="md" onClick={() => router.push(`/${slug}/testimonials`)}>
+              View All Testimonials <FiArrowRight size={14} />
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* =============================================
           07 — WHY CHOOSE US
           ============================================= */}
-      <section className={`luxe-section ${styles.sectionSurface}`}>
+      <section className={`luxe-section ${styles.sectionIvory}`}>
         <div className="luxe-container">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Why Choose Us</span>
@@ -541,7 +550,7 @@ export default function SalonLuxuryPage() {
       {/* =============================================
            10 — LATEST BLOG
           ============================================= */}
-      <section className={`luxe-section ${styles.sectionIvory}`} id="blog">
+      <section className={`luxe-section ${styles.sectionSurface}`} id="blog">
         <div className="luxe-container">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">Journal</span>
@@ -567,7 +576,7 @@ export default function SalonLuxuryPage() {
       {/* =============================================
           11 — FAQ
           ============================================= */}
-      <section className={`luxe-section ${styles.sectionSurface}`} id="faq">
+      <section className={`luxe-section ${styles.sectionIvory}`} id="faq">
         <div className="luxe-container-sm">
           <div className="luxe-section-header">
             <span className="luxe-section-overline">FAQ</span>
@@ -601,19 +610,14 @@ export default function SalonLuxuryPage() {
               </div>
             ))}
           </div>
-          <div className={styles.faqCta}>
-            <p className={styles.faqCtaText}>Still have questions? We're here to help.</p>
-            <Button variant="gold-outline" size="md" href={`/${slug}/contact`}>
-              Contact Us <FiArrowRight size={14} />
-            </Button>
-          </div>
+          
         </div>
       </section>
 
       {/* =============================================
           12 — CONTACT PREVIEW
           ============================================= */}
-      <section className={`luxe-section ${styles.sectionIvory}`} id="contact">
+      <section className={`luxe-section ${styles.sectionSurface}`} id="contact">
         <div className="luxe-container">
           <div className="luxe-contact-preview">
             <div className={styles.contactInfoCol}>
