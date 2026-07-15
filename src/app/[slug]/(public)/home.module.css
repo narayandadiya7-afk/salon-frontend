@@ -1426,26 +1426,62 @@
   right: 24px;
 }
 
+:global(.luxe-modal-antd .ant-modal) {
+  max-width: calc(100vw - 32px);
+}
+
+@media (max-width: 480px) {
+  :global(.luxe-modal-antd .ant-modal-header) {
+    padding: 18px 20px;
+  }
+
+  :global(.luxe-modal-antd .ant-modal-body) {
+    padding: 18px 20px;
+  }
+
+  :global(.luxe-modal-antd .ant-modal-content) {
+    border-radius: 18px;
+  }
+}
+
 :global(.scroll-lock) {
   overflow: hidden;
 }
 
+/* ============================================================
+   RESPONSIVE — 1024px (tablet landscape)
+   ============================================================ */
 @media (max-width: 1024px) {
   .portfolioGrid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .aboutGrid {
+    gap: 48px;
+  }
+
   .heroStats {
     padding: 16px 0;
   }
+
   .heroStatValue {
     font-size: 24px;
   }
+
   .heroStatSep {
     margin: 0 16px;
   }
+
+  .contactCtaCard {
+    padding: var(--space-10) var(--space-8);
+  }
 }
 
+/* ============================================================
+   RESPONSIVE — 768px (tablet portrait / large phone)
+   ============================================================ */
 @media (max-width: 768px) {
+  /* --- Portfolio --- */
   .portfolioGrid {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;
@@ -1456,6 +1492,7 @@
     grid-row: span 1;
   }
 
+  /* --- Hero --- */
   .heroContent {
     padding: 100px 24px 40px;
   }
@@ -1464,13 +1501,24 @@
     display: none;
   }
 
-  .heroSlideCounter {
-    margin-bottom: 24px;
+  .heroInner {
+    gap: 0;
+  }
+
+  .heroTextBlock {
+    max-width: 100%;
+  }
+
+  .heroDesc {
+    font-size: 15px;
+    max-width: 100%;
   }
 
   .heroStats {
     margin-top: 32px;
     max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .heroStatValue {
@@ -1488,16 +1536,193 @@
   .heroSlideCounter {
     display: none;
   }
+
+  .heroActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .heroActions > * {
+    width: 100%;
+  }
+
+  /* --- About / Our Story --- */
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .aboutTitle {
+    max-width: 100%;
+  }
+
+  .aboutText {
+    font-size: var(--text-sm);
+  }
+
+  /* --- Testimonials --- */
+  .testimonialCard {
+    padding: 32px 28px 28px;
+    border-radius: 16px;
+  }
+
+  .testimonialQuoteIcon {
+    font-size: 56px;
+    margin-bottom: 12px;
+  }
+
+  .testimonialText {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .testimonialAvatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .testimonialName {
+    font-size: 13px;
+  }
+
+  /* --- Contact CTA Card --- */
+  .contactCtaCard {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .contactCtaHeading {
+    font-size: var(--text-2xl);
+  }
+
+  .contactCtaText {
+    font-size: var(--text-sm);
+  }
+
+  .contactInfoCol {
+    max-width: 100%;
+  }
+
+  /* --- FAQ --- */
+  .faqTrigger {
+    padding: var(--space-4) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .faqAnswerContent {
+    padding: 0 var(--space-4) var(--space-4);
+    font-size: 13px;
+  }
+
+  /* --- Service Cards --- */
+  .serviceCardBody {
+    padding: 16px 18px 18px;
+  }
+
+  .serviceCardTitle {
+    font-size: 15px;
+  }
+
+  .serviceCardDesc {
+    font-size: 13px;
+  }
+
+  .serviceCardMeta {
+    gap: 10px;
+  }
+
+  /* --- Blog Cards --- */
+  .blogCardBody {
+    padding: 16px 18px 18px;
+  }
+
+  .blogCardTitle {
+    font-size: 15px;
+  }
+
+  .blogCardExcerpt {
+    font-size: 13px;
+  }
+
+  /* --- Floating Book Button --- */
+  .floatingBookBtn {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .floatingBtn {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* --- Modal --- */
+  .modalTitle {
+    font-size: 16px;
+  }
+
+  /* --- Section Center CTA spacing --- */
+  .sectionCenterCta {
+    margin-top: var(--space-8);
+  }
+
+  /* --- Statistics section (global luxe overrides) --- */
+  :global(.luxe-stats) {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  :global(.luxe-stats-grid) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  :global(.luxe-stat-value) {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+
+  :global(.luxe-stat-label) {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  /* --- Why Choose Us section (global luxe overrides) --- */
+  :global(.luxe-why-grid) {
+    gap: var(--space-4);
+  }
+
+  :global(.luxe-why-item) {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  :global(.luxe-why-icon) {
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-4);
+  }
 }
 
+/* ============================================================
+   RESPONSIVE — 480px (small phones)
+   ============================================================ */
 @media (max-width: 480px) {
-  .portfolioGrid {
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 160px;
-    gap: var(--space-2);
+  /* --- Hero --- */
+  .heroContent {
+    padding: 80px 16px 32px;
+  }
+
+  .heroOverline {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .heroDesc {
+    font-size: 14px;
+    margin-bottom: 28px;
   }
 
   .heroStats {
+    margin-top: 24px;
     flex-wrap: wrap;
     gap: 8px;
   }
@@ -1508,5 +1733,258 @@
 
   .heroStatSep {
     display: none;
+  }
+
+  .heroStatValue {
+    font-size: 20px;
+  }
+
+  /* --- Portfolio --- */
+  .portfolioGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 160px;
+    gap: var(--space-2);
+  }
+
+  /* --- Testimonials --- */
+  .testimonialCard {
+    padding: 24px 20px 20px;
+    border-radius: 14px;
+  }
+
+  .testimonialQuoteIcon {
+    font-size: 44px;
+    margin-bottom: 8px;
+  }
+
+  .testimonialText {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .testimonialDivider {
+    width: 24px;
+    margin-bottom: 18px;
+  }
+
+  .testimonialAuthor {
+    gap: 10px;
+  }
+
+  .testimonialAvatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .testimonialName {
+    font-size: 12px;
+  }
+
+  .testimonialService {
+    font-size: 11px;
+  }
+
+  /* --- Contact --- */
+  .contactCtaCard {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .contactCtaIcon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-4);
+  }
+
+  .contactCtaHeading {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .contactCtaText {
+    max-width: 100%;
+    margin-bottom: var(--space-5);
+  }
+
+  .contactInfoItem {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .contactInfoIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .contactLabel {
+    font-size: 10px;
+  }
+
+  .contactValue {
+    font-size: var(--text-sm);
+  }
+
+  /* --- FAQ --- */
+  .faqTrigger {
+    padding: var(--space-3) var(--space-3);
+    font-size: 13px;
+  }
+
+  .faqAnswerContent {
+    padding: 0 var(--space-3) var(--space-3);
+    font-size: 12px;
+  }
+
+  .faqContainer {
+    border-radius: var(--radius-xl);
+  }
+
+  /* --- Service Cards --- */
+  .serviceCardImageWrap img {
+    aspect-ratio: 16/10;
+  }
+
+  .serviceCardBody {
+    padding: 14px 16px 16px;
+  }
+
+  .serviceCardTitle {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .serviceCardMeta {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .serviceCardDuration {
+    font-size: 12px;
+  }
+
+  .serviceCardFooter {
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  .serviceCardQuickBookBtn {
+    font-size: 11px;
+    padding: 6px 14px;
+  }
+
+  .serviceCardPrice {
+    font-size: 13px;
+    padding: 4px 12px;
+  }
+
+  /* --- Blog Cards --- */
+  .blogCardImageWrap img {
+    aspect-ratio: 16/10;
+  }
+
+  .blogCardBody {
+    padding: 14px 16px 16px;
+  }
+
+  .blogCardTitle {
+    font-size: 14px;
+  }
+
+  .blogCardExcerpt {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .blogCardMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 12px;
+  }
+
+  /* --- Floating Book Button --- */
+  .floatingBookBtn {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .floatingBtn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .floatingBtn :global(.anticon) {
+    font-size: 22px;
+  }
+
+  /* --- Modal --- */
+  .modalButtons {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .modalButtons > * {
+    width: 100%;
+  }
+
+  /* --- About --- */
+  .aboutDivider {
+    width: 32px;
+    margin-bottom: var(--space-4);
+  }
+
+  .aboutText {
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+
+  /* --- Section spacing --- */
+  .sectionCenterCta {
+    margin-top: var(--space-6);
+  }
+
+  .sectionCenter {
+    margin-top: var(--space-6);
+  }
+
+  /* --- Ornament lines --- */
+  .servicesOrnamentLine,
+  .faqOrnamentLine,
+  .contactOrnamentLine {
+    width: 28px;
+  }
+
+  /* --- Statistics section (global luxe overrides) --- */
+  :global(.luxe-stats) {
+    padding: var(--space-8) var(--space-3);
+  }
+
+  :global(.luxe-stats-grid) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  :global(.luxe-stat-value) {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  :global(.luxe-stat-label) {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Why Choose Us section (global luxe overrides) --- */
+  :global(.luxe-why-item) {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  :global(.luxe-why-item-title) {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2);
+  }
+
+  :global(.luxe-why-item-desc) {
+    font-size: 13px;
   }
 }

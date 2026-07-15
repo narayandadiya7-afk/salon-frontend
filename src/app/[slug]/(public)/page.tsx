@@ -120,7 +120,7 @@ const ServiceCard = ({ service, onBook }: { service: typeof servicesData[0]; onB
       <p className={styles.serviceCardDesc}>{service.description}</p>
       <div className={styles.serviceCardFooter}>
         <Button variant="gold-outline" size="md" onClick={onBook}>
-          Book Appointment <FiArrowRight size={14} />
+          Book Now <FiArrowRight size={14} />
         </Button>
       </div>
     </div>
@@ -702,6 +702,7 @@ export default function SalonLuxuryPage() {
         onCancel={() => setQuickBookOpen(false)}
         footer={null}
         width={480}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
         className={styles.modalStyle}
         rootClassName="luxe-modal-antd"
       >
