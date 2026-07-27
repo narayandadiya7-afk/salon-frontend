@@ -179,10 +179,9 @@ const BlogCard = ({ post, slug }: { post: typeof blogData[0]; slug: string }) =>
         <h3 className={styles.blogCardTitle}>{post.title}</h3>
         <p className={styles.blogCardExcerpt}>{post.excerpt}</p>
         <div className={styles.blogCardMeta}>
-          <div className={styles.blogCardMetaLeft}>
-            <span className={styles.blogCardAuthor}>{post.author}</span>
-            <span className={styles.blogCardMetaDot}>·</span>
-            <span className={styles.blogCardDate}>{post.date}</span>
+          <div>
+            <div className={styles.blogCardAuthor}>{post.author}</div>
+            <div className={styles.blogCardDate}>{post.date}</div>
           </div>
           <Button variant="gold-outline" size="md" href={`/${slug}/blog/${post.id}`}>Read More <FiArrowRight size={14} /></Button>
         </div>
