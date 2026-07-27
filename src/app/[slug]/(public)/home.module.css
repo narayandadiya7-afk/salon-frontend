@@ -1493,58 +1493,7 @@
   }
 
   /* --- Hero --- */
-  .heroContent {
-    padding: 100px 24px 40px;
-  }
-
-  .heroAccentBar {
-    display: none;
-  }
-
-  .heroInner {
-    gap: 0;
-  }
-
-  .heroTextBlock {
-    max-width: 100%;
-  }
-
-  .heroDesc {
-    font-size: 15px;
-    max-width: 100%;
-  }
-
-  .heroStats {
-    margin-top: 32px;
-    max-width: 100%;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .heroStatValue {
-    font-size: 22px;
-  }
-
-  .heroStatLabel {
-    font-size: 9px;
-  }
-
-  .heroStatSep {
-    margin: 0 12px;
-  }
-
-  .heroSlideCounter {
-    display: none;
-  }
-
-  .heroActions {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .heroActions > * {
-    width: 100%;
-  }
+  
 
   /* --- About / Our Story --- */
   .aboutGrid {
@@ -1701,6 +1650,61 @@
   }
 }
 
+
+@media(max-width: 576px) {
+  .heroContent {
+    padding: 100px 24px 40px;
+  }
+
+  .heroAccentBar {
+    display: none;
+  }
+
+  .heroInner {
+    gap: 0;
+  }
+
+  .heroTextBlock {
+    max-width: 100%;
+  }
+
+  .heroDesc {
+    font-size: 15px;
+    max-width: 100%;
+  }
+
+  .heroStats {
+    margin-top: 32px;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .heroStatValue {
+    font-size: 22px;
+  }
+
+  .heroStatLabel {
+    font-size: 9px;
+  }
+
+  .heroStatSep {
+    margin: 0 12px;
+  }
+
+  .heroSlideCounter {
+    display: none;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .heroActions > * {
+    width: 100%;
+  }
+}
 /* ============================================================
    RESPONSIVE — 480px (small phones)
    ============================================================ */

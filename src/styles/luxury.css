@@ -2723,7 +2723,7 @@
 }
 
 @media (max-width: 1024px) {
-  .luxe-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .luxe-grid-3, .luxe-grid-4 { grid-template-columns: repeat(2, 1fr); }
   .luxe-grid-5 { grid-template-columns: repeat(3, 1fr); }
   .luxe-footer-grid { grid-template-columns: 2fr 1fr 1fr; }
   .luxe-contact-preview { grid-template-columns: 1fr; gap: var(--space-10); }
