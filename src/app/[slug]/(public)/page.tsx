@@ -143,7 +143,7 @@ const StylistCard = ({ stylist, onBook }: { stylist: typeof teamData[0]; onBook:
       ))}
     </div>
     <p className={`luxe-body-text ${styles.stylistBio}`}>{stylist.bio}</p>
-    <Button variant="gold-outline" size="sm" onClick={onBook}>Book with {stylist.name.split(' ')[0]} <FiArrowRight size={12} /></Button>
+    <Button variant="gold-outline" size="md" onClick={onBook}>Book with {stylist.name.split(' ')[0]} <FiArrowRight size={14} /></Button>
   </div>
 );
 
@@ -184,7 +184,7 @@ const BlogCard = ({ post, slug }: { post: typeof blogData[0]; slug: string }) =>
             <span className={styles.blogCardMetaDot}>·</span>
             <span className={styles.blogCardDate}>{post.date}</span>
           </div>
-          <Button variant="gold-outline" size="sm" href={`/${slug}/blog/${post.id}`}>              Read More <FiArrowRight size={14} /></Button>
+          <Button variant="gold-outline" size="md" href={`/${slug}/blog/${post.id}`}>Read More <FiArrowRight size={14} /></Button>
         </div>
       </div>
   </div>

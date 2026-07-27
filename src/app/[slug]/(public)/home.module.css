@@ -231,7 +231,14 @@
 
 /* ===== Stylist Card ===== */
 .stylistCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-bottom: var(--space-6);
+}
+
+.stylistCard Button {
+  margin-top: auto;
 }
 
 .stylistCardTitle {
@@ -1190,8 +1197,6 @@
   font-size: 18px;
 }
 
-.modalForm {
-}
 
 .modalTextarea {
   resize: none;
