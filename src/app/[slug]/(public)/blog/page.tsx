@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button as AntButton } from 'antd';
+import Button from '../../../../components/button/button';
 import styles from './blog.module.css';
 import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const posts = [
   { id: '1', title: 'Summer Hair Care: Essential Tips for Healthy, Glowing Hair', excerpt: 'Protect your hair from sun damage with our expert guide to summer hair care routines and products.', category: 'Hair Care', date: 'Jun 28, 2026', author: 'Priya Sharma', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80', featured: true, readTime: '5 min read' },
@@ -80,7 +80,7 @@ export default function BlogPage() {
           <div className={styles.filterBar}>
             <div className={styles.filterChips}>
               {categories.map((cat) => (
-                <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
+                <AntButton key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</AntButton>
               ))}
             </div>
             <div className={`luxe-search ${styles.searchWrapper}`}>
@@ -120,7 +120,7 @@ export default function BlogPage() {
           <p className="luxe-newsletter-subtitle">Get the latest beauty tips and trends delivered to your inbox.</p>
           <form className="luxe-newsletter-form" onSubmit={(e) => e.preventDefault()}>
             <input type="email" placeholder="Your email address" required />
-            <Button htmlType="submit" className="luxe-btn luxe-btn-secondary luxe-btn-lg">Subscribe</Button>
+            <Button variant="secondary" size="lg" htmlType="submit">Subscribe</Button>
           </form>
         </div>
       </section>

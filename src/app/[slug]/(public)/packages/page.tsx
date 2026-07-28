@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button as AntButton } from 'antd';
+import Button from '../../../../components/button/button';
 import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import styles from './packages.module.css';
 
 const packages = [
@@ -76,7 +76,7 @@ export default function PackagesPage() {
         <div className="luxe-container-lg">
           <div className={styles.filterRow}>
             {categories.map((cat) => (
-              <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
+              <AntButton key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</AntButton>
             ))}
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function PackagesPage() {
                     ))}
                     {pkg.includes.length > 4 && <li className={styles.moreItems}>+{pkg.includes.length - 4} more items</li>}
                   </ul>
-                  <Button onClick={() => router.push(`/${slug}/book?package=${pkg.id}`)} type="primary" className={`luxe-btn luxe-btn-lg ${styles.bookBtn}`}>Book This Package</Button>
+                  <AntButton onClick={() => router.push(`/${slug}/book?package=${pkg.id}`)} type="primary" className={`luxe-btn luxe-btn-lg ${styles.bookBtn}`}>Book This Package</AntButton>
                 </div>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function PackagesPage() {
         <div className="luxe-container-sm">
           <h2 className="luxe-newsletter-title">Looking for a Custom Package?</h2>
           <p className="luxe-newsletter-subtitle">Contact us for personalized packages tailored to your specific needs and preferences.</p>
-          <Link href={`/${slug}/contact`} className="luxe-btn luxe-btn-secondary luxe-btn-lg">Get in Touch</Link>
+          <Button variant="secondary" size="lg" onClick={() => router.push(`/${slug}/contact`)}>Get in Touch</Button>
         </div>
       </section>
     </>

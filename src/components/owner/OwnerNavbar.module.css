@@ -97,22 +97,8 @@
   gap: 10px;
 }
 
-.bookBtn {
-  background: linear-gradient(135deg, #d4a853, #c9953f) !important;
-  border: none !important;
-  color: #fff !important;
-  font-family: 'LexendMedium', sans-serif !important;
-  font-size: 13px !important;
-  height: 38px !important;
-  padding: 0 22px !important;
-  border-radius: 100px !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 16px rgba(201, 149, 63, 0.3) !important;
-}
-
-.bookBtn:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 8px 28px rgba(201, 149, 63, 0.4) !important;
+.bookBtnWrap {
+  display: flex;
 }
 
 .loginBtn {
@@ -239,6 +225,6 @@
 
 @media (max-width: 900px) {
   .nav { display: none; }
-  .actions > :not(.bookBtn) { display: none; }
+  .actions > :not(.bookBtnWrap) { display: none; }
   .toggle { display: flex; }
 }

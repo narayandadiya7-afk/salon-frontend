@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter, usePathname } from 'next/navigation';
 import { MenuOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button as AntButton } from 'antd';
+import Button from '../button/button';
 import LanguageSwitcher from '../language-switcher/LanguageSwitcher';
 import Utils from '../../utils';
 import styles from './OwnerNavbar.module.css';
@@ -70,17 +71,15 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
         <div className={styles.actions}>
           <LanguageSwitcher />
           {isOwner ? (
-            <Button type="default" icon={<UserOutlined />} className={styles.dashBtn} onClick={() => router.push(`/${slug}/owner/dashboard`)}>
+            <AntButton type="default" icon={<UserOutlined />} className={styles.dashBtn} onClick={() => router.push(`/${slug}/owner/dashboard`)}>
               Dashboard
-            </Button>
+            </AntButton>
           ) : (
-            <Button type="default" className={styles.loginBtn} onClick={() => router.push(`/${slug}/owner/login`)}>
+            <AntButton type="default" className={styles.loginBtn} onClick={() => router.push(`/${slug}/owner/login`)}>
               Owner Login
-            </Button>
+            </AntButton>
           )}
-          <Link href={`/${slug}/book`}>
-            <Button className={styles.bookBtn}>Book Now</Button>
-          </Link>
+          <span className={styles.bookBtnWrap}><Button variant="secondary" size="md" onClick={() => router.push(`/${slug}/book`)}>Book Now</Button></span>
         </div>
 
         <button className={styles.toggle} onClick={() => setOpen(!open)} aria-label="Toggle menu">
@@ -108,7 +107,7 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
               <LanguageSwitcher />
             </div>
             {isOwner ? (
-              <Button
+              <AntButton
                 block
                 type="default"
                 icon={<UserOutlined />}
@@ -116,31 +115,20 @@ export default function OwnerNavbar({ salon }: { salon?: any }) {
                 onClick={() => { setOpen(false); router.push(`/${slug}/owner/dashboard`); }}
               >
                 Dashboard
-              </Button>
+              </AntButton>
             ) : (
-              <Button
+              <AntButton
                 block
                 type="default"
                 style={{ height: 44, borderRadius: 100, borderColor: 'rgba(0,0,0,0.15)', color: '#333' }}
                 onClick={() => { setOpen(false); router.push(`/${slug}/owner/login`); }}
               >
                 Owner Login
-              </Button>
+              </AntButton>
             )}
-            <Link href={`/${slug}/book`} onClick={() => setOpen(false)}>
-              <Button
-                block
-                style={{
-                  height: 44, borderRadius: 100,
-                  background: 'linear-gradient(135deg, #d4a853, #c9953f)',
-                  border: 'none', color: '#fff',
-                  fontFamily: 'LexendMedium, sans-serif',
-                  boxShadow: '0 4px 16px rgba(201,149,63,0.3)',
-                }}
-              >
-                Book Now
-              </Button>
-            </Link>
+            <Button variant="secondary" size="md" style={{ width: '100%' }} onClick={() => { setOpen(false); router.push(`/${slug}/book`); }}>
+              Book Now
+            </Button>
           </div>
         </div>
       )}

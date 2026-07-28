@@ -142,25 +142,6 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-.newsletterForm button {
-  height: 44px;
-  padding: 0 24px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, #d4a853, #c9953f);
-  border: none;
-  color: #fff;
-  font-family: 'LexendMedium', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.newsletterForm button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(201, 149, 63, 0.3);
-}
-
 .bottom {
   display: flex;
   justify-content: space-between;

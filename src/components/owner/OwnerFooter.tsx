@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { InstagramOutlined, FacebookOutlined, WhatsAppOutlined, YoutubeOutlined } from '@ant-design/icons';
+import Button from '../button/button';
 import styles from './OwnerFooter.module.css';
 
 export default function OwnerFooter({ salon }: { salon?: any }) {
@@ -54,7 +55,7 @@ export default function OwnerFooter({ salon }: { salon?: any }) {
             <p>Subscribe for exclusive offers, beauty tips, and salon updates.</p>
             <form className={styles.newsletterForm} onSubmit={e => e.preventDefault()}>
               <input type="email" placeholder="Your email address" />
-              <button type="submit">Subscribe</button>
+              <Button variant="secondary" size="md" htmlType="submit">Subscribe</Button>
             </form>
           </div>
         </div>
