@@ -1,123 +1,124 @@
 'use client';
 
-import React from 'react';
-import { Button } from 'antd';
-import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import styles from './memberships.module.css';
+import { useState } from 'react';
+import { Check, Minus } from 'lucide-react';
+import { PageHero, SectionHead, usePageMeta } from '../../../../components/site/ui';
+import { memberships } from '../../../../data/salon';
+import { useSite } from '../../../../components/site/site-context';
 
-const plans = [
-  {
-    name: 'Silver',
-    price: '999',
-    period: 'month',
-    desc: 'Perfect for occasional visits. Enjoy great savings and priority access.',
-    featured: false,
-    perks: ['10% off all services', 'Priority booking', 'Free annual consultation', 'Birthday bonus treatment', 'Exclusive member offers'],
-  },
-  {
-    name: 'Gold',
-    price: '1,999',
-    period: 'month',
-    desc: 'Our most popular plan. Significant savings for regular customers with added perks.',
-    featured: true,
-    perks: ['20% off all services', 'VIP priority booking', 'Free haircut every quarter', 'Free facial every quarter', 'Birthday bonus + gift', 'Exclusive events access', 'Guest pass (1/year)'],
-  },
-  {
-    name: 'Platinum',
-    price: '3,999',
-    period: 'month',
-    desc: 'The ultimate luxury experience. Unlimited benefits for our most valued customers.',
-    featured: false,
-    perks: ['30% off all services', 'VIP priority booking', 'Unlimited express services', 'Free treatment monthly', 'Free haircut monthly', 'Birthday bonus + gift', 'Exclusive events + previews', 'Guest pass (2/year)', 'Complimentary add-ons', 'Dedicated concierge'],
-  },
-];
-
-const comparisonRows = [
-  { label: 'Monthly Fee', silver: '₹999', gold: '₹1,999', platinum: '₹3,999' },
-  { label: 'Service Discount', silver: '10%', gold: '20%', platinum: '30%' },
-  { label: 'Priority Booking', silver: true, gold: true, platinum: true },
-  { label: 'Free Haircut', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
-  { label: 'Free Facial', silver: false, gold: 'Quarterly', platinum: 'Monthly' },
-  { label: 'Free Treatment', silver: false, gold: false, platinum: 'Monthly' },
-  { label: 'Birthday Bonus', silver: 'Treatment', gold: 'Treatment + Gift', platinum: 'Gift' },
-  { label: 'Guest Pass', silver: false, gold: '1/year', platinum: '2/year' },
-  { label: 'Events Access', silver: false, gold: true, platinum: true },
-  { label: 'Dedicated Concierge', silver: false, gold: false, platinum: true },
+const compare = [
+  { feature: 'Monthly signature services', values: ['1', '2', '4'] },
+  { feature: 'Discount on services & retail', values: ['10%', '15%', '20%'] },
+  { feature: 'Priority booking window', values: ['Weekdays', 'All week', 'Concierge'] },
+  { feature: 'Loyalty points', values: ['1x', '2x', '3x'] },
+  { feature: 'Complimentary blow-dry', values: [false, true, true] },
+  { feature: 'After-hours private suite', values: [false, false, true] },
+  { feature: 'Guest passes', values: [false, false, true] },
 ];
 
 export default function MembershipsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params?.slug as string;
+  const { slug } = useSite();
+  usePageMeta(
+    'Memberships — Maison Lumière',
+    'Monthly and annual salon memberships with priority booking, loyalty points and up to 20% off every service.',
+  );
+
+  const [annual, setAnnual] = useState(false);
 
   return (
     <>
-      <section className={`luxe-hero ${styles.hero}`}>
-        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=85" alt="Memberships" /></div>
-        <div className="luxe-hero-overlay" />
-        <div className={`luxe-hero-content ${styles.heroContent}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>LuxeClub Membership</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Join our membership program and enjoy exclusive benefits, discounts, and VIP treatment all year round.</p>
+      <PageHero
+        eyebrow="Memberships"
+        title="Membership, the quiet luxury of never waiting"
+        copy="Choose a rhythm that suits you. Cancel or change tier any time — unused credits roll over for 60 days."
+      />
+
+      <section className="shell pb-16">
+        <div className="mx-auto flex w-fit items-center gap-1 rounded-full border border-border p-1">
+          {[
+            { label: 'Monthly', v: false },
+            { label: 'Annual · save 2 months', v: true },
+          ].map((o) => (
+            <button
+              key={o.label}
+              onClick={() => setAnnual(o.v)}
+              className={`rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.18em] transition-colors ${
+                annual === o.v ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+              }`}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          {memberships.map((m) => (
+            <article key={m.id} className={`surface-card lift p-8 ${m.featured ? 'ring-1 ring-gold' : ''}`}>
+              {m.featured && (
+                <span className="mb-4 inline-block rounded-full bg-gold px-3 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-primary-foreground">
+                  Most chosen
+                </span>
+              )}
+              <h2 className="display text-3xl">{m.name}</h2>
+              <p className="mt-2 text-sm text-muted-foreground">{m.description}</p>
+              <p className="display mt-6 text-5xl">
+                ${annual ? m.annual : m.monthly}
+                <span className="text-base text-muted-foreground">{annual ? ' /year' : ' /month'}</span>
+              </p>
+              <ul className="mt-7 space-y-3 text-sm text-muted-foreground">
+                {m.perks.map((p) => (
+                  <li key={p} className="flex gap-3">
+                    <Check className="size-4 shrink-0 text-gold" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`/${slug}/book`}
+                className={`mt-8 block rounded-full px-6 py-3.5 text-center text-xs uppercase tracking-[0.2em] transition-transform hover:-translate-y-0.5 ${
+                  m.featured ? 'bg-primary text-primary-foreground' : 'border border-border'
+                }`}
+              >
+                Join {m.name}
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className="luxe-section-header">
-            <span className="luxe-section-overline">Choose Your Plan</span>
-            <h2 className="luxe-section-title">Find Your Perfect Membership</h2>
-            <p className="luxe-section-subtitle">All plans include priority booking and exclusive member benefits. Cancel anytime.</p>
-          </div>
-          <div className={`luxe-grid-3 ${styles.cardGrid}`}>
-            {plans.map((plan) => (
-              <div key={plan.name} className={`luxe-package-card ${plan.featured ? 'featured' : ''} ${styles.packageCard}`}>
-                {plan.featured && <div className="package-badge"><span className="luxe-badge luxe-badge-gold">Most Popular</span></div>}
-                <h3 className={styles.cardName}>{plan.name}</h3>
-                <p className={`luxe-body-text ${styles.cardDesc}`}>{plan.desc}</p>
-                <div className="package-price">₹{plan.price}<span>/{plan.period}</span></div>
-                <p className={styles.cardCancelText}>Cancel anytime • No hidden fees</p>
-                <ul className={`package-perks ${styles.cardPerks}`}>
-                  {plan.perks.map((p) => (
-                    <li key={p}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-emerald)" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-                <Button onClick={() => router.push(`/${slug}/book?membership=${plan.name.toLowerCase()}`)} className={`luxe-btn luxe-btn-lg ${plan.featured ? 'luxe-btn-secondary' : ''} ${styles.cardBtn}`}>
-                  {plan.featured ? 'Start Gold Free Trial' : `Start ${plan.name} Free Trial`}
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section className={`luxe-section ${styles.tableSection}`}>
-        <div className="luxe-container-lg">
-          <div className="luxe-section-header">
-            <span className="luxe-section-overline">Compare Plans</span>
-            <h2 className="luxe-section-title">Detailed Comparison</h2>
-          </div>
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
+      <section className="section bg-secondary/40">
+        <div className="shell">
+          <SectionHead eyebrow="Compare" title="Every benefit, side by side" align="center" />
+          <div className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-160 border-collapse text-sm">
               <thead>
-                <tr className={styles.tableHeaderRow}>
-                  <th className={styles.tableHeaderCell}>Benefits</th>
-                  <th className={styles.tableHeaderCellCenter}>Silver</th>
-                  <th className={styles.tableHeaderCellGold}>Gold</th>
-                  <th className={styles.tableHeaderCellCenter}>Platinum</th>
+                <tr className="border-b border-border">
+                  <th className="py-5 text-left font-normal text-muted-foreground">Benefit</th>
+                  {memberships.map((m) => (
+                    <th key={m.id} className="display py-5 text-2xl font-normal">
+                      {m.name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {comparisonRows.map((row, i) => (
-                  <tr key={row.label} className={styles.tableRow}>
-                    <td className={styles.tableLabelCell}>{row.label}</td>
-                    <td className={styles.tableDataCell}>{renderCell(row.silver)}</td>
-                    <td className={styles.tableDataCellGold}>{renderCell(row.gold)}</td>
-                    <td className={styles.tableDataCell}>{renderCell(row.platinum)}</td>
+                {compare.map((row) => (
+                  <tr key={row.feature} className="border-b border-border/60">
+                    <td className="py-5 text-muted-foreground">{row.feature}</td>
+                    {row.values.map((v, i) => (
+                      <td key={i} className="py-5 text-center">
+                        {typeof v === 'boolean' ? (
+                          v ? (
+                            <Check className="mx-auto size-4 text-gold" />
+                          ) : (
+                            <Minus className="mx-auto size-4 text-muted-foreground/50" />
+                          )
+                        ) : (
+                          v
+                        )}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -125,52 +126,6 @@ export default function MembershipsPage() {
           </div>
         </div>
       </section>
-
-      {/* Benefits */}
-      <section className={`luxe-section ${styles.benefitsSection}`}>
-        <div className="luxe-container-lg">
-          <div className="luxe-section-header">
-            <span className="luxe-section-overline">Why Join?</span>
-            <h2 className="luxe-section-title">Membership Benefits</h2>
-          </div>
-          <div className="luxe-why-grid">
-            {[
-              { icon: '💰', title: 'Save Big', desc: 'Members save up to 30% on every service. The more you visit, the more you save.' },
-              { icon: '⭐', title: 'Priority Booking', desc: 'Skip the wait. Members get priority access to appointments including weekends and peak hours.' },
-              { icon: '🎁', title: 'Exclusive Rewards', desc: 'Birthday treats, seasonal gifts, and exclusive members-only events throughout the year.' },
-              { icon: '🆓', title: 'Free Services', desc: 'Depending on your plan, enjoy complimentary haircuts, facials, and treatments.' },
-              { icon: '👤', title: 'Dedicated Concierge', desc: 'Platinum members receive a personal concierge for effortless booking and personalized recommendations.' },
-              { icon: '📱', title: 'App Benefits', desc: 'Manage your membership, track loyalty points, and book appointments directly from your phone.' },
-            ].map((b) => (
-              <div key={b.title} className={`luxe-why-item ${styles.benefitItem}`}>
-                <div className={`luxe-why-icon ${styles.benefitIcon}`}>{b.icon}</div>
-                <div>
-                  <h3 className={`luxe-why-item-title ${styles.benefitTitle}`}>{b.title}</h3>
-                  <p className="luxe-why-item-desc">{b.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="luxe-newsletter">
-        <div className="luxe-newsletter-content">
-          <h2 className="luxe-newsletter-title">Ready to Elevate Your Experience?</h2>
-          <p className="luxe-newsletter-subtitle">Start your free trial today. No commitment, cancel anytime.</p>
-          <Button onClick={() => router.push(`/${slug}/book`)} className="luxe-btn luxe-btn-secondary luxe-btn-xl">Start Free Trial</Button>
-        </div>
-      </section>
     </>
   );
-}
-
-function renderCell(value: string | boolean) {
-  if (typeof value === 'boolean') {
-    return value
-      ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-emerald)" strokeWidth="2.5" className={styles.cellIcon}><path d="M20 6L9 17l-5-5"/></svg>
-      : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--luxe-text-tertiary)" strokeWidth="2" className={styles.cellIcon}><path d="M18 6L6 18M6 6l12 12"/></svg>;
-  }
-  return value;
 }

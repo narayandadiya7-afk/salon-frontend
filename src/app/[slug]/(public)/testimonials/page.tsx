@@ -1,82 +1,89 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from 'antd';
 import Link from 'next/link';
-import styles from './testimonials.module.css';
-
-const reviews = [
-  { id: 'r1', name: 'Neha Gupta', text: 'Absolutely stunning results! The team at LuxeStudio transformed my look completely. The attention to detail is remarkable. I have never felt more confident.', rating: 5, service: 'Signature Haircut', date: '2 weeks ago', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80' },
-  { id: 'r2', name: 'Sneha Reddy', text: 'I have been coming here for years. The consistency in quality and service is unmatched. Best salon in the city. Priya is a magician with scissors!', rating: 5, service: 'Hair Color & Highlights', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80' },
-  { id: 'r3', name: 'Arjun Mehta', text: 'As a groom, I wanted to look my best on my wedding day. Rohit gave me the perfect cut and beard style. The hot towel shave was incredible. Highly recommend!', rating: 5, service: 'Classic Cut & Shave', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80' },
-  { id: 'r4', name: 'Kavita Desai', text: 'The bridal package was worth every penny. My makeup lasted all day and I felt like a queen. Sophia understood exactly what I wanted. Thank you, LuxeStudio!', rating: 5, service: 'Bridal Makeup', date: '2 months ago', avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&q=80' },
-  { id: 'r5', name: 'Ritu Agarwal', text: 'The keratin treatment changed my hair completely. So smooth and manageable now. The staff is incredibly professional and the salon ambiance is top-notch.', rating: 5, service: 'Keratin Treatment', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80' },
-  { id: 'r6', name: 'Divya Kumar', text: 'Ananya gave me the best facial I have ever had. My skin was glowing for weeks. The organic products they use make a noticeable difference.', rating: 5, service: 'Luxury Facial', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80' },
-  { id: 'r7', name: 'Vikram Joshi', text: 'Great barber shop experience. Rohit really knows his craft. The attention to detail in the beard shaping is exceptional. Will definitely be coming back.', rating: 5, service: 'Beard Styling', date: '1 week ago', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80' },
-  { id: 'r8', name: 'Pooja Sharma', text: 'Maya did incredible nail art for my sister\'s wedding. Everyone was asking where I got them done. The gel extensions looked so natural and lasted for weeks.', rating: 5, service: 'Gel Extensions', date: '2 weeks ago', avatar: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=100&q=80' },
-  { id: 'r9', name: 'Anita Menon', text: 'The spa escape package was exactly what I needed. A full day of pure relaxation. The massage was heavenly and the facial left my skin radiant.', rating: 5, service: 'Spa Escape Package', date: '1 month ago', avatar: 'https://images.unsplash.com/photo-1598346762291-aee88549193f?w=100&q=80' },
-  { id: 'r10', name: 'Rahul Kapoor', text: 'I am particular about my hair and Vikram exceeded my expectations. The balayage looks natural and the color is perfect. Finally found my go-to salon.', rating: 5, service: 'Balayage', date: '3 weeks ago', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80' },
-];
+import { Star, Play, ArrowRight } from 'lucide-react';
+import { PageHero, SectionHead, usePageMeta } from '../../../../components/site/ui';
+import { testimonials, galleryItems, stats } from '../../../../data/salon';
+import { useSite } from '../../../../components/site/site-context';
 
 export default function TestimonialsPage() {
-  const [showAll, setShowAll] = useState(false);
-  const displayed = showAll ? reviews : reviews.slice(0, 6);
+  const { slug } = useSite();
+  usePageMeta(
+    'Client Reviews — Maison Lumière',
+    'Read written and video reviews from Maison Lumière guests, with a 4.9 average across 2,400+ ratings.',
+  );
 
   return (
     <>
-      <section className={`luxe-hero ${styles.hero}`}>
-        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=1920&q=85" alt="Testimonials" /></div>
-        <div className="luxe-hero-overlay" />
-        <div className={`luxe-hero-content ${styles.heroContent}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Customer Testimonials</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Hear from our customers about their LuxeStudio experience.</p>
+      <PageHero
+        eyebrow="Reviews"
+        title="Twelve thousand regulars, and counting"
+        copy="Every review below is left by a verified guest after a completed appointment."
+      />
+
+      <section className="shell pb-16">
+        <div className="surface-card flex flex-wrap items-center justify-between gap-8 p-10">
+          <div>
+            <p className="display text-6xl gold-text">4.9</p>
+            <div className="mt-2 flex gap-1 text-gold">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="size-4 fill-gold" />
+              ))}
+            </div>
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">2,412 verified reviews</p>
+          </div>
+          {stats.slice(1).map((s) => (
+            <div key={s.label}>
+              <p className="display text-4xl">{s.value}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">{s.label}</p>
+            </div>
+          ))}
+          <div className="grid h-24 w-40 place-items-center rounded-2xl border border-dashed border-border text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+            Google reviews
+          </div>
         </div>
       </section>
 
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className={styles.grid}>
-            {displayed.map((review) => (
-              <div key={review.id} className="luxe-review-card">
-                <div className="review-stars">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  ))}
-                </div>
-                <div className="review-text">&ldquo;{review.text}&rdquo;</div>
-                <div className="review-author">
-                  <img src={review.avatar} alt={review.name} className="review-avatar" />
-                  <div>
-                    <div className="review-name">{review.name}</div>
-                    <div className="review-service">{review.service} • {review.date}</div>
-                  </div>
-                </div>
+      <section className="shell pb-20">
+        <div className="columns-1 gap-6 md:columns-2 lg:columns-3 [&>*]:mb-6">
+          {[...testimonials, ...testimonials].map((t, i) => (
+            <blockquote key={i} className="surface-card break-inside-avoid p-8">
+              <div className="flex gap-1 text-gold">
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <Star key={j} className="size-3.5 fill-gold" />
+                ))}
+              </div>
+              <p className="display mt-5 text-2xl leading-snug">“{t.quote}”</p>
+              <footer className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                {t.name} · {t.role}
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </section>
+
+      <section className="section bg-secondary/40">
+        <div className="shell">
+          <SectionHead eyebrow="Video reviews" title="Hear it from our guests" align="center" />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {galleryItems.slice(0, 3).map((g, i) => (
+              <div key={i} className="group relative overflow-hidden rounded-3xl">
+                <img src={g.image} alt="" loading="lazy" className="aspect-4/5 w-full object-cover" />
+                <span className="absolute inset-0 grid place-items-center bg-[oklch(0.24_0.012_60/0.3)]">
+                  <span className="grid size-14 place-items-center rounded-full bg-[oklch(0.98_0.006_85/0.9)] text-[oklch(0.24_0.012_60)] transition-transform group-hover:scale-110">
+                    <Play className="size-5" />
+                  </span>
+                </span>
               </div>
             ))}
           </div>
-
-          {!showAll && reviews.length > 6 && (
-            <div className={styles.showAllWrapper}>
-              <Button className="luxe-btn luxe-btn-lg" onClick={() => setShowAll(true)}>
-                Show All Reviews ({reviews.length})
-              </Button>
-            </div>
-          )}
-
-          {/* Stats */}
-          <div className={styles.statsGrid}>
-            <div>
-              <div className={styles.statNumber}>4.9★</div>
-              <div className="luxe-caption">Average Rating</div>
-            </div>
-            <div>
-              <div className={styles.statNumber}>2.5K+</div>
-              <div className="luxe-caption">Verified Reviews</div>
-            </div>
-            <div>
-              <div className={styles.statNumber}>98%</div>
-              <div className="luxe-caption">Would Recommend</div>
-            </div>
+          <div className="mt-14 text-center">
+            <Link
+              href={`/${slug}/book`}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+            >
+              Book your visit <ArrowRight className="size-4" />
+            </Link>
           </div>
         </div>
       </section>

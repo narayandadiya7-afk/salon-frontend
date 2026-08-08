@@ -1,87 +1,96 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from 'antd';
-import { useParams } from 'next/navigation';
-import styles from './gallery.module.css';
-
-const galleryItems = [
-  { id: '1', category: 'Hair', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80', title: 'Balayage Transformation', type: 'image' },
-  { id: '2', category: 'Hair', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80', title: 'Precision Haircut', type: 'image' },
-  { id: '3', category: 'Skin', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80', title: 'Glowing Skin Facial', type: 'image' },
-  { id: '4', category: 'Nails', image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80', title: 'Artistic Nail Design', type: 'image' },
-  { id: '5', category: 'Bridal', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80', title: 'Bridal Elegance', type: 'image' },
-  { id: '6', category: 'Spa', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80', title: 'Luxury Spa Treatment', type: 'image' },
-  { id: '7', category: 'Hair', image: 'https://images.unsplash.com/photo-1567894340315-735d7c361db7?w=600&q=80', title: 'Voluminous Blow-Dry', type: 'image' },
-  { id: '8', category: 'Skin', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80', title: 'Skincare Results', type: 'image' },
-  { id: '9', category: 'Nails', image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&q=80', title: 'Gel Extension Art', type: 'image' },
-  { id: '10', category: 'Hair', image: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?w=600&q=80', title: 'Hair Spa Treatment', type: 'image' },
-  { id: '11', category: 'Bridal', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80', title: 'Bridal Makeup Look', type: 'image' },
-  { id: '12', category: 'Spa', image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80', title: 'Wellness Retreat', type: 'image' },
-];
-
-const categories = ['All', 'Hair', 'Skin', 'Nails', 'Bridal', 'Spa'];
+import { useState } from 'react';
+import { X, Play } from 'lucide-react';
+import { PageHero, usePageMeta } from '../../../../components/site/ui';
+import { galleryItems } from '../../../../data/salon';
 
 export default function GalleryPage() {
-  const params = useParams();
-  const slug = params?.slug as string;
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  usePageMeta(
+    'Gallery & Before After — Maison Lumière',
+    'Browse hair, skin, spa, nails and bridal transformations from the Maison Lumière floor.',
+  );
 
-  const filtered = activeCategory === 'All' ? galleryItems : galleryItems.filter((g) => g.category === activeCategory);
+  const cats = ['All', ...Array.from(new Set(galleryItems.map((g) => g.category))), 'Before & After'];
+  const [cat, setCat] = useState('All');
+  const [lightbox, setLightbox] = useState<null | { image: string; title: string }>(null);
+
+  const items = galleryItems.filter((g) => cat === 'All' || cat === 'Before & After' || g.category === cat);
 
   return (
     <>
-      <section className={`luxe-hero ${styles.hero}`}>
-        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1920&q=85" alt="Gallery" /></div>
-        <div className="luxe-hero-overlay" />
-        <div className={`luxe-hero-content ${styles.heroContent}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>Our Gallery</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Explore our portfolio of transformations, creative work, and the LuxeStudio experience.</p>
+      <PageHero
+        eyebrow="Portfolio"
+        title="Work we are proud to sign"
+        copy="Unretouched results photographed in salon light. Tap any image to view it larger."
+      />
+
+      <section className="shell pb-28">
+        <div className="flex flex-wrap gap-2">
+          {cats.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCat(c)}
+              className={`rounded-full border px-5 py-2 text-xs uppercase tracking-[0.18em] transition-colors ${
+                cat === c ? 'border-gold bg-gold text-primary-foreground' : 'border-border hover:border-gold'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-12 columns-2 gap-5 lg:columns-3 [&>*]:mb-5">
+          {items.map((g, i) => (
+            <figure
+              key={i}
+              onClick={() => setLightbox(g)}
+              className="group relative cursor-pointer overflow-hidden rounded-2xl break-inside-avoid"
+            >
+              <img
+                src={g.image}
+                alt={g.title}
+                loading="lazy"
+                className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+                  i % 4 === 1 ? 'aspect-3/4' : i % 4 === 2 ? 'aspect-square' : 'aspect-4/5'
+                }`}
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-[var(--gradient-veil)] p-5 text-xs uppercase tracking-[0.2em] text-[oklch(0.98_0.006_85)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                {g.title} · {g.category}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <h2 className="display mt-24 text-4xl">Video stories</h2>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {galleryItems.slice(0, 3).map((g, i) => (
+            <div key={i} className="group relative overflow-hidden rounded-2xl">
+              <img src={g.image} alt={g.title} loading="lazy" className="aspect-video w-full object-cover" />
+              <span className="absolute inset-0 grid place-items-center bg-[oklch(0.24_0.012_60/0.35)]">
+                <span className="grid size-14 place-items-center rounded-full bg-[oklch(0.98_0.006_85/0.9)] text-[oklch(0.24_0.012_60)] transition-transform group-hover:scale-110">
+                  <Play className="size-5" />
+                </span>
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className={`luxe-section ${styles.sectionNoPadding}`}>
-        <div className="luxe-container-lg">
-          <div className={styles.filterRow}>
-            {categories.map((cat) => (
-              <Button key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className={styles.masonry}>
-            {filtered.map((item) => (
-              <div
-                key={item.id}
-                className={`luxe-gallery-card ${styles.galleryCard}`}
-                onClick={() => setLightbox(item.image)}
-              >
-                <img src={item.image} alt={item.title} className={`${styles.galleryImage} ${item.id === '2' || item.id === '7' ? styles.galleryImagePortrait : styles.galleryImageSquare}`} />
-                <div className="gallery-overlay">
-                  <div className={styles.overlayText}>
-                    <p className={styles.overlayTitle}>{item.title}</p>
-                    <span className="luxe-badge luxe-badge-gold">{item.category}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Lightbox */}
       {lightbox && (
-        <div className={`luxe-modal-overlay ${styles.modalOverlay}`} onClick={() => setLightbox(null)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <img src={lightbox} alt="Gallery preview" className={styles.modalImage} />
-            <Button onClick={() => setLightbox(null)} className={styles.modalClose}>
-              ✕
-            </Button>
-          </div>
+        <div
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-60 grid place-items-center bg-[oklch(0.16_0.008_60/0.92)] p-6"
+        >
+          <button aria-label="Close" className="absolute right-6 top-6 text-[oklch(0.98_0.006_85)]">
+            <X className="size-6" />
+          </button>
+          <figure className="max-h-[85vh]">
+            <img src={lightbox.image} alt={lightbox.title} className="max-h-[80vh] rounded-2xl object-contain" />
+            <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.25em] text-[oklch(0.98_0.006_85)]">
+              {lightbox.title}
+            </figcaption>
+          </figure>
         </div>
       )}
     </>

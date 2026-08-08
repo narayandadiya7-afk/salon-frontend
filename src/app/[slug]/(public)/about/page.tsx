@@ -1,161 +1,113 @@
 'use client';
 
-import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import styles from './about.module.css';
-
-const team = [
-  { name: 'Priya Sharma', role: 'Founder & Master Stylist', image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&q=80' },
-  { name: 'Ananya Patel', role: 'Lead Esthetician', image: 'https://images.unsplash.com/photo-1598346762291-aee88549193f?w=400&q=80' },
-  { name: 'Rohit Verma', role: 'Master Barber', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
-];
+import { ArrowRight } from 'lucide-react';
+import { PageHero, SectionHead, usePageMeta } from '../../../../components/site/ui';
+import { stylists, stats } from '../../../../data/salon';
+import { useSite } from '../../../../components/site/site-context';
+import aboutImg from '../../../../assets/about.jpg';
+import heroImg from '../../../../assets/hero.jpg';
 
 const values = [
-  { icon: '🎯', title: 'Quality', desc: 'We are dedicated to providing quality service with attention to every detail.' },
-  { icon: '🤝', title: 'Integrity', desc: 'Honest consultations, transparent pricing, and genuine care for our customers.' },
-  { icon: '💡', title: 'Innovation', desc: 'Continuous learning and adoption of the latest trends and technologies in beauty.' },
-  { icon: '❤️', title: 'Passion', desc: 'A genuine love for what we do, reflected in every haircut, facial, and treatment.' },
-  { icon: '🌿', title: 'Sustainability', desc: 'Mindful practices and responsible choices in our daily operations.' },
-  { icon: '👥', title: 'Community', desc: 'Building lasting relationships with our customers and supporting local initiatives.' },
+  { t: 'Craft over speed', d: 'One guest per specialist, always. No double-booking, no rushed finishes.' },
+  { t: 'Honest counsel', d: 'We recommend the smallest change that gets you the result you want.' },
+  { t: 'Considered sourcing', d: 'Cruelty-free, refillable and low-waste across every back bar.' },
+  { t: 'Warmth as standard', d: 'Luxury without stiffness. You should feel at ease the moment you arrive.' },
 ];
 
-const milestones = [
-  { year: '2010', event: 'LuxeStudio founded by Priya Sharma in Bengaluru' },
-  { year: '2013', event: 'Expanded to a 2,000 sq ft premium salon space' },
-  { year: '2016', event: 'Expanded services to include advanced skincare treatments' },
-  { year: '2018', event: 'Launched LuxeClub membership program' },
-  { year: '2020', event: 'Introduced advanced skincare treatments' },
-  { year: '2023', event: 'Opened second location, expanded team to 25+ experts' },
+const timeline = [
+  { y: '2008', t: 'Two chairs on Fillmore', d: 'Founded as a colour-only studio above a florist.' },
+  { y: '2013', t: 'The skin room opens', d: 'Clinical facials join the menu under our first lead aesthetician.' },
+  { y: '2018', t: 'Ivory hammam', d: 'A dedicated spa wing brings slow ritual bathing to the house.' },
+  { y: '2024', t: 'The atelier today', d: 'Fourteen specialists, nine awards, and the same one-chair philosophy.' },
 ];
 
 export default function AboutPage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params?.slug as string;
+  const { slug } = useSite();
+  usePageMeta(
+    'Our Story — Maison Lumière',
+    'The story, values and craft behind Maison Lumière — an unhurried luxury salon atelier in San Francisco.',
+  );
 
   return (
     <>
-      <section className={`luxe-hero ${styles.heroMinHeight}`}>
-        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1920&q=85" alt="About" /></div>
-        <div className="luxe-hero-overlay" />
-        <div className={`luxe-hero-content ${styles.heroContentCenter}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitleMargin}`}>Our Story</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitleMargin}`}>A journey of passion and dedication to the art of beauty.</p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="About"
+        title="Eighteen years of unhurried craft"
+        copy="Maison Lumière exists for people who would rather be looked after properly than processed quickly."
+        image={heroImg.src}
+      />
 
-      {/* Story */}
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className={styles.storyGrid}>
-            <div>
-              <span className="luxe-section-overline">Since 2010</span>
-              <h2 className={`luxe-section-title ${styles.sectionTitleLeft}`}>Our Journey</h2>
-              <div className="luxe-divider-left" />
-              <p className={`luxe-body-text ${styles.bodyMarginBottom}`}>
-                LuxeStudio was born from a simple belief: that everyone deserves to look and feel their best.
-                Founded by Priya Sharma, a trained stylist with a vision to bring quality beauty
-                services to Bengaluru, our salon has grown steadily through the years.
-              </p>
-              <p className={`luxe-body-text ${styles.bodyMarginBottom}`}>
-                Over the past 15 years, we have built a team of talented professionals who share
-                our commitment to customer satisfaction. Each member of the LuxeStudio family is carefully selected for
-                their skill, creativity, and dedication.
-              </p>
-              <p className="luxe-body-text">
-                Today, LuxeStudio continues to grow, serving our community with a focus on
-                quality service and genuine care for every customer.
-              </p>
-            </div>
-            <div className={styles.imageGrid}>
-              <img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=400&q=80" alt="Salon" className={styles.imageFull} />
-              <div className={styles.imageGridOffset}>
-                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80" alt="Salon" className={styles.imageSquareMargin} />
-                <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=400&q=80" alt="Salon" className={styles.imageSquare} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section className={`luxe-section ${styles.sectionWhiteBg}`}>
-        <div className="luxe-container-lg">
-          <div className={styles.missionVisionGrid}>
-            <div className={styles.cardIvory}>
-              <div className={styles.iconLarge}>🎯</div>
-              <h3 className={styles.cardTitle}>Our Mission</h3>
-              <p className="luxe-body-text">To help every customer feel confident and cared for through quality beauty services tailored to their needs.</p>
-            </div>
-            <div className={styles.cardIvory}>
-              <div className={styles.iconLarge}>👁️</div>
-              <h3 className={styles.cardTitle}>Our Vision</h3>
-              <p className="luxe-body-text">To be a trusted beauty destination known for quality, consistency, and genuine care in everything we do.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="luxe-section">
-        <div className="luxe-container-sm">
-          <div className="luxe-section-header">
-            <span className="luxe-section-overline">Timeline</span>
-            <h2 className="luxe-section-title">Our Milestones</h2>
-          </div>
-          <div className={styles.timelineWrapper}>
-            {milestones.map((m, i) => (
-              <div key={m.year} className={styles.timelineItem}>
-                <div className={`${styles.timelineDotBase} ${i === milestones.length - 1 ? styles.timelineDotActive : styles.timelineDotInactive}`} />
-                {i < milestones.length - 1 && <div className={styles.timelineLine} />}
-                <div className={styles.timelineYear}>{m.year}</div>
-                <p className="luxe-body-text">{m.event}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className={`luxe-section ${styles.sectionDarkBg}`}>
-        <div className="luxe-container-lg">
-          <div className="luxe-section-header">
-            <span className={`luxe-section-overline ${styles.overlineGold}`}>The LuxeStudio Way</span>
-            <h2 className={`luxe-section-title ${styles.titleWhite}`}>Our Core Values</h2>
-          </div>
-          <div className="luxe-why-grid">
-            {values.map((v) => (
-              <div key={v.title} className="luxe-why-item">
-                <div className={styles.valueIcon}>{v.icon}</div>
-                <h3 className={`luxe-why-item-title ${styles.titleWhite}`}>{v.title}</h3>
-                <p className={`luxe-why-item-desc ${styles.valueDesc}`}>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Preview */}
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className="luxe-section-header">
-            <span className="luxe-section-overline">Leadership</span>
-            <h2 className="luxe-section-title">Meet the Team</h2>
-          </div>
-          <div className={`luxe-grid-3 ${styles.teamGrid}`}>
-            {team.map((t) => (
-              <div key={t.name} className="luxe-stylist-card">
-                <img src={t.image} alt={t.name} className="stylist-image" />
-                <div className={`luxe-card-body ${styles.cardBodyNoPadding}`}>
-                  <h3 className={styles.teamMemberName}>{t.name}</h3>
-                  <p className={styles.teamMemberRole}>{t.role}</p>
+      <section className="shell pb-24">
+        <div className="grid items-center gap-14 lg:grid-cols-2">
+          <img
+            src={aboutImg.src}
+            alt="Brass tools on marble"
+            loading="lazy"
+            className="aspect-4/5 w-full rounded-3xl object-cover"
+          />
+          <div>
+            <SectionHead eyebrow="Mission" title="Beauty work that respects your time and your hair" />
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+              Our mission is simple: deliver technically excellent work in an environment that feels calm. Our vision
+              is a salon where the consultation matters as much as the service, and where guests leave knowing
+              exactly how to maintain the result at home.
+            </p>
+            <div className="mt-10 grid gap-8 sm:grid-cols-2">
+              {values.map((v) => (
+                <div key={v.t}>
+                  <div className="gold-rule w-10" />
+                  <p className="mt-4 text-sm font-medium">{v.t}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{v.d}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-secondary/40">
+        <div className="shell">
+          <SectionHead eyebrow="History" title="How the house grew" />
+          <div className="mt-14 grid gap-10 md:grid-cols-4">
+            {timeline.map((t) => (
+              <div key={t.y} className="border-t border-border pt-6">
+                <p className="display text-4xl gold-text">{t.y}</p>
+                <p className="mt-3 text-sm font-medium">{t.t}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.d}</p>
               </div>
             ))}
           </div>
-          <div className={styles.ctaCenter}>
-            <Link href={`/${slug}/team`} className="luxe-btn luxe-btn-outline luxe-btn-lg">View Full Team</Link>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="shell">
+          <SectionHead eyebrow="The people" title="Meet the atelier" align="center" />
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {stylists.map((s) => (
+              <div key={s.id}>
+                <img src={s.image} alt={s.name} loading="lazy" className="aspect-4/5 w-full rounded-2xl object-cover" />
+                <p className="display mt-4 text-2xl">{s.name}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{s.role}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-16 grid gap-10 border-y border-border py-14 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="display text-5xl">{s.value}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-14 text-center">
+            <Link
+              href={`/${slug}/book`}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+            >
+              Book an appointment <ArrowRight className="size-4" />
+            </Link>
           </div>
         </div>
       </section>

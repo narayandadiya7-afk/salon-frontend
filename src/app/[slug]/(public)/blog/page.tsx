@@ -1,126 +1,129 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button as AntButton } from 'antd';
-import Button from '../../../../components/button/button';
-import styles from './blog.module.css';
-import { useParams, useRouter } from 'next/navigation';
-
-const posts = [
-  { id: '1', title: 'Summer Hair Care: Essential Tips for Healthy, Glowing Hair', excerpt: 'Protect your hair from sun damage with our expert guide to summer hair care routines and products.', category: 'Hair Care', date: 'Jun 28, 2026', author: 'Priya Sharma', image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80', featured: true, readTime: '5 min read' },
-  { id: '2', title: 'The Complete Guide to Bridal Beauty: Hair, Makeup & Skincare', excerpt: 'Everything you need to know about preparing for your wedding day beauty routine.', category: 'Bridal', date: 'Jun 25, 2026', author: 'Sophia D\'Souza', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80', featured: true, readTime: '8 min read' },
-  { id: '3', title: 'Skincare Routine: Why Professional Facials Matter', excerpt: 'Discover the benefits of professional facial treatments and how they complement your daily skincare routine.', category: 'Skin Care', date: 'Jun 20, 2026', author: 'Ananya Patel', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80', featured: false, readTime: '6 min read' },
-  { id: '4', title: '5 Nail Art Trends Taking Over This Season', excerpt: 'From minimalist designs to bold statements, explore the hottest nail art trends of the season.', category: 'Nails', date: 'Jun 18, 2026', author: 'Maya Krishnan', image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80', featured: false, readTime: '4 min read' },
-  { id: '5', title: 'Beard Grooming 101: A Complete Guide for Modern Gentlemen', excerpt: 'Master the art of beard grooming with professional tips from our master barber.', category: 'Grooming', date: 'Jun 15, 2026', author: 'Rohit Verma', image: 'https://images.unsplash.com/photo-1503951914875-452cb67b3cbe?w=800&q=80', featured: false, readTime: '5 min read' },
-  { id: '6', title: 'The Benefits of Keratin Treatments for All Hair Types', excerpt: 'Learn how keratin treatments can transform your hair, regardless of your hair type or texture.', category: 'Hair Care', date: 'Jun 12, 2026', author: 'Priya Sharma', image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&q=80', featured: false, readTime: '6 min read' },
-  { id: '7', title: 'Stress Relief Through Aromatherapy Massage', excerpt: 'Explore how aromatherapy massage can help reduce stress and improve your overall well-being.', category: 'Wellness', date: 'Jun 10, 2026', author: 'Ananya Patel', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80', featured: false, readTime: '4 min read' },
-  { id: '8', title: 'Winter Skincare: Adjusting Your Routine for Cold Weather', excerpt: 'Protect and nourish your skin during the colder months with these expert skincare tips.', category: 'Skin Care', date: 'Jun 5, 2026', author: 'Ananya Patel', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=800&q=80', featured: false, readTime: '5 min read' },
-];
-
-const categories = ['All', 'Hair Care', 'Skin Care', 'Bridal', 'Nails', 'Grooming', 'Wellness'];
-
-const popular = posts.slice(0, 4);
+import { useState } from 'react';
+import { Search, ArrowRight } from 'lucide-react';
+import { PageHero, usePageMeta } from '../../../../components/site/ui';
+import { posts } from '../../../../data/salon';
 
 export default function BlogPage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params?.slug as string;
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  usePageMeta(
+    'The Journal — Maison Lumière',
+    'Beauty tips, hair care, skin care and lifestyle notes written by the specialists at Maison Lumière.',
+  );
 
-  const filtered = posts.filter((p) => {
-    const matchCategory = activeCategory === 'All' || p.category === activeCategory;
-    const matchSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchCategory && matchSearch;
-  });
-
-  const featured = posts.filter((p) => p.featured);
+  const [q, setQ] = useState('');
+  const [cat, setCat] = useState('All');
+  const cats = ['All', ...Array.from(new Set(posts.map((p) => p.category)))];
+  const [featured, ...rest] = posts;
+  const list = rest.filter(
+    (p) => (cat === 'All' || p.category === cat) && p.title.toLowerCase().includes(q.toLowerCase()),
+  );
 
   return (
     <>
-      <section className={`luxe-hero ${styles.hero}`}>
-        <div className="luxe-hero-bg"><img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=85" alt="Blog" /></div>
-        <div className="luxe-hero-overlay" />
-        <div className={`luxe-hero-content ${styles.heroContent}`}>
-          <h1 className={`luxe-hero-title ${styles.heroTitle}`}>The LuxeStudio Blog</h1>
-          <p className={`luxe-hero-subtitle ${styles.heroSubtitle}`}>Beauty tips, trends, and expert advice from our team.</p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Journal"
+        title="Notes from the atelier"
+        copy="Practical guidance from the people who do the work — no trend chasing, no filler."
+      />
 
-      {/* Featured */}
-      {featured.length > 0 && (
-        <section className={`luxe-section ${styles.sectionNoPadding}`}>
-          <div className="luxe-container-lg">
-            <div className="luxe-section-header-left">
-              <span className="luxe-section-overline">Featured</span>
-            </div>
-            <div className={styles.featuredGrid}>
-              {featured.map((post) => (
-                <div key={post.id} className="luxe-blog-card" onClick={() => router.push(`/${slug}/blog/${post.id}`)}>
-                  <img src={post.image} alt={post.title} />
-                  <div className="blog-body">
-                    <div className="blog-category">{post.category}</div>
-                    <h3 className="blog-title">{post.title}</h3>
-                    <p className="blog-excerpt">{post.excerpt}</p>
-                    <div className={styles.postMeta}>
-                      <span>{post.author} • {post.date}</span>
-                      <span>{post.readTime}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <section className="shell pb-24">
+        <article className="group grid gap-10 lg:grid-cols-2">
+          <div className="overflow-hidden rounded-3xl">
+            <img
+              src={featured.image}
+              alt={featured.title}
+              loading="lazy"
+              className="aspect-4/3 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
           </div>
-        </section>
-      )}
-
-      {/* Filters */}
-      <section className={`luxe-section ${styles.sectionNoPadding}`}>
-        <div className="luxe-container-lg">
-          <div className={styles.filterBar}>
-            <div className={styles.filterChips}>
-              {categories.map((cat) => (
-                <AntButton key={cat} className={`luxe-chip ${activeCategory === cat ? 'active' : ''}`} onClick={() => setActiveCategory(cat)}>{cat}</AntButton>
-              ))}
-            </div>
-            <div className={`luxe-search ${styles.searchWrapper}`}>
-              <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              <input className={`luxe-input ${styles.searchInput}`} placeholder="Search posts..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-            </div>
+          <div className="flex flex-col justify-center">
+            <p className="eyebrow">Featured · {featured.category}</p>
+            <h2 className="display mt-4 text-4xl leading-tight md:text-5xl">{featured.title}</h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">{featured.excerpt}</p>
+            <p className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              {featured.date} · {featured.read} read
+            </p>
+            <a href="#" className="mt-8 inline-flex items-center gap-2 text-sm text-gold">
+              Read article <ArrowRight className="size-4" />
+            </a>
           </div>
-        </div>
-      </section>
+        </article>
 
-      {/* All Posts */}
-      <section className="luxe-section">
-        <div className="luxe-container-lg">
-          <div className="luxe-grid-3">
-            {filtered.filter((p) => !p.featured).map((post) => (
-              <div key={post.id} className="luxe-blog-card" onClick={() => router.push(`/${slug}/blog/${post.id}`)}>
-                <img src={post.image} alt={post.title} />
-                <div className="blog-body">
-                  <div className="blog-category">{post.category}</div>
-                  <h3 className="blog-title">{post.title}</h3>
-                  <p className="blog-excerpt">{post.excerpt}</p>
-                  <div className={styles.postMeta}>
-                    <span>{post.author} • {post.date}</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                </div>
-              </div>
+        <div className="mt-20 flex flex-wrap items-center justify-between gap-6">
+          <div className="flex flex-wrap gap-2">
+            {cats.map((c) => (
+              <button
+                key={c}
+                onClick={() => setCat(c)}
+                className={`rounded-full border px-5 py-2 text-xs uppercase tracking-[0.18em] transition-colors ${
+                  cat === c ? 'border-gold bg-gold text-primary-foreground' : 'border-border hover:border-gold'
+                }`}
+              >
+                {c}
+              </button>
             ))}
           </div>
+          <label className="flex w-full items-center gap-3 border-b border-border pb-2 sm:w-64">
+            <Search className="size-4 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value.slice(0, 60))}
+              placeholder="Search articles"
+              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </label>
         </div>
-      </section>
 
-      {/* Newsletter */}
-      <section className="luxe-newsletter">
-        <div className="luxe-newsletter-content">
-          <h2 className="luxe-newsletter-title">Stay Inspired</h2>
-          <p className="luxe-newsletter-subtitle">Get the latest beauty tips and trends delivered to your inbox.</p>
-          <form className="luxe-newsletter-form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Your email address" required />
-            <Button variant="secondary" size="lg" htmlType="submit">Subscribe</Button>
+        {list.length === 0 ? (
+          <p className="mt-16 text-center text-sm text-muted-foreground">No articles match that search yet.</p>
+        ) : (
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {list.map((p) => (
+              <article key={p.slug} className="group">
+                <div className="overflow-hidden rounded-2xl">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    className="aspect-4/3 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <p className="mt-5 text-xs uppercase tracking-[0.2em] text-gold">{p.category}</p>
+                <h3 className="display mt-2 text-2xl leading-snug">{p.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.excerpt}</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  {p.date} · {p.read}
+                </p>
+              </article>
+            ))}
+          </div>
+        )}
+
+        <div className="surface-card mt-20 flex flex-wrap items-center justify-between gap-8 p-10">
+          <div className="max-w-md">
+            <p className="display text-3xl">One letter a month</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Seasonal care notes and early access to members-only offers. No noise.
+            </p>
+          </div>
+          <form
+            className="flex w-full max-w-sm items-center gap-2 border-b border-border pb-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              (e.currentTarget as HTMLFormElement).reset();
+            }}
+          >
+            <input
+              type="email"
+              required
+              maxLength={255}
+              placeholder="your@email.com"
+              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+            <button type="submit" className="text-gold" aria-label="Subscribe">
+              <ArrowRight className="size-4" />
+            </button>
           </form>
         </div>
       </section>

@@ -2,7 +2,36 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { App, ConfigProvider } from 'antd';
+import { usePathname } from 'next/navigation';
 import { ThemeMode, getAntdTheme, themes } from '../config/theme';
+
+const RESERVED_APP_SEGMENTS = new Set([
+  'login',
+  'register',
+  'forgot-password',
+  'about',
+  'contact',
+  'pricing',
+  'account',
+  'my-bookings',
+  'superadmin',
+  'super-admin',
+  'tenant',
+  'admin',
+  'owner',
+  'cms',
+  'blog',
+]);
+
+function isPublicSalonPage(pathname: string | null): boolean {
+  if (!pathname) return false;
+  const segs = pathname.split('/').filter(Boolean);
+  if (segs.length < 1) return false;
+  const [slug, second] = segs;
+  if (second === 'owner') return false;
+  if (RESERVED_APP_SEGMENTS.has(slug)) return false;
+  return /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(slug);
+}
 
 interface ThemeContextType {
   theme: ThemeMode;
@@ -33,6 +62,8 @@ const AppContextBridge: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeMode>('light');
+  const pathname = usePathname();
+  const isPublic = isPublicSalonPage(pathname);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode;
@@ -69,13 +100,17 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      <ConfigProvider theme={getAntdTheme(theme)}>
-        <App>
-          <AppContextBridge>
-            {children}
-          </AppContextBridge>
-        </App>
-      </ConfigProvider>
+      {isPublic ? (
+        <>{children}</>
+      ) : (
+        <ConfigProvider theme={getAntdTheme(theme)}>
+          <App>
+            <AppContextBridge>
+              {children}
+            </AppContextBridge>
+          </App>
+        </ConfigProvider>
+      )}
     </ThemeContext.Provider>
   );
 };

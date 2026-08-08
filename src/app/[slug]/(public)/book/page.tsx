@@ -1,366 +1,514 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from 'antd';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import styles from './book.module.css';
+import { useSearchParams } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import {
+  Search,
+  Star,
+  Clock,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  CalendarPlus,
+  MapPin,
+  Share2,
+  CreditCard,
+  Wallet,
+  Gift,
+  Banknote,
+  Smartphone,
+} from 'lucide-react';
+import { services, stylists, categories, salon } from '../../../../data/salon';
+import { cn } from '../../../../lib/utils';
+import { useSite } from '../../../../components/site/site-context';
+import { usePageMeta } from '../../../../components/site/ui';
 
-const services = [
-  { id: '1', name: 'Signature Haircut', category: 'Hair', price: '₹2,500', duration: '60 min', rating: 4.9 },
-  { id: '2', name: 'Keratin Treatment', category: 'Hair', price: '₹5,500', duration: '120 min', rating: 4.8 },
-  { id: '3', name: 'Luxury Facial', category: 'Skin', price: '₹3,200', duration: '75 min', rating: 4.9 },
-  { id: '4', name: 'Bridal Makeup', category: 'Makeup', price: '₹12,000', duration: '180 min', rating: 5.0 },
-  { id: '5', name: 'Manicure & Pedicure', category: 'Nails', price: '₹1,800', duration: '90 min', rating: 4.7 },
-  { id: '6', name: 'Aromatherapy Massage', category: 'Spa', price: '₹4,000', duration: '90 min', rating: 4.9 },
-  { id: '7', name: 'Hair Color & Highlights', category: 'Hair', price: '₹4,500', duration: '150 min', rating: 4.7 },
-  { id: '8', name: 'Chemical Peel', category: 'Skin', price: '₹4,000', duration: '60 min', rating: 4.8 },
+const steps = ['Service', 'Specialist', 'Date', 'Time', 'Details', 'Summary', 'Payment', 'Confirmed'];
+
+const slotGroups = [
+  { label: 'Morning', slots: ['09:00', '09:45', '10:30', '11:15'] },
+  { label: 'Afternoon', slots: ['12:30', '13:15', '14:00', '15:30'] },
+  { label: 'Evening', slots: ['17:00', '17:45', '18:30', '19:15'] },
 ];
-
-const staff = [
-  { id: '1', name: 'Priya Sharma', role: 'Master Stylist', rating: 4.9, image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=200&q=80' },
-  { id: '2', name: 'Ananya Patel', role: 'Lead Esthetician', rating: 4.8, image: 'https://images.unsplash.com/photo-1598346762291-aee88549193f?w=200&q=80' },
-  { id: '3', name: 'Rohit Verma', role: 'Master Barber', rating: 4.9, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80' },
-  { id: '4', name: 'Maya Krishnan', role: 'Nail Artist', rating: 4.7, image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80' },
-];
-
-const timeSlots = {
-  morning: ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'],
-  afternoon: ['12:00 PM', '12:30 PM', '1:00 PM', '2:00 PM', '2:30 PM', '3:00 PM'],
-  evening: ['3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM'],
-};
-
-const steps = ['Service', 'Staff', 'Date & Time', 'Details', 'Confirm'];
 
 export default function BookingPage() {
-  const params = useParams();
-  const router = useRouter();
+  const { slug } = useSite();
+  usePageMeta(
+    'Book an Appointment — Maison Lumière',
+    'Book your salon appointment in eight simple steps: choose a service, specialist, date, time and pay securely.',
+  );
+
   const searchParams = useSearchParams();
-  const slug = params?.slug as string;
+  const presetService = searchParams.get('service') ?? undefined;
+  const presetStylist = searchParams.get('stylist') ?? undefined;
+  const [step, setStep] = useState(presetService || presetStylist ? 1 : 0);
+  const [serviceId, setServiceId] = useState<string | undefined>(presetService);
+  const [stylistId, setStylistId] = useState<string | undefined>(presetStylist);
+  const [query, setQuery] = useState('');
+  const [cat, setCat] = useState<string>('All');
+  const [date, setDate] = useState<number | null>(null);
+  const [time, setTime] = useState<string | null>(null);
+  const [coupon, setCoupon] = useState('');
+  const [applied, setApplied] = useState(false);
+  const [payment, setPayment] = useState('card');
 
-  const [step, setStep] = useState(0);
-  const [selectedService, setSelectedService] = useState<string | null>(searchParams.get('service'));
-  const [selectedStaff, setSelectedStaff] = useState<string | null>(searchParams.get('staff'));
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [notes, setNotes] = useState('');
-  const [confirmed, setConfirmed] = useState(false);
+  const service = services.find((s) => s.id === serviceId);
+  const stylist = stylists.find((s) => s.id === stylistId);
 
-  const selectedServiceData = services.find((s) => s.id === selectedService);
-  const selectedStaffData = staff.find((s) => s.id === selectedStaff);
+  const filtered = useMemo(
+    () =>
+      services.filter(
+        (s) =>
+          (cat === 'All' || s.category === cat) &&
+          (s.name.toLowerCase().includes(query.toLowerCase()) ||
+            s.description.toLowerCase().includes(query.toLowerCase())),
+      ),
+    [cat, query],
+  );
 
-  const handleNext = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
-  const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
+  const subtotal = service?.price ?? 0;
+  const discount = applied ? Math.round(subtotal * 0.1) : 0;
+  const tax = Math.round((subtotal - discount) * 0.0875);
+  const total = subtotal - discount + tax;
 
-  // Generate calendar days
-  const today = new Date();
-  const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-  const calendarDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  const monthName = today.toLocaleString('default', { month: 'long', year: 'numeric' });
-
-  if (confirmed) {
-    return (
-      <section className={`luxe-section ${styles.confirmedSection}`}>
-        <div className={`luxe-container-sm ${styles.confirmedContainer}`}>
-          <div className={styles.confirmedEmoji}>✨</div>
-          <h1 className={`luxe-heading-1 ${styles.confirmedHeading}`}>Booking Confirmed!</h1>
-          <p className={`luxe-section-subtitle ${styles.confirmedSubtitle}`}>Your appointment has been booked successfully. We look forward to welcoming you!</p>
-          <div className={`luxe-booking-summary ${styles.confirmedSummary}`}>
-            <div className="luxe-booking-summary-row">
-              <span className="luxe-booking-summary-label">Service</span>
-              <span className="luxe-booking-summary-value">{selectedServiceData?.name}</span>
-            </div>
-            <div className="luxe-booking-summary-row">
-              <span className="luxe-booking-summary-label">Staff</span>
-              <span className="luxe-booking-summary-value">{selectedStaffData?.name}</span>
-            </div>
-            <div className="luxe-booking-summary-row">
-              <span className="luxe-booking-summary-label">Date</span>
-              <span className="luxe-booking-summary-value">{selectedDate ? `${monthName} ${selectedDate}` : ''}</span>
-            </div>
-            <div className="luxe-booking-summary-row">
-              <span className="luxe-booking-summary-label">Time</span>
-              <span className="luxe-booking-summary-value">{selectedTime}</span>
-            </div>
-            <div className={`luxe-booking-summary-row ${styles.summaryRowNoBorder}`}>
-              <span className="luxe-booking-summary-label">Total</span>
-              <span className="luxe-booking-summary-total">{selectedServiceData?.price}</span>
-            </div>
-          </div>
-          <div className={styles.confirmedActions}>
-            <Button type="primary" className="luxe-btn luxe-btn-lg" onClick={() => router.push(`/${slug}`)}>Back to Home</Button>
-            <Button className="luxe-btn luxe-btn-lg" onClick={() => { setConfirmed(false); setStep(0); setSelectedService(null); setSelectedStaff(null); setSelectedDate(null); setSelectedTime(null); }}>Book Another</Button>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const canContinue = [
+    Boolean(serviceId),
+    Boolean(stylistId),
+    date !== null,
+    Boolean(time),
+    true,
+    true,
+    true,
+    true,
+  ][step];
 
   return (
-    <section className={`luxe-section ${styles.mainSection}`}>
-      <div className="luxe-container-sm">
+    <div className="pt-32 pb-24">
+      <div className="shell">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">Booking</p>
+          <h1 className="display mt-4 text-4xl md:text-6xl">Reserve your chair</h1>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Eight short steps. You can change or cancel free of charge up to 24 hours before.
+          </p>
+        </div>
+
         {/* Stepper */}
-        <div className={`luxe-stepper ${styles.stepper}`}>
-          {steps.map((label, i) => (
-            <div key={label} className={`luxe-step ${i < step ? 'completed' : ''} ${i === step ? 'active' : ''}`}>
-              <div className="luxe-step-number">{i < step ? '✓' : i + 1}</div>
-              <span className="luxe-step-label">{label}</span>
+        <div className="mx-auto mt-14 flex max-w-4xl items-center gap-1 overflow-x-auto pb-2">
+          {steps.map((s, i) => (
+            <div key={s} className="flex min-w-fit flex-1 items-center gap-1">
+              <button
+                onClick={() => i < step && setStep(i)}
+                className={cn(
+                  'flex items-center gap-2 rounded-full border px-3.5 py-2 text-[0.68rem] uppercase tracking-[0.16em] transition-colors',
+                  i === step && 'border-gold bg-gold text-primary-foreground',
+                  i < step && 'border-gold/50 text-gold',
+                  i > step && 'border-border text-muted-foreground',
+                )}
+              >
+                {i < step ? <Check className="size-3" /> : <span>{i + 1}</span>}
+                {s}
+              </button>
+              {i < steps.length - 1 && <span className="h-px flex-1 bg-border" />}
             </div>
           ))}
         </div>
 
-        {/* Step 0: Choose Service */}
-        {step === 0 && (
-          <div>
-            <div className={`luxe-section-header ${styles.stepHeader}`}>
-              <h2 className="luxe-section-title">Choose Your Service</h2>
-              <p className="luxe-section-subtitle">Select the service you would like to book.</p>
-            </div>
-            <div className={`luxe-search ${styles.searchWrapper}`}>
-              <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              <input className={`luxe-input ${styles.searchInput}`} placeholder="Search services..." />
-            </div>
-            <div className={styles.servicesList}>
-              {services.map((s) => (
-                  <Button
+        <div className="mx-auto mt-14 max-w-4xl">
+          {step === 0 && (
+            <div className="reveal">
+              <div className="flex flex-wrap items-center gap-4">
+                <label className="flex min-w-60 flex-1 items-center gap-3 border-b border-border pb-2">
+                  <Search className="size-4 text-muted-foreground" />
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value.slice(0, 60))}
+                    placeholder="Search services"
+                    className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                  />
+                </label>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {categories.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCat(c)}
+                    className={cn(
+                      'rounded-full border px-4 py-1.5 text-xs uppercase tracking-[0.16em] transition-colors',
+                      cat === c ? 'border-gold bg-gold text-primary-foreground' : 'border-border hover:border-gold',
+                    )}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {filtered.map((s) => (
+                  <button
                     key={s.id}
-                    onClick={() => { setSelectedService(s.id); handleNext(); }}
-                    className={`${styles.serviceBtn} ${selectedService === s.id ? styles.serviceBtnSelected : ''}`}
+                    onClick={() => setServiceId(s.id)}
+                    className={cn(
+                      'surface-card flex items-center gap-4 p-4 text-left transition-colors',
+                      serviceId === s.id && 'ring-1 ring-gold',
+                    )}
                   >
-                    <div>
-                      <p className={styles.serviceName}>{s.name}</p>
-                      <div className={styles.serviceMeta}>
-                        <span>{s.category}</span>
-                        <span>•</span>
-                        <span>{s.duration}</span>
-                        <span>•</span>
-                        <span>{s.rating} ★</span>
-                      </div>
-                    </div>
-                    <div className={styles.servicePrice}>{s.price}</div>
-                  </Button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Step 1: Choose Staff */}
-        {step === 1 && (
-          <div>
-            <div className={`luxe-section-header ${styles.stepHeader}`}>
-              <h2 className="luxe-section-title">Choose Your Stylist</h2>
-              <p className="luxe-section-subtitle">Select a professional for your appointment.</p>
-            </div>
-            <div className={styles.staffList}>
-              {staff.map((st) => (
-                  <Button
-                    key={st.id}
-                    onClick={() => { setSelectedStaff(st.id); handleNext(); }}
-                    className={`${styles.staffBtn} ${selectedStaff === st.id ? styles.staffBtnSelected : ''}`}
-                  >
-                    <img src={st.image} alt={st.name} className={styles.staffImage} />
-                    <div className={styles.staffInfo}>
-                      <p className={styles.staffName}>{st.name}</p>
-                      <p className={styles.staffRole}>{st.role}</p>
-                    </div>
-                  <div className="luxe-rating">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    {st.rating}
-                  </div>
-                </Button>
-              ))}
-            </div>
-            <div className={styles.skipWrapper}>
-              <Button type="text" className="luxe-btn luxe-btn-lg" onClick={handleNext}>Skip — Any Available</Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Date & Time */}
-        {step === 2 && (
-          <div>
-            <div className={`luxe-section-header ${styles.stepHeader}`}>
-              <h2 className="luxe-section-title">Select Date & Time</h2>
-              <p className="luxe-section-subtitle">Pick your preferred appointment slot.</p>
-            </div>
-            <div className={`luxe-calendar ${styles.calendar}`}>
-              <div className="luxe-calendar-header">
-                <Button className="luxe-calendar-nav">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-                </Button>
-                <span className="luxe-calendar-month">{monthName}</span>
-                <Button className="luxe-calendar-nav">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-                </Button>
+                    <img src={s.image} alt="" loading="lazy" className="size-20 shrink-0 rounded-xl object-cover" />
+                    <span className="min-w-0">
+                      <span className="display block truncate text-xl">{s.name}</span>
+                      <span className="mt-1 block text-xs text-muted-foreground">
+                        {s.duration} min · ${s.price}
+                      </span>
+                      {s.popular && (
+                        <span className="mt-2 inline-block text-[0.6rem] uppercase tracking-[0.2em] text-gold">
+                          Popular
+                        </span>
+                      )}
+                    </span>
+                  </button>
+                ))}
               </div>
-              <div className="luxe-calendar-grid">
-                <div className="luxe-calendar-weekdays">
-                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-                    <span key={d}>{d}</span>
-                  ))}
-                </div>
-                <div className="luxe-calendar-days">
-                  {Array.from({ length: firstDayOfMonth }).map((_, i) => (
-                    <div key={`empty-${i}`} />
-                  ))}
-                  {calendarDays.map((day) => {
-                    const isPast = day < today.getDate() && today.getMonth() === new Date().getMonth();
-                    return (
-                      <Button
-                        key={day}
-                        className={`luxe-calendar-day ${selectedDate === day ? 'selected' : ''} ${day === today.getDate() ? 'today' : ''} ${isPast ? 'disabled' : ''}`}
-                        onClick={() => !isPast && setSelectedDate(day)}
-                        disabled={isPast}
+              {filtered.length === 0 && (
+                <p className="mt-10 text-center text-sm text-muted-foreground">No services match that search.</p>
+              )}
+            </div>
+          )}
+
+          {step === 1 && (
+            <div className="reveal grid gap-4 sm:grid-cols-2">
+              {stylists.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => setStylistId(s.id)}
+                  className={cn(
+                    'surface-card flex items-center gap-4 p-5 text-left',
+                    stylistId === s.id && 'ring-1 ring-gold',
+                  )}
+                >
+                  <img src={s.image} alt="" loading="lazy" className="size-20 shrink-0 rounded-full object-cover" />
+                  <span className="min-w-0">
+                    <span className="display block truncate text-xl">{s.name}</span>
+                    <span className="block text-xs uppercase tracking-[0.16em] text-muted-foreground">{s.role}</span>
+                    <span className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1 text-gold">
+                        <Star className="size-3 fill-gold" /> {s.rating.toFixed(1)}
+                      </span>
+                      {s.experience}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="reveal surface-card p-8">
+              <div className="flex items-center justify-between">
+                <button className="grid size-9 place-items-center rounded-full border border-border" aria-label="Previous month">
+                  <ChevronLeft className="size-4" />
+                </button>
+                <p className="display text-2xl">August 2026</p>
+                <button className="grid size-9 place-items-center rounded-full border border-border" aria-label="Next month">
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+              <div className="mt-8 grid grid-cols-7 gap-2 text-center text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground">
+                {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                  <span key={i}>{d}</span>
+                ))}
+              </div>
+              <div className="mt-3 grid grid-cols-7 gap-2">
+                {Array.from({ length: 31 }).map((_, i) => {
+                  const day = i + 1;
+                  const closed = day % 7 === 0;
+                  const busy = day % 5 === 0;
+                  return (
+                    <button
+                      key={day}
+                      disabled={closed}
+                      onClick={() => setDate(day)}
+                      className={cn(
+                        'relative rounded-xl border py-3 text-sm transition-colors',
+                        closed && 'cursor-not-allowed border-transparent text-muted-foreground/35',
+                        !closed && date === day && 'border-gold bg-gold text-primary-foreground',
+                        !closed && date !== day && 'border-border hover:border-gold',
+                      )}
+                    >
+                      {day}
+                      {!closed && date !== day && (
+                        <span
+                          className={cn(
+                            'absolute inset-x-0 bottom-1.5 mx-auto size-1 rounded-full',
+                            busy ? 'bg-rose' : 'bg-emerald',
+                          )}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-6 text-xs text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-emerald" /> Good availability
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-rose" /> Limited
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-muted-foreground/40" /> Closed
+                </span>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="reveal space-y-8">
+              {slotGroups.map((g) => (
+                <div key={g.label}>
+                  <p className="eyebrow">{g.label}</p>
+                  <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {g.slots.map((s, i) => (
+                      <button
+                        key={s}
+                        onClick={() => setTime(s)}
+                        className={cn(
+                          'rounded-full border py-3 text-sm transition-colors',
+                          time === s ? 'border-gold bg-gold text-primary-foreground' : 'border-border hover:border-gold',
+                        )}
                       >
-                        {day}
-                      </Button>
-                    );
-                  })}
+                        {s}
+                        {i === 1 && time !== s && (
+                          <span className="ml-2 text-[0.6rem] uppercase tracking-[0.15em] text-gold">Best</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
+          )}
 
-            {selectedDate && (
-              <div>
-                <h3 className={styles.availableTimesHeading}>
-                  Available Times
-                </h3>
-                {(['morning', 'afternoon', 'evening'] as const).map((period) => (
-                  <div key={period} className={styles.periodGroup}>
-                    <p className={styles.periodLabel}>
-                      {period === 'morning' ? 'Morning' : period === 'afternoon' ? 'Afternoon' : 'Evening'}
-                    </p>
-                    <div className="luxe-time-slot">
-                      {timeSlots[period].map((time) => (
-                        <Button
-                          key={time}
-                          className={`luxe-time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
-                          onClick={() => setSelectedTime(time)}
-                        >
-                          {time}
-                        </Button>
-                      ))}
-                    </div>
+          {step === 4 && (
+            <div className="reveal surface-card mx-auto max-w-lg p-8">
+              <h2 className="display text-3xl">Your details</h2>
+              <p className="mt-2 text-sm text-muted-foreground">Sign in, or continue as a guest.</p>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {['Continue with Google', 'Continue with Apple'].map((p) => (
+                  <button
+                    key={p}
+                    className="rounded-full border border-border py-3 text-xs uppercase tracking-[0.16em] hover:border-gold"
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+              <div className="my-7 flex items-center gap-4 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
+              </div>
+              <div className="space-y-5">
+                {[
+                  { id: 'full-name', label: 'Full name', type: 'text' },
+                  { id: 'email', label: 'Email', type: 'email' },
+                  { id: 'phone', label: 'Mobile (for OTP)', type: 'tel' },
+                ].map((f) => (
+                  <div key={f.id}>
+                    <label htmlFor={f.id} className="eyebrow">
+                      {f.label}
+                    </label>
+                    <input
+                      id={f.id}
+                      type={f.type}
+                      maxLength={255}
+                      className="mt-2 w-full border-b border-border bg-transparent pb-2 text-sm outline-none focus:border-gold"
+                    />
                   </div>
                 ))}
               </div>
-            )}
-          </div>
-        )}
+              <p className="mt-6 text-xs text-muted-foreground">
+                We&apos;ll text a one-time code to confirm your booking.{' '}
+                <button className="text-gold">Forgot password?</button>
+              </p>
+            </div>
+          )}
 
-        {/* Step 3: Details */}
-        {step === 3 && (
-          <div>
-            <div className={`luxe-section-header ${styles.stepHeader}`}>
-              <h2 className="luxe-section-title">Your Details</h2>
-              <p className="luxe-section-subtitle">We will send your booking confirmation here.</p>
-            </div>
-            <div className={styles.detailsForm}>
-              <div className="luxe-input-group">
-                <label className="luxe-input-label">Full Name *</label>
-                <input className="luxe-input" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} required />
-              </div>
-              <div className="luxe-input-group">
-                <label className="luxe-input-label">Email *</label>
-                <input className="luxe-input" type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
-              </div>
-              <div className="luxe-input-group">
-                <label className="luxe-input-label">Phone *</label>
-                <input className="luxe-input" placeholder="+91 98765 43210" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-              </div>
-              <div className="luxe-input-group">
-                <label className="luxe-input-label">Special Notes</label>
-                <textarea className={`luxe-input ${styles.textarea}`} rows={3} placeholder="Any allergies, preferences, or special requests..." value={notes} onChange={(e) => setNotes(e.target.value)} />
-              </div>
-            </div>
-          </div>
-        )}
+          {step === 5 && (
+            <div className="reveal surface-card mx-auto max-w-lg p-8">
+              <h2 className="display text-3xl">Booking summary</h2>
+              <dl className="mt-7 space-y-4 text-sm">
+                <Row label="Service" value={service?.name ?? '—'} />
+                <Row label="Specialist" value={stylist?.name ?? 'Any available'} />
+                <Row label="Date" value={date ? `${date} August 2026` : '—'} />
+                <Row label="Time" value={time ?? '—'} />
+                <Row label="Duration" value={service ? `${service.duration} min` : '—'} />
+              </dl>
 
-        {/* Step 4: Confirm */}
-        {step === 4 && (
-          <div>
-            <div className={`luxe-section-header ${styles.stepHeader}`}>
-              <h2 className="luxe-section-title">Review & Confirm</h2>
-              <p className="luxe-section-subtitle">Please review your booking details before confirming.</p>
-            </div>
-            <div className={`luxe-booking-summary ${styles.summary}`}>
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Service</span>
-                <span className="luxe-booking-summary-value">{selectedServiceData?.name}</span>
+              <div className="mt-7 flex items-center gap-2 border-b border-border pb-2">
+                <input
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value.slice(0, 20))}
+                  placeholder="Coupon or membership code"
+                  className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                />
+                <button
+                  onClick={() => setApplied(coupon.trim().length > 2)}
+                  className="text-xs uppercase tracking-[0.16em] text-gold"
+                >
+                  Apply
+                </button>
               </div>
-              {selectedStaffData && (
-                <div className="luxe-booking-summary-row">
-                  <span className="luxe-booking-summary-label">Staff</span>
-                  <span className="luxe-booking-summary-value">{selectedStaffData.name}</span>
+              {applied && <p className="mt-2 text-xs text-emerald">Member discount applied — 10% off.</p>}
+
+              <div className="gold-rule mt-7" />
+              <dl className="mt-5 space-y-3 text-sm">
+                <Row label="Subtotal" value={`$${subtotal}`} />
+                <Row label="Discount" value={`-$${discount}`} />
+                <Row label="Tax (8.75%)" value={`$${tax}`} />
+              </dl>
+              <div className="mt-5 flex items-end justify-between">
+                <span className="eyebrow">Total</span>
+                <span className="display text-4xl">${total}</span>
+              </div>
+            </div>
+          )}
+
+          {step === 6 && (
+            <div className="reveal surface-card mx-auto max-w-lg p-8">
+              <h2 className="display text-3xl">Payment</h2>
+              <p className="mt-2 text-sm text-muted-foreground">Secured checkout. Nothing is charged until you confirm.</p>
+              <div className="mt-7 space-y-3">
+                {[
+                  { id: 'card', label: 'Card', icon: CreditCard },
+                  { id: 'upi', label: 'UPI', icon: Smartphone },
+                  { id: 'wallet', label: 'Wallet', icon: Wallet },
+                  { id: 'gift', label: 'Gift card', icon: Gift },
+                  { id: 'cash', label: 'Pay at the salon', icon: Banknote },
+                ].map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setPayment(p.id)}
+                    className={cn(
+                      'flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left text-sm transition-colors',
+                      payment === p.id ? 'border-gold' : 'border-border hover:border-gold/50',
+                    )}
+                  >
+                    <p.icon className="size-4 text-gold" />
+                    {p.label}
+                    {payment === p.id && <Check className="ml-auto size-4 text-gold" />}
+                  </button>
+                ))}
+              </div>
+              {payment === 'card' && (
+                <div className="mt-7 space-y-5">
+                  {['Card number', 'Name on card'].map((l) => (
+                    <div key={l}>
+                      <label className="eyebrow" htmlFor={l}>
+                        {l}
+                      </label>
+                      <input
+                        id={l}
+                        maxLength={40}
+                        className="mt-2 w-full border-b border-border bg-transparent pb-2 text-sm outline-none focus:border-gold"
+                      />
+                    </div>
+                  ))}
                 </div>
               )}
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Date</span>
-                <span className="luxe-booking-summary-value">{selectedDate ? `${monthName} ${selectedDate}` : ''}</span>
+              <p className="mt-8 flex items-center justify-between text-sm">
+                <span className="eyebrow">Amount due</span>
+                <span className="display text-3xl">${total}</span>
+              </p>
+            </div>
+          )}
+
+          {step === 7 && (
+            <div className="reveal surface-card mx-auto max-w-lg p-10 text-center">
+              <span className="mx-auto grid size-20 place-items-center rounded-full bg-[var(--gradient-gold)] text-primary-foreground">
+                <Check className="size-8" />
+              </span>
+              <h2 className="display mt-7 text-4xl">You&apos;re booked</h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                A confirmation is on its way to your inbox. We look forward to seeing you.
+              </p>
+              <dl className="mt-8 space-y-4 text-left text-sm">
+                <Row label="Service" value={service?.name ?? '—'} />
+                <Row label="Specialist" value={stylist?.name ?? 'Any available'} />
+                <Row label="When" value={`${date ?? '—'} August 2026 · ${time ?? '—'}`} />
+                <Row label="Where" value={salon.address} />
+                <Row label="Paid" value={`$${total}`} />
+              </dl>
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {[
+                  { icon: CalendarPlus, label: 'Add to calendar' },
+                  { icon: MapPin, label: 'Directions' },
+                  { icon: Share2, label: 'Share' },
+                ].map((a) => (
+                  <button
+                    key={a.label}
+                    className="flex items-center justify-center gap-2 rounded-full border border-border py-3 text-[0.68rem] uppercase tracking-[0.16em] hover:border-gold hover:text-gold"
+                  >
+                    <a.icon className="size-4" /> {a.label}
+                  </button>
+                ))}
               </div>
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Time</span>
-                <span className="luxe-booking-summary-value">{selectedTime}</span>
-              </div>
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Duration</span>
-                <span className="luxe-booking-summary-value">{selectedServiceData?.duration}</span>
-              </div>
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Name</span>
-                <span className="luxe-booking-summary-value">{name}</span>
-              </div>
-              <div className="luxe-booking-summary-row">
-                <span className="luxe-booking-summary-label">Email</span>
-                <span className="luxe-booking-summary-value">{email}</span>
-              </div>
-              <div className={`luxe-booking-summary-row ${styles.summaryRowNoBorder}`}>
-                <span className="luxe-booking-summary-label">Total</span>
-                <span className="luxe-booking-summary-total">{selectedServiceData?.price}</span>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <button
+                  onClick={() => {
+                    setStep(0);
+                    setServiceId(undefined);
+                    setStylistId(undefined);
+                    setDate(null);
+                    setTime(null);
+                  }}
+                  className="rounded-full bg-primary px-6 py-3.5 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+                >
+                  Book another
+                </button>
+                <Link
+                  href={`/${slug}`}
+                  className="rounded-full border border-border px-6 py-3.5 text-xs uppercase tracking-[0.2em]"
+                >
+                  Back home
+                </Link>
               </div>
             </div>
+          )}
 
-            <div className={styles.checkboxRow}>
-              <label className={`luxe-checkbox ${styles.checkboxLabel}`}>
-                <input type="checkbox" defaultChecked />
-                <span className="checkmark">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                I agree to the cancellation policy and terms of service
-              </label>
+          {step < 7 && (
+            <div className="mt-12 flex items-center justify-between gap-4">
+              <button
+                onClick={() => setStep((s) => Math.max(0, s - 1))}
+                disabled={step === 0}
+                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3.5 text-xs uppercase tracking-[0.2em] disabled:opacity-40"
+              >
+                <ChevronLeft className="size-4" /> Back
+              </button>
+              <div className="hidden items-center gap-4 text-xs text-muted-foreground sm:flex">
+                {service && (
+                  <span className="flex items-center gap-2">
+                    <Clock className="size-3.5" /> {service.duration} min · ${service.price}
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={() => setStep((s) => Math.min(7, s + 1))}
+                disabled={!canContinue}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-xs uppercase tracking-[0.2em] text-primary-foreground transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {step === 6 ? 'Confirm booking' : 'Continue'} <ChevronRight className="size-4" />
+              </button>
             </div>
-
-            <Button
-              className={`luxe-btn luxe-btn-secondary luxe-btn-xl ${styles.confirmBtn}`}
-              onClick={() => setConfirmed(true)}
-              disabled={!name || !email || !phone}
-            >
-              Confirm Booking — {selectedServiceData?.price}
-            </Button>
-          </div>
-        )}
-
-        {/* Navigation */}
-        {step < 4 && (
-          <div className={styles.nav}>
-            <Button
-              type="text" className="luxe-btn luxe-btn-lg"
-              onClick={step === 0 ? () => router.push(`/${slug}`) : handleBack}
-            >
-              {step === 0 ? 'Cancel' : 'Back'}
-            </Button>
-            {(step === 2 && selectedDate && selectedTime) && (
-              <Button type="primary" className="luxe-btn luxe-btn-lg" onClick={handleNext}>
-                Continue
-              </Button>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </section>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-start justify-between gap-6">
+      <dt className="text-muted-foreground">{label}</dt>
+      <dd className="text-right">{value}</dd>
+    </div>
   );
 }
