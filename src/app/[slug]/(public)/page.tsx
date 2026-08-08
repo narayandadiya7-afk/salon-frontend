@@ -13,6 +13,7 @@ import {
   Phone,
   Mail,
   Clock,
+  Check,
 } from 'lucide-react';
 import { Instagram } from '../../../components/site/brand-icons';
 import {
@@ -303,7 +304,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href={`/${slug}/memberships`}
-                  className={`mt-8 block rounded-full px-6 py-3.5 text-center text-xs uppercase tracking-[0.2em] transition-transform duration-300 hover:-translate-y-0.5 ${
+                  className={`mt-8 block rounded-full px-6 py-2.5 text-center text-xs uppercase tracking-[0.2em] transition-transform duration-300 hover:-translate-y-0.5 ${
                     m.featured ? 'bg-primary text-primary-foreground' : 'border border-border'
                   }`}
                 >
@@ -326,21 +327,42 @@ export default function Home() {
           </div>
           <div className="mt-14 grid gap-8 md:grid-cols-2">
             {packages.slice(0, 2).map((p) => (
-              <article key={p.id} className="group relative overflow-hidden rounded-3xl">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  className="aspect-4/3 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-[var(--gradient-veil)]" />
-                <div className="absolute inset-x-0 bottom-0 p-8 text-[oklch(0.98_0.006_85)]">
-                  <p className="text-[0.65rem] uppercase tracking-[0.28em] opacity-80">{p.duration}</p>
-                  <h3 className="display mt-2 text-4xl">{p.name}</h3>
-                  <p className="mt-3 text-sm opacity-85">{p.includes.slice(0, 3).join(' · ')}</p>
-                  <p className="display mt-4 text-2xl">
-                    ${p.price} <span className="text-sm opacity-70">save ${p.saving}</span>
-                  </p>
+              <article key={p.id} className="surface-card lift group overflow-hidden">
+                <div className="relative aspect-16/10 overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex h-full flex-col p-8">
+                  <p className="eyebrow">{p.duration}</p>
+                  <h3 className="display mt-2 text-3xl">{p.name}</h3>
+                  <ul className="mt-5 space-y-2.5">
+                    {p.includes.slice(0, 3).map((i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <Check className="size-4 shrink-0 text-gold" /> {i}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-7 border-t border-border pt-6">
+                    <p className="flex gap-[10px]">
+                      <span className="display block text-3xl">${p.price}</span>
+                      <span className="mt-1.5 flex items-center gap-2.5 text-xs">
+                        <span className="text-muted-foreground line-through">${p.price + p.saving}</span>
+                        <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-[0.18em] text-gold">
+                          Save ${p.saving}
+                        </span>
+                      </span>
+                    </p>
+                    <Link
+                      href={`/${slug}/book`}
+                      className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground transition-transform hover:-translate-y-0.5"
+                    >
+                      Book now <ArrowRight className="size-4" />
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}

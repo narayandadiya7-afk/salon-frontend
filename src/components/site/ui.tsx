@@ -95,10 +95,7 @@ export function ServiceCard({ service }: { service: Service }) {
         )}
       </div>
       <div className="p-6">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="display text-2xl leading-tight">{service.name}</h3>
-          <span className="display shrink-0 text-2xl text-gold">${service.price}</span>
-        </div>
+        <h3 className="display text-2xl leading-tight">{service.name}</h3>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
         <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
@@ -110,19 +107,30 @@ export function ServiceCard({ service }: { service: Service }) {
             {service.rating.toFixed(1)}
           </span>
         </div>
-        <div className="mt-6 flex items-center gap-3">
-          <Link
-            href={`/${slug}/book?service=${service.id}`}
-            className="flex-1 rounded-full bg-primary px-4 py-2.5 text-center text-xs tracking-widest uppercase text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
-          >
-            Book now
-          </Link>
-          <Link
-            href={`/${slug}/services/${service.id}`}
-            className="rounded-full border border-border px-4 py-2.5 text-xs uppercase tracking-widest transition-colors hover:border-gold hover:text-gold"
-          >
-            Details
-          </Link>
+        <div className="mt-6 border-t border-border pt-5">
+          <p className="flex gap-[10px]">
+            <span className="display block text-3xl">${service.price}</span>
+            <span className="mt-1.5 flex items-center gap-2.5 text-xs">
+              <span className="text-muted-foreground line-through">${service.price + service.saving}</span>
+              <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-[0.18em] text-gold">
+                Save ${service.saving}
+              </span>
+            </span>
+          </p>
+          <div className="mt-5 flex items-center gap-3">
+            <Link
+              href={`/${slug}/book?service=${service.id}`}
+              className="flex-1 rounded-full bg-primary px-4 py-2.5 text-center text-xs tracking-widest uppercase text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Book now
+            </Link>
+            <Link
+              href={`/${slug}/services/${service.id}`}
+              className="rounded-full border border-border px-4 py-2.5 text-xs uppercase tracking-widest transition-colors hover:border-gold hover:text-gold"
+            >
+              Details
+            </Link>
+          </div>
         </div>
       </div>
     </article>

@@ -44,6 +44,7 @@ export type Service = {
   category: 'Hair' | 'Skin' | 'Nails' | 'Spa' | 'Bridal' | 'Grooming';
   description: string;
   price: number;
+  saving: number;
   duration: number;
   rating: number;
   image: string;
@@ -57,6 +58,7 @@ export const services: Service[] = [
     category: 'Hair',
     description: 'Consultation, precision cut and a couture blow-dry finish.',
     price: 145,
+    saving: 15,
     duration: 75,
     rating: 4.9,
     image: hair,
@@ -68,6 +70,7 @@ export const services: Service[] = [
     category: 'Hair',
     description: 'Dimensional colour painted freehand, gloss and bond repair.',
     price: 320,
+    saving: 40,
     duration: 180,
     rating: 5.0,
     image: hair,
@@ -79,6 +82,7 @@ export const services: Service[] = [
     category: 'Skin',
     description: 'Enzyme resurfacing, lymphatic massage and LED light therapy.',
     price: 210,
+    saving: 25,
     duration: 90,
     rating: 4.9,
     image: skin,
@@ -90,6 +94,7 @@ export const services: Service[] = [
     category: 'Skin',
     description: 'Clinical firming protocol with peptide infusion.',
     price: 380,
+    saving: 45,
     duration: 75,
     rating: 4.8,
     image: skin,
@@ -100,6 +105,7 @@ export const services: Service[] = [
     category: 'Nails',
     description: 'Russian shaping, cuticle care and long-wear gloss.',
     price: 95,
+    saving: 10,
     duration: 60,
     rating: 4.9,
     image: nails,
@@ -110,6 +116,7 @@ export const services: Service[] = [
     category: 'Nails',
     description: 'Mineral soak, exfoliation and heated stone massage.',
     price: 120,
+    saving: 15,
     duration: 70,
     rating: 4.8,
     image: nails,
@@ -120,6 +127,7 @@ export const services: Service[] = [
     category: 'Spa',
     description: 'Bespoke oil blend, deep pressure, full-body release.',
     price: 185,
+    saving: 25,
     duration: 90,
     rating: 5.0,
     image: spa,
@@ -131,6 +139,7 @@ export const services: Service[] = [
     category: 'Spa',
     description: 'Black soap cleanse, kessa exfoliation, argan wrap.',
     price: 240,
+    saving: 30,
     duration: 105,
     rating: 4.9,
     image: spa,
@@ -141,6 +150,7 @@ export const services: Service[] = [
     category: 'Bridal',
     description: 'Two full looks, photography test and timeline planning.',
     price: 290,
+    saving: 35,
     duration: 150,
     rating: 5.0,
     image: bridal,
@@ -151,6 +161,7 @@ export const services: Service[] = [
     category: 'Grooming',
     description: 'Razor detailing, hot towel ritual and conditioning oil.',
     price: 85,
+    saving: 10,
     duration: 45,
     rating: 4.8,
     image: grooming,
@@ -161,6 +172,7 @@ export const services: Service[] = [
     category: 'Grooming',
     description: 'Scissor-over-comb tailoring with scalp treatment.',
     price: 110,
+    saving: 12,
     duration: 60,
     rating: 4.9,
     image: grooming,
@@ -171,6 +183,7 @@ export const services: Service[] = [
     category: 'Hair',
     description: 'Frizz-free finish that lasts up to twelve weeks.',
     price: 350,
+    saving: 45,
     duration: 165,
     rating: 4.7,
     image: hair,
