@@ -25,16 +25,8 @@ export function SiteNav() {
   const { slug } = useSite();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [dark, setDark] = useState(false);
   const [lang, setLang] = useState('EN');
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -56,14 +48,7 @@ export function SiteNav() {
 
   return (
     <>
-      <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-500',
-          scrolled
-            ? 'glass py-2 shadow-[var(--shadow-soft)]'
-            : 'bg-[linear-gradient(180deg,color-mix(in_oklab,var(--background)_82%,transparent),transparent)] py-4 backdrop-blur-[2px]',
-        )}
-      >
+      <header className="glass fixed inset-x-0 top-0 z-50 py-2 shadow-[var(--shadow-soft)] transition-all duration-500">
         <div className="shell grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
           <Link href={`/${slug}`} className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
             <span className="grid size-9 shrink-0 place-items-center rounded-full border border-gold/40 text-gold">
@@ -141,8 +126,8 @@ export function SiteNav() {
       </header>
 
       {open && (
-        <div className="fixed inset-0 z-40 bg-background/98 pt-24 backdrop-blur-xl xl:hidden">
-          <nav className="shell flex flex-col">
+        <div className="fixed inset-0 z-40 overflow-y-auto bg-background/98 pt-24 backdrop-blur-xl xl:hidden">
+          <nav className="shell flex flex-col pb-10">
             {links.map((l, i) => (
               <Link
                 key={l.to}
@@ -166,16 +151,6 @@ export function SiteNav() {
             </Link>
           </nav>
         </div>
-      )}
-
-      {!open && (
-        <Link
-          href={`/${slug}/book`}
-          className="fixed inset-x-5 bottom-5 z-40 flex items-center justify-center gap-2 rounded-full bg-primary py-4 text-sm tracking-wide text-primary-foreground shadow-[var(--shadow-lift)] md:hidden"
-        >
-          <CalendarCheck className="size-4" />
-          Book Now
-        </Link>
       )}
     </>
   );
