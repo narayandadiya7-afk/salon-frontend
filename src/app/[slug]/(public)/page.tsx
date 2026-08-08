@@ -76,13 +76,13 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href={`/${slug}/book`}
-                className="inline-flex items-center gap-2 rounded-full bg-[oklch(0.98_0.006_85)] px-7 py-4 text-xs uppercase tracking-[0.2em] text-[oklch(0.24_0.012_60)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-[oklch(0.98_0.006_85)] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[oklch(0.24_0.012_60)] transition-transform duration-300 hover:-translate-y-0.5"
               >
                 Book appointment <ArrowRight className="size-4" />
               </Link>
               <Link
                 href={`/${slug}/services`}
-                className="inline-flex items-center gap-2 rounded-full border border-[oklch(0.98_0.006_85/0.4)] px-7 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-[oklch(0.98_0.006_85/0.12)]"
+                className="inline-flex items-center gap-2 rounded-full border border-[oklch(0.98_0.006_85/0.4)] px-6 py-2.5 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-[oklch(0.98_0.006_85/0.12)]"
               >
                 Explore services
               </Link>
@@ -403,7 +403,7 @@ export default function Home() {
             </p>
             <Link
               href={`/${slug}/book`}
-              className="mt-9 inline-flex items-center gap-2 rounded-full bg-[oklch(0.98_0.006_85)] px-7 py-4 text-xs uppercase tracking-[0.2em] text-[oklch(0.24_0.012_60)]"
+              className="mt-9 inline-flex items-center gap-2 rounded-full bg-[oklch(0.98_0.006_85)] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[oklch(0.24_0.012_60)]"
             >
               Claim offer <ArrowRight className="size-4" />
             </Link>

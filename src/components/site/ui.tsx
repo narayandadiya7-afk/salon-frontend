@@ -85,17 +85,19 @@ export function ServiceCard({ service }: { service: Service }) {
           loading="lazy"
           className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="glass absolute left-4 top-4 rounded-full px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em]">
-          {service.category}
-        </span>
-        {service.popular && (
-          <span className="absolute right-4 top-4 rounded-full bg-gold px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-primary-foreground">
-            Popular
-          </span>
-        )}
       </div>
       <div className="p-6">
-        <h3 className="display text-2xl leading-tight">{service.name}</h3>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-border px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+            {service.category}
+          </span>
+          {service.popular && (
+            <span className="rounded-full bg-gold px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-primary-foreground">
+              Popular
+            </span>
+          )}
+        </div>
+        <h3 className="display mt-3 text-2xl leading-tight">{service.name}</h3>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
         <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
