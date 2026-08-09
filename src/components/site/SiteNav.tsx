@@ -135,7 +135,7 @@ export function SiteNav() {
                 onClick={() => setOpen(false)}
                 style={{ animationDelay: `${i * 40}ms` }}
                 className={cn(
-                  'reveal display border-b border-border/60 py-4 text-3xl',
+                  'reveal display border-b border-border/60 py-3.5 text-2xl',
                   isActive(l.to) ? 'text-gold' : '',
                 )}
               >
