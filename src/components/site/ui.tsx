@@ -99,7 +99,7 @@ export function ServiceCard({ service }: { service: Service }) {
         </div>
         <h3 className="display mt-3 text-2xl leading-tight">{service.name}</h3>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-        <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
+        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Clock className="size-3.5" />
             {service.duration} min
@@ -109,7 +109,7 @@ export function ServiceCard({ service }: { service: Service }) {
             {service.rating.toFixed(1)}
           </span>
         </div>
-        <div className="mt-6 border-t border-border pt-5">
+        <div className="mt-5 border-t border-border pt-3">
           <p className="flex gap-[10px]">
             <span className="display block text-3xl">${service.price}</span>
             <span className="mt-1.5 flex items-center gap-2.5 text-xs">

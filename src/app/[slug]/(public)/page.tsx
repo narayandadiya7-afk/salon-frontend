@@ -346,7 +346,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-7 border-t border-border pt-6">
+                  <div className="mt-7 border-t border-border pt-3">
                     <p className="flex gap-[10px]">
                       <span className="display block text-3xl">${p.price}</span>
                       <span className="mt-1.5 flex items-center gap-2.5 text-xs">
