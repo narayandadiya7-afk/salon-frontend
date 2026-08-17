@@ -1,262 +1,253 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import {
-  Row, Col, Card, Tag, Typography, Button, Space, Avatar, Input,
-  Table, Progress, Modal, Statistic, Divider, Rate, Tooltip, Badge,
-} from 'antd';
+  CalendarHeart,
+  Gift,
+  Heart,
+  Mail,
+  Phone,
+  Plus,
+  Search,
+  Sparkles,
+  Star,
+  Users,
+  Wallet,
+} from 'lucide-react';
 import {
-  UserOutlined, PlusOutlined, SearchOutlined, FilterOutlined,
-  MoreOutlined, StarOutlined, GiftOutlined, MailOutlined,
-  PhoneOutlined, CalendarOutlined, RightOutlined,
-  WalletOutlined, RiseOutlined, CrownOutlined,
-  TeamOutlined, DownloadOutlined, MessageOutlined,
-  HeartOutlined, GoldOutlined,
-} from '@ant-design/icons';
-import PillFilter from '@/components/pill-filter';
+  EmptyState,
+  Guard,
+  PageHeader,
+  StatCard,
+  StatusChip,
+  Surface,
+} from '@/components/portal/primitives';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { customers, type Customer } from '@/data/portal';
+import { useSession } from '@/lib/portal/session';
+import { toast } from 'sonner';
 
-const { Text } = Typography;
+const SEGMENTS = ['All', 'VIP', 'Regular', 'New', 'Inactive'] as const;
 
-const customers = [
-  { id: 'C001', name: 'Sarah Johnson', email: 'sarah.j@email.com', phone: '+91 98765 43210', visits: 24, totalSpent: 72000, lastVisit: '2024-01-15', segment: 'vip', birthday: '15 Mar', notes: 'Prefers morning appointments. Allergic to certain fragrances.', avatar: 'SJ', color: 'var(--salon-primary)', points: 2400, tier: 'Gold' },
-  { id: 'C002', name: 'Priya Sharma', email: 'priya.s@email.com', phone: '+91 98765 43211', visits: 18, totalSpent: 54000, lastVisit: '2024-01-14', segment: 'regular', birthday: '22 Jul', notes: 'Likes the same stylist every time.', avatar: 'PS', color: '#B8986B', points: 1800, tier: 'Silver' },
-  { id: 'C003', name: 'Amrita Singh', email: 'amrita.s@email.com', phone: '+91 98765 43212', visits: 32, totalSpent: 96000, lastVisit: '2024-01-15', segment: 'vip', birthday: '5 Jan', notes: 'VIP client. Prefers weekend slots.', avatar: 'AS', color: '#8B7D6B', points: 3200, tier: 'Platinum' },
-  { id: 'C004', name: 'Neha Gupta', email: 'neha.g@email.com', phone: '+91 98765 43213', visits: 6, totalSpent: 18000, lastVisit: '2024-01-10', segment: 'new', birthday: '12 Sep', notes: 'New customer. Introduced by Priya.', avatar: 'NG', color: '#5B7A6B', points: 600, tier: 'Bronze' },
-  { id: 'C005', name: 'Ritu Patel', email: 'ritu.p@email.com', phone: '+91 98765 43214', visits: 15, totalSpent: 45000, lastVisit: '2024-01-13', segment: 'regular', birthday: '3 Nov', notes: 'Loyal customer. Books monthly facials.', avatar: 'RP', color: '#A0886B', points: 1500, tier: 'Silver' },
-  { id: 'C006', name: 'Deepa Verma', email: 'deepa.v@email.com', phone: '+91 98765 43215', visits: 2, totalSpent: 7000, lastVisit: '2024-01-08', segment: 'new', birthday: '28 Feb', notes: 'Came for bridal trial. Potential wedding booking.', avatar: 'DV', color: '#7A6B5A', points: 200, tier: 'Bronze' },
-  { id: 'C007', name: 'Kavita Reddy', email: 'kavita.r@email.com', phone: '+91 98765 43216', visits: 42, totalSpent: 126000, lastVisit: '2024-01-12', segment: 'vip', birthday: '19 Aug', notes: 'Highest spender. Books family packages.', avatar: 'KR', color: '#5B8C5A', points: 4200, tier: 'Platinum' },
-  { id: 'C008', name: 'Meera Nair', email: 'meera.n@email.com', phone: '+91 98765 43217', visits: 9, totalSpent: 27000, lastVisit: '2024-01-09', segment: 'regular', birthday: '7 Jun', notes: '', avatar: 'MN', color: '#8B7A6B', points: 900, tier: 'Silver' },
-];
+function CustomersPage() {
+  const { can } = useSession();
+  const [query, setQuery] = useState('');
+  const [segment, setSegment] = useState<(typeof SEGMENTS)[number]>('All');
+  const [active, setActive] = useState<Customer | null>(null);
 
-const segmentColors: Record<string, string> = { vip: 'var(--salon-primary)', regular: '#8B7D6B', new: '#5B8C5A', 'at-risk': '#7A6B5A' };
-const tierColors: Record<string, string> = { Platinum: 'var(--salon-primary)', Gold: '#B8986B', Silver: '#8B7D6B', Bronze: '#A0886B' };
-const segments = [
-  { key: 'all', label: 'All Customers', count: 1284 },
-  { key: 'vip', label: 'VIP', count: 86 },
-  { key: 'regular', label: 'Regular', count: 542 },
-  { key: 'new', label: 'New', count: 656 },
-  { key: 'at-risk', label: 'At Risk', count: 124 },
-];
-
-function CustomerProfileModal({ customer, open, onClose }: { customer: typeof customers[0] | null; open: boolean; onClose: () => void }) {
-  if (!customer) return null;
-  return (
-    <Modal
-      title={null}
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      width={600}
-      styles={{ body: { padding: 0 } }}
-    >
-      <div style={{
-        background: 'var(--salon-primary)',
-        padding: '32px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-        <div style={{ position: 'absolute', bottom: -60, left: -60, width: 300, height: 300, borderRadius: '50%', background: 'rgba(255,255,255,0.03)' }} />
-        <Avatar size={64} style={{ background: 'rgba(255,255,255,0.2)', fontSize: 24, fontWeight: 600, border: '3px solid rgba(255,255,255,0.4)' }}>
-          {customer.avatar}
-        </Avatar>
-        <div style={{ marginTop: 12 }}>
-          <Text strong style={{ fontSize: 20, color: '#fff' }}>{customer.name}</Text>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 4 }}>
-            <Tag style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }}>{customer.tier} Member</Tag>
-            <Tag style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }}>{customer.segment.toUpperCase()}</Tag>
-          </div>
-        </div>
-      </div>
-      <div style={{ padding: 24 }}>
-        <Row gutter={[16, 16]}>
-          <Col span={8}>
-            <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
-              <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Visits</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--salon-primary)' }}>{customer.visits}</div>
-            </div>
-          </Col>
-          <Col span={8}>
-            <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
-              <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Spent</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#5B7A6B' }}>₹{customer.totalSpent.toLocaleString()}</div>
-            </div>
-          </Col>
-          <Col span={8}>
-            <div style={{ textAlign: 'center', padding: '12px 0', background: 'var(--theme-hover)', borderRadius: 12 }}>
-              <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Loyalty Points</Text>
-              <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--salon-secondary)' }}>{customer.points}</div>
-            </div>
-          </Col>
-        </Row>
-        <Divider style={{ margin: '16px 0' }} />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <MailOutlined style={{ color: 'var(--theme-text-secondary)', width: 16 }} />
-            <Text style={{ fontSize: 13 }}>{customer.email}</Text>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <PhoneOutlined style={{ color: 'var(--theme-text-secondary)', width: 16 }} />
-            <Text style={{ fontSize: 13 }}>{customer.phone}</Text>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <CalendarOutlined style={{ color: 'var(--theme-text-secondary)', width: 16 }} />
-            <Text style={{ fontSize: 13 }}>Birthday: {customer.birthday}</Text>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <HeartOutlined style={{ color: 'var(--theme-text-secondary)', width: 16 }} />
-            <Text style={{ fontSize: 13 }}>Last Visit: {customer.lastVisit}</Text>
-          </div>
-        </div>
-        {customer.notes && (
-          <>
-            <Divider style={{ margin: '16px 0' }} />
-            <div>
-              <Text style={{ fontSize: 12, color: 'var(--theme-text-secondary)', display: 'block', marginBottom: 4 }}>Notes</Text>
-              <Text style={{ fontSize: 13 }}>{customer.notes}</Text>
-            </div>
-          </>
-        )}
-        <Divider style={{ margin: '16px 0' }} />
-        <Row gutter={8}>
-          <Col span={8}><Button block icon={<MessageOutlined />} style={{ borderRadius: 8 }}>Message</Button></Col>
-          <Col span={8}><Button block icon={<CalendarOutlined />} style={{ borderRadius: 8 }}>Book Now</Button></Col>
-          <Col span={8}><Button block type="primary" style={{ borderRadius: 8 }} icon={<GiftOutlined />}>Send Offer</Button></Col>
-        </Row>
-      </div>
-    </Modal>
+  const rows = useMemo(
+    () =>
+      customers.filter((c) => {
+        if (segment !== 'All' && c.tier !== segment) return false;
+        const q = query.toLowerCase();
+        return !q || c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+      }),
+    [query, segment],
   );
-}
-
-function CustomerContent() {
-  const params = useParams();
-  const slug = params?.slug as string;
-  const [search, setSearch] = useState('');
-  const [segmentFilter, setSegmentFilter] = useState('all');
-  const [selectedCustomer, setSelectedCustomer] = useState<typeof customers[0] | null>(null);
-
-  const filtered = customers.filter(c => {
-    if (segmentFilter !== 'all' && c.segment !== segmentFilter) return false;
-    if (search && !c.name.toLowerCase().includes(search.toLowerCase()) && !c.email.toLowerCase().includes(search.toLowerCase())) return false;
-    return true;
-  });
-
-  const columns = [
-    {
-      title: 'Customer', dataIndex: 'name', key: 'name',
-      render: (name: string, r: typeof customers[0]) => (
-        <Space>
-          <Avatar size={34} style={{ background: r.color, borderRadius: 10, fontSize: 12, fontWeight: 600 }}>{r.avatar}</Avatar>
-          <div>
-            <Text strong style={{ fontSize: 13, cursor: 'pointer' }} onClick={() => setSelectedCustomer(r)}>{name}</Text>
-            <div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{r.email}</div>
-          </div>
-        </Space>
-      ),
-    },
-    { title: 'Phone', dataIndex: 'phone', key: 'phone', render: (p: string) => <Text style={{ fontSize: 13 }}>{p}</Text> },
-    {
-      title: 'Visits', dataIndex: 'visits', key: 'visits',
-      render: (v: number) => <Text strong style={{ fontSize: 13 }}>{v}</Text>,
-    },
-    {
-      title: 'Total Spent', dataIndex: 'totalSpent', key: 'totalSpent',
-      render: (v: number) => <Text strong style={{ fontSize: 13, color: '#5B7A6B' }}>₹{v.toLocaleString()}</Text>,
-    },
-    {
-      title: 'Segment', dataIndex: 'segment', key: 'segment',
-      render: (s: string) => (
-        <span style={{
-          padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600,
-          background: `${segmentColors[s] || '#7A6B5A'}12`, color: segmentColors[s] || '#7A6B5A',
-        }}>{s.toUpperCase()}</span>
-      ),
-    },
-    {
-      title: 'Tier', dataIndex: 'tier', key: 'tier',
-      render: (t: string) => (
-        <Space size={4}>
-          <CrownOutlined style={{ color: t === 'Platinum' ? 'var(--salon-primary)' : t === 'Gold' ? '#B8986B' : t === 'Silver' ? '#8B7D6B' : '#A0886B', fontSize: 12 }} />
-          <Text style={{ fontSize: 12, fontWeight: 600, color: tierColors[t] || '#7A6B5A' }}>{t}</Text>
-        </Space>
-      ),
-    },
-    {
-      title: 'Points', dataIndex: 'points', key: 'points',
-      render: (p: number) => (
-        <Space size={4}>
-          <GoldOutlined style={{ color: 'var(--salon-secondary)', fontSize: 12 }} />
-          <Text style={{ fontSize: 13 }}>{p}</Text>
-        </Space>
-      ),
-    },
-    {
-      key: 'actions', width: 48,
-      render: (_: any, r: typeof customers[0]) => (
-        <Button type="text" size="small" icon={<MoreOutlined />} style={{ borderRadius: 6 }} onClick={() => setSelectedCustomer(r)} />
-      ),
-    },
-  ];
 
   return (
-    <div>
-      <div className="page-header-row">
-        <div>
-          <h1 className="page-header-title">Customers</h1>
-          <p className="page-header-subtitle">Manage your client relationships and loyalty programs</p>
-        </div>
-        <Space>
-          <Input prefix={<SearchOutlined />} placeholder="Search customers..." style={{ width: 240, borderRadius: 10 }} value={search} onChange={e => setSearch(e.target.value)} />
-          <Button icon={<DownloadOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }}>Export</Button>
-          <Button type="primary" icon={<PlusOutlined />} style={{ borderRadius: 10 }}>
-            Add Customer
-          </Button>
-        </Space>
-      </div>
-
-      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-        {[
-          { label: 'Total Customers', value: '1,284', icon: <TeamOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '+12 this week' },
-          { label: 'Active (30 days)', value: '842', icon: <RiseOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '65.6% retention' },
-          { label: 'Avg. Spend', value: '₹3,200', icon: <WalletOutlined />, color: 'var(--salon-primary)', bg: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', change: '+8% vs last month' },
-          { label: 'VIP Customers', value: '86', icon: <CrownOutlined />, color: 'var(--salon-secondary)', bg: 'color-mix(in srgb, var(--salon-secondary) 10%, transparent)', change: '6.7% of total' },
-        ].map((stat, i) => (
-          <Col xs={12} sm={6} key={i}>
-            <div className="stat-widget" style={{ borderTop: 'none' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                <div>
-                  <div className="stat-widget-label">{stat.label}</div>
-                  <div className="stat-widget-value">{stat.value}</div>
-                </div>
-                <div style={{ width: 40, height: 40, borderRadius: 12, background: stat.bg, color: stat.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>{stat.icon}</div>
-              </div>
-              <div style={{ fontSize: 12, color: '#5B8C5A' }}>{stat.change}</div>
-            </div>
-          </Col>
-        ))}
-      </Row>
-
-      <PillFilter
-        options={segments}
-        value={segmentFilter}
-        onChange={setSegmentFilter}
-        style={{ marginBottom: 20 }}
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Clients"
+        title="Customers & CRM"
+        description="Every guest, their history, spend and preferences — one profile across all locations."
+        actions={
+          can('customers', 'create') && (
+            <>
+              <Button variant="outline" onClick={() => toast('Import wizard opened')}>Import</Button>
+              <Button variant="gold" onClick={() => toast.success('New customer drawer opened')}>
+                <Plus className="size-4" /> Add customer
+              </Button>
+            </>
+          )
+        }
       />
 
-      <Card className="premium-card" styles={{ body: { padding: 0 } }}>
-        <Table
-          columns={columns}
-          dataSource={filtered}
-          rowKey="id"
-          pagination={{ pageSize: 10, showSizeChanger: false }}
-          size="middle"
-        />
-      </Card>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="Total customers" value="4,812" delta="+139" hint="This month" icon={Users} tone="gold" />
+        <StatCard label="VIP members" value="327" delta="+12" icon={Star} tone="royal" />
+        <StatCard label="Wallet liability" value="£18,940" icon={Wallet} tone="azure" />
+        <StatCard label="Birthdays this week" value="14" hint="Auto campaign live" icon={CalendarHeart} tone="emerald" />
+      </section>
 
-      <CustomerProfileModal customer={selectedCustomer} open={!!selectedCustomer} onClose={() => setSelectedCustomer(null)} />
+      <div className="grid grid-cols-1 gap-3 md:flex md:flex-wrap md:items-center md:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {SEGMENTS.map((s) => (
+            <Button
+              key={s}
+              size="sm"
+              variant={segment === s ? 'default' : 'outline'}
+              onClick={() => setSegment(s)}
+            >
+              {s}
+            </Button>
+          ))}
+        </div>
+        <div className="relative md:w-72">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search name or email"
+            className="pl-9"
+            aria-label="Search customers"
+          />
+        </div>
+      </div>
+
+      {rows.length === 0 ? (
+        <Surface>
+          <EmptyState
+            icon={Users}
+            title="No customers in this segment"
+            description="Adjust your filters or import a client list to get started."
+            action={
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setQuery('');
+                  setSegment('All');
+                }}
+              >
+                Reset
+              </Button>
+            }
+          />
+        </Surface>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {rows.map((c) => (
+            <Surface key={c.id} className="p-5 transition-shadow hover:shadow-[var(--shadow-lifted)]">
+              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3">
+                <Avatar className="size-11 shrink-0">
+                  <AvatarFallback className="bg-accent text-sm font-semibold text-accent-foreground">
+                    {c.initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold">{c.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">{c.email}</p>
+                </div>
+                <StatusChip tone={c.tier === 'VIP' ? 'gold' : c.tier === 'Inactive' ? 'neutral' : 'azure'}>
+                  {c.tier}
+                </StatusChip>
+              </div>
+
+              <dl className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-muted/50 p-3 text-center">
+                <div>
+                  <dt className="text-[0.68rem] uppercase tracking-wider text-muted-foreground">Visits</dt>
+                  <dd className="text-sm font-semibold">{c.visits}</dd>
+                </div>
+                <div>
+                  <dt className="text-[0.68rem] uppercase tracking-wider text-muted-foreground">Spend</dt>
+                  <dd className="text-sm font-semibold">£{c.spend.toLocaleString()}</dd>
+                </div>
+                <div>
+                  <dt className="text-[0.68rem] uppercase tracking-wider text-muted-foreground">Points</dt>
+                  <dd className="text-sm font-semibold">{c.points}</dd>
+                </div>
+              </dl>
+
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {c.membership && <StatusChip tone="royal">{c.membership}</StatusChip>}
+                {c.tags.map((t) => (
+                  <StatusChip key={t} tone="neutral">{t}</StatusChip>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-xs text-muted-foreground">Last visit · {c.lastVisit}</p>
+                <Button size="sm" variant="subtle" onClick={() => setActive(c)}>
+                  View profile
+                </Button>
+              </div>
+            </Surface>
+          ))}
+        </div>
+      )}
+
+      <Sheet open={!!active} onOpenChange={(o) => !o && setActive(null)}>
+        <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
+          {active && (
+            <>
+              <SheetHeader>
+                <SheetTitle className="text-display text-xl">{active.name}</SheetTitle>
+                <SheetDescription>
+                  {active.id} · Client since 2022 · Favourite stylist {active.favouriteStaff}
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="space-y-5 px-4 pb-8">
+                <div className="grid grid-cols-2 gap-3">
+                  <Surface className="p-4">
+                    <p className="text-xs text-muted-foreground">Wallet</p>
+                    <p className="text-lg font-semibold">£{active.wallet}</p>
+                  </Surface>
+                  <Surface className="p-4">
+                    <p className="text-xs text-muted-foreground">Loyalty points</p>
+                    <p className="text-lg font-semibold">{active.points}</p>
+                  </Surface>
+                </div>
+
+                <Tabs defaultValue="overview">
+                  <TabsList className="w-full">
+                    <TabsTrigger value="overview" className="flex-1">Overview</TabsTrigger>
+                    <TabsTrigger value="history" className="flex-1">History</TabsTrigger>
+                    <TabsTrigger value="notes" className="flex-1">Notes</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="overview" className="mt-4 space-y-3 text-sm">
+                    <p className="flex items-center gap-2"><Mail className="size-4 text-muted-foreground" /> {active.email}</p>
+                    <p className="flex items-center gap-2"><Phone className="size-4 text-muted-foreground" /> {active.phone}</p>
+                    <p className="flex items-center gap-2"><Gift className="size-4 text-muted-foreground" /> Birthday · 14 March</p>
+                    <p className="flex items-center gap-2"><Heart className="size-4 text-muted-foreground" /> Prefers ammonia-free colour</p>
+                    <p className="flex items-center gap-2"><Sparkles className="size-4 text-muted-foreground" /> Membership · {active.membership ?? 'None'}</p>
+                  </TabsContent>
+                  <TabsContent value="history" className="mt-4">
+                    <ol className="space-y-4 border-l border-border pl-4">
+                      {['Balayage + Gloss · £285', 'Signature Facial · £130', 'Cut & Style · £78', 'Gel Manicure · £65'].map(
+                        (h, i) => (
+                          <li key={i} className="relative">
+                            <span className="absolute -left-[21px] top-1.5 size-2.5 rounded-full bg-gold" />
+                            <p className="text-sm font-medium">{h}</p>
+                            <p className="text-xs text-muted-foreground">{['Today', '3 weeks ago', '2 months ago', '4 months ago'][i]}</p>
+                          </li>
+                        ),
+                      )}
+                    </ol>
+                  </TabsContent>
+                  <TabsContent value="notes" className="mt-4 space-y-3">
+                    <Surface className="p-4 text-sm">
+                      <p className="font-medium">Medical note</p>
+                      <p className="mt-1 text-muted-foreground">Sensitive scalp — patch test required before colour.</p>
+                    </Surface>
+                    <Surface className="p-4 text-sm">
+                      <p className="font-medium">Consent form</p>
+                      <p className="mt-1 text-muted-foreground">Signed 12 Feb 2026 · Colour services</p>
+                    </Surface>
+                  </TabsContent>
+                </Tabs>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="gold" onClick={() => toast.success('Booking drawer opened')}>Book appointment</Button>
+                  <Button variant="outline" onClick={() => toast('Message composer opened')}>Message</Button>
+                </div>
+              </div>
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
 
-export default function CustomerPage() {
-  return <CustomerContent />;
+export default function CustomersPageRoute() {
+  return (
+    <Guard module="customers" name="Customers & CRM">
+      <CustomersPage />
+    </Guard>
+  );
 }

@@ -288,12 +288,20 @@ body {
 
 /* ==========================================
    CUSTOM SCROLLBAR
+   The owner portal must match its reference app, which uses the default
+   browser scrollbar, so these custom rules only apply when no portal
+   shell is present on the page.
    ========================================== */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--theme-background); }
-::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
-* { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
+:root:not(:has(.portal-shell))::-webkit-scrollbar,
+:root:not(:has(.portal-shell)) *::-webkit-scrollbar { width: 6px; height: 6px; }
+:root:not(:has(.portal-shell))::-webkit-scrollbar-track,
+:root:not(:has(.portal-shell)) *::-webkit-scrollbar-track { background: var(--theme-background); }
+:root:not(:has(.portal-shell))::-webkit-scrollbar-thumb,
+:root:not(:has(.portal-shell)) *::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
+:root:not(:has(.portal-shell))::-webkit-scrollbar-thumb:hover,
+:root:not(:has(.portal-shell)) *::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
+:root:not(:has(.portal-shell)),
+:root:not(:has(.portal-shell)) * { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
 
 /* ==========================================
    ANT DESIGN BREADCRUMB
