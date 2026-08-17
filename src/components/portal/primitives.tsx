@@ -81,7 +81,7 @@ export function SectionCard({
 }
 
 const toneMap = {
-  gold: 'bg-gold-soft text-gold-foreground',
+  gold: 'bg-gold-soft text-gold',
   royal: 'bg-royal-soft text-royal',
   azure: 'bg-azure-soft text-azure',
   emerald: 'bg-emerald-soft text-emerald',

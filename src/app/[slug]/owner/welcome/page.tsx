@@ -1,11 +1,15 @@
 'use client';
 
-import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Typography, Card, Steps, Divider } from 'antd';
-import { CheckCircleOutlined, GlobalOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
+import { Check, Globe, User, Users } from 'lucide-react';
+import { Surface } from '@/components/portal/primitives';
+import { Button } from '@/components/ui/button';
 
-const { Title, Text, Paragraph } = Typography;
+const steps = [
+  { icon: User, title: 'Set up your salon details', description: 'Add your address, phone, working hours, and more.' },
+  { icon: Check, title: 'Add services & pricing', description: 'List the services you offer with prices and durations.' },
+  { icon: Users, title: 'Invite your staff', description: 'Add team members so they can manage bookings too.' },
+];
 
 export default function WelcomePage() {
   const params = useParams();
@@ -13,74 +17,44 @@ export default function WelcomePage() {
   const slug = params?.slug as string;
 
   return (
-    <div style={{ maxWidth: 700, margin: '60px auto', padding: '0 24px', textAlign: 'center' }}>
-      <div style={{ fontSize: 64, marginBottom: 16 }}>🎉</div>
-      <Title level={2} style={{ marginBottom: 8 }}>Your salon is live!</Title>
-      <Paragraph style={{ fontSize: 16, color: '#666', marginBottom: 32 }}>
+    <div className="mx-auto max-w-[700px] px-6 py-16 text-center">
+      <div className="text-6xl mb-4">🎉</div>
+      <h1 className="text-display text-2xl font-semibold sm:text-3xl">Your salon is live!</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
         Your 1-month free trial has started. Here&apos;s your salon website:
-      </Paragraph>
+      </p>
 
-      <Card
-        style={{
-          borderRadius: 12,
-          background: '#f6f8ff',
-          border: '1px solid #d9e6ff',
-          marginBottom: 40,
-          textAlign: 'center',
-        }}
-      >
-        <GlobalOutlined style={{ fontSize: 24, color: '#1890ff', marginBottom: 8 }} />
-        <div style={{ fontSize: 20, fontWeight: 600, color: '#1890ff' }}>
-          /{slug}
-        </div>
-        <Text type="secondary">Share this link with your customers</Text>
-        <div style={{ marginTop: 16 }}>
-          <Button
-            type="primary"
-            size="large"
-            onClick={() => router.push(`/${slug}`)}
-          >
-            View Your Salon Website
-          </Button>
-        </div>
-      </Card>
+      <Surface className="mx-auto mt-8 max-w-md p-8 text-center">
+        <span className="mx-auto grid size-12 place-items-center rounded-xl bg-gold-soft text-gold">
+          <Globe className="size-6" />
+        </span>
+        <p className="mt-4 text-lg font-semibold text-gold">/{slug}</p>
+        <p className="mt-1 text-sm text-muted-foreground">Share this link with your customers</p>
+        <Button variant="gold" className="mt-5" onClick={() => router.push(`/${slug}`)}>
+          View Your Salon Website
+        </Button>
+      </Surface>
 
-      <Title level={4} style={{ marginBottom: 24 }}>Next Steps</Title>
+      <h2 className="mt-10 text-display text-lg font-semibold">Next Steps</h2>
 
-      <div style={{ textAlign: 'left', maxWidth: 500, margin: '0 auto' }}>
-        <Steps
-          direction="vertical"
-          current={-1}
-          items={[
-            {
-              title: 'Set up your salon details',
-              description: 'Add your address, phone, working hours, and more.',
-              icon: <UserOutlined />,
-            },
-            {
-              title: 'Add services & pricing',
-              description: 'List the services you offer with prices and durations.',
-              icon: <CheckCircleOutlined />,
-            },
-            {
-              title: 'Invite your staff',
-              description: 'Add team members so they can manage bookings too.',
-              icon: <TeamOutlined />,
-            },
-          ]}
-        />
+      <div className="mx-auto mt-6 max-w-[500px] space-y-4 text-left">
+        {steps.map((s, i) => (
+          <div key={i} className="flex items-start gap-4">
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-gold-soft text-gold">
+              <s.icon className="size-4.5" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold">{s.title}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{s.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <Divider />
-
-      <Paragraph style={{ color: '#888' }}>
+      <p className="mt-8 text-sm text-muted-foreground">
         You can manage everything from your salon dashboard.
-      </Paragraph>
-      <Button
-        type="primary"
-        size="large"
-        onClick={() => router.push(`/${slug}/owner/login`)}
-      >
+      </p>
+      <Button variant="gold" className="mt-4" onClick={() => router.push(`/${slug}/owner/login`)}>
         Go to Dashboard
       </Button>
     </div>

@@ -84,7 +84,7 @@ function BookingCard({ a }: { a: Appointment }) {
         <StatusChip tone={a.paid ? 'emerald' : 'neutral'}>{a.paid ? 'Paid' : 'Unpaid'}</StatusChip>
       </div>
       {a.notes && (
-        <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold-foreground">{a.notes}</p>
+        <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold">{a.notes}</p>
       )}
       {can('appointments', 'edit') && (
         <div className="mt-3 flex flex-wrap gap-2">
