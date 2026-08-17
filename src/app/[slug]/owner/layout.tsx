@@ -1,6 +1,18 @@
-import OwnerLayout from '../../../components/layout/OwnerLayout';
+import type { Metadata } from 'next';
+import '@/styles/owner-portal.css';
+import { PortalShell } from '@/components/portal/PortalShell';
 
-export default async function SalonOwnerLayout({ children, params }: { children: React.ReactNode; params: Promise<{ slug: string }> }) {
+export const metadata: Metadata = {
+  title: 'Maison Lumière — Business OS',
+};
+
+export default async function SalonOwnerLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  return <OwnerLayout salonSlug={slug}>{children}</OwnerLayout>;
+  return <PortalShell slug={slug}>{children}</PortalShell>;
 }
