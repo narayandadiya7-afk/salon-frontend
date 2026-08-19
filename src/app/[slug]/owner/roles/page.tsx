@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Check, Copy, Minus, Plus, ShieldCheck, Users } from 'lucide-react';
-import { Guard, PageHeader, StatCard, StatusChip, Surface } from '@/components/portal/primitives';
+import { Guard, PageHeader, StatCard, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { MODULES, ROLES, type PermissionAction } from '@/lib/portal/rbac';
 import { toast } from 'sonner';

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import ScrollRestoration from '../../../components/ScrollRestoration';
-import { SiteRoot } from '../../../components/site/SiteRoot';
+import { SiteRoot } from '../../../components/owner/owner-website/SiteRoot';
 import { getSalon } from '../../../lib/site';
 import '../../../styles/site.css';
 

@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { Check, Globe, User, Users } from 'lucide-react';
-import { Surface } from '@/components/portal/primitives';
+import { Surface } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 
 const steps = [

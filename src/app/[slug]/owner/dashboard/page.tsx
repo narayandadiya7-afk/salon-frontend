@@ -42,7 +42,7 @@ import {
   StatCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
+} from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';

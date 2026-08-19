@@ -21,8 +21,8 @@ import {
 } from 'lucide-react';
 import { services, stylists, categories, salon } from '../../../../data/salon';
 import { cn } from '../../../../lib/utils';
-import { useSite } from '../../../../components/site/site-context';
-import { usePageMeta } from '../../../../components/site/ui';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { usePageMeta } from '../../../../components/owner/owner-website/ui';
 
 const steps = ['Service', 'Specialist', 'Date', 'Time', 'Details', 'Summary', 'Payment', 'Confirmed'];
 

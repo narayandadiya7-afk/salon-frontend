@@ -25,7 +25,7 @@ import {
   StatCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
+} from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -41,7 +41,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { appointments, type Appointment, type AppointmentStatus } from '@/data/portal';
 import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';
-import type { Tone } from '@/components/portal/primitives';
+import type { Tone } from '@/components/owner/owner-portal/primitives';
 
 const statusTone: Record<AppointmentStatus, Tone | 'danger' | 'warning'> = {
   confirmed: 'azure',

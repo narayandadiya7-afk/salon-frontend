@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { PageHero, ServiceCard, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, ServiceCard, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { services, categories, stylists } from '../../../../data/salon';
 import { Slider } from '../../../../components/ui/slider';
 import { ArrowRight } from 'lucide-react';
-import { useSite } from '../../../../components/site/site-context';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
 
 export default function ServicesPage() {
   const { slug } = useSite();

@@ -26,7 +26,7 @@ import {
   SectionCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
+} from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

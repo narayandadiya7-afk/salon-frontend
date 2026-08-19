@@ -1,7 +1,7 @@
 'use client';
 
 import { CalendarCheck, FileText, Globe, TrendingUp } from 'lucide-react';
-import { ModulePage } from '@/components/portal/ModulePage';
+import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 
 export default function CmsPage() {
   return (

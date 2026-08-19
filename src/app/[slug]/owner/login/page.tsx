@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Mail, Lock } from 'lucide-react';
-import { Surface } from '@/components/portal/primitives';
+import { Surface } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { notification } from '../../../../utils/notification';

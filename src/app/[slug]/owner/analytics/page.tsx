@@ -37,7 +37,7 @@ import {
   StatCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
+} from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useSession } from '@/lib/portal/session';
