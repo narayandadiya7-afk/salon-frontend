@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Check, Copy, Minus, Plus, ShieldCheck, Users } from 'lucide-react';
 import { Guard, PageHeader, StatCard, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/owner/owner-portal/button';
 import { MODULES, ROLES, type PermissionAction } from '@/lib/portal/rbac';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';

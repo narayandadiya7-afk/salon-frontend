@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { Check, Globe, User, Users } from 'lucide-react';
 import { Surface } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/owner/owner-portal/button';
 
 const steps = [
   { icon: User, title: 'Set up your salon details', description: 'Add your address, phone, working hours, and more.' },

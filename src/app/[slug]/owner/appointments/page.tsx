@@ -26,18 +26,18 @@ import {
   StatusChip,
   Surface,
 } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Input } from '@/components/owner/owner-portal/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+} from '@/components/owner/owner-portal/dropdown-menu';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/owner/owner-portal/select';
 import { appointments, type Appointment, type AppointmentStatus } from '@/data/portal';
 import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';

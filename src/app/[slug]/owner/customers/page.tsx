@@ -22,11 +22,11 @@ import {
   StatusChip,
   Surface,
 } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Input } from '@/components/owner/owner-portal/input';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/owner/owner-portal/sheet';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
 import { customers, type Customer } from '@/data/portal';
 import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';

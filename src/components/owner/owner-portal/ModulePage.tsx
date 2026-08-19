@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from 'lucide-react';
 import { Guard, PageHeader, SectionCard, StatCard, StatusChip, Surface } from './primitives';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/owner/owner-portal/button';
 import type { ModuleId } from '@/lib/portal/rbac';
 import { toast } from 'sonner';
 

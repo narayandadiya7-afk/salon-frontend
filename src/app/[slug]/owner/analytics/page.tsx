@@ -38,8 +38,8 @@ import {
   StatusChip,
   Surface,
 } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Progress } from '@/components/owner/owner-portal/progress';
 import { useSession } from '@/lib/portal/session';
 import { cn } from '@/lib/utils';
 

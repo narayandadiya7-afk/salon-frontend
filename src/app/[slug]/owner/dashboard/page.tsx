@@ -43,9 +43,9 @@ import {
   StatusChip,
   Surface,
 } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
+import { Progress } from '@/components/owner/owner-portal/progress';
 import { useSession } from '@/lib/portal/session';
 import {
   acquisition,

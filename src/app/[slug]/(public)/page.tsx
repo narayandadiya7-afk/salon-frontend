@@ -21,7 +21,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '../../../components/ui/accordion';
+} from '../../../components/owner/owner-website/accordion';
 import { SectionHead, ServiceCard, usePageMeta } from '../../../components/owner/owner-website/ui';
 import {
   salon,

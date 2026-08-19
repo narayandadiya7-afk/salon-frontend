@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { PageHero, ServiceCard, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { services, categories, stylists } from '../../../../data/salon';
-import { Slider } from '../../../../components/ui/slider';
+import { Slider } from '../../../../components/owner/owner-website/slider';
 import { ArrowRight } from 'lucide-react';
 import { useSite } from '../../../../components/owner/owner-website/site-context';
 

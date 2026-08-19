@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, DoorOpen, Grid3x3, Users } from 'lucide-react';
 import { Guard, PageHeader, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
