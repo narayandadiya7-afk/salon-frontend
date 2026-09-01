@@ -1,31 +1,56 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
-  Row, Col, Card, Tag, Button, Space, Avatar, Input, Select, Switch,
-  Modal, Table, Typography, Divider, Tooltip, Badge, Tabs, Upload, Form, Rate, InputNumber,
-} from 'antd';
+  Check,
+  CheckCircle,
+  ChevronRight,
+  Eye,
+  Globe,
+  Home,
+  Image,
+  Info,
+  MessageSquare,
+  MoreHorizontal,
+  Plus,
+  Save,
+  Star,
+  Trash2,
+  Upload,
+  Users,
+} from 'lucide-react';
 import {
-  CodeSandboxOutlined, PlusOutlined, EditOutlined, EyeOutlined,
-  PictureOutlined, TeamOutlined, MessageOutlined, GlobalOutlined,
-  SettingOutlined, SaveOutlined, UploadOutlined, DeleteOutlined,
-  StarOutlined, RightOutlined, HomeOutlined, InfoCircleOutlined, CheckCircleOutlined,
-} from '@ant-design/icons';
+  EmptyState,
+  Guard,
+  PageHeader,
+  SectionCard,
+  StatusChip,
+  Surface,
+} from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Input } from '@/components/owner/owner-portal/input';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 
-const { Text, Title } = Typography;
-const { TextArea } = Input;
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/owner/owner-portal/dialog';
+import { useSession } from '@/lib/portal/session';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface TeamMember {
   id: string;
   name: string;
   role: string;
   bio: string;
-  image: string;
 }
 
 interface GalleryImage {
   id: string;
-  url: string;
   caption: string;
 }
 
@@ -39,19 +64,19 @@ interface Testimonial {
 }
 
 const mockTeam: TeamMember[] = [
-  { id: '1', name: 'Ananya Sharma', role: 'Senior Stylist', bio: 'Expert in modern haircuts and styling with 8+ years of experience.', image: '' },
-  { id: '2', name: 'Rahul Verma', role: 'Barber', bio: 'Master barber specializing in classic and contemporary grooming.', image: '' },
-  { id: '3', name: 'Priya Patel', role: 'Esthetician', bio: 'Certified skin care specialist with a passion for holistic treatments.', image: '' },
-  { id: '4', name: 'Vikram Singh', role: 'Colorist', bio: 'Award-winning color specialist known for balayage and creative color.', image: '' },
+  { id: '1', name: 'Ananya Sharma', role: 'Senior Stylist', bio: 'Expert in modern haircuts and styling with 8+ years of experience.' },
+  { id: '2', name: 'Rahul Verma', role: 'Barber', bio: 'Master barber specializing in classic and contemporary grooming.' },
+  { id: '3', name: 'Priya Patel', role: 'Esthetician', bio: 'Certified skin care specialist with a passion for holistic treatments.' },
+  { id: '4', name: 'Vikram Singh', role: 'Colorist', bio: 'Award-winning color specialist known for balayage and creative color.' },
 ];
 
 const mockGallery: GalleryImage[] = [
-  { id: '1', url: '', caption: 'Salon Interior' },
-  { id: '2', url: '', caption: 'Hair Styling' },
-  { id: '3', url: '', caption: 'Facial Treatment' },
-  { id: '4', url: '', caption: 'Manicure Station' },
-  { id: '5', url: '', caption: 'Product Display' },
-  { id: '6', url: '', caption: 'Team Event' },
+  { id: '1', caption: 'Salon Interior' },
+  { id: '2', caption: 'Hair Styling' },
+  { id: '3', caption: 'Facial Treatment' },
+  { id: '4', caption: 'Manicure Station' },
+  { id: '5', caption: 'Product Display' },
+  { id: '6', caption: 'Team Event' },
 ];
 
 const mockTestimonials: Testimonial[] = [
@@ -61,22 +86,330 @@ const mockTestimonials: Testimonial[] = [
   { id: '4', customerName: 'Neha Gupta', rating: 4, reviewText: 'Great coloring work by Vikram. The balayage turned out perfect!', date: '2026-05-28', active: false },
 ];
 
-const sectionColors: Record<string, string> = {
-  'Hero Banner': 'var(--salon-primary)',
-  'About Section': 'var(--salon-primary)',
-  'Team': '#B8986B',
-  'Gallery': '#5B8C5A',
-  'Testimonials': '#8B7D6B',
+const sectionIcons: Record<string, React.ReactNode> = {
+  'Hero Banner': <Image className="size-4" />,
+  'About Section': <Info className="size-4" />,
+  Team: <Users className="size-4" />,
+  Gallery: <Image className="size-4" />,
+  Testimonials: <MessageSquare className="size-4" />,
 };
 
+const sectionColors: Record<string, string> = {
+  'Hero Banner': 'var(--gold)',
+  'About Section': 'var(--royal)',
+  Team: 'var(--azure)',
+  Gallery: 'var(--emerald)',
+  Testimonials: 'var(--emerald)',
+};
+
+function UploadZone({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-xl border-2 border-dashed border-border bg-muted/20 p-8 text-center transition-colors hover:border-gold/30 hover:bg-muted/40 cursor-pointer">
+      {children}
+    </div>
+  );
+}
+
+function HeroTab({ heroData, setHeroData }: { heroData: any; setHeroData: (f: any) => void }) {
+  return (
+    <div className="grid gap-6 lg:grid-cols-[1fr_auto]">
+      <div className="space-y-5">
+        <div>
+          <label className="text-sm font-medium">Headline</label>
+          <Input
+            value={heroData.headline}
+            onChange={(e) => setHeroData((p: any) => ({ ...p, headline: e.target.value }))}
+            placeholder="Enter headline text"
+            className="mt-1.5"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium">Subtitle</label>
+          <textarea
+            rows={3}
+            value={heroData.subtitle}
+            onChange={(e) => setHeroData((p: any) => ({ ...p, subtitle: e.target.value }))}
+            placeholder="Enter subtitle text"
+            className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="text-sm font-medium">CTA Button Text</label>
+            <Input
+              value={heroData.ctaText}
+              onChange={(e) => setHeroData((p: any) => ({ ...p, ctaText: e.target.value }))}
+              placeholder="e.g. Book Now"
+              className="mt-1.5"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium">CTA Link</label>
+            <Input
+              value={heroData.ctaLink}
+              onChange={(e) => setHeroData((p: any) => ({ ...p, ctaLink: e.target.value }))}
+              placeholder="e.g. /book"
+              className="mt-1.5"
+            />
+          </div>
+        </div>
+        <div>
+          <label className="text-sm font-medium">Background Image</label>
+          <UploadZone>
+            <Upload className="mx-auto size-7 text-muted-foreground" />
+            <p className="mt-2 text-sm text-muted-foreground">Click or drag image to upload</p>
+            <p className="mt-1 text-xs text-muted-foreground/60">Recommended: 1920x800px, max 2MB</p>
+          </UploadZone>
+        </div>
+      </div>
+      <div className="lg:w-80">
+        <Surface className="overflow-hidden p-0">
+          <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#1A0A12] to-[#2C1020] p-8 text-center min-h-[320px]">
+            <div className="mb-4 grid size-12 place-items-center rounded-xl bg-gold text-white">
+              <Eye className="size-5" />
+            </div>
+            <p className="mb-2 text-[10px] uppercase tracking-[1.5px] text-gold/50">Preview</p>
+            <p className="mb-2 text-xl font-bold text-white">{heroData.headline || 'Headline'}</p>
+            <p className="mb-4 max-w-[280px] text-xs leading-relaxed text-white/60">{heroData.subtitle || 'Subtitle'}</p>
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-gold px-5 py-2 text-sm font-semibold text-white">
+              {heroData.ctaText || 'CTA Button'}
+            </span>
+          </div>
+        </Surface>
+      </div>
+    </div>
+  );
+}
+
+function AboutTab({ aboutData, setAboutData }: { aboutData: any; setAboutData: (f: any) => void }) {
+  return (
+    <div className="grid gap-6 lg:grid-cols-[1fr_auto]">
+      <div className="space-y-5">
+        <div>
+          <label className="text-sm font-medium">Our Story</label>
+          <textarea
+            rows={5}
+            value={aboutData.story}
+            onChange={(e) => setAboutData((p: any) => ({ ...p, story: e.target.value }))}
+            placeholder="Tell your salon's story"
+            className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
+          />
+          <p className="mt-1 text-xs text-muted-foreground">This appears on the About page of your website</p>
+        </div>
+        <div>
+          <label className="text-sm font-medium">Mission Statement</label>
+          <textarea
+            rows={3}
+            value={aboutData.mission}
+            onChange={(e) => setAboutData((p: any) => ({ ...p, mission: e.target.value }))}
+            placeholder="Your salon's mission"
+            className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium">About Image</label>
+          <UploadZone>
+            <Upload className="mx-auto size-7 text-muted-foreground" />
+            <p className="mt-2 text-sm text-muted-foreground">Upload salon image</p>
+          </UploadZone>
+        </div>
+      </div>
+      <div className="lg:w-80">
+        <Surface>
+          <div className="mb-4 flex items-center gap-2.5 border-b border-border pb-4">
+            <div className="grid size-9 place-items-center rounded-lg bg-royal-soft text-royal"><Globe className="size-4" /></div>
+            <div>
+              <p className="text-sm font-semibold">Live Preview</p>
+              <p className="text-xs text-muted-foreground">How this looks on your site</p>
+            </div>
+          </div>
+          <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+            <div>
+              <p className="font-semibold text-foreground">Our Story</p>
+              <p className="mt-0.5">{aboutData.story}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground">Our Mission</p>
+              <p className="mt-0.5">{aboutData.mission}</p>
+            </div>
+          </div>
+        </Surface>
+      </div>
+    </div>
+  );
+}
+
+function TeamTab({ team, setTeam }: { team: TeamMember[]; setTeam: (f: TeamMember[]) => void }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editing, setEditing] = useState<TeamMember | null>(null);
+
+  const save = () => {
+    if (!editing) return;
+    if (editing.id) {
+      setTeam(team.map((m) => (m.id === editing.id ? editing : m)));
+    } else {
+      setTeam([...team, { ...editing, id: String(Date.now()) }]);
+    }
+    setModalOpen(false);
+    setEditing(null);
+    toast.success('Team member saved');
+  };
+
+  return (
+    <div>
+      <div className="mb-5 flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">{team.length} team member{team.length !== 1 ? 's' : ''} displayed on website</p>
+        <Button variant="gold" size="sm" onClick={() => { setEditing({ id: '', name: '', role: '', bio: '' }); setModalOpen(true); }}>
+          <Plus className="size-3.5" /> Add Member
+        </Button>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {team.map((m) => (
+          <div key={m.id} className="overflow-hidden rounded-xl border border-border bg-card">
+            <div className="flex h-40 items-center justify-center bg-gradient-to-br from-[#2C1020] to-[#3D1830]">
+              <Avatar className="size-16 border-[3px] border-white/20">
+                <AvatarFallback className="bg-gold text-2xl font-semibold text-white">{m.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="p-4">
+              <p className="font-semibold">{m.name}</p>
+              <span className="mt-1 inline-block rounded-md bg-emerald-soft px-2 py-0.5 text-[11px] font-medium text-emerald">{m.role}</span>
+              <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">{m.bio}</p>
+              <div className="mt-3 flex gap-2">
+                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => { setEditing({ ...m }); setModalOpen(true); }}>
+                  Edit
+                </Button>
+                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-destructive hover:text-destructive" onClick={() => setTeam(team.filter((x) => x.id !== m.id))}>
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Dialog open={modalOpen} onOpenChange={(o) => { if (!o) { setModalOpen(false); setEditing(null); } }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{editing?.id ? 'Edit Team Member' : 'Add Team Member'}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <div>
+              <label className="text-sm font-medium">Name</label>
+              <Input value={editing?.name || ''} onChange={(e) => setEditing((p) => p ? { ...p, name: e.target.value } : null)} placeholder="Full name" className="mt-1.5" />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Role</label>
+              <Input value={editing?.role || ''} onChange={(e) => setEditing((p) => p ? { ...p, role: e.target.value } : null)} placeholder="e.g. Senior Stylist" className="mt-1.5" />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Bio</label>
+              <textarea
+                rows={3}
+                value={editing?.bio || ''}
+                onChange={(e) => setEditing((p) => p ? { ...p, bio: e.target.value } : null)}
+                placeholder="Brief biography"
+                className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
+              />
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="outline" onClick={() => { setModalOpen(false); setEditing(null); }}>Cancel</Button>
+              <Button variant="gold" onClick={save}>Save</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function GalleryTab({ gallery, setGallery }: { gallery: GalleryImage[]; setGallery: (f: GalleryImage[]) => void }) {
+  return (
+    <div>
+      <UploadZone>
+        <Upload className="mx-auto size-9 text-muted-foreground" />
+        <p className="mt-3 text-sm font-semibold">Drop images here or click to upload</p>
+        <p className="mt-1 text-xs text-muted-foreground/60">Supported: JPG, PNG, WebP — Max 5MB each</p>
+      </UploadZone>
+
+      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {gallery.map((img) => (
+          <div key={img.id} className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-gold/30 hover:shadow-md">
+            <div className="flex h-36 items-center justify-center bg-gradient-to-br from-[#1A0A12] to-[#2C1020]">
+              <Image className="size-8 text-muted-foreground/30" />
+            </div>
+            <div className="flex items-center justify-between px-3 py-2.5">
+              <span className="text-xs font-semibold">{img.caption}</span>
+              <button onClick={() => setGallery(gallery.filter((x) => x.id !== img.id))} className="opacity-0 group-hover:opacity-100 transition-opacity">
+                <Trash2 className="size-3.5 text-muted-foreground hover:text-destructive" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 text-center text-xs text-muted-foreground">{gallery.length} image{gallery.length !== 1 ? 's' : ''} in gallery</p>
+    </div>
+  );
+}
+
+function TestimonialsTab({ testimonials, setTestimonials }: { testimonials: Testimonial[]; setTestimonials: (f: Testimonial[]) => void }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {testimonials.map((t) => (
+        <Surface key={t.id} className={cn('transition-opacity', !t.active && 'opacity-50')}>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar className="size-10">
+                <AvatarFallback className={cn('text-sm font-semibold', t.active ? 'bg-gold text-white' : 'bg-muted text-muted-foreground')}>{t.customerName.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-sm font-semibold">{t.customerName}</p>
+                <div className="mt-0.5 flex items-center gap-1.5">
+                  <span className="flex text-gold">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className={cn('size-3', i < t.rating ? 'fill-current' : '')} />
+                    ))}
+                  </span>
+                  <span className="text-[11px] text-muted-foreground">{t.date}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setTestimonials(testimonials.map((x) => x.id === t.id ? { ...x, active: !x.active } : x))}
+                className={cn(
+                  'relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors',
+                  t.active ? 'bg-gold' : 'bg-muted',
+                )}
+              >
+                <span className={cn('pointer-events-none block size-4 rounded-full bg-white shadow-sm transition-transform', t.active ? 'translate-x-4.5' : 'translate-x-0.5')} />
+              </button>
+              <button onClick={() => setTestimonials(testimonials.filter((x) => x.id !== t.id))}>
+                <Trash2 className="size-3.5 text-muted-foreground hover:text-destructive" />
+              </button>
+            </div>
+          </div>
+          <p className="mt-3 pl-[52px] text-sm italic leading-relaxed text-muted-foreground">&ldquo;{t.reviewText}&rdquo;</p>
+          <div className="mt-2 pl-[52px]">
+            {t.active ? (
+              <span className="inline-flex items-center gap-1 rounded-md bg-emerald-soft px-2 py-0.5 text-[10px] font-medium text-emerald">
+                <CheckCircle className="size-3" /> Published
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">Draft</span>
+            )}
+          </div>
+        </Surface>
+      ))}
+    </div>
+  );
+}
+
 function WebsiteCMSContent() {
+  const { can } = useSession();
   const [team, setTeam] = useState<TeamMember[]>(mockTeam);
   const [gallery, setGallery] = useState<GalleryImage[]>(mockGallery);
   const [testimonials, setTestimonials] = useState<Testimonial[]>(mockTestimonials);
-  const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
-  const [memberModalOpen, setMemberModalOpen] = useState(false);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState('hero');
 
   const [heroData, setHeroData] = useState({
     headline: 'Where Style Meets Elegance',
@@ -90,699 +423,52 @@ function WebsiteCMSContent() {
     mission: 'To provide exceptional beauty services in a warm, welcoming environment that inspires confidence and well-being.',
   });
 
-  const handleSaveMember = () => {
-    if (!editingMember) return;
-    if (editingMember.id) {
-      setTeam(prev => prev.map(m => m.id === editingMember.id ? editingMember : m));
-    } else {
-      setTeam(prev => [...prev, { ...editingMember, id: String(Date.now()) }]);
-    }
-    setMemberModalOpen(false);
-    setEditingMember(null);
-  };
-
-  const handleDeleteMember = (id: string) => {
-    setTeam(prev => prev.filter(m => m.id !== id));
-  };
-
-  const handleToggleTestimonial = (id: string) => {
-    setTestimonials(prev => prev.map(t => t.id === id ? { ...t, active: !t.active } : t));
-  };
-
-  const handleDeleteTestimonial = (id: string) => {
-    setTestimonials(prev => prev.filter(t => t.id !== id));
-  };
-
-  const handleDeleteGallery = (id: string) => {
-    setGallery(prev => prev.filter(g => g.id !== id));
-  };
-
-  const sectionHeader = (title: string, icon: React.ReactNode) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-      <div style={{
-        width: 36, height: 36, borderRadius: 10,
-        background: `${sectionColors[title]}15`,
-        color: sectionColors[title],
-        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
-      }}>
-        {icon}
-      </div>
-      <div>
-        <Text strong style={{ fontSize: 15 }}>{title}</Text>
-        <div style={{ fontSize: 12, color: 'var(--theme-text-secondary)' }}>Manage your {title.toLowerCase()} content</div>
-      </div>
-    </div>
-  );
-
-  const tabItems = [
-    {
-      key: 'hero',
-      label: (
-        <Space size={6}>
-          <PictureOutlined style={{ fontSize: 14 }} />
-          <span>Hero Banner</span>
-        </Space>
-      ),
-      children: (
-        <div>
-          {sectionHeader('Hero Banner', <PictureOutlined />)}
-
-          <Row gutter={[24, 24]}>
-            <Col xs={24} lg={14}>
-              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
-                <Space direction="vertical" size={20} style={{ width: '100%' }}>
-                  <div>
-                    <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Headline</Text>
-                    <Input
-                      size="large"
-                      value={heroData.headline}
-                      onChange={e => setHeroData(prev => ({ ...prev, headline: e.target.value }))}
-                      placeholder="Enter headline text"
-                      style={{ borderRadius: 10 }}
-                    />
-                  </div>
-                  <div>
-                    <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Subtitle</Text>
-                    <TextArea
-                      rows={3}
-                      value={heroData.subtitle}
-                      onChange={e => setHeroData(prev => ({ ...prev, subtitle: e.target.value }))}
-                      placeholder="Enter subtitle text"
-                      style={{ borderRadius: 10, resize: 'none' }}
-                    />
-                  </div>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>CTA Button Text</Text>
-                      <Input
-                        value={heroData.ctaText}
-                        onChange={e => setHeroData(prev => ({ ...prev, ctaText: e.target.value }))}
-                        placeholder="e.g. Book Now"
-                        style={{ borderRadius: 10 }}
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>CTA Link</Text>
-                      <Input
-                        value={heroData.ctaLink}
-                        onChange={e => setHeroData(prev => ({ ...prev, ctaLink: e.target.value }))}
-                        placeholder="e.g. /book"
-                        style={{ borderRadius: 10 }}
-                      />
-                    </Col>
-                  </Row>
-                </Space>
-
-                <Divider style={{ margin: '20px 0', borderColor: 'var(--theme-border-light)' }} />
-
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 12 }}>Background Image</Text>
-                  <Upload.Dragger
-                    accept="image/*"
-                    showUploadList={false}
-                    style={{ borderRadius: 12, border: '2px dashed var(--theme-border-light)', background: 'var(--theme-background)' }}
-                  >
-                    <div style={{ padding: 24 }}>
-                      <UploadOutlined style={{ fontSize: 28, color: 'var(--theme-text-tertiary)' }} />
-                      <div style={{ marginTop: 8, color: 'var(--theme-text-secondary)', fontSize: 13 }}>
-                        Click or drag image to upload
-                      </div>
-                      <div style={{ fontSize: 11, color: 'var(--theme-text-tertiary)', marginTop: 4 }}>
-                        Recommended: 1920x800px, max 2MB
-                      </div>
-                    </div>
-                  </Upload.Dragger>
-                </div>
-              </Card>
-            </Col>
-
-            <Col xs={24} lg={10}>
-              <Card className="premium-card" styles={{ body: { padding: 0, overflow: 'hidden' } }}>
-                <div style={{
-                  background: 'linear-gradient(135deg, #1A0A12, #2C1020)',
-                  padding: 32, minHeight: 320,
-                  display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-                  <div style={{
-                    width: 48, height: 48, borderRadius: 12,
-                    background: 'var(--salon-primary)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: 16, fontSize: 20, color: '#fff',
-                  }}>
-                    <EyeOutlined />
-                  </div>
-                  <Text style={{ fontSize: 11, color: 'color-mix(in srgb, #B8986B 50%, transparent)', textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 8 }}>Preview</Text>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#fff', marginBottom: 8 }}>{heroData.headline || 'Headline'}</div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', maxWidth: 280, marginBottom: 16, lineHeight: 1.5 }}>{heroData.subtitle || 'Subtitle'}</div>
-                  <div style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 6,
-                    padding: '8px 20px', borderRadius: 8,
-                    background: 'var(--salon-primary)',
-                    color: '#fff', fontSize: 13, fontWeight: 600,
-                  }}>
-                    {heroData.ctaText || 'CTA Button'}
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      ),
-    },
-    {
-      key: 'about',
-      label: (
-        <Space size={6}>
-          <InfoCircleOutlined style={{ fontSize: 14 }} />
-          <span>About Section</span>
-        </Space>
-      ),
-      children: (
-        <div>
-          {sectionHeader('About Section', <InfoCircleOutlined />)}
-
-          <Row gutter={[24, 24]}>
-            <Col xs={24} lg={14}>
-              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
-                <Space direction="vertical" size={20} style={{ width: '100%' }}>
-                  <div>
-                    <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Our Story</Text>
-                    <TextArea
-                      rows={5}
-                      value={aboutData.story}
-                      onChange={e => setAboutData(prev => ({ ...prev, story: e.target.value }))}
-                      placeholder="Tell your salon's story"
-                      style={{ borderRadius: 10, resize: 'none' }}
-                    />
-                    <div style={{ fontSize: 11, color: 'var(--theme-text-tertiary)', marginTop: 4 }}>
-                      <InfoCircleOutlined style={{ marginRight: 4 }} />
-                      This appears on the About page of your website
-                    </div>
-                  </div>
-                  <div>
-                    <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Mission Statement</Text>
-                    <TextArea
-                      rows={3}
-                      value={aboutData.mission}
-                      onChange={e => setAboutData(prev => ({ ...prev, mission: e.target.value }))}
-                      placeholder="Your salon's mission"
-                      style={{ borderRadius: 10, resize: 'none' }}
-                    />
-                  </div>
-                </Space>
-
-                <Divider style={{ margin: '20px 0', borderColor: 'var(--theme-border-light)' }} />
-
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 12 }}>About Image</Text>
-                  <Upload.Dragger
-                    accept="image/*"
-                    showUploadList={false}
-                    style={{ borderRadius: 12, border: '2px dashed var(--theme-border-light)', background: 'var(--theme-background)' }}
-                  >
-                    <div style={{ padding: 24 }}>
-                      <PictureOutlined style={{ fontSize: 28, color: 'var(--theme-text-tertiary)' }} />
-                      <div style={{ marginTop: 8, color: 'var(--theme-text-secondary)', fontSize: 13 }}>
-                        Upload salon image
-                      </div>
-                    </div>
-                  </Upload.Dragger>
-                </div>
-              </Card>
-            </Col>
-
-            <Col xs={24} lg={10}>
-              <Card className="premium-card" styles={{ body: { padding: 24 } }}>
-                <div style={{
-                  display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16,
-                  paddingBottom: 16, borderBottom: '1px solid var(--theme-border-light)',
-                }}>
-                  <div style={{
-                    width: 36, height: 36, borderRadius: 10,
-                    background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', color: 'var(--salon-primary)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <GlobalOutlined />
-                  </div>
-                  <div>
-                    <Text strong style={{ fontSize: 13 }}>Live Preview</Text>
-                    <div style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>How this looks on your site</div>
-                  </div>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--theme-text-secondary)', lineHeight: 1.7 }}>
-                  <div style={{ marginBottom: 12 }}>
-                    <Text strong style={{ fontSize: 14, color: 'var(--theme-text)', display: 'block', marginBottom: 4 }}>Our Story</Text>
-                    {aboutData.story}
-                  </div>
-                  <div>
-                    <Text strong style={{ fontSize: 14, color: 'var(--theme-text)', display: 'block', marginBottom: 4 }}>Our Mission</Text>
-                    {aboutData.mission}
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      ),
-    },
-    {
-      key: 'team',
-      label: (
-        <Space size={6}>
-          <TeamOutlined style={{ fontSize: 14 }} />
-          <span>Team</span>
-        </Space>
-      ),
-      children: (
-        <div>
-          {sectionHeader('Team', <TeamOutlined />)}
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-            <Text style={{ fontSize: 13, color: 'var(--theme-text-secondary)' }}>
-              {team.length} team member{team.length !== 1 ? 's' : ''} displayed on website
-            </Text>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              style={{
-                borderRadius: 10,
-              }}
-              onClick={() => {
-                setEditingMember({ id: '', name: '', role: '', bio: '', image: '' });
-                setMemberModalOpen(true);
-              }}
-            >
-              Add Member
-            </Button>
-          </div>
-
-          <Row gutter={[20, 20]}>
-            {team.map(member => (
-              <Col xs={24} sm={12} lg={6} key={member.id}>
-                <Card
-                  className="premium-card"
-                  styles={{ body: { padding: 0 } }}
-                  style={{ height: '100%' }}
-                >
-                  <div style={{
-                    height: 160,
-                    background: 'linear-gradient(135deg, #2C1020, #3D1830)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    position: 'relative',
-                  }}>
-                    <Avatar
-                      size={72}
-                      style={{
-                        borderRadius: 16,
-                        background: 'var(--salon-primary)',
-                        fontSize: 28, fontWeight: 600, border: '3px solid rgba(255,255,255,0.2)',
-                      }}
-                    >
-                      {member.name.charAt(0)}
-                    </Avatar>
-                    <div style={{
-                      position: 'absolute', top: 12, right: 12,
-                      display: 'flex', gap: 6,
-                    }}>
-                      <Tooltip title="Edit">
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<EditOutlined />}
-                          style={{
-                            borderRadius: 6, width: 28, height: 28,
-                            background: 'rgba(255,255,255,0.1)', color: '#fff',
-                          }}
-                          onClick={() => {
-                            setEditingMember({ ...member });
-                            setMemberModalOpen(true);
-                          }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Delete">
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<DeleteOutlined />}
-                          style={{
-                            borderRadius: 6, width: 28, height: 28,
-                            background: 'rgba(255,255,255,0.1)', color: 'color-mix(in srgb, var(--salon-primary) 70%, transparent)',
-                          }}
-                          onClick={() => handleDeleteMember(member.id)}
-                        />
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div style={{ padding: '16px 20px 20px' }}>
-                    <Text strong style={{ fontSize: 15, display: 'block' }}>{member.name}</Text>
-                    <Tag
-                      style={{
-                        borderRadius: 6, fontSize: 11, padding: '0 8px', marginTop: 4,
-                        border: 'none', background: 'color-mix(in srgb, var(--salon-secondary) 8%, transparent)', color: 'var(--salon-secondary)',
-                      }}
-                    >
-                      {member.role}
-                    </Tag>
-                    <div style={{ fontSize: 12, color: 'var(--theme-text-secondary)', marginTop: 10, lineHeight: 1.5 }}>
-                      {member.bio}
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-
-          <Modal
-            title={
-              <Space>
-                <TeamOutlined style={{ color: 'var(--salon-primary)' }} />
-                <span>{editingMember?.id ? 'Edit Team Member' : 'Add Team Member'}</span>
-              </Space>
-            }
-            open={memberModalOpen}
-            onCancel={() => { setMemberModalOpen(false); setEditingMember(null); }}
-            onOk={handleSaveMember}
-            okText="Save"
-            okButtonProps={{
-              style: { borderRadius: 10 },
-            }}
-            cancelButtonProps={{ style: { borderRadius: 10 } }}
-            width={520}
-          >
-            <div style={{ padding: '8px 0' }}>
-              <Space direction="vertical" size={16} style={{ width: '100%' }}>
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Name</Text>
-                  <Input
-                    value={editingMember?.name || ''}
-                    onChange={e => setEditingMember(prev => prev ? { ...prev, name: e.target.value } : null)}
-                    placeholder="Full name"
-                    style={{ borderRadius: 10 }}
-                  />
-                </div>
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Role</Text>
-                  <Input
-                    value={editingMember?.role || ''}
-                    onChange={e => setEditingMember(prev => prev ? { ...prev, role: e.target.value } : null)}
-                    placeholder="e.g. Senior Stylist"
-                    style={{ borderRadius: 10 }}
-                  />
-                </div>
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Bio</Text>
-                  <TextArea
-                    rows={3}
-                    value={editingMember?.bio || ''}
-                    onChange={e => setEditingMember(prev => prev ? { ...prev, bio: e.target.value } : null)}
-                    placeholder="Brief biography"
-                    style={{ borderRadius: 10, resize: 'none' }}
-                  />
-                </div>
-                <div>
-                  <Text strong style={{ fontSize: 13, display: 'block', marginBottom: 6 }}>Photo</Text>
-                  <Upload
-                    accept="image/*"
-                    showUploadList={false}
-                  >
-                    <Button icon={<UploadOutlined />} style={{ borderRadius: 10 }}>
-                      Upload Photo
-                    </Button>
-                  </Upload>
-                </div>
-              </Space>
-            </div>
-          </Modal>
-        </div>
-      ),
-    },
-    {
-      key: 'gallery',
-      label: (
-        <Space size={6}>
-          <PictureOutlined style={{ fontSize: 14 }} />
-          <span>Gallery</span>
-        </Space>
-      ),
-      children: (
-        <div>
-          {sectionHeader('Gallery', <PictureOutlined />)}
-
-          <Upload.Dragger
-            accept="image/*"
-            showUploadList={false}
-            style={{
-              borderRadius: 12, border: '2px dashed var(--theme-border-light)',
-              background: 'var(--theme-background)', marginBottom: 24,
-            }}
-          >
-            <div style={{ padding: 32 }}>
-              <UploadOutlined style={{ fontSize: 36, color: 'var(--theme-text-tertiary)' }} />
-              <div style={{ marginTop: 12, fontSize: 14, fontWeight: 600, color: 'var(--theme-text)' }}>
-                Drop images here or click to upload
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--theme-text-tertiary)', marginTop: 4 }}>
-                Supported: JPG, PNG, WebP — Max 5MB each
-              </div>
-            </div>
-          </Upload.Dragger>
-
-          <Row gutter={[16, 16]}>
-            {gallery.map(image => (
-              <Col xs={12} sm={8} lg={6} key={image.id}>
-                <div style={{
-                  borderRadius: 12, overflow: 'hidden',
-                  border: '1px solid var(--theme-border-light)',
-                  background: 'var(--theme-surface)',
-                  position: 'relative',
-                  transition: 'all 0.2s ease',
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--salon-primary) 30%, transparent)'; e.currentTarget.style.boxShadow = '0 4px 20px color-mix(in srgb, var(--salon-primary) 10%, transparent)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--theme-border-light)'; e.currentTarget.style.boxShadow = 'none'; }}
-                >
-                  <div style={{
-                    height: 140,
-                    background: 'linear-gradient(135deg, #1A0A12, #2C1020)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <PictureOutlined style={{ fontSize: 32, color: 'color-mix(in srgb, var(--salon-secondary) 30%, transparent)' }} />
-                  </div>
-                  <div style={{ padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 12, fontWeight: 600 }}>{image.caption}</Text>
-                    <Tooltip title="Delete">
-                      <Button
-                        type="text"
-                        size="small"
-                        icon={<DeleteOutlined />}
-                        style={{ color: 'var(--theme-text-tertiary)', borderRadius: 6 }}
-                        onClick={() => handleDeleteGallery(image.id)}
-                      />
-                    </Tooltip>
-                  </div>
-                </div>
-              </Col>
-            ))}
-          </Row>
-
-          <div style={{ marginTop: 20, textAlign: 'center' }}>
-            <Text style={{ fontSize: 12, color: 'var(--theme-text-tertiary)' }}>
-              {gallery.length} image{gallery.length !== 1 ? 's' : ''} in gallery
-            </Text>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: 'testimonials',
-      label: (
-        <Space size={6}>
-          <MessageOutlined style={{ fontSize: 14 }} />
-          <span>Testimonials</span>
-        </Space>
-      ),
-      children: (
-        <div>
-          {sectionHeader('Testimonials', <MessageOutlined />)}
-
-          <Row gutter={[20, 20]}>
-            {testimonials.map(testimonial => (
-              <Col xs={24} sm={12} lg={12} key={testimonial.id}>
-                <Card
-                  className="premium-card"
-                  styles={{ body: { padding: 20 } }}
-                  style={{
-                    opacity: testimonial.active ? 1 : 0.5,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                    <Space>
-                      <Avatar
-                        size={40}
-                        style={{
-                          borderRadius: 12,
-                          background: testimonial.active
-                            ? 'var(--salon-primary)'
-                            : 'var(--theme-text-tertiary)',
-                          fontSize: 16, fontWeight: 600,
-                        }}
-                      >
-                        {testimonial.customerName.charAt(0)}
-                      </Avatar>
-                      <div>
-                        <Text strong style={{ fontSize: 14 }}>{testimonial.customerName}</Text>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
-                          <Rate
-                            disabled
-                            value={testimonial.rating}
-                            style={{ fontSize: 12 }}
-                          />
-                          <Text style={{ fontSize: 11, color: 'var(--theme-text-tertiary)', marginLeft: 4 }}>
-                            {testimonial.date}
-                          </Text>
-                        </div>
-                      </div>
-                    </Space>
-                    <Space>
-                      <Tooltip title={testimonial.active ? 'Hide from website' : 'Show on website'}>
-                        <Switch
-                          size="small"
-                          checked={testimonial.active}
-                          onChange={() => handleToggleTestimonial(testimonial.id)}
-                          style={{
-                            background: testimonial.active ? 'var(--salon-primary)' : undefined,
-                          }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Delete">
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<DeleteOutlined />}
-                          style={{ borderRadius: 6, color: 'var(--theme-text-tertiary)' }}
-                          onClick={() => handleDeleteTestimonial(testimonial.id)}
-                        />
-                      </Tooltip>
-                    </Space>
-                  </div>
-
-                  <div style={{
-                    fontSize: 13, color: 'var(--theme-text-secondary)',
-                    lineHeight: 1.6, fontStyle: 'italic',
-                    padding: '8px 0 0 52px',
-                  }}>
-                    "{testimonial.reviewText}"
-                  </div>
-
-                  <div style={{ padding: '8px 0 0 52px' }}>
-                    {testimonial.active ? (
-                      <Tag
-                        style={{
-                          borderRadius: 6, fontSize: 10,
-                          border: 'none', background: 'color-mix(in srgb, #5B8C5A 8%, transparent)', color: '#5B8C5A',
-                        }}
-                      >
-                        <CheckCircleOutlined style={{ marginRight: 4 }} />
-                        Published
-                      </Tag>
-                    ) : (
-                      <Tag
-                        style={{
-                          borderRadius: 6, fontSize: 10,
-                          border: 'none', background: 'color-mix(in srgb, #7A6B5A 8%, transparent)', color: '#7A6B5A',
-                        }}
-                      >
-                        Draft
-                      </Tag>
-                    )}
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      ),
-    },
-  ];
-
   return (
-    <div>
-      {/* Page Header */}
-      <div className="page-header-row">
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
-            <div style={{
-              width: 40, height: 40, borderRadius: 12,
-              background: 'linear-gradient(135deg, color-mix(in srgb, var(--salon-primary) 10%, transparent), color-mix(in srgb, var(--salon-secondary) 10%, transparent))',
-              color: 'var(--salon-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
-            }}>
-              <CodeSandboxOutlined />
-            </div>
-            <h1 className="page-header-title" style={{ margin: 0 }}>Website CMS</h1>
-          </div>
-          <p className="page-header-subtitle">Manage your salon website content</p>
-        </div>
-        <Space>
-          <Button
-            icon={<EyeOutlined />}
-            style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }}
-          >
-            Preview Website
-          </Button>
-          <Button
-            type="primary"
-            icon={<CheckCircleOutlined />}
-            style={{
-              borderRadius: 10,
-            }}
-          >
-            Publish Changes
-          </Button>
-          <Button
-            type="primary"
-            icon={<SaveOutlined />}
-            style={{
-              borderRadius: 10,
-            }}
-          >
-            Save Draft
-          </Button>
-        </Space>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="CMS"
+        title="Website Content"
+        description="Manage your salon website content."
+        actions={
+          <>
+            <Button variant="outline" onClick={() => toast.success('Preview opened')}><Eye className="size-4" /> Preview Website</Button>
+            <Button variant="gold" onClick={() => toast.success('Changes published')}><Check className="size-4" /> Publish Changes</Button>
+          </>
+        }
+      />
 
-      {/* Tabs */}
-      <Card
-        className="premium-card"
-        styles={{ body: { padding: 0 } }}
-        style={{ border: 'none' }}
-      >
-        <Tabs
-          activeKey={activeTab}
-          onChange={setActiveTab}
-            className="salon-tabs"
-            tabBarStyle={{
-            padding: '4px 24px 0',
-            margin: 0,
-            background: 'var(--theme-surface)',
-            borderBottom: '1px solid var(--theme-border-light)',
-            borderRadius: '16px 16px 0 0',
-          }}
-          tabBarGutter={4}
-          items={tabItems.map(item => ({
-            ...item,
-            children: (
-              <div style={{ padding: 24 }}>
-                {item.children}
-              </div>
-            ),
-          }))}
-        />
-      </Card>
+      <Surface className="overflow-hidden p-0">
+        <Tabs defaultValue="hero">
+          <TabsList className="w-full justify-start rounded-none border-b border-border px-4">
+            {[
+              { value: 'hero', icon: <Image className="size-3.5" />, label: 'Hero Banner' },
+              { value: 'about', icon: <Info className="size-3.5" />, label: 'About' },
+              { value: 'team', icon: <Users className="size-3.5" />, label: 'Team' },
+              { value: 'gallery', icon: <Image className="size-3.5" />, label: 'Gallery' },
+              { value: 'testimonials', icon: <MessageSquare className="size-3.5" />, label: 'Testimonials' },
+            ].map((t) => (
+              <TabsTrigger key={t.value} value={t.value} className="gap-1.5">
+                {t.icon} {t.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <div className="p-6">
+            <TabsContent value="hero"><HeroTab heroData={heroData} setHeroData={setHeroData} /></TabsContent>
+            <TabsContent value="about"><AboutTab aboutData={aboutData} setAboutData={setAboutData} /></TabsContent>
+            <TabsContent value="team"><TeamTab team={team} setTeam={setTeam} /></TabsContent>
+            <TabsContent value="gallery"><GalleryTab gallery={gallery} setGallery={setGallery} /></TabsContent>
+            <TabsContent value="testimonials"><TestimonialsTab testimonials={testimonials} setTestimonials={setTestimonials} /></TabsContent>
+          </div>
+        </Tabs>
+      </Surface>
     </div>
   );
 }
 
 export default function WebsiteCMSPage() {
-  return <WebsiteCMSContent />;
+  return (
+    <Guard module="cms" name="Website CMS">
+      <WebsiteCMSContent />
+    </Guard>
+  );
 }

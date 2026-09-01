@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Form, Input, Button, Typography, Card } from 'antd';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Mail, Lock } from 'lucide-react';
+import { Surface } from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Input } from '@/components/owner/owner-portal/input';
 import { notification } from '../../../../utils/notification';
 import apiUtil from '../../../../utils/api';
 import AuthUtil from '../../../../utils/auth';
@@ -11,23 +13,21 @@ import EncryptUtils from '../../../../utils/encrypt';
 import { ApiAuthLogin } from '../../../../utils/api.constant';
 import { eResultCode } from '../../../../utils/enum';
 
-const { Title, Text } = Typography;
-
 export default function PortalLoginPage() {
   const [loading, setLoading] = useState(false);
-  const [form] = Form.useForm();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
   const params = useParams();
   const slug = params?.slug as string;
 
-  const onFinish = async (values: { emailId: string; password: string }) => {
+  const onFinish = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       setLoading(true);
-
-      const encryptedPassword = EncryptUtils.encrypt(values.password);
-
+      const encryptedPassword = EncryptUtils.encrypt(password);
       const response = await apiUtil.post(ApiAuthLogin, {
-        email: values.emailId,
+        email,
         password: encryptedPassword,
         tenantSlug: slug,
       });
@@ -38,10 +38,8 @@ export default function PortalLoginPage() {
       if (returnCode === eResultCode.SUCCESS || returnCode === eResultCode.CREATED) {
         const token = data?.accessToken || data?.token;
         if (token) AuthUtil.setToken(token);
-
         const role = data?.user?.role;
         notification.success('Login successful!');
-
         if (role === 'SALON_OWNER' || role === 'SALON_STAFF') {
           router.push(`/${slug}/owner/dashboard`);
         } else {
@@ -58,41 +56,57 @@ export default function PortalLoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '80px auto', padding: '0 16px' }}>
-      <Card style={{ borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <Title level={3} style={{ margin: 0 }}>Owner Portal</Title>
-          <Text type="secondary">Sign in to manage your salon</Text>
+    <div className="mx-auto max-w-[400px] px-4 py-20">
+      <Surface className="p-8">
+        <div className="mb-8 text-center">
+          <h1 className="text-display text-xl font-semibold">Owner Portal</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Sign in to manage your salon</p>
         </div>
 
-        <Form form={form} layout="vertical" onFinish={onFinish} size="large">
-          <Form.Item
-            name="emailId"
-            rules={[{ required: true, message: 'Please enter your email' }]}
-          >
-            <Input prefix={<MailOutlined />} placeholder="Email" />
-          </Form.Item>
+        <form onSubmit={onFinish} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="email" className="text-sm font-medium">Email</label>
+            <div className="relative">
+              <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="pl-9"
+              />
+            </div>
+          </div>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please enter your password' }]}
-          >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-          </Form.Item>
+          <div className="space-y-2">
+            <label htmlFor="password" className="text-sm font-medium">Password</label>
+            <div className="relative">
+              <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="pl-9"
+              />
+            </div>
+          </div>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} block>
-              Sign In
-            </Button>
-          </Form.Item>
-        </Form>
+          <Button type="submit" variant="gold" className="w-full" disabled={loading}>
+            {loading ? 'Signing in…' : 'Sign In'}
+          </Button>
+        </form>
 
-        <div style={{ textAlign: 'center' }}>
-          <Text type="secondary">
-            <a href={`/${slug}`} style={{ color: '#1890ff' }}>Back to salon website</a>
-          </Text>
-        </div>
-      </Card>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          <a href={`/${slug}`} className="text-azure hover:underline">
+            Back to salon website
+          </a>
+        </p>
+      </Surface>
     </div>
   );
 }

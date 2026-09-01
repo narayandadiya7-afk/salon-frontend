@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, DoorOpen, Grid3x3, Users } from 'lucide-react';
-import { Guard, PageHeader, StatusChip, Surface } from '@/components/portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Guard, PageHeader, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -33,7 +33,7 @@ const BLOCKS: Block[] = [
 ];
 
 const toneClass: Record<string, string> = {
-  gold: 'bg-gold-soft border-gold/40 text-gold-foreground',
+  gold: 'bg-gold-soft border-gold/40 text-gold',
   royal: 'bg-royal-soft border-royal/30 text-royal',
   azure: 'bg-azure-soft border-azure/30 text-azure',
   emerald: 'bg-emerald-soft border-emerald/30 text-emerald',
@@ -101,7 +101,7 @@ function CalendarPage() {
                   </span>
                   {busy && (
                     <div className="mt-1.5 space-y-1">
-                      <p className="truncate rounded bg-gold-soft px-1.5 py-0.5 text-[0.65rem] text-gold-foreground">
+                      <p className="truncate rounded bg-gold-soft px-1.5 py-0.5 text-[0.65rem] text-gold">
                         6 bookings
                       </p>
                       <p className="truncate rounded bg-emerald-soft px-1.5 py-0.5 text-[0.65rem] text-emerald">

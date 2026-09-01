@@ -18,8 +18,8 @@ import {
   UserRound,
   Scissors,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/owner/owner-portal/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +27,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+} from '@/components/owner/owner-portal/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/owner/owner-portal/popover';
 import {
   CommandDialog,
   CommandEmpty,
@@ -36,8 +36,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+} from '@/components/owner/owner-portal/command';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 import { SidebarNav } from './AppSidebar';
 import { useSession } from '@/lib/portal/session';
 import { NAV, navHref } from '@/lib/portal/nav';

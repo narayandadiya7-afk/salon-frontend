@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { Star, Play, ArrowRight } from 'lucide-react';
-import { PageHero, SectionHead, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, SectionHead, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { testimonials, galleryItems, stats } from '../../../../data/salon';
-import { useSite } from '../../../../components/site/site-context';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
 
 export default function TestimonialsPage() {
   const { slug } = useSite();

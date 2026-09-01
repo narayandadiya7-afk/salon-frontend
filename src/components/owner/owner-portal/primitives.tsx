@@ -7,8 +7,8 @@ import { Lock, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSession } from '@/lib/portal/session';
 import type { ModuleId, PermissionAction } from '@/lib/portal/rbac';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Skeleton } from '@/components/owner/owner-portal/skeleton';
 
 export function PageHeader({
   eyebrow,
@@ -81,7 +81,7 @@ export function SectionCard({
 }
 
 const toneMap = {
-  gold: 'bg-gold-soft text-gold-foreground',
+  gold: 'bg-gold-soft text-gold',
   royal: 'bg-royal-soft text-royal',
   azure: 'bg-azure-soft text-azure',
   emerald: 'bg-emerald-soft text-emerald',

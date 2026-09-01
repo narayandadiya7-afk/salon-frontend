@@ -16,7 +16,7 @@ const buttonVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        gold: 'bg-gold text-gold-foreground shadow-soft hover:brightness-105',
+        gold: 'bg-primary text-primary-foreground shadow-soft hover:brightness-110',
         royal: 'bg-royal text-royal-foreground shadow-soft hover:brightness-110',
         emerald: 'bg-emerald text-emerald-foreground shadow-soft hover:brightness-110',
         subtle: 'bg-muted text-foreground hover:bg-accent',

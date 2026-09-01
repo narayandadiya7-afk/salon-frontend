@@ -263,27 +263,31 @@ body.theme-slate {
 
 /* ==========================================
    BASE STYLES
+   Wrapped in @layer base so the admin portal's
+   AdminStyles.css (also @layer base) can override.
    ========================================== */
-*, *::before, *::after { box-sizing: border-box; }
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: "LexendRegular", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
-  color: var(--theme-text);
-  background-color: var(--theme-background);
-  transition: background-color var(--transition-base) var(--transition-timing),
-              color var(--transition-base) var(--transition-timing);
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "LexendRegular", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    color: var(--theme-text);
+    background-color: var(--theme-background);
+    transition: background-color var(--transition-base) var(--transition-timing),
+                color var(--transition-base) var(--transition-timing);
+  }
 }
 
 /* ==========================================
@@ -292,16 +296,16 @@ body {
    browser scrollbar, so these custom rules only apply when no portal
    shell is present on the page.
    ========================================== */
-:root:not(:has(.portal-shell))::-webkit-scrollbar,
-:root:not(:has(.portal-shell)) *::-webkit-scrollbar { width: 6px; height: 6px; }
-:root:not(:has(.portal-shell))::-webkit-scrollbar-track,
-:root:not(:has(.portal-shell)) *::-webkit-scrollbar-track { background: var(--theme-background); }
-:root:not(:has(.portal-shell))::-webkit-scrollbar-thumb,
-:root:not(:has(.portal-shell)) *::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
-:root:not(:has(.portal-shell))::-webkit-scrollbar-thumb:hover,
-:root:not(:has(.portal-shell)) *::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
-:root:not(:has(.portal-shell)),
-:root:not(:has(.portal-shell)) * { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell))::-webkit-scrollbar,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)) *::-webkit-scrollbar { width: 6px; height: 6px; }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell))::-webkit-scrollbar-track,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)) *::-webkit-scrollbar-track { background: var(--theme-background); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell))::-webkit-scrollbar-thumb,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)) *::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell))::-webkit-scrollbar-thumb:hover,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)) *::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)),
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)) * { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
 
 /* ==========================================
    ANT DESIGN BREADCRUMB
@@ -663,7 +667,7 @@ nextjs-portal {
   display: none !important;
 }
 
-body {
+body:not(.portal-shell):not(.admin-shell) {
   top: 0 !important;
   position: static !important;
 }

@@ -42,10 +42,10 @@ import {
   StatCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
+} from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
+import { Progress } from '@/components/owner/owner-portal/progress';
 import { useSession } from '@/lib/portal/session';
 import {
   acquisition,
@@ -62,22 +62,13 @@ import {
 
 const chartColors = ['var(--gold)', 'var(--royal)', 'var(--azure)', 'var(--emerald)', 'var(--chart-5)'];
 
-interface ChartTipProps {
-  active?: boolean;
-  payload?: Array<{ dataKey?: string | number; name?: string | number; value?: string | number }>;
-  label?: string | number;
-  series?: Array<string | number>;
-}
-
-function ChartTip({ active, payload, label, series }: ChartTipProps) {
+function ChartTip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
-  const shown = series?.length ? payload.filter((p) => series.includes(p.dataKey as string | number)) : payload;
-  if (!shown.length) return null;
   return (
     <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-[var(--shadow-lifted)]">
       <p className="font-semibold text-popover-foreground">{label}</p>
-      {shown.map((p) => (
-        <p key={String(p.dataKey)} className="mt-0.5 text-muted-foreground">
+      {payload.map((p: any) => (
+        <p key={p.dataKey} className="mt-0.5 text-muted-foreground">
           {p.name}: <span className="font-medium text-popover-foreground">{p.value}</span>
         </p>
       ))}
@@ -111,7 +102,7 @@ function Dashboard() {
               </Button>
             )}
             {can('reports', 'export') && (
-              <Button variant="outline" onClick={() => toast.info('Preparing PDF export…')}>
+              <Button variant="outline" onClick={() => toast('Preparing PDF export…')}>
                 Export report
               </Button>
             )}
@@ -146,7 +137,7 @@ function Dashboard() {
         >
           <div className="h-[280px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={revenueByDay} margin={{ left: -18, right: 8, top: 8 }} accessibilityLayer={false}>
+              <AreaChart data={revenueByDay} margin={{ left: -18, right: 8, top: 8 }}>
                 <defs>
                   <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="var(--gold)" stopOpacity={0.45} />
@@ -156,7 +147,7 @@ function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                 <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
                 <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
-                <Tooltip content={<ChartTip series={['revenue']} />} />
+                <Tooltip content={<ChartTip />} />
                 <Area type="monotone" dataKey="revenue" name="This week" stroke="var(--gold)" strokeWidth={2.5} fill="url(#rev)" />
               </AreaChart>
             </ResponsiveContainer>
@@ -166,8 +157,8 @@ function Dashboard() {
         <SectionCard title="Service popularity" description="Share of bookings, 30 days">
           <div className="h-[280px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-                <PieChart accessibilityLayer={false}>
-                  <Pie data={servicePopularity} dataKey="value" nameKey="name" innerRadius={62} outerRadius={98} paddingAngle={3} stroke="none" rootTabIndex={-1}>
+                <PieChart>
+                  <Pie data={servicePopularity} dataKey="value" nameKey="name" innerRadius={62} outerRadius={98} paddingAngle={3} stroke="none">
                   {servicePopularity.map((_, i) => (
                     <Cell key={i} fill={chartColors[i % chartColors.length]} />
                   ))}
@@ -276,7 +267,7 @@ function Dashboard() {
           <SectionCard title="Customer acquisition" description="New vs. returning, 6 months">
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={acquisition} margin={{ left: -22, right: 4 }} accessibilityLayer={false}>
+                <BarChart data={acquisition} margin={{ left: -22, right: 4 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                   <XAxis dataKey="month" tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
                   <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
@@ -291,7 +282,7 @@ function Dashboard() {
           <SectionCard title="Monthly revenue" description="Services vs. retail">
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={monthlyRevenue} margin={{ left: -12, right: 4 }} accessibilityLayer={false}>
+                <LineChart data={monthlyRevenue} margin={{ left: -12, right: 4 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                   <XAxis dataKey="month" tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
                   <YAxis hide />

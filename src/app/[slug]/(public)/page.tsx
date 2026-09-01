@@ -15,14 +15,14 @@ import {
   Clock,
   Check,
 } from 'lucide-react';
-import { Instagram } from '../../../components/site/brand-icons';
+import { Instagram } from '../../../components/owner/owner-website/brand-icons';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '../../../components/ui/accordion';
-import { SectionHead, ServiceCard, usePageMeta } from '../../../components/site/ui';
+} from '../../../components/owner/owner-website/accordion';
+import { SectionHead, ServiceCard, usePageMeta } from '../../../components/owner/owner-website/ui';
 import {
   salon,
   services,
@@ -34,7 +34,7 @@ import {
   faqs,
   galleryItems,
 } from '../../../data/salon';
-import { useSite } from '../../../components/site/site-context';
+import { useSite } from '../../../components/owner/owner-website/site-context';
 import heroImg from '../../../assets/hero.jpg';
 import aboutImg from '../../../assets/about.jpg';
 

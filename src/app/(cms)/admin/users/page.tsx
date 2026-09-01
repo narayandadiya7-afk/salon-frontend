@@ -1,214 +1,133 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  Button, Space, Typography, Card,
-  Drawer, Tooltip, Popconfirm, Tag, Avatar, Input,
-} from 'antd';
-import type { TablePaginationConfig } from 'antd/es/table';
-import {
-  PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined,
-  TeamOutlined,
-} from '@ant-design/icons';
-import DataTable from '@/components/super-admin/DataTable';
-import StatusBadge from '@/components/super-admin/StatusBadge';
-import useFetch from '@/hooks/useFetch';
-import { TFilterModel } from '@/types/config';
-import { defaultFilterParams } from '@/utils/constants';
-import { eResultCode } from '@/utils/enum';
-import notification from '@/utils/notification';
-import UserForm from './form';
-import './Users.css';
-import { GetUserList, DeleteUser } from '@/utils/api.constant';
-
-const { Title, Text } = Typography;
-
-interface TUserRow {
-  id: string; userName: string;
-  emailId: string; mobileNumber?: string; roleName?: string;
-  isdeleted: number; createdOn: string;
-}
-
-type TEditMode = { enable: boolean; data: TUserRow | null };
+import { useState } from "react";
+import { MoreHorizontal, Search, UserPlus, Users as UsersIcon, ShieldCheck, UserX } from "lucide-react";
+import { PageHeader, KpiCard, Panel, StatusBadge } from "@/components/admin/admin-portal/primitives";
+import { Button } from "@/components/admin/admin-portal/button";
+import { Input } from "@/components/admin/admin-portal/input";
+import { Label } from "@/components/admin/admin-portal/label";
+import { Avatar, AvatarFallback } from "@/components/admin/admin-portal/avatar";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/admin/admin-portal/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/admin/admin-portal/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/admin/admin-portal/select";
+import { platformUsers } from "@/components/admin/admin-portal/mock-data";
 
 export default function UsersPage() {
-  const { post } = useFetch();
-  const [data, setData] = useState<TUserRow[]>([]);
-  const [totalRows, setTotalRows] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [filterParams, setFilterParams] = useState<TFilterModel>({ ...defaultFilterParams });
-  const filterParamsRef = useRef(filterParams);
-  filterParamsRef.current = filterParams;
-  const [fetchTrigger, setFetchTrigger] = useState(0);
-  const [isEditing, setIsEditing] = useState<TEditMode>({ enable: false, data: null });
-  const [addDrawerOpen, setAddDrawerOpen] = useState(false);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await post(GetUserList, {
-        data: { ...filterParamsRef.current },
-      });
-      const { dataResponse, data: rows, filterModel } = response;
-      if (dataResponse?.returnCode === eResultCode.SUCCESS) {
-        setData(rows || []);
-        if (filterModel?.totalRows !== undefined) setTotalRows(filterModel.totalRows);
-      }
-    } catch {
-      notification.error('Failed to load users');
-    } finally {
-      setLoading(false);
-    }
-  }, [post]);
-
-  const initialFetchDone = useRef(false);
-
-  useEffect(() => {
-    if (initialFetchDone.current && fetchTrigger === 0) return;
-    initialFetchDone.current = true;
-    fetchData();
-  }, [fetchTrigger]);
-
-  const handleSearch = (value: string) => {
-    setFilterParams((prev) => ({ ...prev, searchText: value, currentPage: 1 }));
-    setFetchTrigger((t) => t + 1);
-  };
-
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    setFilterParams((prev) => ({ ...prev, currentPage: pagination.current || 1, pageSize: pagination.pageSize || 10 }));
-    setFetchTrigger((t) => t + 1);
-  };
-
-  const handleReset = () => {
-    setFilterParams({ ...defaultFilterParams });
-    setFetchTrigger((t) => t + 1);
-  };
-
-  const handleDelete = async (id: string) => {
-    try {
-      const response = await post(DeleteUser, { data: { id } });
-      if (response?.dataResponse?.returnCode === eResultCode.SUCCESS) {
-        notification.success('User deleted successfully');
-        fetchData();
-      } else {
-        notification.error(response?.dataResponse?.description || 'Failed to delete user');
-      }
-    } catch {
-      notification.error('Failed to delete user');
-    }
-  };
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U';
-  };
-
-  const columns = [
-    {
-      title: 'User', key: 'user',
-      render: (_: any, record: TUserRow) => (
-        <Space>
-          <Avatar size={28} style={{ background: '#d4a853', fontSize: 12, fontWeight: 600 }}>
-            {getInitials(record.userName)}
-          </Avatar>
-          <div>
-            <Text strong style={{ fontSize: 13 }}>{record.userName}</Text>
-            <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>{record.emailId}</Text>
-          </div>
-        </Space>
-      ),
-    },
-    {
-      title: 'Mobile', dataIndex: 'mobileNumber', key: 'mobileNumber',
-      render: (mobile: string) => mobile ? <Text style={{ fontSize: 12 }}>{mobile}</Text> : <Text type="secondary" style={{ fontSize: 12 }}>—</Text>,
-    },
-    {
-      title: 'Role', dataIndex: 'roleName', key: 'roleName',
-      render: (role: string) => <Tag>{role || '—'}</Tag>,
-    },
-    {
-      title: 'Status', key: 'status',
-      render: (_: any, record: TUserRow) => (
-        <StatusBadge status={record.isdeleted === 1 ? 'suspended' : 'active'} />
-      ),
-    },
-    {
-      title: 'Actions', key: 'action', width: 140, align: 'center' as const,
-      render: (_: any, record: TUserRow) => (
-        <Space size={4}>
-          <Tooltip title="Edit">
-            <Button type="link" size="small" icon={<EditOutlined />} className="super-action-btn"
-              onClick={() => setIsEditing({ enable: true, data: record })} />
-          </Tooltip>
-          <Popconfirm title="Delete this user?" onConfirm={() => handleDelete(record.id)} okText="Yes" cancelText="No">
-            <Tooltip title="Delete">
-              <Button type="link" size="small" icon={<DeleteOutlined />} className="super-action-btn" danger />
-            </Tooltip>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
+  const [query, setQuery] = useState("");
+  const rows = platformUsers.filter(
+    (u) => u.name.toLowerCase().includes(query.toLowerCase()) || u.email.toLowerCase().includes(query.toLowerCase()),
+  );
 
   return (
-    <div className="super-page">
-      <div className="super-page-header">
-        <div>
-          <Title level={4} className="super-page-title">
-            <TeamOutlined className="super-page-icon" /> User Management
-          </Title>
-          <Text type="secondary">Manage platform administrators and their access</Text>
-        </div>
-        <Space>
-          <Button type="primary" icon={<PlusOutlined />}
-            style={{ background: '#d4a853', borderColor: '#d4a853' }}
-            onClick={() => setAddDrawerOpen(true)}>
-            Add User
-          </Button>
-          <Input.Search
-            placeholder="Search users by name or email..."
-            onSearch={handleSearch}
-            allowClear
-            style={{ width: 240 }}
-          />
-          <Tooltip title="Reset">
-            <Button icon={<ReloadOutlined />} onClick={handleReset} />
-          </Tooltip>
-        </Space>
+    <>
+      <PageHeader
+        title="Users"
+        description="Internal administrators with access to the super admin portal."
+        breadcrumb={["Home", "Users"]}
+        actions={
+          <Dialog>
+            <DialogTrigger asChild><Button><UserPlus className="size-4" /> Invite user</Button></DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Invite a platform user</DialogTitle>
+                <DialogDescription>They receive an email invite and must enable MFA on first sign-in.</DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-2">
+                <div className="grid gap-2">
+                  <Label htmlFor="invite-email">Work email</Label>
+                  <Input id="invite-email" type="email" placeholder="name@salonos.io" />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="invite-role">Role</Label>
+                  <Select defaultValue="Support Agent">
+                    <SelectTrigger id="invite-role"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Super Admin">Super Admin</SelectItem>
+                      <SelectItem value="Billing Manager">Billing Manager</SelectItem>
+                      <SelectItem value="Support Lead">Support Lead</SelectItem>
+                      <SelectItem value="Support Agent">Support Agent</SelectItem>
+                      <SelectItem value="Analyst">Analyst</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline">Cancel</Button>
+                <Button>Send invite</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        }
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <KpiCard label="Platform users" value="34" delta={5.9} icon={UsersIcon} />
+        <KpiCard label="MFA enabled" value="88%" delta={4.1} icon={ShieldCheck} tone="success" />
+        <KpiCard label="Pending invites" value="3" icon={UserPlus} tone="warning" />
+        <KpiCard label="Suspended" value="1" icon={UserX} tone="destructive" />
       </div>
 
-
-      <Card className="super-page-card" variant="borderless">
-        <DataTable
-          columns={columns}
-          dataSource={data}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            current: filterParams.currentPage,
-            pageSize: filterParams.pageSize,
-            total: totalRows,
-            showSizeChanger: true,
-            showTotal: (total: number) => `Total ${total} users`,
-            pageSizeOptions: ['10', '20', '50', '100'],
-          }}
-          onChange={handleTableChange}
-          scroll={{ x: 900 }}
-        />
-      </Card>
-
-      <Drawer title="Add New User" placement="right"
-        open={addDrawerOpen} onClose={() => setAddDrawerOpen(false)} closable destroyOnClose
-        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-        <UserForm id={0} onCloseDrawer={() => setAddDrawerOpen(false)} onRefreshList={fetchData} />
-      </Drawer>
-
-      <Drawer title="Edit User" placement="right"
-        open={isEditing.enable} onClose={() => setIsEditing({ enable: false, data: null })} closable destroyOnClose
-        styles={{ wrapper: { width: 600 }, body: { padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' } }}>
-        <UserForm id={isEditing.data?.id ?? 0} onCloseDrawer={() => setIsEditing({ enable: false, data: null })} onRefreshList={fetchData} />
-      </Drawer>
-
-
-    </div>
+      <Panel className="mt-6" bodyClassName="p-0">
+        <div className="border-b border-border p-4">
+          <div className="relative max-w-sm">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search users…" aria-label="Search users" className="pl-9" />
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>User</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>MFA</TableHead>
+                <TableHead>Last login</TableHead>
+                <TableHead className="w-10" />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map((u) => (
+                <TableRow key={u.email}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="size-9">
+                        <AvatarFallback className="bg-primary/10 text-[11px] font-semibold text-primary">
+                          {u.name.split(" ").map((n) => n[0]).join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-sm font-medium">{u.name}</p>
+                        <p className="text-xs text-muted-foreground">{u.email}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-sm">{u.role}</TableCell>
+                  <TableCell><StatusBadge status={u.status} /></TableCell>
+                  <TableCell><StatusBadge status={u.mfa ? "active" : "pending"} /></TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{u.lastLogin}</TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" aria-label={`Actions for ${u.name}`}><MoreHorizontal className="size-4" /></Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Edit user</DropdownMenuItem>
+                        <DropdownMenuItem>Assign roles</DropdownMenuItem>
+                        <DropdownMenuItem>Reset password</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Suspend</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </Panel>
+    </>
   );
 }

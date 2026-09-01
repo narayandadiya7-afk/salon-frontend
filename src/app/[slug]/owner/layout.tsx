@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/styles/owner-portal.css';
-import { PortalShell } from '@/components/portal/PortalShell';
+import { PortalShell } from '@/components/owner/owner-portal/PortalShell';
 
 export const metadata: Metadata = {
   title: 'Maison Lumière — Business OS',

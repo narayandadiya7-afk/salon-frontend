@@ -25,23 +25,23 @@ import {
   StatCard,
   StatusChip,
   Surface,
-} from '@/components/portal/primitives';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+} from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Input } from '@/components/owner/owner-portal/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
+import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+} from '@/components/owner/owner-portal/dropdown-menu';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/owner/owner-portal/select';
 import { appointments, type Appointment, type AppointmentStatus } from '@/data/portal';
 import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';
-import type { Tone } from '@/components/portal/primitives';
+import type { Tone } from '@/components/owner/owner-portal/primitives';
 
 const statusTone: Record<AppointmentStatus, Tone | 'danger' | 'warning'> = {
   confirmed: 'azure',
@@ -84,7 +84,7 @@ function BookingCard({ a }: { a: Appointment }) {
         <StatusChip tone={a.paid ? 'emerald' : 'neutral'}>{a.paid ? 'Paid' : 'Unpaid'}</StatusChip>
       </div>
       {a.notes && (
-        <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold-foreground">{a.notes}</p>
+        <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold">{a.notes}</p>
       )}
       {can('appointments', 'edit') && (
         <div className="mt-3 flex flex-wrap gap-2">

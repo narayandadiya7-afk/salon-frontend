@@ -1,7 +1,7 @@
 'use client';
 
 import { Boxes, Crown, Scissors, Tag } from 'lucide-react';
-import { ModulePage } from '@/components/portal/ModulePage';
+import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 
 export default function ServicesPage() {
   return (

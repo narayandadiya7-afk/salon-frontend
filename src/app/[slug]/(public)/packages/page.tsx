@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { Check, ArrowRight } from 'lucide-react';
-import { PageHero, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { packages } from '../../../../data/salon';
-import { useSite } from '../../../../components/site/site-context';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
 
 export default function PackagesPage() {
   const { slug } = useSite();

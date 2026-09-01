@@ -86,6 +86,17 @@
 :root {
   --radius: 0.875rem;
 
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --shadow-soft: 0 1px 2px oklch(0.2 0.02 60 / 0.04), 0 8px 24px -12px oklch(0.2 0.02 60 / 0.12);
+  --shadow-lifted: 0 2px 4px oklch(0.2 0.02 60 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 60 / 0.22);
+
   --background: oklch(0.985 0.004 85);
   --foreground: oklch(0.22 0.012 60);
   --card: oklch(1 0 0);
@@ -173,6 +184,7 @@
   --azure-soft: oklch(0.3 0.055 255);
   --emerald-soft: oklch(0.3 0.05 160);
   --warning-soft: oklch(0.32 0.06 82);
+  --warning-foreground: oklch(0.92 0.04 80);
 
   --sidebar: oklch(0.145 0.01 62);
   --sidebar-foreground: oklch(0.88 0.008 80);
@@ -238,6 +250,20 @@
     color-mix(in oklab, var(--gold) 60%, transparent),
     transparent
   );
+}
+
+/*
+ * Override body color inheritance inside the portal.
+ *
+ * globals.css (unlayered) sets `body { color: var(--theme-text) }` which
+ * beats any `@layer base` rule.  Every element without an explicit Tailwind
+ * `text-*` class inherits that dark color — invisible on a dark background
+ * when the portal's own `.dark` toggle is active.  Setting `color` on
+ * `.portal-shell` (unlayered) fixes the inheritance chain for all portal
+ * descendants, because `color` is an inherited property.
+ */
+.portal-shell {
+  color: var(--foreground);
 }
 
 /*

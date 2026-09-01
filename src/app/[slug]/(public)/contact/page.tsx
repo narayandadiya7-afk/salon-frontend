@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, ArrowRight, Check } from 'lucide-react';
-import { Instagram, Facebook } from '../../../../components/site/brand-icons';
+import { Instagram, Facebook } from '../../../../components/owner/owner-website/brand-icons';
 import { z } from 'zod';
-import { PageHero, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { salon } from '../../../../data/salon';
-import { useSite } from '../../../../components/site/site-context';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
 
 const schema = z.object({
   name: z.string().trim().min(1, 'Please enter your name').max(100),

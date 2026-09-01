@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { PageHero, SectionHead, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, SectionHead, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { stylists, stats } from '../../../../data/salon';
-import { useSite } from '../../../../components/site/site-context';
+import { useSite } from '../../../../components/owner/owner-website/site-context';
 import aboutImg from '../../../../assets/about.jpg';
 import heroImg from '../../../../assets/hero.jpg';
 

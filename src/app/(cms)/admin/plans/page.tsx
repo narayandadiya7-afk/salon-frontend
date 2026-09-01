@@ -1,192 +1,140 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Row, Col, Card, Typography, Space, Button, Tag, Switch, Modal, Form, Input, Select, InputNumber, Divider } from 'antd';
-import {
-  GiftOutlined, PlusOutlined, CheckOutlined, TeamOutlined,
-  DollarOutlined, EditOutlined, ThunderboltOutlined, CrownOutlined, StarOutlined,
-  CloseOutlined, BarChartOutlined, ArrowUpOutlined,
-} from '@ant-design/icons';
-import DataTable from '../../../../components/super-admin/DataTable';
-import StatusBadge from '../../../../components/super-admin/StatusBadge';
-import StatCard from '../../../../components/super-admin/StatCard';
-import BarChart from '../../../../components/super-admin/BarChart';
-import './Plans.css';
+import { Check, Plus, Sparkles } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { PageHeader, KpiCard, Panel } from "@/components/admin/admin-portal/primitives";
+import { Button } from "@/components/admin/admin-portal/button";
+import { Badge } from "@/components/admin/admin-portal/badge";
+import { Input } from "@/components/admin/admin-portal/input";
+import { Label } from "@/components/admin/admin-portal/label";
+import { Switch } from "@/components/admin/admin-portal/switch";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/admin/admin-portal/dialog";
+import { currency, planCatalog } from "@/components/admin/admin-portal/mock-data";
+import { cn } from "@/lib/utils";
 
-const { Text, Title } = Typography;
-
-const plans = [
-  { key: 'starter', name: 'Starter', price: '$99', cycle: '/month', yearlyPrice: '$999', icon: <StarOutlined />, color: '#3b82f6', subscribers: 485, status: true, trialDays: 14,
-    features: ['Up to 3 staff', 'Basic analytics', 'Email support', '1 salon location', 'Booking widget'] },
-  { key: 'growth', name: 'Growth', price: '$299', cycle: '/month', yearlyPrice: '$2,999', icon: <ThunderboltOutlined />, color: '#10b981', subscribers: 372, status: true, trialDays: 14,
-    features: ['Up to 10 staff', 'Advanced analytics', 'Priority support', '3 salon locations', 'Marketing tools', 'API access'] },
-  { key: 'professional', name: 'Professional', price: '$599', cycle: '/month', yearlyPrice: '$5,999', icon: <CrownOutlined />, color: '#d4a853', subscribers: 218, status: true, trialDays: 14,
-    features: ['Unlimited staff', 'Full analytics suite', '24/7 phone support', 'Unlimited locations', 'Marketing automation', 'API access', 'Custom domain', 'White-label option'] },
-  { key: 'enterprise', name: 'Enterprise', price: '$999', cycle: '/month', yearlyPrice: '$9,999', icon: <DollarOutlined />, color: '#8b5cf6', subscribers: 89, status: true, trialDays: 30,
-    features: ['Everything in Professional', 'Dedicated account manager', 'Custom integrations', 'SLA guarantee', 'On-premise option', 'Advanced security', 'Multi-region deployment'] },
-];
-
-const allFeatures = [
-  'Up to 3 staff', 'Up to 10 staff', 'Unlimited staff', 'Basic analytics', 'Advanced analytics',
-  'Full analytics suite', 'Email support', 'Priority support', '24/7 phone support',
-  '1 salon location', '3 salon locations', 'Unlimited locations', 'Booking widget',
-  'Marketing tools', 'Marketing automation', 'API access', 'Custom domain',
-  'White-label option', 'Dedicated account manager', 'Custom integrations',
-  'SLA guarantee', 'On-premise option', 'Advanced security', 'Multi-region deployment',
-];
-
-const planRevenueData = [
-  { label: 'Enterprise', value: 89000, color: '#8b5cf6' },
-  { label: 'Professional', value: 130000, color: '#d4a853' },
-  { label: 'Growth', value: 111000, color: '#10b981' },
-  { label: 'Starter', value: 48000, color: '#3b82f6' },
-];
-
-const upgradeTrends = [
-  { key: '1', from: 'Starter', to: 'Growth', count: 28 },
-  { key: '2', from: 'Growth', to: 'Professional', count: 15 },
-  { key: '3', from: 'Professional', to: 'Enterprise', count: 7 },
-  { key: '4', from: 'Starter', to: 'Professional', count: 5 },
+const revenueByPlan = [
+  { plan: "Starter", revenue: 23814 },
+  { plan: "Professional", revenue: 61388 },
+  { plan: "Business", revenue: 86901 },
+  { plan: "Enterprise", revenue: 86304 },
 ];
 
 export default function PlansPage() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState<any>(null);
-
-  const openEdit = (plan: any) => { setEditingPlan(plan); setModalOpen(true); };
-  const openCreate = () => { setEditingPlan(null); setModalOpen(true); };
-
   return (
-    <div className="super-page">
-      <div className="super-page-header">
-        <div>
-          <Title level={4} className="super-page-title"><GiftOutlined className="super-page-icon" /> Subscription Plans</Title>
-          <Text type="secondary">Manage platform subscription plans, pricing, and feature tiers</Text>
-        </div>
-        <Button type="primary" icon={<PlusOutlined />} style={{ background: '#d4a853', borderColor: '#d4a853' }} onClick={openCreate}>Create Plan</Button>
+    <>
+      <PageHeader
+        title="Subscription Plans"
+        description="Define what each tier includes, how it is priced and which modules unlock."
+        breadcrumb={["Home", "Subscription Plans"]}
+        actions={
+          <Dialog>
+            <DialogTrigger asChild><Button><Plus className="size-4" /> Create plan</Button></DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create a plan</DialogTitle>
+                <DialogDescription>Plans become available to new tenants immediately after publishing.</DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-2">
+                <div className="grid gap-2">
+                  <Label htmlFor="plan-name">Plan name</Label>
+                  <Input id="plan-name" placeholder="e.g. Growth" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="plan-monthly">Monthly price</Label>
+                    <Input id="plan-monthly" type="number" placeholder="149" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="plan-yearly">Yearly price</Label>
+                    <Input id="plan-yearly" type="number" placeholder="1490" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="plan-trial">Trial days</Label>
+                    <Input id="plan-trial" type="number" placeholder="14" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="plan-seats">Staff limit</Label>
+                    <Input id="plan-seats" type="number" placeholder="20" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between rounded-lg border border-border px-3 py-2.5">
+                  <Label htmlFor="plan-public" className="text-sm font-normal">Publicly listed on pricing page</Label>
+                  <Switch id="plan-public" defaultChecked />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline">Cancel</Button>
+                <Button>Publish plan</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        }
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <KpiCard label="Active plans" value="4" hint="1 draft" />
+        <KpiCard label="Expiring in 30 days" value="186" delta={-6.4} tone="warning" />
+        <KpiCard label="Failed renewals" value="24" delta={-11.2} tone="destructive" />
+        <KpiCard label="Upgrade rate" value="8.6%" delta={1.9} tone="success" />
       </div>
 
-      <div className="plans-stats-row">
-        <Row gutter={[16, 16]}>
-          <Col xs={12} sm={6}><Card className="plans-stat-card" variant="borderless"><Text className="plans-stat-value">$1.2M</Text><Text className="plans-stat-label">Total MRR</Text></Card></Col>
-          <Col xs={12} sm={6}><Card className="plans-stat-card" variant="borderless"><Text className="plans-stat-value">1,164</Text><Text className="plans-stat-label">Active Subscribers</Text></Card></Col>
-          <Col xs={12} sm={6}><Card className="plans-stat-card" variant="borderless"><Text className="plans-stat-value">4</Text><Text className="plans-stat-label">Active Plans</Text></Card></Col>
-          <Col xs={12} sm={6}><Card className="plans-stat-card" variant="borderless"><Text className="plans-stat-value">$291</Text><Text className="plans-stat-label">Avg. Revenue/User</Text></Card></Col>
-        </Row>
-      </div>
-
-      <Row gutter={[16, 16]}>
-        {plans.map((plan) => (
-          <Col xs={24} sm={12} lg={6} key={plan.key}>
-            <Card className={`plans-card ${plan.key}`} variant="borderless">
-              <div className="plans-card-header">
-                <div className="plans-card-icon" style={{ background: `${plan.color}15`, color: plan.color }}>{plan.icon}</div>
-                <Space>
-                  <Switch defaultChecked={plan.status} size="small" />
-                  <Button type="text" size="small" icon={<EditOutlined />} onClick={() => openEdit(plan)} />
-                </Space>
-              </div>
-              <Title level={4} className="plans-card-name">{plan.name}</Title>
-              <div className="plans-card-price">
-                <Text className="plans-price">{plan.price}</Text>
-                <Text className="plans-cycle">{plan.cycle}</Text>
-              </div>
-              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 12 }}>{plan.yearlyPrice}/year</Text>
-              <div className="plans-card-subscribers"><TeamOutlined /> {plan.subscribers} subscribers</div>
-              <div className="plans-card-features">
-                {plan.features.map((f, i) => (
-                  <div key={i} className="plans-card-feature"><CheckOutlined style={{ color: '#10b981', fontSize: 12 }} /> {f}</div>
-                ))}
-              </div>
-              <Tag style={{ marginTop: 8 }}>{plan.trialDays}-day trial</Tag>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
-        <Col xs={24} lg={12}>
-          <Card className="super-page-card" variant="borderless" title={<span className="card-title">Revenue by Plan</span>}>
-            <BarChart data={planRevenueData} height={240} formatValue={(v) => `$${(v / 1000).toFixed(0)}k`} />
-          </Card>
-        </Col>
-
-        <Col xs={24} lg={12}>
-          <Card className="super-page-card" variant="borderless" title={<span className="card-title">Upgrade Trends</span>}>
-            <DataTable columns={[
-              { title: 'From', dataIndex: 'from', key: 'from', render: (f: string) => <Tag>{f}</Tag> },
-              { title: 'To', dataIndex: 'to', key: 'to', render: (t: string) => <Tag color="gold">{t}</Tag> },
-              { title: 'Upgrades', dataIndex: 'count', key: 'count', render: (c: number) => <Text strong>{c}</Text> },
-              { title: 'Trend', key: 'trend', render: () => <ArrowUpOutlined style={{ color: '#10b981' }} /> },
-            ]} dataSource={upgradeTrends} pagination={false} />
-          </Card>
-        </Col>
-      </Row>
-
-      <Modal
-        title={editingPlan ? `Edit ${editingPlan.name} Plan` : 'Create New Plan'}
-        open={modalOpen}
-        onCancel={() => setModalOpen(false)}
-        footer={null}
-        width={640}
-      >
-        <Form layout="vertical">
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item label="Plan Name" required>
-                <Input defaultValue={editingPlan?.name} placeholder="e.g., Professional" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Status">
-                <Switch defaultChecked={editingPlan?.status !== false} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider>Pricing</Divider>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item label="Monthly Price ($)" required>
-                <InputNumber defaultValue={parseInt(editingPlan?.price?.replace('$', '') || '0')} min={0} style={{ width: '100%' }} prefix="$" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Yearly Price ($)">
-                <InputNumber defaultValue={parseInt(editingPlan?.yearlyPrice?.replace(/[$,]/g, '') || '0')} min={0} style={{ width: '100%' }} prefix="$" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Form.Item label="Trial Days">
-            <InputNumber defaultValue={editingPlan?.trialDays || 14} min={0} max={90} style={{ width: 200 }} />
-          </Form.Item>
-
-          <Divider>Features</Divider>
-
-          <Form.Item label="Included Features">
-            <Select
-              mode="multiple"
-              defaultValue={editingPlan?.features || []}
-              style={{ width: '100%' }}
-              placeholder="Select features"
-              options={allFeatures.map((f) => ({ label: f, value: f }))}
-            />
-          </Form.Item>
-
-          <Divider />
-
-          <div style={{ textAlign: 'right' }}>
-            <Space>
-              <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-              <Button type="primary" style={{ background: '#d4a853', borderColor: '#d4a853' }}>
-                {editingPlan ? 'Save Changes' : 'Create Plan'}
-              </Button>
-            </Space>
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {planCatalog.map((p) => (
+          <div
+            key={p.name}
+            className={cn(
+              "surface-card flex flex-col p-6 transition-shadow hover:shadow-[var(--shadow-elevated)]",
+              p.popular && "ring-2 ring-primary",
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-semibold">{p.name}</h3>
+              {p.popular && <Badge className="gap-1"><Sparkles className="size-3" /> Popular</Badge>}
+            </div>
+            <p className="mt-4 text-3xl font-semibold tracking-tight tabular-nums">{currency(p.price)}</p>
+            <p className="text-xs text-muted-foreground">per month · {currency(p.yearly)} billed yearly</p>
+            <p className="mt-1 text-xs text-muted-foreground">{p.trial}-day free trial · {p.tenants} tenants</p>
+            <ul className="mt-5 flex-1 space-y-2.5 text-sm">
+              {p.features.map((f) => (
+                <li key={f} className="flex items-start gap-2">
+                  <Check className="mt-0.5 size-4 shrink-0 text-success" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <dl className="mt-5 space-y-1.5 rounded-lg bg-muted/60 p-3 text-xs">
+              {Object.entries(p.limits).map(([k, v]) => (
+                <div key={k} className="flex justify-between">
+                  <dt className="capitalize text-muted-foreground">{k}</dt>
+                  <dd className="font-medium">{String(v)}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-5 flex gap-2">
+              <Button variant="outline" className="flex-1">Edit</Button>
+              <Button className="flex-1">Promote</Button>
+            </div>
           </div>
-        </Form>
-      </Modal>
-    </div>
+        ))}
+      </div>
+
+      <Panel className="mt-6" title="Revenue by plan" description="Monthly recurring revenue contribution" bodyClassName="p-4">
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={revenueByPlan} margin={{ top: 8, right: 8, left: -8, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
+            <XAxis dataKey="plan" tickLine={false} axisLine={false} stroke="var(--color-muted-foreground)" fontSize={12} />
+            <YAxis tickLine={false} axisLine={false} stroke="var(--color-muted-foreground)" fontSize={12} />
+            <Tooltip
+              cursor={{ fill: "var(--color-muted)" }}
+              formatter={(v) => currency(Number(v))}
+              contentStyle={{ background: "var(--color-popover)", border: "1px solid var(--color-border)", borderRadius: 12, fontSize: 12 }}
+            />
+            <Bar dataKey="revenue" name="MRR" fill="var(--color-chart-1)" radius={[8, 8, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </Panel>
+    </>
   );
 }

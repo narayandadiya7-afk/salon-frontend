@@ -1,71 +1,82 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import {
-  Row, Col, Card, Tag, Button, Space, Table, Typography, Divider, Tooltip, Select, DatePicker, Progress, Rate,
-} from 'antd';
+  ArrowDownRight,
+  ArrowUpRight,
+  BarChart3,
+  CalendarDays,
+  Download,
+  Filter,
+  LineChart,
+  PieChart,
+  Scissors,
+  Star,
+  TrendingUp,
+  Users,
+  Wallet,
+} from 'lucide-react';
 import {
-  BarChartOutlined, RiseOutlined, ArrowUpOutlined, ArrowDownOutlined,
-  TeamOutlined, WalletOutlined, CalendarOutlined, ScissorOutlined,
-  UserOutlined, DownloadOutlined, FilterOutlined, StarOutlined,
-  PieChartOutlined, LineChartOutlined, RightOutlined,
-} from '@ant-design/icons';
-import PillFilter from '@/components/pill-filter';
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Line,
+  LineChart as ReLineChart,
+  Pie,
+  PieChart as RePieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
+  EmptyState,
+  PageHeader,
+  SectionCard,
+  StatCard,
+  StatusChip,
+  Surface,
+} from '@/components/owner/owner-portal/primitives';
+import { Button } from '@/components/owner/owner-portal/button';
+import { Progress } from '@/components/owner/owner-portal/progress';
+import { useSession } from '@/lib/portal/session';
+import { cn } from '@/lib/utils';
 
-const { Text } = Typography;
+const chartColors = ['var(--gold)', 'var(--royal)', 'var(--azure)', 'var(--emerald)'];
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const revenueData = [285000, 312000, 298000, 341000, 365000, 352000, 384200, 378000, 395000, 410000, 398000, 425000];
-const maxRevenue = Math.max(...revenueData);
-
-const kpis = [
-  {
-    icon: <WalletOutlined />, label: 'Total Revenue', value: '₹3,84,200',
-    trend: '+12.5%', up: true, vs: 'vs last month', color: 'var(--salon-primary)',
-  },
-  {
-    icon: <CalendarOutlined />, label: 'Total Bookings', value: '1,428',
-    trend: '+8.3%', up: true, vs: 'vs last month', color: 'var(--salon-primary)',
-  },
-  {
-    icon: <TeamOutlined />, label: 'Customer Retention', value: '68.5%',
-    trend: '+5.2%', up: true, vs: 'vs last month', color: 'var(--salon-primary)',
-  },
-  {
-    icon: <StarOutlined />, label: 'Avg. Rating', value: '4.8',
-    suffix: <StarOutlined style={{ color: 'var(--salon-secondary)', fontSize: 14 }} />,
-    trend: 'from 156 reviews', up: null, vs: '', color: 'var(--salon-secondary)',
-  },
-];
+const revenueData = months.map((m, i) => ({
+  month: m,
+  revenue: [285, 312, 298, 341, 365, 352, 384, 378, 395, 410, 398, 425][i]!,
+}));
 
 const serviceData = [
-  { service: 'Haircut', bookings: 284, revenue: 426000, growth: 12 },
-  { service: 'Facial', bookings: 196, revenue: 431000, growth: 8 },
-  { service: 'Manicure', bookings: 168, revenue: 302000, growth: -3 },
-  { service: 'Hair Coloring', bookings: 142, revenue: 497000, growth: 15 },
-  { service: 'Massage Therapy', bookings: 98, revenue: 392000, growth: 5 },
-  { service: 'Bridal Makeup', bookings: 52, revenue: 260000, growth: 22 },
+  { name: 'Haircut', bookings: 284, revenue: 426, growth: 12 },
+  { name: 'Facial', bookings: 196, revenue: 431, growth: 8 },
+  { name: 'Manicure', bookings: 168, revenue: 302, growth: -3 },
+  { name: 'Hair Coloring', bookings: 142, revenue: 497, growth: 15 },
+  { name: 'Massage', bookings: 98, revenue: 392, growth: 5 },
+  { name: 'Bridal Makeup', bookings: 52, revenue: 260, growth: 22 },
 ];
-const maxServiceBookings = Math.max(...serviceData.map(s => s.bookings));
 
 const staffData = [
-  { name: 'Ananya', role: 'Senior Stylist', bookings: 186, revenue: 279000, rating: 4.9, utilization: 92, color: 'var(--salon-primary)' },
-  { name: 'Rahul', role: 'Barber', bookings: 152, revenue: 182400, rating: 4.7, utilization: 78, color: '#B8986B' },
-  { name: 'Priya', role: 'Esthetician', bookings: 138, revenue: 220800, rating: 4.8, utilization: 85, color: '#8B7D6B' },
-  { name: 'Vikram', role: 'Colorist', bookings: 112, revenue: 201600, rating: 4.6, utilization: 71, color: '#5B7A6B' },
+  { name: 'Ananya', role: 'Senior Stylist', bookings: 186, revenue: 279, rating: 4.9, util: 92, color: 'var(--gold)' },
+  { name: 'Rahul', role: 'Barber', bookings: 152, revenue: 182, rating: 4.7, util: 78, color: 'var(--royal)' },
+  { name: 'Priya', role: 'Esthetician', bookings: 138, revenue: 220, rating: 4.8, util: 85, color: 'var(--azure)' },
+  { name: 'Vikram', role: 'Colorist', bookings: 112, revenue: 201, rating: 4.6, util: 71, color: 'var(--emerald)' },
 ];
 
 const retentionData = [
-  { month: 'Jan', new: 86, returning: 52, rate: 60.5 },
-  { month: 'Feb', new: 94, returning: 61, rate: 64.9 },
-  { month: 'Mar', new: 78, returning: 52, rate: 66.7 },
-  { month: 'Apr', new: 102, returning: 70, rate: 68.6 },
-  { month: 'May', new: 88, returning: 62, rate: 70.5 },
-  { month: 'Jun', new: 96, returning: 66, rate: 68.5 },
+  { month: 'Jan', newC: 86, returning: 52, rate: 60.5 },
+  { month: 'Feb', newC: 94, returning: 61, rate: 64.9 },
+  { month: 'Mar', newC: 78, returning: 52, rate: 66.7 },
+  { month: 'Apr', newC: 102, returning: 70, rate: 68.6 },
+  { month: 'May', newC: 88, returning: 62, rate: 70.5 },
+  { month: 'Jun', newC: 96, returning: 66, rate: 68.5 },
 ];
 
-const peakHoursData = [
+const peakHours = [
   { hour: '9 AM', bookings: 8 }, { hour: '10 AM', bookings: 24 },
   { hour: '11 AM', bookings: 32 }, { hour: '12 PM', bookings: 28 },
   { hour: '1 PM', bookings: 12 }, { hour: '2 PM', bookings: 22 },
@@ -73,437 +84,300 @@ const peakHoursData = [
   { hour: '5 PM', bookings: 18 }, { hour: '6 PM', bookings: 10 },
   { hour: '7 PM', bookings: 6 },
 ];
-const maxPeak = Math.max(...peakHoursData.map(p => p.bookings));
+const maxPeak = Math.max(...peakHours.map((p) => p.bookings));
 
-function RevenueBarChart() {
-  const currentMonth = new Date().getMonth();
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 200, paddingTop: 8 }}>
-      {months.map((m, i) => {
-        const isCurrent = i === currentMonth;
-        const h = (revenueData[i] / maxRevenue) * 100;
-        return (
-          <Tooltip key={m} title={`${m}: ₹${revenueData[i].toLocaleString()}`}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
-              <div style={{
-                width: '100%', maxWidth: 40,
-                height: `${Math.max(h, 6)}%`,
-                borderRadius: '8px 8px 4px 4px',
-                  background: isCurrent
-                    ? 'linear-gradient(180deg, var(--salon-primary) 0%, color-mix(in srgb, var(--salon-primary) 60%, var(--salon-secondary) 40%) 50%, var(--salon-secondary) 100%)'
-                    : 'linear-gradient(180deg, color-mix(in srgb, var(--salon-primary) 35%, transparent) 0%, color-mix(in srgb, var(--salon-primary) 12%, transparent) 100%)',
-                transition: 'height 0.3s ease',
-                position: 'relative',
-                border: isCurrent ? '1px solid color-mix(in srgb, var(--salon-primary) 30%, transparent)' : 'none',
-              }}>
-                {isCurrent && (
-                  <div style={{
-                    position: 'absolute', top: -22, left: '50%', transform: 'translateX(-50%)',
-                    background: 'var(--salon-primary)', color: '#fff', fontSize: 9, padding: '2px 8px',
-                    borderRadius: 6, whiteSpace: 'nowrap', fontWeight: 600,
-                  }}>
-                    ₹{revenueData[i].toLocaleString()}
-                  </div>
-                )}
-              </div>
-                            <Text style={{ fontSize: 10, color: isCurrent ? 'var(--salon-primary)' : 'var(--theme-text-tertiary)', fontWeight: isCurrent ? 600 : 400 }}>{m}</Text>
-            </div>
-          </Tooltip>
-        );
-      })}
-    </div>
-  );
+interface ChartTipProps {
+  active?: boolean;
+  payload?: Array<{ dataKey?: string; name?: string; value?: number }>;
+  label?: string;
 }
 
-function PeakHoursChart() {
+function ChartTip({ active, payload, label }: ChartTipProps) {
+  if (!active || !payload?.length) return null;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      {peakHoursData.map((p, i) => (
-        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Text style={{ width: 40, fontSize: 11, color: 'var(--theme-text-secondary)', textAlign: 'right', flexShrink: 0 }}>{p.hour}</Text>
-          <div style={{ flex: 1, height: 20, background: 'color-mix(in srgb, var(--salon-primary) 6%, transparent)', borderRadius: 10, overflow: 'hidden', position: 'relative' }}>
-            <div style={{
-              width: `${(p.bookings / maxPeak) * 100}%`,
-              height: '100%',
-              borderRadius: 10,
-              background: p.bookings >= 30
-                ? 'linear-gradient(90deg, var(--salon-primary), var(--salon-secondary))'
-                : p.bookings >= 20
-                  ? 'linear-gradient(90deg, var(--salon-primary), var(--salon-secondary))'
-                  : 'linear-gradient(90deg, color-mix(in srgb, var(--salon-primary) 40%, transparent), color-mix(in srgb, var(--salon-primary) 20%, transparent))',
-              transition: 'width 0.3s ease',
-            }} />
-          </div>
-          <Text style={{ width: 24, fontSize: 11, fontWeight: 600, color: 'var(--theme-text)' }}>{p.bookings}</Text>
-        </div>
+    <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-[var(--shadow-lifted)]">
+      <p className="font-semibold text-popover-foreground">{label}</p>
+      {payload.map((p) => (
+        <p key={p.dataKey} className="mt-0.5 text-muted-foreground">
+          {p.name}: <span className="font-medium text-popover-foreground">{p.value}</span>
+        </p>
       ))}
     </div>
   );
 }
 
-function DonutChart({ percentage, color, size = 80 }: { percentage: number; color: string; size?: number }) {
-  const r = size / 2 - 6;
-  const circumference = 2 * Math.PI * r;
-  const offset = circumference - (percentage / 100) * circumference;
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(0,0,0,0.06)" strokeWidth={6} />
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={6}
-        strokeDasharray={circumference} strokeDashoffset={offset}
-        strokeLinecap="round" transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-      />
-      <text x={size / 2} y={size / 2} textAnchor="middle" dominantBaseline="central"
-        style={{ fontSize: size * 0.2, fontWeight: 700, fill: 'var(--theme-text)' }}>
-        {percentage}%
-      </text>
-    </svg>
-  );
-}
-
-const serviceColumns = [
-  {
-    title: 'Service', dataIndex: 'service', key: 'service',
-    render: (name: string) => (
-      <Space>
-        <div style={{ width: 28, height: 28, borderRadius: 8, background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--salon-primary)', fontSize: 14 }}>
-          <ScissorOutlined />
-        </div>
-        <Text strong style={{ fontSize: 13 }}>{name}</Text>
-      </Space>
-    ),
-  },
-  {
-    title: 'Bookings', dataIndex: 'bookings', key: 'bookings',
-    render: (val: number) => <Text style={{ fontSize: 13, fontWeight: 600 }}>{val}</Text>,
-  },
-  {
-    title: 'Revenue', dataIndex: 'revenue', key: 'revenue',
-    render: (val: number) => <Text style={{ fontSize: 13, fontWeight: 600, color: '#5B7A6B' }}>₹{val.toLocaleString()}</Text>,
-  },
-  {
-    title: 'Growth', dataIndex: 'growth', key: 'growth',
-    render: (val: number) => (
-      <Space size={4}>
-        {val >= 0 ? <ArrowUpOutlined style={{ fontSize: 10, color: '#5B8C5A' }} /> : <ArrowDownOutlined style={{ fontSize: 10, color: 'var(--salon-primary)' }} />}
-        <Text style={{ fontSize: 12, fontWeight: 600, color: val >= 0 ? '#5B8C5A' : 'var(--salon-primary)' }}>{val >= 0 ? '+' : ''}{val}%</Text>
-      </Space>
-    ),
-  },
-  {
-    title: 'Popularity', key: 'popularity',
-    render: (_: any, record: typeof serviceData[0]) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ flex: 1, height: 6, background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', borderRadius: 3, overflow: 'hidden' }}>
-            <div style={{
-              width: `${(record.bookings / maxServiceBookings) * 100}%`,
-              height: '100%', borderRadius: 3,
-              background: 'linear-gradient(90deg, var(--salon-primary), var(--salon-secondary))',
-            }} />
-        </div>
-        <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{Math.round((record.bookings / maxServiceBookings) * 100)}%</Text>
-      </div>
-    ),
-  },
-];
-
-const retentionColumns = [
-  { title: 'Month', dataIndex: 'month', key: 'month', render: (m: string) => <Text strong style={{ fontSize: 12 }}>{m}</Text> },
-  { title: 'New Customers', dataIndex: 'new', key: 'new', render: (v: number) => <Text style={{ fontSize: 12, fontWeight: 600 }}>{v}</Text> },
-  { title: 'Returning', dataIndex: 'returning', key: 'returning', render: (v: number) => <Text style={{ fontSize: 12, fontWeight: 600, color: '#5B8C5A' }}>{v}</Text> },
-  {
-    title: 'Retention Rate', dataIndex: 'rate', key: 'rate',
-    render: (v: number) => (
-      <Space size={6}>
-        <div style={{ width: 60, height: 6, background: 'color-mix(in srgb, var(--salon-primary) 10%, transparent)', borderRadius: 3, overflow: 'hidden' }}>
-          <div style={{
-            width: `${v}%`, height: '100%', borderRadius: 3,
-            background: 'var(--salon-primary)',
-          }} />
-        </div>
-        <Text style={{ fontSize: 12, fontWeight: 600, color: v >= 68 ? '#5B8C5A' : 'var(--salon-primary)' }}>{v}%</Text>
-      </Space>
-    ),
-  },
-];
-
 function AnalyticsContent() {
-  const params = useParams();
-  const slug = params?.slug as string;
-  const [activeChart, setActiveChart] = useState('revenue');
-
-  const chartOptions = [
-    { key: 'revenue', label: 'Revenue' },
-    { key: 'bookings', label: 'Bookings' },
-  ];
+  const [chartMode, setChartMode] = useState<'revenue' | 'bookings'>('revenue');
+  const { can } = useSession();
+  const totalRevenue = revenueData.reduce((a, b) => a + b.revenue, 0);
+  const avgMonthly = Math.round(totalRevenue / revenueData.length);
+  const currentMonth = new Date().getMonth();
 
   return (
-    <div>
-      <div className="page-header-row">
-        <div>
-          <h1 className="page-header-title">Analytics &amp; Insights</h1>
-          <p className="page-header-subtitle">Track your salon&apos;s performance and growth</p>
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Insight"
+        title="Analytics & Insights"
+        description="Track your salon's performance and growth."
+        actions={
+          <>
+            <Button variant="outline" onClick={() => {}}>
+              <Download className="size-4" /> Download Report
+            </Button>
+          </>
+        }
+      />
+
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="Total Revenue" value={`£${totalRevenue.toLocaleString()}k`} delta="+12.5%" hint="vs last month" icon={Wallet} tone="gold" />
+        <StatCard label="Total Bookings" value="1,428" delta="+8.3%" hint="vs last month" icon={CalendarDays} tone="royal" />
+        <StatCard label="Customer Retention" value="68.5%" delta="+5.2%" hint="vs last month" icon={Users} tone="azure" />
+        <StatCard label="Avg. Rating" value="4.8" hint="From 156 reviews" icon={Star} tone="emerald" />
+      </section>
+
+      <SectionCard
+        title="Revenue Overview"
+        description="Monthly revenue (₹ thousands)"
+        action={
+          <div className="flex gap-1">
+            {(['revenue', 'bookings'] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setChartMode(m)}
+                className={cn(
+                  'rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition-colors',
+                  chartMode === m ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted',
+                )}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+        }
+      >
+        <div className="h-[260px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={revenueData} margin={{ left: -18, right: 8, top: 8 }} accessibilityLayer={false}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+              <XAxis dataKey="month" tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
+              <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
+              <Tooltip content={<ChartTip />} />
+              <Bar dataKey="revenue" name="Revenue" radius={[6, 6, 0, 0]}>
+                {revenueData.map((_, i) => (
+                  <Cell key={i} fill={i === currentMonth ? 'var(--gold)' : 'var(--gold-soft)'} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-        <Space>
-          <Select
-            defaultValue="6m"
-            style={{ width: 140, borderRadius: 10 }}
-            options={[
-              { value: '1m', label: 'Last Month' },
-              { value: '3m', label: 'Last 3 Months' },
-              { value: '6m', label: 'Last 6 Months' },
-              { value: '1y', label: 'Last Year' },
-              { value: 'custom', label: 'Custom Range' },
-            ]}
-          />
-          <Button icon={<FilterOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }} />
-          <Button icon={<DownloadOutlined />} style={{ borderRadius: 10, border: '1px solid var(--theme-border)' }}>
-            Download Report
-          </Button>
-        </Space>
-      </div>
+        <div className="mt-4 grid grid-cols-3 gap-4 border-t border-border pt-4">
+          <div>
+            <p className="text-xs text-muted-foreground">Total Revenue (YTD)</p>
+            <p className="mt-0.5 text-xl font-semibold">{totalRevenue.toLocaleString()}k</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Monthly Average</p>
+            <p className="mt-0.5 text-xl font-semibold">{avgMonthly.toLocaleString()}k</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Projected Annual</p>
+            <p className="mt-0.5 text-xl font-semibold text-gold">{(totalRevenue * 2).toLocaleString()}k</p>
+          </div>
+        </div>
+      </SectionCard>
 
-      <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
-        {kpis.map((kpi, i) => (
-          <Col xs={24} sm={12} lg={6} key={i}>
-            <div className="stat-widget" style={{ borderTop: `3px solid ${kpi.color}` }}>
-              <div className="stat-widget-header">
-                <div className="stat-widget-icon" style={{ background: `${kpi.color}12`, color: kpi.color }}>{kpi.icon}</div>
-                <Tag style={{ borderRadius: 6, margin: 0, fontSize: 10, border: 'none', background: `${kpi.color}10`, color: kpi.color }}>
-                  {kpi.vs}
-                </Tag>
-              </div>
-              <div className="stat-widget-label">{kpi.label}</div>
-              <div className="stat-widget-value" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                {kpi.value}
-                {kpi.suffix}
-              </div>
-              <div className={`stat-widget-trend ${kpi.up === true ? 'stat-widget-trend-up' : kpi.up === false ? 'stat-widget-trend-down' : ''}`}>
-                {kpi.up === true && <ArrowUpOutlined />}
-                {kpi.up === false && <ArrowDownOutlined />}
-                {kpi.trend}
-              </div>
-            </div>
-          </Col>
-        ))}
-      </Row>
+      <section className="grid gap-4 xl:grid-cols-3">
+        <SectionCard title="Service Analytics" description="Bookings & growth" className="xl:col-span-2">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="pb-3 font-semibold">Service</th>
+                  <th className="pb-3 font-semibold">Bookings</th>
+                  <th className="pb-3 font-semibold">Revenue</th>
+                  <th className="pb-3 font-semibold">Growth</th>
+                  <th className="pb-3 font-semibold">Popularity</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {serviceData.map((s) => {
+                  const maxBookings = Math.max(...serviceData.map((x) => x.bookings));
+                  return (
+                    <tr key={s.name} className="hover:bg-muted/30">
+                      <td className="py-3 font-medium">
+                        <span className="flex items-center gap-2.5">
+                          <span className="grid size-7 place-items-center rounded-lg bg-gold-soft text-gold">
+                            <Scissors className="size-3.5" />
+                          </span>
+                          {s.name}
+                        </span>
+                      </td>
+                      <td className="py-3 font-semibold tabular-nums">{s.bookings}</td>
+                      <td className="py-3 font-semibold tabular-nums text-emerald">£{s.revenue}k</td>
+                      <td className="py-3">
+                        <span className={cn('flex items-center gap-1 text-xs font-semibold', s.growth >= 0 ? 'text-emerald' : 'text-destructive')}>
+                          {s.growth >= 0 ? <ArrowUpRight className="size-3" /> : <ArrowDownRight className="size-3" />}
+                          {s.growth >= 0 ? '+' : ''}{s.growth}%
+                        </span>
+                      </td>
+                      <td className="py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-gold to-royal"
+                              style={{ width: `${(s.bookings / maxBookings) * 100}%` }}
+                            />
+                          </div>
+                          <span className="w-8 text-right text-xs text-muted-foreground">
+                            {Math.round((s.bookings / maxBookings) * 100)}%
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </SectionCard>
 
-      <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
-        <Col xs={24}>
-          <Card
-            className="premium-card"
-            title={
-              <Space>
-                <LineChartOutlined style={{ color: 'var(--salon-primary)' }} />
-                <Text strong style={{ fontSize: 15 }}>Revenue Overview</Text>
-              </Space>
-            }
-            extra={
-              <PillFilter
-                options={chartOptions}
-                value={activeChart}
-                onChange={setActiveChart}
-              />
-            }
-          >
-            <RevenueBarChart />
-            <Divider style={{ margin: '16px 0 12px' }} />
-            <Row gutter={[16, 12]}>
-              <Col span={8}>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Revenue (YTD)</Text>
-                <div><Text strong style={{ fontSize: 20 }}>₹{revenueData.reduce((a, b) => a + b, 0).toLocaleString()}</Text></div>
-              </Col>
-              <Col span={8}>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Monthly Average</Text>
-                <div><Text strong style={{ fontSize: 20 }}>₹{Math.round(revenueData.reduce((a, b) => a + b, 0) / revenueData.length).toLocaleString()}</Text></div>
-              </Col>
-              <Col span={8}>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Projected Annual</Text>
-                <div><Text strong style={{ fontSize: 20, color: 'var(--salon-primary)' }}>₹{(revenueData.reduce((a, b) => a + b, 0) * 2).toLocaleString()}</Text></div>
-              </Col>
-            </Row>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
-        <Col xs={24} lg={16}>
-          <Card
-            className="premium-card"
-            title={
-              <Space>
-                <PieChartOutlined style={{ color: 'var(--salon-secondary)' }} />
-                <Text strong style={{ fontSize: 15 }}>Service Analytics</Text>
-              </Space>
-            }
-            extra={<Button type="link" style={{ fontSize: 12 }}>View Details <RightOutlined /></Button>}
-          >
-            <Table
-              columns={serviceColumns}
-              dataSource={serviceData}
-              rowKey="service"
-              pagination={false}
-              size="small"
-            />
-          </Card>
-        </Col>
-        <Col xs={24} lg={8}>
-          <Card
-            className="premium-card"
-            title={
-              <Space>
-                <UserOutlined style={{ color: 'var(--salon-secondary)' }} />
-                <Text strong style={{ fontSize: 15 }}>Staff Analytics</Text>
-              </Space>
-            }
-            extra={<Button type="link" style={{ fontSize: 12, color: 'var(--salon-primary)' }}>View All <RightOutlined /></Button>}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {staffData.map((staff, i) => (
-                <div key={i} style={{ padding: '12px 0', borderBottom: i < staffData.length - 1 ? '1px solid var(--theme-border-light)' : 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                    <div style={{
-                      width: 36, height: 36, borderRadius: 10,
-                      background: `${staff.color}15`, color: staff.color,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: 14, fontWeight: 700, flexShrink: 0,
-                    }}>
-                      {staff.name.charAt(0)}
+        <SectionCard title="Staff Analytics" description="Performance this month">
+          <div className="space-y-4">
+            {staffData.map((s) => (
+              <div key={s.name}>
+                <div className="flex items-center gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-xl text-sm font-bold" style={{ background: `color-mix(in srgb, ${s.color} 15%, transparent)`, color: s.color }}>
+                    {s.name.charAt(0)}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="truncate text-sm font-semibold">{s.name}</span>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Star className="size-3 text-gold fill-current" /> {s.rating}
+                      </span>
                     </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text strong style={{ fontSize: 13 }}>{staff.name}</Text>
-                        <Space size={3}>
-                          <StarOutlined style={{ fontSize: 11, color: 'var(--salon-secondary)' }} />
-                          <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.rating}</Text>
-                        </Space>
-                      </div>
-                      <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{staff.role}</Text>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
-                    <div>
-                      <Text style={{ fontSize: 10, color: 'var(--theme-text-tertiary)' }}>Bookings</Text>
-                      <div><Text style={{ fontSize: 13, fontWeight: 600 }}>{staff.bookings}</Text></div>
-                    </div>
-                    <div>
-                      <Text style={{ fontSize: 10, color: 'var(--theme-text-tertiary)' }}>Revenue</Text>
-                      <div><Text style={{ fontSize: 13, fontWeight: 600, color: '#5B7A6B' }}>₹{staff.revenue.toLocaleString()}</Text></div>
-                    </div>
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 10, color: 'var(--theme-text-tertiary)' }}>Utilization</Text>
-                        <Text style={{ fontSize: 10, fontWeight: 600, color: staff.color }}>{staff.utilization}%</Text>
-                      </div>
-                      <Progress
-                        percent={staff.utilization}
-                        showInfo={false}
-                        size="small"
-                        strokeColor={staff.color}
-                        railColor="rgba(0,0,0,0.06)"
-                        style={{ margin: 0 }}
-                      />
-                    </div>
+                    <p className="text-xs text-muted-foreground">{s.role}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row gutter={[20, 20]}>
-        <Col xs={24} lg={16}>
-          <Card
-            className="premium-card"
-            title={
-              <Space>
-                <TeamOutlined style={{ color: 'var(--salon-primary)' }} />
-                <Text strong style={{ fontSize: 15 }}>Customer Retention</Text>
-              </Space>
-            }
-            extra={
-              <Space>
-                {['6 Months', '12 Months'].map(t => (
-                  <Tag key={t} style={{ borderRadius: 6, cursor: 'pointer', fontSize: 11, padding: '2px 10px', border: '1px solid var(--theme-border-light)' }}>{t}</Tag>
-                ))}
-              </Space>
-            }
-          >
-            <div style={{ marginBottom: 16 }}>
-              <Row gutter={24} align="middle">
-                <Col span={6}>
-                  <div style={{ textAlign: 'center' }}>
-                    <DonutChart percentage={68.5} color="var(--salon-primary)" />
-                    <div style={{ marginTop: 8 }}>
-                      <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Overall Retention</Text>
+                <div className="mt-2 grid grid-cols-3 gap-3 text-xs">
+                  <div>
+                    <p className="text-muted-foreground">Bookings</p>
+                    <p className="font-semibold">{s.bookings}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Revenue</p>
+                    <p className="font-semibold text-emerald">£{s.revenue}k</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <p className="text-muted-foreground">Util.</p>
+                      <p className="font-semibold" style={{ color: s.color }}>{s.util}%</p>
                     </div>
+                    <Progress value={s.util} className="mt-1 h-1.5" />
                   </div>
-                </Col>
-                <Col span={18}>
-                  <div style={{ display: 'flex', gap: 24 }}>
-                    {[
-                      { label: 'Total Customers', value: '1,284', color: 'var(--salon-primary)' },
-                      { label: 'Returning Rate', value: '68.5%', color: 'var(--salon-primary)' },
-                      { label: 'Avg. Visits/Month', value: '2.4', color: 'var(--salon-primary)' },
-                      { label: 'Churn Rate', value: '6.2%', color: 'color-mix(in srgb, var(--salon-primary) 60%, transparent)' },
-                    ].map((s, i) => (
-                      <div key={i}>
-                        <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>{s.label}</Text>
-                        <div><Text strong style={{ fontSize: 18, color: s.color }}>{s.value}</Text></div>
-                      </div>
-                    ))}
-                  </div>
-                </Col>
-              </Row>
+                </div>
+              </div>
+            ))}
+          </div>
+        </SectionCard>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-3">
+        <SectionCard title="Customer Retention" description="New vs. returning, 6 months" className="xl:col-span-2">
+          <div className="grid grid-cols-4 gap-4 text-center">
+            <div>
+              <p className="text-xs text-muted-foreground">Total</p>
+              <p className="text-lg font-semibold">1,284</p>
             </div>
-            <Divider style={{ margin: '12px 0' }} />
-            <Table
-              columns={retentionColumns}
-              dataSource={retentionData}
-              rowKey="month"
-              pagination={false}
-              size="small"
-            />
-          </Card>
-        </Col>
-        <Col xs={24} lg={8}>
-          <Card
-            className="premium-card"
-            title={
-              <Space>
-                <BarChartOutlined style={{ color: 'var(--salon-secondary)' }} />
-                <Text strong style={{ fontSize: 15 }}>Peak Hours</Text>
-              </Space>
-            }
-            extra={
-              <Tag style={{ borderRadius: 6, fontSize: 10, border: 'none', background: 'color-mix(in srgb, var(--salon-primary) 8%, transparent)', color: 'var(--salon-primary)' }}>
-                Weekdays
-              </Tag>
-            }
-          >
-            <PeakHoursChart />
-            <Divider style={{ margin: '16px 0 12px' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Peak Hour</Text>
-                <div><Text strong style={{ fontSize: 16, color: 'var(--salon-secondary)' }}>11 AM</Text></div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>32 bookings</Text>
-              </div>
-              <div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Total Daily</Text>
-                <div><Text strong style={{ fontSize: 16 }}>{peakHoursData.reduce((a, p) => a + p.bookings, 0)}</Text></div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>bookings</Text>
-              </div>
-              <div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>Avg/Hour</Text>
-                <div><Text strong style={{ fontSize: 16 }}>{Math.round(peakHoursData.reduce((a, p) => a + p.bookings, 0) / peakHoursData.length)}</Text></div>
-                <Text style={{ fontSize: 11, color: 'var(--theme-text-secondary)' }}>bookings</Text>
-              </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Returning</p>
+              <p className="text-lg font-semibold">68.5%</p>
             </div>
-          </Card>
-        </Col>
-      </Row>
+            <div>
+              <p className="text-xs text-muted-foreground">Avg Visits</p>
+              <p className="text-lg font-semibold">2.4/mo</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Churn</p>
+              <p className="text-lg font-semibold">6.2%</p>
+            </div>
+          </div>
+          <div className="mt-4 h-[180px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={retentionData} margin={{ left: -18, right: 4 }} accessibilityLayer={false}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
+                <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="var(--muted-foreground)" />
+                <Tooltip content={<ChartTip />} />
+                <Bar dataKey="returning" name="Returning" stackId="a" fill="var(--royal)" radius={[0, 0, 4, 4]} />
+                <Bar dataKey="newC" name="New" stackId="a" fill="var(--gold)" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="pb-2 font-semibold">Month</th>
+                  <th className="pb-2 font-semibold">New</th>
+                  <th className="pb-2 font-semibold">Returning</th>
+                  <th className="pb-2 font-semibold">Rate</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {retentionData.map((r) => (
+                  <tr key={r.month}>
+                    <td className="py-2 font-semibold">{r.month}</td>
+                    <td className="py-2 font-semibold tabular-nums">{r.newC}</td>
+                    <td className="py-2 font-semibold tabular-nums text-emerald">{r.returning}</td>
+                    <td className="py-2">
+                      <span className={cn('font-semibold tabular-nums', r.rate >= 68 ? 'text-emerald' : 'text-gold')}>
+                        {r.rate}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </SectionCard>
+
+        <SectionCard title="Peak Hours" description="Weekday distribution">
+          <div className="space-y-2">
+            {peakHours.map((p) => (
+              <div key={p.hour} className="flex items-center gap-2">
+                <span className="w-10 shrink-0 text-right text-xs text-muted-foreground">{p.hour}</span>
+                <div className="h-5 flex-1 overflow-hidden rounded-full bg-muted/50">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-gold to-royal transition-all"
+                    style={{ width: `${(p.bookings / maxPeak) * 100}%` }}
+                  />
+                </div>
+                <span className="w-6 text-right text-xs font-semibold tabular-nums">{p.bookings}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-3 border-t border-border pt-4 text-center">
+            <div>
+              <p className="text-xs text-muted-foreground">Peak Hour</p>
+              <p className="text-sm font-semibold text-royal">11 AM</p>
+              <p className="text-xs text-muted-foreground">32 bookings</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Total Daily</p>
+              <p className="text-sm font-semibold">{peakHours.reduce((a, p) => a + p.bookings, 0)}</p>
+              <p className="text-xs text-muted-foreground">bookings</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Avg/Hour</p>
+              <p className="text-sm font-semibold">
+                {Math.round(peakHours.reduce((a, p) => a + p.bookings, 0) / peakHours.length)}
+              </p>
+              <p className="text-xs text-muted-foreground">bookings</p>
+            </div>
+          </div>
+        </SectionCard>
+      </section>
     </div>
   );
 }

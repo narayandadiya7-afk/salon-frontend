@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Search, ArrowRight } from 'lucide-react';
-import { PageHero, usePageMeta } from '../../../../components/site/ui';
+import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
 import { posts } from '../../../../data/salon';
 
 export default function BlogPage() {

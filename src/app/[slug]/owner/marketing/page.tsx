@@ -1,7 +1,7 @@
 'use client';
 
 import { Crown, MailOpen, Megaphone, TrendingUp } from 'lucide-react';
-import { ModulePage } from '@/components/portal/ModulePage';
+import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 
 export default function MarketingPage() {
   return (
