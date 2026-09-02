@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart,
   ResponsiveContainer, Tooltip, XAxis, YAxis,
@@ -85,7 +86,7 @@ export default function DashboardPage() {
                   <Cell key={entry.name} fill={entry.color} />
                 ))}
               </Pie>
-              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} itemSorter={null} />
               <Tooltip contentStyle={tooltipStyle} />
             </PieChart>
           </ResponsiveContainer>
@@ -141,6 +142,7 @@ export default function DashboardPage() {
           title="Recent payments"
           className="lg:col-span-2"
           bodyClassName="p-0"
+          actions={<Button variant="ghost" size="sm" asChild><Link href="/admin/payments">View all <ArrowRight className="size-3.5" /></Link></Button>}
         >
           <div className="divide-y divide-border">
             {recentPayments.map((p) => (
