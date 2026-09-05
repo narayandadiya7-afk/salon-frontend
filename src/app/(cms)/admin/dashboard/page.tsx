@@ -13,6 +13,7 @@ import { PageHeader, KpiCard, Panel, StatusBadge } from "@/components/admin/admi
 import { Button } from "@/components/admin/admin-portal/button";
 import { Avatar, AvatarFallback } from "@/components/admin/admin-portal/avatar";
 import { Progress } from "@/components/admin/admin-portal/progress";
+import { PieChartTooltip } from "@/components/admin/admin-portal/chart-tooltip";
 import {
   activityFeed, compact, currency, dauSeries, expiringTrials, geoDistribution, planDistribution,
   recentPayments, revenueSeries, systemHealth, tenants,
@@ -86,8 +87,8 @@ export default function DashboardPage() {
                   <Cell key={entry.name} fill={entry.color} />
                 ))}
               </Pie>
-              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} itemSorter={null} />
-              <Tooltip contentStyle={tooltipStyle} />
+              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+              <Tooltip content={<PieChartTooltip style={tooltipStyle} />} />
             </PieChart>
           </ResponsiveContainer>
         </Panel>
