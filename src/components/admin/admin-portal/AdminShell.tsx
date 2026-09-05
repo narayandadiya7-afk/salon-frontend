@@ -4,9 +4,10 @@ import React, { useEffect, useState, type ReactNode, createContext, useContext }
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import {
+  type LucideIcon,
   LayoutDashboard, Building2, CreditCard, TrendingUp, ReceiptText, Wallet, Users, ShieldCheck,
   ToggleRight, LifeBuoy, ScrollText, Bell, Plug, Lock, Settings, Search, HelpCircle, Moon, Sun,
-  PanelLeftClose, PanelLeft, ChevronDown, Menu, X, Sparkles,
+  PanelLeftClose, PanelLeft, ChevronDown, Menu, Plus, X, Sparkles, LogOut, UserRound,
 } from "lucide-react";
 import { Button } from "@/components/admin/admin-portal/button";
 import {
@@ -14,9 +15,15 @@ import {
   DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/admin/admin-portal/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/admin/admin-portal/avatar";
-import { Badge } from "@/components/admin/admin-portal/badge";
 import { cn } from "@/lib/utils";
 import { notifications } from "@/components/admin/admin-portal/mock-data";
+import {
+  Popover, PopoverContent, PopoverTrigger,
+} from "@/components/admin/admin-portal/popover";
+import {
+  CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList,
+} from "@/components/admin/admin-portal/command";
+import { Toaster, toast } from "sonner";
 
 const nav = [
   {
@@ -56,6 +63,12 @@ const nav = [
   },
 ] as const;
 
+type NavItem = { to: string; label: string; icon: LucideIcon };
+
+const navItems: NavItem[] = nav
+  .map((section) => section.items.map((item) => ({ to: item.to, label: item.label, icon: item.icon })))
+  .flat();
+
 export interface AdminShellContextValue {
   dark: boolean;
   toggleTheme: () => void;
@@ -94,7 +107,7 @@ function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; onNavig
   return (
     <div className="flex h-full flex-col">
       <div className={cn("flex h-16 items-center gap-2.5 border-b border-sidebar-border px-4", collapsed && "justify-center px-0")}>
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
           <Sparkles className="size-4.5" />
         </div>
         {!collapsed && (
@@ -105,15 +118,15 @@ function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; onNavig
         )}
       </div>
 
-      <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4" aria-label="Main">
+      <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 py-4" aria-label="Main">
         {nav.map((section) => (
           <div key={section.group}>
             {!collapsed && (
-              <p className="px-2 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <p className="px-3 pb-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-sidebar-foreground/45">
                 {section.group}
               </p>
             )}
-            <ul className="space-y-0.5">
+            <ul className="space-y-1">
               {section.items.map((item) => {
                 const active = pathname === item.to;
                 return (
@@ -124,14 +137,20 @@ function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; onNavig
                       title={collapsed ? item.label : undefined}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm font-medium text-sidebar-foreground transition-colors",
-                        "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring",
-                        active && "bg-sidebar-accent text-sidebar-primary",
+                        "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring",
                         collapsed && "justify-center px-0",
+                        active
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
                       )}
                     >
-                      <item.icon className={cn("size-4.5 shrink-0", active && "text-sidebar-primary")} />
-                      {!collapsed && <span className="truncate">{item.label}</span>}
+                      <span className="relative flex items-center">
+                        <item.icon className="size-[1.15rem] shrink-0" strokeWidth={1.75} />
+                        {active && (
+                          <span className="absolute -left-3 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-sidebar-primary" />
+                        )}
+                      </span>
+                      {!collapsed && <span className="min-w-0 flex-1 truncate">{item.label}</span>}
                     </Link>
                   </li>
                 );
@@ -156,7 +175,21 @@ function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; onNavig
 export function AdminShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const { dark, toggle } = useTheme();
+  const unread = notifications.filter((n) => n.unread).length;
+  const router = useRouter();
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <AdminShellContext.Provider value={{ dark, toggleTheme: toggle }}>
@@ -164,7 +197,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         {/* Desktop sidebar */}
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 hidden border-r border-sidebar-border bg-sidebar transition-[width] duration-200 lg:block",
+            "fixed inset-y-0 left-0 z-40 hidden border-r border-sidebar-border bg-sidebar transition-[width] duration-300 lg:block",
             collapsed ? "w-[72px]" : "w-64",
           )}
         >
@@ -187,8 +220,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
           </div>
         )}
 
-        <div className={cn("transition-[padding] duration-200", collapsed ? "lg:pl-[72px]" : "lg:pl-64")}>
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b border-border bg-card/80 px-4 backdrop-blur-md md:px-6">
+        <div className={cn("transition-[padding] duration-300", collapsed ? "lg:pl-[72px]" : "lg:pl-64")}>
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b border-border bg-background/85 px-4 backdrop-blur-xl md:px-6">
             <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open navigation" onClick={() => setMobileOpen(true)}>
               <Menu className="size-5" />
             </Button>
@@ -218,17 +251,20 @@ export function AdminShell({ children }: { children: ReactNode }) {
             </DropdownMenu>
 
             {/* Search bar */}
-            <div className="relative mx-auto hidden w-full max-w-md md:block">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <input
-                type="search"
+            <div className="mx-auto hidden w-full max-w-md md:block">
+              <button
+                onClick={() => setOpen(true)}
                 aria-label="Global search"
-                placeholder="Search tenants, invoices, users…"
-                className="h-9 w-full rounded-lg border border-input bg-background pl-9 pr-14 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
-              />
-              <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                ⌘K
-              </kbd>
+                className="flex h-10 w-full items-center gap-2 rounded-xl border border-border bg-muted/50 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
+              >
+                <Search className="size-4 shrink-0" />
+                <span className="min-w-0 flex-1 truncate text-left">
+                  Search tenants, invoices, users…
+                </span>
+                <kbd className="hidden shrink-0 rounded border border-border bg-background px-1.5 py-0.5 text-[0.65rem] font-medium sm:block">
+                  ⌘K
+                </kbd>
+              </button>
             </div>
 
             <div className="ml-auto flex items-center gap-1">
@@ -242,50 +278,84 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 <Link href="/admin/support"><HelpCircle className="size-4.5" /></Link>
               </Button>
 
-              {/* Notifications dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
-                    <Bell className="size-4.5" />
-                    <span className="absolute right-2 top-2 size-2 rounded-full bg-destructive ring-2 ring-card" />
+              {/* Notifications popover */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Notifications, ${unread} unread`}
+                    className="relative"
+                  >
+                    <Bell className="size-5" />
+                    {unread > 0 && (
+                      <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-destructive ring-2 ring-background" />
+                    )}
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-80">
-                  <DropdownMenuLabel className="flex items-center justify-between">
-                    Notifications <Badge variant="secondary">{notifications.length} new</Badge>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {notifications.map((n) => (
-                    <DropdownMenuItem key={n.title} className="flex-col items-start gap-0.5 py-2">
-                      <span className="text-sm font-medium">{n.title}</span>
-                      <span className="text-xs text-muted-foreground">{n.body}</span>
-                      <span className="text-[11px] text-muted-foreground">{n.time}</span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-[340px] p-0">
+                  <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                    <p className="text-sm font-semibold">Notifications</p>
+                    <Link
+                      href="/admin/notifications"
+                      className="text-xs font-medium text-azure hover:underline"
+                    >
+                      View all
+                    </Link>
+                  </div>
+                  <ul className="max-h-80 divide-y divide-border overflow-y-auto">
+                    {notifications.slice(0, 5).map((n) => (
+                      <li key={n.id} className="flex gap-3 px-4 py-3">
+                        <span
+                          className={cn(
+                            "mt-1.5 size-2 shrink-0 rounded-full",
+                            n.unread ? "bg-gold" : "bg-border",
+                          )}
+                        />
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-medium">{n.title}</p>
+                          <p className="text-xs text-muted-foreground">{n.body}</p>
+                          <p className="mt-1 text-[0.68rem] text-muted-foreground/70">{n.when}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>
 
               {/* Profile dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="ml-1 flex items-center gap-2 rounded-lg p-1 transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
+                  <Button variant="ghost" className="h-10 gap-2 px-1.5 sm:px-2">
                     <Avatar className="size-8">
-                      <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">NK</AvatarFallback>
+                      <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">NK</AvatarFallback>
                     </Avatar>
-                    <span className="hidden text-left lg:block">
-                      <span className="block text-xs font-semibold leading-tight">Neha Kapoor</span>
-                      <span className="block text-[11px] leading-tight text-muted-foreground">Super Admin</span>
+                    <span className="hidden flex-col items-start lg:flex">
+                      <span className="text-sm font-semibold leading-tight">Neha Kapoor</span>
+                      <span className="text-[0.68rem] leading-tight text-muted-foreground">Super Admin</span>
                     </span>
-                  </button>
+                    <ChevronDown className="size-4 text-muted-foreground" />
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
-                  <DropdownMenuLabel>neha@salonos.io</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-72">
+                  <DropdownMenuLabel className="font-normal">
+                    <p className="text-sm font-semibold">Neha Kapoor</p>
+                    <p className="text-xs text-muted-foreground">neha@salonos.io</p>
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link href="/admin/security">Security</Link></DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link href="/admin/settings">Preferences</Link></DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <UserRound className="size-4" /> Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin/security"><ShieldCheck className="size-4" /> Security</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin/settings"><Settings className="size-4" /> Preferences</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive">Sign out</DropdownMenuItem>
+                  <DropdownMenuItem className="text-destructive">
+                    <LogOut className="size-4" /> Sign out
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -294,6 +364,48 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <main className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-6 lg:py-8">{children}</main>
         </div>
       </div>
+
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Search modules, tenants, users…" />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Modules">
+            {navItems.map((item) => (
+              <CommandItem
+                key={item.to}
+                value={item.label}
+                onSelect={() => {
+                  setOpen(false);
+                  router.push(item.to);
+                }}
+              >
+                <item.icon className="size-4" />
+                {item.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+          <CommandGroup heading="Quick actions">
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+                toast.success("Tenant creation wizard opened.");
+              }}
+            >
+              <Plus className="size-4" /> New tenant
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+                toast.success("Invitation form opened.");
+              }}
+            >
+              <Plus className="size-4" /> Invite user
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+
+      <Toaster position="top-right" richColors />
     </AdminShellContext.Provider>
   );
 }

@@ -212,10 +212,10 @@ export const integrations = [
 ];
 
 export const notifications = [
-  { title: "Payment failure spike", body: "18 failed renewals in the last hour on Razorpay.", type: "destructive" as const, time: "12 min ago" },
-  { title: "New enterprise tenant", body: "Ivory Room upgraded to Enterprise (annual).", type: "success" as const, time: "1 h ago" },
-  { title: "Scheduled maintenance", body: "Database failover drill on Aug 24, 02:00–03:00 UTC.", type: "info" as const, time: "5 h ago" },
-  { title: "Trial expiring", body: "23 trials end within 48 hours.", type: "warning" as const, time: "Yesterday" },
+  { id: "sn_1", type: "destructive" as const, title: "Payment failure spike", body: "18 failed renewals in the last hour on Razorpay.", when: "12 min ago", unread: true },
+  { id: "sn_2", type: "success" as const, title: "New enterprise tenant", body: "Ivory Room upgraded to Enterprise (annual).", when: "1 h ago", unread: true },
+  { id: "sn_3", type: "info" as const, title: "Scheduled maintenance", body: "Database failover drill on Aug 24, 02:00–03:00 UTC.", when: "5 h ago", unread: true },
+  { id: "sn_4", type: "warning" as const, title: "Trial expiring", body: "23 trials end within 48 hours.", when: "Yesterday", unread: false },
 ];
 
 export const sessions = [

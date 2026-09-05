@@ -5,12 +5,24 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Enterprise Salon SaaS — Super Admin design system.
- * All colors are oklch semantic tokens. Never hardcode colors in components.
+ * SalonOS — Super Admin design system.
+ *
+ * Theme values are ported 1:1 from the owner portal (Slug Owner Portal /
+ * Salon Business OS) so the CMS admin portal looks identical to it.
+ * Deep charcoal + warm gray neutrals, luxury gold / royal purple /
+ * premium blue / emerald accents. All colors are oklch semantic tokens.
+ * Never hardcode colors in components.
+ *
+ * Admin-only tokens (surface, info, violet) map to owner portal values:
+ *   surface   → warm channel (between background and muted)
+ *   info      → azure
+ *   violet    → royal
+ *   success   → success, warning → warning, destructive → destructive
  */
 
 @theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces, "Fraunces"), ui-serif, Georgia, serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -44,6 +56,19 @@
   --color-info-foreground: var(--info-foreground);
   --color-violet: var(--violet);
   --color-violet-foreground: var(--violet-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-gold-soft: var(--gold-soft);
+  --color-royal: var(--royal);
+  --color-royal-foreground: var(--royal-foreground);
+  --color-royal-soft: var(--royal-soft);
+  --color-azure: var(--azure);
+  --color-azure-foreground: var(--azure-foreground);
+  --color-azure-soft: var(--azure-soft);
+  --color-emerald: var(--emerald);
+  --color-emerald-foreground: var(--emerald-foreground);
+  --color-emerald-soft: var(--emerald-soft);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -61,12 +86,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --shadow-card: 0 1px 2px 0 oklch(0.2 0.03 260 / 0.04), 0 1px 3px 0 oklch(0.2 0.03 260 / 0.06);
-  --shadow-elevated: 0 10px 30px -12px oklch(0.2 0.03 260 / 0.18);
+  --shadow-soft: 0 1px 2px oklch(0.2 0.02 60 / 0.04), 0 8px 24px -12px oklch(0.2 0.02 60 / 0.12);
+  --shadow-lifted: 0 2px 4px oklch(0.2 0.02 60 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 60 / 0.22);
+  --shadow-card: 0 1px 2px oklch(0.2 0.02 60 / 0.04), 0 8px 24px -12px oklch(0.2 0.02 60 / 0.12);
+  --shadow-elevated: 0 2px 4px oklch(0.2 0.02 60 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 60 / 0.22);
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.875rem;
 
   /* Override globals.css --radius-* values that leak into admin */
   --radius-sm: calc(var(--radius) - 4px);
@@ -77,93 +104,119 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
   --radius-full: 9999px;
-  --background: oklch(0.985 0.002 260);
-  --foreground: oklch(0.22 0.02 258);
-  --surface: oklch(0.972 0.003 260);
-  --surface-foreground: oklch(0.22 0.02 258);
+
+  --shadow-soft: 0 1px 2px oklch(0.2 0.02 60 / 0.04), 0 8px 24px -12px oklch(0.2 0.02 60 / 0.12);
+  --shadow-lifted: 0 2px 4px oklch(0.2 0.02 60 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 60 / 0.22);
+  --shadow-card: 0 1px 2px oklch(0.2 0.02 60 / 0.04), 0 8px 24px -12px oklch(0.2 0.02 60 / 0.12);
+  --shadow-elevated: 0 2px 4px oklch(0.2 0.02 60 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 60 / 0.22);
+
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.22 0.012 60);
+  --surface: oklch(0.972 0.004 85);
+  --surface-foreground: oklch(0.22 0.012 60);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 258);
+  --card-foreground: oklch(0.22 0.012 60);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 258);
-  --primary: oklch(0.55 0.19 260);
-  --primary-foreground: oklch(0.99 0.002 260);
-  --secondary: oklch(0.955 0.005 260);
-  --secondary-foreground: oklch(0.3 0.02 258);
-  --muted: oklch(0.962 0.004 260);
-  --muted-foreground: oklch(0.55 0.017 258);
-  --accent: oklch(0.955 0.014 260);
-  --accent-foreground: oklch(0.35 0.05 260);
-  --destructive: oklch(0.585 0.216 26);
-  --destructive-foreground: oklch(0.99 0.002 260);
-  --success: oklch(0.63 0.14 162);
-  --success-foreground: oklch(0.99 0.002 260);
-  --warning: oklch(0.78 0.15 78);
-  --warning-foreground: oklch(0.28 0.05 60);
-  --info: oklch(0.62 0.14 235);
-  --info-foreground: oklch(0.99 0.002 260);
-  --violet: oklch(0.58 0.19 300);
-  --violet-foreground: oklch(0.99 0.002 260);
-  --border: oklch(0.918 0.006 260);
-  --input: oklch(0.918 0.006 260);
-  --ring: oklch(0.55 0.19 260);
-  --chart-1: oklch(0.55 0.19 260);
-  --chart-2: oklch(0.63 0.14 162);
-  --chart-3: oklch(0.58 0.19 300);
-  --chart-4: oklch(0.78 0.15 78);
-  --chart-5: oklch(0.62 0.14 235);
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.35 0.015 258);
-  --sidebar-primary: oklch(0.55 0.19 260);
-  --sidebar-primary-foreground: oklch(0.99 0.002 260);
-  --sidebar-accent: oklch(0.962 0.008 260);
-  --sidebar-accent-foreground: oklch(0.3 0.03 260);
-  --sidebar-border: oklch(0.925 0.005 260);
-  --sidebar-ring: oklch(0.55 0.19 260);
+  --popover-foreground: oklch(0.22 0.012 60);
+
+  --primary: oklch(0.26 0.014 62);
+  --primary-foreground: oklch(0.985 0.004 85);
+  --secondary: oklch(0.955 0.008 80);
+  --secondary-foreground: oklch(0.28 0.014 62);
+  --muted: oklch(0.958 0.006 80);
+  --muted-foreground: oklch(0.52 0.014 68);
+  --accent: oklch(0.948 0.014 84);
+  --accent-foreground: oklch(0.28 0.014 62);
+
+  --destructive: oklch(0.577 0.222 25);
+  --destructive-foreground: oklch(0.99 0.004 85);
+
+  --border: oklch(0.906 0.008 80);
+  --input: oklch(0.906 0.008 80);
+  --ring: oklch(0.72 0.115 80);
+
+  --gold: oklch(0.72 0.115 80);
+  --gold-foreground: oklch(0.22 0.03 70);
+  --gold-soft: oklch(0.955 0.035 85);
+  --royal: oklch(0.48 0.17 295);
+  --royal-foreground: oklch(0.98 0.005 300);
+  --royal-soft: oklch(0.955 0.02 300);
+  --azure: oklch(0.55 0.15 255);
+  --azure-foreground: oklch(0.98 0.005 255);
+  --azure-soft: oklch(0.955 0.025 255);
+  --emerald: oklch(0.58 0.12 160);
+  --emerald-foreground: oklch(0.98 0.005 160);
+  --emerald-soft: oklch(0.955 0.03 160);
+
+  --success: oklch(0.58 0.13 150);
+  --success-foreground: oklch(0.99 0.004 150);
+  --warning: oklch(0.75 0.15 75);
+  --warning-foreground: oklch(0.25 0.05 70);
+  --warning-soft: oklch(0.96 0.045 85);
+  --info: oklch(0.55 0.15 255);
+  --info-foreground: oklch(0.98 0.005 255);
+  --violet: oklch(0.48 0.17 295);
+  --violet-foreground: oklch(0.98 0.005 300);
+
+  --chart-1: oklch(0.72 0.115 80);
+  --chart-2: oklch(0.48 0.17 295);
+  --chart-3: oklch(0.55 0.15 255);
+  --chart-4: oklch(0.58 0.12 160);
+  --chart-5: oklch(0.42 0.02 62);
+
+  --sidebar: oklch(0.205 0.012 62);
+  --sidebar-foreground: oklch(0.86 0.008 80);
+  --sidebar-primary: oklch(0.72 0.115 80);
+  --sidebar-primary-foreground: oklch(0.2 0.02 70);
+  --sidebar-accent: oklch(0.27 0.014 62);
+  --sidebar-accent-foreground: oklch(0.97 0.006 85);
+  --sidebar-border: oklch(0.3 0.012 62);
+  --sidebar-ring: oklch(0.72 0.115 80);
 }
 
 .dark {
-  --background: oklch(0.17 0.014 262);
-  --foreground: oklch(0.965 0.004 260);
-  --surface: oklch(0.2 0.016 262);
-  --surface-foreground: oklch(0.965 0.004 260);
-  --card: oklch(0.215 0.017 262);
-  --card-foreground: oklch(0.965 0.004 260);
-  --popover: oklch(0.215 0.017 262);
-  --popover-foreground: oklch(0.965 0.004 260);
-  --primary: oklch(0.66 0.17 262);
-  --primary-foreground: oklch(0.17 0.014 262);
-  --secondary: oklch(0.26 0.018 262);
-  --secondary-foreground: oklch(0.95 0.004 260);
-  --muted: oklch(0.26 0.018 262);
-  --muted-foreground: oklch(0.7 0.017 260);
-  --accent: oklch(0.28 0.03 262);
-  --accent-foreground: oklch(0.95 0.004 260);
+  --background: oklch(0.17 0.01 62);
+  --foreground: oklch(0.95 0.006 85);
+  --surface: oklch(0.2 0.012 62);
+  --surface-foreground: oklch(0.95 0.006 85);
+  --card: oklch(0.215 0.012 62);
+  --card-foreground: oklch(0.95 0.006 85);
+  --popover: oklch(0.215 0.012 62);
+  --popover-foreground: oklch(0.95 0.006 85);
+
+  --primary: oklch(0.72 0.115 80);
+  --primary-foreground: oklch(0.2 0.02 70);
+  --secondary: oklch(0.27 0.012 62);
+  --secondary-foreground: oklch(0.95 0.006 85);
+  --muted: oklch(0.26 0.01 62);
+  --muted-foreground: oklch(0.72 0.012 80);
+  --accent: oklch(0.29 0.014 62);
+  --accent-foreground: oklch(0.96 0.006 85);
+
   --destructive: oklch(0.65 0.19 25);
-  --destructive-foreground: oklch(0.99 0.002 260);
-  --success: oklch(0.7 0.14 162);
-  --success-foreground: oklch(0.17 0.014 262);
-  --warning: oklch(0.82 0.14 80);
-  --warning-foreground: oklch(0.22 0.04 60);
-  --info: oklch(0.68 0.13 235);
-  --info-foreground: oklch(0.17 0.014 262);
-  --violet: oklch(0.68 0.16 300);
-  --violet-foreground: oklch(0.17 0.014 262);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.66 0.17 262);
-  --chart-1: oklch(0.66 0.17 262);
-  --chart-2: oklch(0.7 0.14 162);
-  --chart-3: oklch(0.68 0.16 300);
-  --chart-4: oklch(0.82 0.14 80);
-  --chart-5: oklch(0.68 0.13 235);
-  --sidebar: oklch(0.195 0.016 262);
-  --sidebar-foreground: oklch(0.9 0.006 260);
-  --sidebar-primary: oklch(0.66 0.17 262);
-  --sidebar-primary-foreground: oklch(0.17 0.014 262);
-  --sidebar-accent: oklch(0.26 0.02 262);
-  --sidebar-accent-foreground: oklch(0.96 0.004 260);
+  --destructive-foreground: oklch(0.99 0.004 85);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.115 80);
+
+  --gold-soft: oklch(0.32 0.05 82);
+  --royal-soft: oklch(0.3 0.06 298);
+  --azure-soft: oklch(0.3 0.055 255);
+  --emerald-soft: oklch(0.3 0.05 160);
+  --warning-soft: oklch(0.32 0.06 82);
+  --warning-foreground: oklch(0.92 0.04 80);
+  --info-foreground: oklch(0.98 0.005 255);
+  --violet-foreground: oklch(0.98 0.005 300);
+
+  --sidebar: oklch(0.145 0.01 62);
+  --sidebar-foreground: oklch(0.88 0.008 80);
+  --sidebar-primary: oklch(0.72 0.115 80);
+  --sidebar-primary-foreground: oklch(0.18 0.02 70);
+  --sidebar-accent: oklch(0.24 0.012 62);
+  --sidebar-accent-foreground: oklch(0.97 0.006 85);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.66 0.17 262);
+  --sidebar-ring: oklch(0.72 0.115 80);
 }
 
 @layer base {
@@ -185,6 +238,13 @@
   }
 }
 
+@utility surface {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
 @utility surface-card {
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
@@ -192,7 +252,20 @@
   box-shadow: var(--shadow-card);
 }
 
+@utility text-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
 
+@utility gold-rule {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gold) 60%, transparent),
+    transparent
+  );
+}
 
 /*
  * Override body color inheritance inside the admin portal.
@@ -217,7 +290,7 @@
   background-color: revert-layer;
 }
 
-/* Suppress recharts focus outlines inside admin (matching super-admin-portal) */
+/* Suppress recharts focus outlines inside admin (matching owner portal) */
 .admin-shell .recharts-wrapper :focus,
 .admin-shell .recharts-wrapper :focus-visible {
   outline: none;

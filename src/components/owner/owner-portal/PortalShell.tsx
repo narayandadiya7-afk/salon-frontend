@@ -14,7 +14,7 @@ export function PortalShell({ slug, children }: { slug: string; children: ReactN
       <div className="portal-shell flex min-h-dvh w-full bg-background font-sans">
         <AppSidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} slug={slug} />
         <div className="flex min-w-0 flex-1 flex-col">
-          <TopBar slug={slug} />
+          <TopBar slug={slug} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
           <main className="mx-auto w-full max-w-[1500px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
             {children}
           </main>

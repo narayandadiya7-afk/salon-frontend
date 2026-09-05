@@ -35,12 +35,12 @@ export default function NotificationsPage() {
         <Panel title="Inbox" bodyClassName="p-0">
           <ul className="divide-y divide-border">
             {notifications.map((n) => (
-              <li key={n.title} className="flex items-start gap-3 px-5 py-4">
+              <li key={n.id} className="flex items-start gap-3 px-5 py-4">
                 <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", dotTone[n.type] ?? "bg-muted")} />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium">{n.title}</p>
                   <p className="text-sm text-muted-foreground">{n.body}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{n.time}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{n.when}</p>
                 </div>
                 <Button variant="ghost" size="sm">Dismiss</Button>
               </li>

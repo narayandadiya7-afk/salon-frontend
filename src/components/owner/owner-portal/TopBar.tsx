@@ -17,6 +17,8 @@ import {
   Sun,
   UserRound,
   Scissors,
+  PanelLeft,
+  PanelLeftClose,
 } from 'lucide-react';
 import { Button } from '@/components/owner/owner-portal/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/owner/owner-portal/sheet';
@@ -45,7 +47,15 @@ import { notifications } from '@/data/portal';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
-export function TopBar({ slug }: { slug: string }) {
+export function TopBar({
+  slug,
+  collapsed,
+  onToggle,
+}: {
+  slug: string;
+  collapsed: boolean;
+  onToggle: () => void;
+}) {
   const { user, role, roles, setRoleId, salon, salons, setSalonId, theme, toggleTheme, can } =
     useSession();
   const [open, setOpen] = useState(false);
@@ -84,11 +94,21 @@ export function TopBar({ slug }: { slug: string }) {
                 <span className="grid size-9 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
                   <Scissors className="size-4.5" />
                 </span>
-                <p className="text-display text-base text-sidebar-accent-foreground">Maison Lumière</p>
+                <p className="text-sm font-semibold text-sidebar-accent-foreground">Maison Lumière</p>
               </div>
               <SidebarNav collapsed={false} onNavigate={() => setMobileOpen(false)} slug={paramSlug} />
             </SheetContent>
           </Sheet>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden lg:inline-flex"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            onClick={onToggle}
+          >
+            {collapsed ? <PanelLeft className="size-4.5" /> : <PanelLeftClose className="size-4.5" />}
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

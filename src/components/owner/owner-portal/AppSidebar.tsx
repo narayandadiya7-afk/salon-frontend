@@ -101,13 +101,13 @@ export function AppSidebar({
         collapsed ? 'w-[76px]' : 'w-[268px]',
       )}
     >
-      <div className={cn('flex items-center gap-3 px-5 py-5', collapsed && 'justify-center px-0')}>
+      <div className={cn('flex h-16 items-center gap-2.5 border-b border-sidebar-border px-4', collapsed && 'justify-center px-0')}>
         <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
           <Scissors className="size-4.5" strokeWidth={2} />
         </span>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="truncate text-display text-base text-sidebar-accent-foreground">
+            <p className="truncate text-sm font-semibold text-sidebar-accent-foreground">
               Maison Lumière
             </p>
             <p className="truncate text-[0.7rem] uppercase tracking-[0.16em] text-sidebar-foreground/50">
