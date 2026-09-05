@@ -4,8 +4,8 @@ import React, { useEffect, useState, type ReactNode, createContext, useContext }
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import {
-  type LucideIcon,
-  LayoutDashboard, Building2, CreditCard, TrendingUp, ReceiptText, Wallet, Users, ShieldCheck,
+type LucideIcon,
+  LayoutDashboard, Building2, TrendingUp, ReceiptText, Wallet, Users, ShieldCheck,
   ToggleRight, LifeBuoy, ScrollText, Bell, Plug, Lock, Settings, Search, HelpCircle, Moon, Sun,
   PanelLeftClose, PanelLeft, ChevronDown, Menu, Plus, X, Sparkles, LogOut, UserRound,
 } from "lucide-react";
@@ -36,7 +36,7 @@ const nav = [
   {
     group: "Revenue",
     items: [
-      { to: "/admin/plans", label: "Subscription Plans", icon: CreditCard },
+      { to: "/admin/plans", label: "Subscription Plans", icon: Sparkles },
       { to: "/admin/revenue", label: "Revenue", icon: TrendingUp },
       { to: "/admin/billing", label: "Billing", icon: ReceiptText },
       { to: "/admin/payments", label: "Payments", icon: Wallet },
