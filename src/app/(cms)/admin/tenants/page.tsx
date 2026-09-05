@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Building2, CircleCheck, Clock, Ban, Download, Plus, Search, SlidersHorizontal, MoreHorizontal } from "lucide-react";
 import { PageHeader, KpiCard, Panel, StatusBadge, EmptyState } from "@/components/admin/admin-portal/primitives";
 import { Button } from "@/components/admin/admin-portal/button";
@@ -151,13 +152,13 @@ export default function TenantsPage() {
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-3">
+                      <Link href={`/admin/tenants/${t.id}`} className="flex items-center gap-3 hover:underline">
                         <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-[11px] font-semibold text-primary">{t.initials}</span>
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-medium">{t.name}</span>
                           <span className="block truncate text-xs text-muted-foreground">{t.domain}</span>
                         </span>
-                      </div>
+                      </Link>
                     </TableCell>
                     <TableCell>
                       <span className="block text-sm">{t.owner}</span>
@@ -177,7 +178,9 @@ export default function TenantsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48">
-                          <DropdownMenuItem>View profile</DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link href={`/admin/tenants/${t.id}`}>View profile</Link>
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Edit</DropdownMenuItem>
                           <DropdownMenuItem>Upgrade plan</DropdownMenuItem>
                           <DropdownMenuItem>Reset password</DropdownMenuItem>
