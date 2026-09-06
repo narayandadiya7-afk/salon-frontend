@@ -3,8 +3,8 @@
 import { PageHeader, Panel } from "@/components/admin/admin-portal/primitives";
 import { Switch } from "@/components/admin/admin-portal/switch";
 import { Button } from "@/components/admin/admin-portal/button";
-import { notifications } from "@/components/admin/admin-portal/mock-data";
-import { cn } from "@/lib/utils";
+import { notifications } from "@/data/admin-portal";
+import { cn } from "@/utils/cn";
 
 const channels = [
   { name: "Email notifications", description: "Digest and instant alerts to platform staff", enabled: true },

@@ -10,7 +10,7 @@ import { Label } from "@/components/admin/admin-portal/label";
 import { Textarea } from "@/components/admin/admin-portal/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/admin/admin-portal/dialog";
-import { permissionModules, roles } from "@/components/admin/admin-portal/mock-data";
+import { permissionModules, roles } from "@/data/admin-portal";
 
 export default function RolesPage() {
   return (

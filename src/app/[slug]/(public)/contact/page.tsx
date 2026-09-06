@@ -6,8 +6,8 @@ import { MapPin, Phone, Mail, MessageCircle, ArrowRight, Check } from 'lucide-re
 import { Instagram, Facebook } from '../../../../components/owner/owner-website/brand-icons';
 import { z } from 'zod';
 import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { salon } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { salon } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 const schema = z.object({
   name: z.string().trim().min(1, 'Please enter your name').max(100),

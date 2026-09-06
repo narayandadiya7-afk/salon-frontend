@@ -10,7 +10,7 @@ import { Input } from "@/components/admin/admin-portal/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/admin/admin-portal/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/admin/admin-portal/dropdown-menu";
-import { currency, tenants } from "@/components/admin/admin-portal/mock-data";
+import { currency, tenants } from "@/data/admin-portal";
 
 const PAGE_SIZE = 10;
 

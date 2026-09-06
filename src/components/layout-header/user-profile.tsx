@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context';
+import { UserContext } from '../../contexts';
 import { Button } from 'antd';
 import {
   MailOutlined,

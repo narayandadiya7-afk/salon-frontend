@@ -8,7 +8,7 @@ import { Input } from "@/components/admin/admin-portal/input";
 import { Badge } from "@/components/admin/admin-portal/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/admin/admin-portal/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
-import { auditLogs } from "@/components/admin/admin-portal/mock-data";
+import { auditLogs } from "@/data/admin-portal";
 
 export default function AuditLogsPage() {
   const [query, setQuery] = useState("");

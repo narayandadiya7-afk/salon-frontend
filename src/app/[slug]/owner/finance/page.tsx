@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function FinancePage() {
   return (
     <ModulePage
-      module="finance"
-      name="Finance"
       eyebrow="Money"
       title="Financial management"
       description="Invoices, payments, expenses, taxes, tips and commission in one ledger."

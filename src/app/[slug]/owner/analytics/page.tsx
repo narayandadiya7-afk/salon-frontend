@@ -40,8 +40,7 @@ import {
 } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/owner/owner-portal/button';
 import { Progress } from '@/components/owner/owner-portal/progress';
-import { useSession } from '@/lib/portal/session';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const chartColors = ['var(--gold)', 'var(--royal)', 'var(--azure)', 'var(--emerald)'];
 
@@ -108,7 +107,6 @@ function ChartTip({ active, payload, label }: ChartTipProps) {
 
 function AnalyticsContent() {
   const [chartMode, setChartMode] = useState<'revenue' | 'bookings'>('revenue');
-  const { can } = useSession();
   const totalRevenue = revenueData.reduce((a, b) => a + b.revenue, 0);
   const avgMonthly = Math.round(totalRevenue / revenueData.length);
   const currentMonth = new Date().getMonth();

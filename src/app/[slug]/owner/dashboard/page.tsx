@@ -25,7 +25,6 @@ import {
   CalendarPlus,
   CreditCard,
   Crown,
-  PackageX,
   Plus,
   Receipt,
   Repeat,
@@ -41,12 +40,11 @@ import {
   SectionCard,
   StatCard,
   StatusChip,
-  Surface,
 } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/owner/owner-portal/button';
 import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 import { Progress } from '@/components/owner/owner-portal/progress';
-import { useSession } from '@/lib/portal/session';
+import { ownerRole, ownerUser } from '@/data/owner-portal';
 import {
   acquisition,
   appointments,
@@ -58,7 +56,7 @@ import {
   servicePopularity,
   staff,
   staffPerformance,
-} from '@/data/portal';
+} from '@/data/owner-portal';
 
 const chartColors = ['var(--gold)', 'var(--royal)', 'var(--azure)', 'var(--emerald)', 'var(--chart-5)'];
 
@@ -79,8 +77,9 @@ function ChartTip({ active, payload, label }: any) {
 function Dashboard() {
   const params = useParams();
   const slug = (params?.slug as string) || '';
-  const { role, user, can } = useSession();
-  const isStylist = role.id === 'stylist';
+  const role = ownerRole;
+  const user = ownerUser;
+  const isStylist = false;
   const myAppointments = appointments.filter((a) => a.staff === user.name);
   const shown = isStylist ? myAppointments : appointments;
 
@@ -96,16 +95,12 @@ function Dashboard() {
         }
         actions={
           <>
-            {can('appointments', 'create') && (
-              <Button variant="gold" onClick={() => toast.success('New booking drawer opened.')}>
-                <Plus className="size-4" /> New booking
-              </Button>
-            )}
-            {can('reports', 'export') && (
-              <Button variant="outline" onClick={() => toast('Preparing PDF export…')}>
-                Export report
-              </Button>
-            )}
+            <Button variant="gold" onClick={() => toast.success('New booking drawer opened.')}>
+              <Plus className="size-4" /> New booking
+            </Button>
+            <Button variant="outline" onClick={() => toast('Preparing PDF export…')}>
+              Export report
+            </Button>
           </>
         }
       />
@@ -225,7 +220,6 @@ function Dashboard() {
                 { label: 'Add customer', icon: Users, module: 'customers' as const },
                 { label: 'New campaign', icon: Crown, module: 'marketing' as const },
               ]
-                .filter((q) => can(q.module, 'create') || can(q.module, 'edit'))
                 .map((q) => (
                   <button
                     key={q.label}
@@ -239,8 +233,7 @@ function Dashboard() {
             </div>
           </SectionCard>
 
-          {can('staff') && (
-            <SectionCard title="Staff availability" description="On shift right now">
+          <SectionCard title="Staff availability" description="On shift right now">
               <ul className="space-y-3">
                 {staff.slice(0, 5).map((s) => (
                   <li key={s.id} className="flex items-center gap-3">
@@ -258,7 +251,6 @@ function Dashboard() {
                 ))}
               </ul>
             </SectionCard>
-          )}
         </div>
       </section>
 
@@ -311,8 +303,7 @@ function Dashboard() {
       )}
 
       <section className="grid gap-4 xl:grid-cols-3">
-        {can('inventory') && (
-          <SectionCard title="Low inventory" description="Reorder needed" bodyClassName="p-0">
+        <SectionCard title="Low inventory" description="Reorder needed" bodyClassName="p-0">
             <ul className="divide-y divide-border">
               {inventory
                 .filter((p) => p.status !== 'Healthy')
@@ -327,10 +318,8 @@ function Dashboard() {
                 ))}
             </ul>
           </SectionCard>
-        )}
 
-        {can('customers') && (
-          <SectionCard title="Recent customers" description="Last visits" bodyClassName="p-0">
+        <SectionCard title="Recent customers" description="Last visits" bodyClassName="p-0">
             <ul className="divide-y divide-border">
               {customers.slice(0, 4).map((c) => (
                 <li key={c.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-3.5">
@@ -346,7 +335,6 @@ function Dashboard() {
               ))}
             </ul>
           </SectionCard>
-        )}
 
         <SectionCard title="Recent reviews" description="Across Google & Fresha">
           {reviews.length === 0 ? (
@@ -371,16 +359,6 @@ function Dashboard() {
           )}
         </SectionCard>
       </section>
-
-      {!can('inventory') && (
-        <Surface className="flex items-center gap-4 border-dashed p-5">
-          <PackageX className="size-5 shrink-0 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">
-            Inventory, finance and website widgets are hidden because the{' '}
-            <strong className="text-foreground">{role.name}</strong> role has no access to those modules.
-          </p>
-        </Surface>
-      )}
     </div>
   );
 }

@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { Check, ArrowRight } from 'lucide-react';
 import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { packages } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { packages } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 export default function PackagesPage() {
   const { slug } = useSite();

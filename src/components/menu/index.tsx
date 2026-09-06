@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useRouter, usePathname } from 'next/navigation';
 import styles from './menu.module.css';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { UserContext } from '../../context';
+import { UserContext } from '../../contexts';
 import { TContext, TMenuItem } from '../../types/config';
 
 type TProps = {

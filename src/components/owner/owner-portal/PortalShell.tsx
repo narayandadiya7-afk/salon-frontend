@@ -1,7 +1,6 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { SessionProvider } from '@/lib/portal/session';
 import { AppSidebar, useSidebarState } from './AppSidebar';
 import { TopBar } from './TopBar';
 import { Toaster } from 'sonner';
@@ -10,7 +9,7 @@ export function PortalShell({ slug, children }: { slug: string; children: ReactN
   const [collapsed, setCollapsed] = useSidebarState();
 
   return (
-    <SessionProvider>
+    <>
       <div className="portal-shell flex min-h-dvh w-full bg-background font-sans">
         <AppSidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} slug={slug} />
         <div className="flex min-w-0 flex-1 flex-col">
@@ -21,6 +20,6 @@ export function PortalShell({ slug, children }: { slug: string; children: ReactN
         </div>
       </div>
       <Toaster position="top-right" richColors />
-    </SessionProvider>
+    </>
   );
 }

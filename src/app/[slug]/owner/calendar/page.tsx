@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, DoorOpen, Grid3x3, Users } from 'lucide-react';
-import { Guard, PageHeader, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
+import { PageHeader, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/owner/owner-portal/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { toast } from 'sonner';
 
 const HOURS = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
@@ -170,9 +170,5 @@ function CalendarPage() {
 }
 
 export default function CalendarPageRoute() {
-  return (
-    <Guard module="calendar" name="the Calendar">
-      <CalendarPage />
-    </Guard>
-  );
+  return <CalendarPage />;
 }

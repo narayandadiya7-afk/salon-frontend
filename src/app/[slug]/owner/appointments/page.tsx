@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import {
   EmptyState,
-  Guard,
   PageHeader,
   SectionCard,
   StatCard,
@@ -38,8 +37,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/owner/owner-portal/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/owner/owner-portal/select';
-import { appointments, type Appointment, type AppointmentStatus } from '@/data/portal';
-import { useSession } from '@/lib/portal/session';
+import { appointments, type Appointment, type AppointmentStatus } from '@/data/owner-portal';
 import { toast } from 'sonner';
 import type { Tone } from '@/components/owner/owner-portal/primitives';
 
@@ -62,7 +60,6 @@ const KANBAN: { key: AppointmentStatus; label: string }[] = [
 ];
 
 function BookingCard({ a }: { a: Appointment }) {
-  const { can } = useSession();
   return (
     <Surface className="p-4 transition-shadow hover:shadow-[var(--shadow-lifted)]">
       <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3">
@@ -86,37 +83,32 @@ function BookingCard({ a }: { a: Appointment }) {
       {a.notes && (
         <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold">{a.notes}</p>
       )}
-      {can('appointments', 'edit') && (
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked in`)}>
-            <LogIn className="size-3.5" /> Check in
-          </Button>
-          <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked out`)}>
-            <LogOut className="size-3.5" /> Check out
-          </Button>
-          <Button size="sm" variant="ghost" onClick={() => toast('Reschedule drawer opened')}>
-            <Repeat className="size-3.5" /> Reschedule
-          </Button>
-        </div>
-      )}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked in`)}>
+          <LogIn className="size-3.5" /> Check in
+        </Button>
+        <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked out`)}>
+          <LogOut className="size-3.5" /> Check out
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => toast('Reschedule drawer opened')}>
+          <Repeat className="size-3.5" /> Reschedule
+        </Button>
+      </div>
     </Surface>
   );
 }
 
 function Appointments() {
-  const { can, role, user } = useSession();
   const [query, setQuery] = useState('');
   const [staffFilter, setStaffFilter] = useState('all');
-  const scopedToMe = role.id === 'stylist';
 
   const rows = useMemo(() => {
     return appointments.filter((a) => {
-      if (scopedToMe && a.staff !== user.name) return false;
       if (staffFilter !== 'all' && a.staff !== staffFilter) return false;
       const q = query.toLowerCase();
       return !q || a.customer.toLowerCase().includes(q) || a.service.toLowerCase().includes(q);
     });
-  }, [query, staffFilter, scopedToMe, user.name]);
+  }, [query, staffFilter]);
 
   const staffNames = Array.from(new Set(appointments.map((a) => a.staff)));
 
@@ -125,22 +117,16 @@ function Appointments() {
       <PageHeader
         eyebrow="Operations"
         title="Appointments"
-        description={
-          scopedToMe
-            ? "You're seeing only the bookings assigned to your chair."
-            : 'Every booking across the floor — drag between stages, resolve conflicts and manage the waiting list.'
-        }
+        description="Every booking across the floor — drag between stages, resolve conflicts and manage the waiting list."
         actions={
-          can('appointments', 'create') && (
-            <>
-              <Button variant="outline" onClick={() => toast.success('Walk-in added to waiting list')}>
-                Add walk-in
-              </Button>
-              <Button variant="gold" onClick={() => toast.success('New booking drawer opened')}>
-                <Plus className="size-4" /> New booking
-              </Button>
-            </>
-          )
+          <>
+            <Button variant="outline" onClick={() => toast.success('Walk-in added to waiting list')}>
+              Add walk-in
+            </Button>
+            <Button variant="gold" onClick={() => toast.success('New booking drawer opened')}>
+              <Plus className="size-4" /> New booking
+            </Button>
+          </>
         }
       />
 
@@ -289,7 +275,6 @@ function Appointments() {
                               <DropdownMenuSeparator />
                               <DropdownMenuItem
                                 className="text-destructive focus:text-destructive"
-                                disabled={!can('appointments', 'delete')}
                                 onSelect={() => toast.error('Booking cancelled')}
                               >
                                 <X className="size-4" /> Cancel booking
@@ -367,9 +352,5 @@ function Appointments() {
 }
 
 export default function AppointmentsPage() {
-  return (
-    <Guard module="appointments" name="Appointments">
-      <Appointments />
-    </Guard>
-  );
+  return <Appointments />;
 }

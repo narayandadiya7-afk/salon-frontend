@@ -9,7 +9,7 @@ import {
   GroupOutlined, UnorderedListOutlined, HomeOutlined,
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
-import { UserContext } from '../../context/user';
+import { UserContext } from '../../contexts/user';
 import { TMenuItem } from '../../types/config';
 import './Sidebar.css';
 

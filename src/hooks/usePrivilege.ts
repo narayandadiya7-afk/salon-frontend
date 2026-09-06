@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { UserContext } from '../context/user';
+import { UserContext } from '../contexts/user';
 
 export function usePrivilege() {
   const { privilegeList } = useContext(UserContext);

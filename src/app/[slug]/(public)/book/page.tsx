@@ -19,9 +19,9 @@ import {
   Banknote,
   Smartphone,
 } from 'lucide-react';
-import { services, stylists, categories, salon } from '../../../../data/salon';
-import { cn } from '../../../../lib/utils';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { services, stylists, categories, salon } from '../../../../data/owner-website';
+import { cn } from '@/utils/cn';
+import { useSite } from '@/contexts/site-context';
 import { usePageMeta } from '../../../../components/owner/owner-website/ui';
 
 const steps = ['Service', 'Specialist', 'Date', 'Time', 'Details', 'Summary', 'Payment', 'Confirmed'];

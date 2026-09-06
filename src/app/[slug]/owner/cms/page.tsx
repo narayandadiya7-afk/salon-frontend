@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function CmsPage() {
   return (
     <ModulePage
-      module="cms"
-      name="Website CMS"
       eyebrow="Web"
       title="Website CMS"
       description="Compose your public site: hero, services, team, gallery, blogs and SEO."

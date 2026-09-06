@@ -5,7 +5,7 @@ import { PageHeader, KpiCard, Panel, StatusBadge } from "@/components/admin/admi
 import { Button } from "@/components/admin/admin-portal/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/admin/admin-portal/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
-import { currency, invoices } from "@/components/admin/admin-portal/mock-data";
+import { currency, invoices } from "@/data/admin-portal";
 
 const refunds = [
   { id: "RF-2041", tenant: "Gilded Glow Spa", amount: 349, reason: "Duplicate charge", status: "pending", requested: "Aug 19, 2026" },

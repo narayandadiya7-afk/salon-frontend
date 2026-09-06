@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { PageHero, SectionHead, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { stylists, stats } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
-import aboutImg from '../../../../assets/about.jpg';
-import heroImg from '../../../../assets/hero.jpg';
+import { stylists, stats } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
+
+const aboutImg = '/assets/owner-website/about.jpg';
+const heroImg = '/assets/owner-website/hero.jpg';
 
 const values = [
   { t: 'Craft over speed', d: 'One guest per specialist, always. No double-booking, no rushed finishes.' },
@@ -35,13 +36,13 @@ export default function AboutPage() {
         eyebrow="About"
         title="Eighteen years of unhurried craft"
         copy="Maison Lumière exists for people who would rather be looked after properly than processed quickly."
-        image={heroImg.src}
+        image={heroImg}
       />
 
       <section className="shell pb-24">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <img
-            src={aboutImg.src}
+            src={aboutImg}
             alt="Brass tools on marble"
             loading="lazy"
             className="aspect-4/5 w-full rounded-3xl object-cover"

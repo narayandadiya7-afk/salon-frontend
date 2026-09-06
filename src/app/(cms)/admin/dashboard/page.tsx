@@ -17,7 +17,7 @@ import { PieChartTooltip } from "@/components/admin/admin-portal/chart-tooltip";
 import {
   activityFeed, compact, currency, dauSeries, expiringTrials, geoDistribution, planDistribution,
   recentPayments, revenueSeries, systemHealth, tenants,
-} from "@/components/admin/admin-portal/mock-data";
+} from "@/data/admin-portal";
 
 const axis = { stroke: "var(--color-muted-foreground)", fontSize: 12 };
 

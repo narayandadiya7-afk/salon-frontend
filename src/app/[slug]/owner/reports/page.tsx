@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function ReportsPage() {
   return (
     <ModulePage
-      module="reports"
-      name="Reports & Analytics"
       eyebrow="Insight"
       title="Reports & analytics"
       description="Slice revenue, staff, customers, services and marketing — then export."

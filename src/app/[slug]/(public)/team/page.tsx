@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { Star, ArrowRight } from 'lucide-react';
 import { Instagram } from '../../../../components/owner/owner-website/brand-icons';
 import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { stylists } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { stylists } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 const slots = ['09:30', '11:00', '13:15', '15:45', '17:30'];
 const days = ['Mon 3', 'Tue 4', 'Wed 5', 'Thu 6', 'Fri 7'];

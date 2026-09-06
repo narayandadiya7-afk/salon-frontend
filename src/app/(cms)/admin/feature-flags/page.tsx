@@ -5,7 +5,7 @@ import { PageHeader, Panel } from "@/components/admin/admin-portal/primitives";
 import { Switch } from "@/components/admin/admin-portal/switch";
 import { Badge } from "@/components/admin/admin-portal/badge";
 import { Progress } from "@/components/admin/admin-portal/progress";
-import { featureFlags } from "@/components/admin/admin-portal/mock-data";
+import { featureFlags } from "@/data/admin-portal";
 
 export default function FeaturesPage() {
   const [flags, setFlags] = useState(featureFlags);

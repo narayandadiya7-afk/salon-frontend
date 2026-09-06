@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { ArrowRight, Mail, MapPin, Phone, Clock, MessageCircle } from 'lucide-react';
 import { Instagram, Facebook, Youtube } from './brand-icons';
-import { salon } from '@/data/salon';
-import { useSite } from './site-context';
+import { salon } from '@/data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 export function SiteFooter() {
   const { slug } = useSite();

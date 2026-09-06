@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { Check, Copy, Minus, Plus, ShieldCheck, Users } from 'lucide-react';
-import { Guard, PageHeader, StatCard, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
+import { PageHeader, StatCard, StatusChip, Surface } from '@/components/owner/owner-portal/primitives';
 import { Button } from '@/components/owner/owner-portal/button';
-import { MODULES, ROLES, type PermissionAction } from '@/lib/portal/rbac';
+import { MODULES, ROLES, type PermissionAction } from '@/data/owner-portal';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const ACTIONS: PermissionAction[] = ['view', 'create', 'edit', 'delete', 'approve', 'export', 'manage'];
 
@@ -113,9 +113,5 @@ function RolesPage() {
 }
 
 export default function RolesPageRoute() {
-  return (
-    <Guard module="roles" name="Roles & Permissions">
-      <RolesPage />
-    </Guard>
-  );
+  return <RolesPage />;
 }

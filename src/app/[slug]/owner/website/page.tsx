@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import {
   EmptyState,
-  Guard,
   PageHeader,
   SectionCard,
   StatusChip,
@@ -38,9 +37,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/owner/owner-portal/dialog';
-import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface TeamMember {
   id: string;
@@ -406,7 +404,6 @@ function TestimonialsTab({ testimonials, setTestimonials }: { testimonials: Test
 }
 
 function WebsiteCMSContent() {
-  const { can } = useSession();
   const [team, setTeam] = useState<TeamMember[]>(mockTeam);
   const [gallery, setGallery] = useState<GalleryImage[]>(mockGallery);
   const [testimonials, setTestimonials] = useState<Testimonial[]>(mockTestimonials);
@@ -466,9 +463,5 @@ function WebsiteCMSContent() {
 }
 
 export default function WebsiteCMSPage() {
-  return (
-    <Guard module="cms" name="Website CMS">
-      <WebsiteCMSContent />
-    </Guard>
-  );
+  return <WebsiteCMSContent />;
 }

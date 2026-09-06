@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { Clock, Star } from 'lucide-react';
 import { useEffect, type ReactNode } from 'react';
-import type { Service } from '@/data/salon';
-import { cn } from '@/lib/utils';
-import { useSite } from './site-context';
+import type { Service } from '@/data/owner-website';
+import { cn } from '@/utils/cn';
+import { useSite } from '@/contexts/site-context';
 
 export function usePageMeta(title?: string, description?: string) {
   useEffect(() => {

@@ -1,9 +1,8 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { Guard, PageHeader, SectionCard, StatCard, StatusChip, Surface } from './primitives';
+import { PageHeader, SectionCard, StatCard, StatusChip, Surface } from './primitives';
 import { Button } from '@/components/owner/owner-portal/button';
-import type { ModuleId } from '@/lib/portal/rbac';
 import { toast } from 'sonner';
 
 export interface ModuleStat {
@@ -33,8 +32,6 @@ export interface ModulePanel {
 }
 
 export function ModulePage({
-  module,
-  name,
   eyebrow,
   title,
   description,
@@ -43,8 +40,6 @@ export function ModulePage({
   panels,
   features,
 }: {
-  module: ModuleId;
-  name: string;
   eyebrow: string;
   title: string;
   description: string;
@@ -54,8 +49,7 @@ export function ModulePage({
   features?: string[];
 }) {
   return (
-    <Guard module={module} name={name}>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <PageHeader
           eyebrow={eyebrow}
           title={title}
@@ -113,6 +107,5 @@ export function ModulePage({
           </Surface>
         )}
       </div>
-    </Guard>
   );
 }

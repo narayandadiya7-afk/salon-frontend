@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function PosPage() {
   return (
     <ModulePage
-      module="pos"
-      name="Point of Sale"
       eyebrow="Checkout"
       title="Point of sale"
       description="Fast checkout for services and retail with split payments, discounts and receipts."

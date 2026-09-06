@@ -7,7 +7,7 @@ import { Switch } from "@/components/admin/admin-portal/switch";
 import { Input } from "@/components/admin/admin-portal/input";
 import { Label } from "@/components/admin/admin-portal/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
-import { apiKeys, sessions } from "@/components/admin/admin-portal/mock-data";
+import { apiKeys, sessions } from "@/data/admin-portal";
 
 const loginAttempts = [
   { user: "owen@salonos.io", ip: "41.22.8.190", result: "failed", time: "09:22 · today", location: "Unknown" },

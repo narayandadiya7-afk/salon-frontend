@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function ServicesPage() {
   return (
     <ModulePage
-      module="services"
-      name="Services & Packages"
       eyebrow="Catalog"
       title="Services, packages & memberships"
       description="Pricing, duration, tax and availability rules for everything you sell."

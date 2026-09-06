@@ -15,8 +15,8 @@ import {
   DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/admin/admin-portal/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/admin/admin-portal/avatar";
-import { cn } from "@/lib/utils";
-import { notifications } from "@/components/admin/admin-portal/mock-data";
+import { cn } from "@/utils/cn";
+import { notifications } from "@/data/admin-portal";
 import {
   Popover, PopoverContent, PopoverTrigger,
 } from "@/components/admin/admin-portal/popover";

@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Moon, Sun, Globe, User, CalendarCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { salon } from '@/data/salon';
-import { useSite } from './site-context';
-import { cn } from '@/lib/cn';
+import { salon } from '@/data/owner-website';
+import { useSite } from '@/contexts/site-context';
+import { cn } from '@/utils/cn';
 
 const links = [
   { to: '', label: 'Home' },

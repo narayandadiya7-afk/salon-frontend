@@ -40,11 +40,10 @@ import {
   CommandList,
 } from '@/components/owner/owner-portal/command';
 import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
-import { SidebarNav } from './AppSidebar';
-import { useSession } from '@/lib/portal/session';
-import { NAV, navHref } from '@/lib/portal/nav';
-import { notifications } from '@/data/portal';
-import { cn } from '@/lib/utils';
+import { SidebarNav, NAV, navHref } from './AppSidebar';
+import { ownerRole, ownerUser, ROLES, salons, type RoleId } from '@/data/owner-portal';
+import { notifications } from '@/data/owner-portal';
+import { cn } from '@/utils/cn';
 import { toast } from 'sonner';
 
 export function TopBar({
@@ -56,13 +55,17 @@ export function TopBar({
   collapsed: boolean;
   onToggle: () => void;
 }) {
-  const { user, role, roles, setRoleId, salon, salons, setSalonId, theme, toggleTheme, can } =
-    useSession();
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [salonId, setSalonId] = useState(salons[0]!.id);
+  const [roleId, setRoleId] = useState<RoleId>(ownerRole.id);
   const router = useRouter();
   const params = useParams();
   const paramSlug = (params?.slug as string) || slug;
+  const user = ownerUser;
+  const role = ROLES.find((r) => r.id === roleId) ?? ownerRole;
+  const salon = salons.find((s) => s.id === salonId) ?? salons[0]!;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -75,7 +78,23 @@ export function TopBar({
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
-  const visibleNav = NAV.flatMap((s) => s.items).filter((i) => can(i.module));
+  useEffect(() => {
+    const stored = localStorage.getItem('salonos.theme');
+    const isDark = stored === 'dark';
+    setTheme(isDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', isDark);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      localStorage.setItem('salonos.theme', next);
+      return next;
+    });
+  };
+
+  const visibleNav = NAV.flatMap((s) => s.items);
   const unread = notifications.filter((n) => n.unread).length;
 
   return (
@@ -232,8 +251,8 @@ export function TopBar({
               <DropdownMenuLabel className="text-[0.68rem] uppercase tracking-wider text-muted-foreground">
                 Preview as role
               </DropdownMenuLabel>
-              {roles.map((r) => (
-                <DropdownMenuItem key={r.id} onSelect={() => setRoleId(r.id)}>
+              {ROLES.map((r) => (
+                <DropdownMenuItem key={r.id} onSelect={() => setRoleId(r.id as RoleId)}>
                   <span className="flex-1">{r.name}</span>
                   {r.custom && (
                     <span className="rounded-full bg-royal-soft px-2 py-0.5 text-[0.62rem] font-semibold text-royal">
