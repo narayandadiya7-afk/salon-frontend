@@ -1,12 +1,8 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { Lock, type LucideIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useSession } from '@/lib/portal/session';
-import type { ModuleId, PermissionAction } from '@/lib/portal/rbac';
+import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/utils/cn';
 import { Button } from '@/components/owner/owner-portal/button';
 import { Skeleton } from '@/components/owner/owner-portal/skeleton';
 
@@ -185,45 +181,4 @@ export function LoadingRows({ rows = 4 }: { rows?: number }) {
       ))}
     </div>
   );
-}
-
-export function PermissionDenied({ module }: { module: string }) {
-  const { role } = useSession();
-  const params = useParams();
-  const slug = (params?.slug as string) || '';
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center px-4">
-      <Surface className="max-w-md p-8 text-center">
-        <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-destructive/10 text-destructive">
-          <Lock className="size-6" strokeWidth={1.5} />
-        </span>
-        <h1 className="mt-5 text-display text-xl">Permission denied</h1>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          The <strong className="text-foreground">{role.name}</strong> role doesn&apos;t include
-          access to {module}. Ask an owner to grant it in Roles &amp; Permissions.
-        </p>
-        <div className="mt-6 flex justify-center gap-2">
-          <Button asChild variant="outline">
-            <Link href={`/${slug}/owner/dashboard`}>Back to dashboard</Link>
-          </Button>
-        </div>
-      </Surface>
-    </div>
-  );
-}
-
-export function Guard({
-  module,
-  action = 'view',
-  name,
-  children,
-}: {
-  module: ModuleId;
-  action?: PermissionAction;
-  name: string;
-  children: ReactNode;
-}) {
-  const { can } = useSession();
-  if (!can(module, action)) return <PermissionDenied module={name} />;
-  return <>{children}</>;
 }

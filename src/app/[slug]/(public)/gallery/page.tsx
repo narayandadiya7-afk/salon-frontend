@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { X, Play } from 'lucide-react';
 import { PageHero, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { galleryItems } from '../../../../data/salon';
+import { galleryItems } from '../../../../data/owner-website';
 
 export default function GalleryPage() {
   usePageMeta(

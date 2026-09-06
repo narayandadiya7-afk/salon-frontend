@@ -4,7 +4,7 @@ import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, Line
 import { DollarSign, TrendingUp, Gem, Percent, Download } from "lucide-react";
 import { PageHeader, KpiCard, Panel } from "@/components/admin/admin-portal/primitives";
 import { Button } from "@/components/admin/admin-portal/button";
-import { compact, currency, geoDistribution, planDistribution, revenueSeries } from "@/components/admin/admin-portal/mock-data";
+import { compact, currency, geoDistribution, planDistribution, revenueSeries } from "@/data/admin-portal";
 import { PieChartTooltip } from "@/components/admin/admin-portal/chart-tooltip";
 
 const tooltipStyle = { background: "var(--color-popover)", border: "1px solid var(--color-border)", borderRadius: 12, fontSize: 12 };

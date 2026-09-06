@@ -4,7 +4,7 @@ import { Plug } from "lucide-react";
 import { PageHeader, Panel, StatusBadge } from "@/components/admin/admin-portal/primitives";
 import { Button } from "@/components/admin/admin-portal/button";
 import { Badge } from "@/components/admin/admin-portal/badge";
-import { integrations } from "@/components/admin/admin-portal/mock-data";
+import { integrations } from "@/data/admin-portal";
 
 export default function IntegrationsPage() {
   return (

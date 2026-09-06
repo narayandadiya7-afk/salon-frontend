@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function StaffPage() {
   return (
     <ModulePage
-      module="staff"
-      name="Staff"
       eyebrow="Team"
       title="Staff management"
       description="Directory, shifts, leave, commission and performance for every team member."

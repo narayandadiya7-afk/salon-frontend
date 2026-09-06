@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/admin/admin-portal/badge";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 export function PageHeader({
   title,

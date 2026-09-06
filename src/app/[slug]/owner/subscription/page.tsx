@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function SubscriptionPage() {
   return (
     <ModulePage
-      module="subscription"
-      name="Subscription"
       eyebrow="Billing"
       title="Subscription & billing"
       description="Your platform plan, usage, invoices and payment method."

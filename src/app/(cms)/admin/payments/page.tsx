@@ -3,7 +3,7 @@
 import { Wallet, CreditCard, RefreshCcw, XCircle } from "lucide-react";
 import { PageHeader, KpiCard, Panel, StatusBadge } from "@/components/admin/admin-portal/primitives";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
-import { currency, recentPayments } from "@/components/admin/admin-portal/mock-data";
+import { currency, recentPayments } from "@/data/admin-portal";
 
 const gateways = [
   { name: "Stripe", volume: 218400, success: "98.4%", status: "operational", mode: "Live" },

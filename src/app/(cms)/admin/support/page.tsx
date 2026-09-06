@@ -6,8 +6,8 @@ import { PageHeader, KpiCard, Panel, StatusBadge } from "@/components/admin/admi
 import { Button } from "@/components/admin/admin-portal/button";
 import { Textarea } from "@/components/admin/admin-portal/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/admin/admin-portal/tabs";
-import { tickets } from "@/components/admin/admin-portal/mock-data";
-import { cn } from "@/lib/utils";
+import { tickets } from "@/data/admin-portal";
+import { cn } from "@/utils/cn";
 
 const thread = [
   { author: "Amelia Hart", role: "Tenant owner", body: "Our August payout hasn't landed and the dashboard still shows it as processing.", time: "Today · 09:12" },

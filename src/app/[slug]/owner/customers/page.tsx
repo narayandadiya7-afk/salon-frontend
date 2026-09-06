@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import {
   EmptyState,
-  Guard,
   PageHeader,
   StatCard,
   StatusChip,
@@ -27,14 +26,12 @@ import { Input } from '@/components/owner/owner-portal/input';
 import { Avatar, AvatarFallback } from '@/components/owner/owner-portal/avatar';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/owner/owner-portal/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/owner/owner-portal/tabs';
-import { customers, type Customer } from '@/data/portal';
-import { useSession } from '@/lib/portal/session';
+import { customers, type Customer } from '@/data/owner-portal';
 import { toast } from 'sonner';
 
 const SEGMENTS = ['All', 'VIP', 'Regular', 'New', 'Inactive'] as const;
 
 function CustomersPage() {
-  const { can } = useSession();
   const [query, setQuery] = useState('');
   const [segment, setSegment] = useState<(typeof SEGMENTS)[number]>('All');
   const [active, setActive] = useState<Customer | null>(null);
@@ -56,14 +53,12 @@ function CustomersPage() {
         title="Customers & CRM"
         description="Every guest, their history, spend and preferences — one profile across all locations."
         actions={
-          can('customers', 'create') && (
-            <>
-              <Button variant="outline" onClick={() => toast('Import wizard opened')}>Import</Button>
-              <Button variant="gold" onClick={() => toast.success('New customer drawer opened')}>
-                <Plus className="size-4" /> Add customer
-              </Button>
-            </>
-          )
+          <>
+            <Button variant="outline" onClick={() => toast('Import wizard opened')}>Import</Button>
+            <Button variant="gold" onClick={() => toast.success('New customer drawer opened')}>
+              <Plus className="size-4" /> Add customer
+            </Button>
+          </>
         }
       />
 
@@ -245,9 +240,5 @@ function CustomersPage() {
 }
 
 export default function CustomersPageRoute() {
-  return (
-    <Guard module="customers" name="Customers & CRM">
-      <CustomersPage />
-    </Guard>
-  );
+  return <CustomersPage />;
 }

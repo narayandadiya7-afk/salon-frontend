@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from './search.module.css';
-import Text from '../../context/language-context';
+import Text from '../../contexts/language-context';
 
 type SearchProps = {
   searchText: string;

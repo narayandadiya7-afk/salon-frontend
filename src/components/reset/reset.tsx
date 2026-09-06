@@ -3,7 +3,7 @@
 import React, { FC, useState } from 'react';
 import { ReloadOutlined } from '@ant-design/icons';
 import style from './reset.module.css';
-import Text from '../../context/language-context';
+import Text from '../../contexts/language-context';
 
 interface FilterResetComponentProps {
   onResetFilters: () => void;

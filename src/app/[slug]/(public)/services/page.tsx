@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { PageHero, ServiceCard, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { services, categories, stylists } from '../../../../data/salon';
+import { services, categories, stylists } from '../../../../data/owner-website';
 import { Slider } from '../../../../components/owner/owner-website/slider';
 import { ArrowRight } from 'lucide-react';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { useSite } from '@/contexts/site-context';
 
 export default function ServicesPage() {
   const { slug } = useSite();

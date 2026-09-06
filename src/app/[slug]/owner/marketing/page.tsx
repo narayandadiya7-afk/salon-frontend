@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function MarketingPage() {
   return (
     <ModulePage
-      module="marketing"
-      name="Marketing"
       eyebrow="Growth"
       title="Marketing center"
       description="Email, SMS, WhatsApp and push campaigns with loyalty, referrals and coupons."

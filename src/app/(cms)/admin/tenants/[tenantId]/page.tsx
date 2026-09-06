@@ -7,7 +7,7 @@ import { PageHeader, KpiCard, Panel, StatusBadge, EmptyState } from "@/component
 import { Button } from "@/components/admin/admin-portal/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/admin/admin-portal/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/admin-portal/table";
-import { currency, invoices, tenants } from "@/components/admin/admin-portal/mock-data";
+import { currency, invoices, tenants } from "@/data/admin-portal";
 
 const timeline = [
   { label: "Plan upgraded to Business", time: "Aug 14, 2026 · 09:12" },

@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function InventoryPage() {
   return (
     <ModulePage
-      module="inventory"
-      name="Inventory"
       eyebrow="Stock"
       title="Inventory & suppliers"
       description="Products, purchase orders, stock movement, expiry and valuation."

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination as AntPagination, Select } from 'antd';
 import styles from './pagination.module.css';
-import Text from '../../context/language-context';
+import Text from '../../contexts/language-context';
 
 type PaginationProps = {
   currentPage?: number;

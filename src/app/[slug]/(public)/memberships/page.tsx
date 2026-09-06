@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Check, Minus } from 'lucide-react';
 import { PageHero, SectionHead, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { memberships } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { memberships } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 const compare = [
   { feature: 'Monthly signature services', values: ['1', '2', '4'] },

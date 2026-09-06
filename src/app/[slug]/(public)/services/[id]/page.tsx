@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useParams, notFound } from 'next/navigation';
 import { Clock, Star, ArrowRight, Check } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../../../components/owner/owner-website/accordion';
-import { services, stylists, faqs, testimonials } from '../../../../../data/salon';
+import { services, stylists, faqs, testimonials } from '../../../../../data/owner-website';
 import { ServiceCard, SectionHead, usePageMeta } from '../../../../../components/owner/owner-website/ui';
-import { useSite } from '../../../../../components/owner/owner-website/site-context';
+import { useSite } from '@/contexts/site-context';
 
 export default function ServiceDetail() {
   const { slug } = useSite();

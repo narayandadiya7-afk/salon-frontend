@@ -3,10 +3,92 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { ChevronLeft, Scissors } from 'lucide-react';
-import { NAV, navHref } from '@/lib/portal/nav';
-import { useSession } from '@/lib/portal/session';
-import { cn } from '@/lib/utils';
+import {
+  ChevronLeft,
+  Scissors,
+  LayoutDashboard,
+  CalendarDays,
+  CalendarRange,
+  Users,
+  UserCog,
+  ShieldCheck,
+  Boxes,
+  CreditCard,
+  Receipt,
+  Megaphone,
+  Globe,
+  BarChart3,
+  Bell,
+  Settings,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react';
+import { ownerRole } from '@/data/owner-portal';
+import { cn } from '@/utils/cn';
+
+export interface NavItem {
+  to: string;
+  label: string;
+  icon: LucideIcon;
+  badge?: string;
+}
+
+export interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+export const NAV: NavSection[] = [
+  {
+    title: 'Overview',
+    items: [{ to: 'dashboard', label: 'Dashboard', icon: LayoutDashboard }],
+  },
+  {
+    title: 'Operations',
+    items: [
+      { to: 'appointments', label: 'Appointments', icon: CalendarDays, badge: '12' },
+      { to: 'calendar', label: 'Calendar', icon: CalendarRange },
+      { to: 'pos', label: 'Point of Sale', icon: CreditCard },
+    ],
+  },
+  {
+    title: 'Clients & Team',
+    items: [
+      { to: 'customers', label: 'Customers CRM', icon: Users },
+      { to: 'staff', label: 'Staff', icon: UserCog },
+      { to: 'roles', label: 'Roles & Permissions', icon: ShieldCheck },
+    ],
+  },
+  {
+    title: 'Catalog',
+    items: [
+      { to: 'services', label: 'Services & Packages', icon: Scissors },
+      { to: 'inventory', label: 'Inventory', icon: Boxes, badge: '4' },
+    ],
+  },
+  {
+    title: 'Growth & Money',
+    items: [
+      { to: 'finance', label: 'Finance', icon: Receipt },
+      { to: 'marketing', label: 'Marketing', icon: Megaphone },
+      { to: 'cms', label: 'Website CMS', icon: Globe },
+      { to: 'reports', label: 'Reports', icon: BarChart3 },
+    ],
+  },
+  {
+    title: 'System',
+    items: [
+      { to: 'notifications', label: 'Notifications', icon: Bell, badge: '5' },
+      { to: 'settings', label: 'Settings', icon: Settings },
+      { to: 'subscription', label: 'Subscription', icon: Sparkles },
+    ],
+  },
+];
+
+export function navHref(to: string, slug: string): string {
+  const base = slug ? `/${slug}/owner` : '/owner';
+  return to === 'dashboard' ? `${base}/dashboard` : `${base}/${to}`;
+}
 
 export function SidebarNav({
   collapsed,
@@ -17,26 +99,22 @@ export function SidebarNav({
   onNavigate?: () => void;
   slug: string;
 }) {
-  const { can, role } = useSession();
   const pathname = usePathname();
 
   return (
     <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 py-4" aria-label="Main">
-      {NAV.map((section) => {
-        const items = section.items.filter((i) => can(i.module));
-        if (items.length === 0) return null;
-        return (
-          <div key={section.title}>
-            {!collapsed && (
-              <p className="px-3 pb-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-sidebar-foreground/45">
-                {section.title}
-              </p>
-            )}
-            <ul className="space-y-1">
-              {items.map((item) => {
-                const href = navHref(item.to, slug);
-                const active = item.to === 'dashboard' ? pathname === href : pathname.startsWith(href);
-                return (
+      {NAV.map((section) => (
+        <div key={section.title}>
+          {!collapsed && (
+            <p className="px-3 pb-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-sidebar-foreground/45">
+              {section.title}
+            </p>
+          )}
+          <ul className="space-y-1">
+            {section.items.map((item) => {
+              const href = navHref(item.to, slug);
+              const active = item.to === 'dashboard' ? pathname === href : pathname.startsWith(href);
+              return (
                   <li key={item.to}>
                     <Link
                       href={href}
@@ -67,17 +145,16 @@ export function SidebarNav({
                 );
               })}
             </ul>
-          </div>
-        );
-      })}
+        </div>
+      ))}
       {!collapsed && (
         <div className="mt-auto rounded-xl border border-sidebar-border bg-sidebar-accent/40 p-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-sidebar-primary">
             Signed in as
           </p>
-          <p className="mt-1 text-sm text-sidebar-foreground">{role.name}</p>
+          <p className="mt-1 text-sm text-sidebar-foreground">{ownerRole.name}</p>
           <p className="mt-1 text-xs leading-relaxed text-sidebar-foreground/60">
-            {Object.keys(role.permissions).length} of 16 modules visible.
+            {Object.keys(ownerRole.permissions).length} of {NAV.flatMap((s) => s.items).length} modules visible.
           </p>
         </div>
       )}
@@ -101,13 +178,13 @@ export function AppSidebar({
         collapsed ? 'w-[76px]' : 'w-[268px]',
       )}
     >
-      <div className={cn('flex items-center gap-3 px-5 py-5', collapsed && 'justify-center px-0')}>
+      <div className={cn('flex h-16 items-center gap-2.5 border-b border-sidebar-border px-4', collapsed && 'justify-center px-0')}>
         <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
           <Scissors className="size-4.5" strokeWidth={2} />
         </span>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="truncate text-display text-base text-sidebar-accent-foreground">
+            <p className="truncate text-sm font-semibold text-sidebar-accent-foreground">
               Maison Lumière
             </p>
             <p className="truncate text-[0.7rem] uppercase tracking-[0.16em] text-sidebar-foreground/50">

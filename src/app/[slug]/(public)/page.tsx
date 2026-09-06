@@ -33,10 +33,11 @@ import {
   stats,
   faqs,
   galleryItems,
-} from '../../../data/salon';
-import { useSite } from '../../../components/owner/owner-website/site-context';
-import heroImg from '../../../assets/hero.jpg';
-import aboutImg from '../../../assets/about.jpg';
+} from '../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
+
+const heroImg = '/assets/owner-website/hero.jpg';
+const aboutImg = '/assets/owner-website/about.jpg';
 
 export default function Home() {
   const { slug } = useSite();
@@ -55,7 +56,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative min-h-[92vh] overflow-hidden">
         <img
-          src={heroImg.src}
+          src={heroImg}
           alt="Interior of the Maison Lumière salon"
           width={1600}
           height={1200}
@@ -126,7 +127,7 @@ export default function Home() {
         <div className="shell grid items-center gap-14 lg:grid-cols-2">
           <div className="relative">
             <img
-              src={aboutImg.src}
+              src={aboutImg}
               alt="Brass salon tools on marble"
               loading="lazy"
               width={1200}

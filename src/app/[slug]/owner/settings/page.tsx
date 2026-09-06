@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function SettingsPage() {
   return (
     <ModulePage
-      module="settings"
-      name="Settings"
       eyebrow="System"
       title="Settings"
       description="Business information, locations, taxes, templates, integrations and security."

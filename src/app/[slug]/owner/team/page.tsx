@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import {
   EmptyState,
-  Guard,
   PageHeader,
   SectionCard,
   StatCard,
@@ -42,9 +41,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/owner/owner-portal/dialog';
-import { useSession } from '@/lib/portal/session';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface StaffMember {
   id: number;
@@ -81,7 +79,6 @@ function getUtilizationColor(val: number) {
 }
 
 function StaffContent() {
-  const { can } = useSession();
   const [query, setQuery] = useState('');
   const [tab, setTab] = useState('all');
   const [selected, setSelected] = useState<StaffMember | null>(null);
@@ -103,11 +100,9 @@ function StaffContent() {
         title="Staff Management"
         description="Manage your team, schedules, and performance."
         actions={
-          can('staff', 'create') && (
-            <Button variant="gold" onClick={() => toast.success('Add staff drawer opened')}>
-              <Plus className="size-4" /> Add Staff Member
-            </Button>
-          )
+          <Button variant="gold" onClick={() => toast.success('Add staff drawer opened')}>
+            <Plus className="size-4" /> Add Staff Member
+          </Button>
         }
       />
 
@@ -324,9 +319,5 @@ function StaffContent() {
 }
 
 export default function StaffManagementPage() {
-  return (
-    <Guard module="staff" name="Staff Management">
-      <StaffContent />
-    </Guard>
-  );
+  return <StaffContent />;
 }

@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { Star, Play, ArrowRight } from 'lucide-react';
 import { PageHero, SectionHead, usePageMeta } from '../../../../components/owner/owner-website/ui';
-import { testimonials, galleryItems, stats } from '../../../../data/salon';
-import { useSite } from '../../../../components/owner/owner-website/site-context';
+import { testimonials, galleryItems, stats } from '../../../../data/owner-website';
+import { useSite } from '@/contexts/site-context';
 
 export default function TestimonialsPage() {
   const { slug } = useSite();

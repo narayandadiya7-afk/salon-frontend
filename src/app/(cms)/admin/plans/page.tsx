@@ -9,8 +9,8 @@ import { Input } from "@/components/admin/admin-portal/input";
 import { Label } from "@/components/admin/admin-portal/label";
 import { Switch } from "@/components/admin/admin-portal/switch";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/admin/admin-portal/dialog";
-import { currency, planCatalog } from "@/components/admin/admin-portal/mock-data";
-import { cn } from "@/lib/utils";
+import { currency, planCatalog } from "@/data/admin-portal";
+import { cn } from "@/utils/cn";
 
 const revenueByPlan = [
   { plan: "Starter", revenue: 23814 },

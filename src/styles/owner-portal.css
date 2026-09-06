@@ -3,7 +3,7 @@
  * Ported 1:1 from the owner-portal (Salon Business OS) reference project.
  * Deep charcoal + warm gray neutrals, luxury gold / royal purple / premium blue / emerald accents.
  *
- * This file is its own Tailwind entry (like src/styles/site.css), so its
+ * This file is its own Tailwind entry (like src/styles/owner-website.css), so its
  * @theme / @utility / @custom-variant directives actually compile.
  */
 

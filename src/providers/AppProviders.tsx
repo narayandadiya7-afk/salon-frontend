@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { ThemeProvider } from '../contexts/ThemeContext';
-import { LanguageProvider } from '../context/language-context';
+import { LanguageProvider } from '../contexts/language-context';
 import ReduxProvider from './ReduxProvider';
-import AppProvider from '../context/app';
-import UserProvider from '../context/user';
+import AppProvider from '../contexts/app';
+import UserProvider from '../contexts/user';
 
 export default function AppProviders({ children }: { children: React.ReactNode }) {
   return (

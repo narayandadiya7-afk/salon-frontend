@@ -6,8 +6,6 @@ import { ModulePage } from '@/components/owner/owner-portal/ModulePage';
 export default function NotificationsPage() {
   return (
     <ModulePage
-      module="notifications"
-      name="Notifications"
       eyebrow="Inbox"
       title="Notification center"
       description="Bookings, payments, stock alerts, client messages and system events."
