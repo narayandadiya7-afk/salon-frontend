@@ -65,6 +65,21 @@
 :root {
   --radius: 1rem;
 
+  /*
+   * Radius scale duplicated at :root (like owner-portal.css / admin-portal.css).
+   * globals.css (unlayered) declares --radius-sm..--radius-4xl on :root, which
+   * beats any @layer theme value in this stylesheet; redeclaring them here
+   * (unlayered, and this file loads after globals.css) keeps `surface` and
+   * every var(--radius-*) at the reference app's 1rem-based scale.
+   */
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+  --radius-4xl: calc(var(--radius) + 28px);
+
   /* Tenant brand layer */
   --gold: oklch(0.76 0.106 84.5);
   --gold-soft: oklch(0.93 0.045 88);
@@ -131,15 +146,19 @@
 }
 
 /*
- * Override body color inheritance inside the customer portal.
+ * Override body inheritance inside the customer portal.
  *
- * globals.css (unlayered) sets `body { color: var(--theme-text) }` which
- * beats any `@layer base` rule. Applying color on `.customer-shell`
+ * globals.css (unlayered) sets `body { color: var(--theme-text);
+ * font-size: var(--font-size-sm); line-height: var(--line-height-normal) }`
+ * which beats any `@layer base` rule (the reference app's base is 16px,
+ * the app-wide base is 14px). Applying these on `.customer-shell`
  * (unlayered) fixes the inheritance chain for all customer portal
- * descendants, because `color` is an inherited property.
+ * descendants, mirroring the reference app's computed body values.
  */
 .customer-shell {
   color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 /*
