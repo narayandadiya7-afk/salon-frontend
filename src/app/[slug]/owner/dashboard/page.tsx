@@ -95,10 +95,10 @@ function Dashboard() {
         }
         actions={
           <>
-            <Button variant="gold" onClick={() => toast.success('New booking drawer opened.')}>
+            <Button variant="secondary" onClick={() => toast.success('New booking drawer opened.')}>
               <Plus className="size-4" /> New booking
             </Button>
-            <Button variant="outline" onClick={() => toast('Preparing PDF export…')}>
+            <Button variant="secondary" onClick={() => toast('Preparing PDF export…')}>
               Export report
             </Button>
           </>
@@ -181,7 +181,7 @@ function Dashboard() {
           className="xl:col-span-2"
           bodyClassName="p-0"
           action={
-            <Button asChild variant="ghost" size="sm">
+            <Button asChild variant="gold" size="sm">
               <Link href={`/${slug}/owner/appointments`}>
                 View all <ArrowUpRight className="size-4" />
               </Link>

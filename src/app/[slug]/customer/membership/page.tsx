@@ -13,7 +13,7 @@ export default function MembershipPage() {
     <div className="space-y-8">
       <PageHeader title="Membership" subtitle="Your plan, benefits and savings." />
 
-      <section className="surface overflow-hidden bg-gradient-ink p-6 text-sidebar-foreground sm:p-8">
+      <section className="surface overflow-hidden bg-sidebar p-6 text-sidebar-foreground sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-sidebar-foreground/60">
@@ -37,10 +37,10 @@ export default function MembershipPage() {
           </div>
         </div>
         <div className="mt-6 flex flex-wrap gap-2">
-          <Button className="rounded-full bg-gradient-gold text-ink hover:opacity-90" onClick={() => toast.success('Membership renewed')}>
+          <Button variant="gold" className="bg-sidebar-primary text-sidebar-primary-foreground" onClick={() => toast.success('Membership renewed')}>
             Renew now
           </Button>
-          <Button variant="ghost" className="rounded-full text-sidebar-foreground hover:bg-sidebar-accent" onClick={() => toast('Cancellation request sent')}>
+          <Button variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" onClick={() => toast('Cancellation request sent')}>
             Cancel membership
           </Button>
         </div>
@@ -71,8 +71,8 @@ export default function MembershipPage() {
                 ))}
               </ul>
               <Button
-                variant={p.name === membership.name ? 'secondary' : 'default'}
-                className="w-full rounded-full"
+                variant={p.name === membership.name ? 'secondary' : 'gold'}
+                className="w-full"
                 disabled={p.name === membership.name}
                 onClick={() => toast.success(`Switched to ${p.name}`)}
               >

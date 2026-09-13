@@ -121,22 +121,24 @@ export function SidebarNav({
                       onClick={onNavigate}
                       title={collapsed ? item.label : undefined}
                       className={cn(
-                        'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                        'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                         collapsed && 'justify-center px-0',
                         active
-                          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                          ? 'bg-sidebar-primary text-sidebar-primary-foreground'
                           : 'text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground',
                       )}
                     >
-                      <span className="relative flex items-center">
-                        <item.icon className="size-[1.15rem] shrink-0" strokeWidth={1.75} />
-                        {active && (
-                          <span className="absolute -left-3 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-sidebar-primary" />
-                        )}
-                      </span>
+                      <item.icon className="size-4 shrink-0" strokeWidth={2} />
                       {!collapsed && <span className="min-w-0 flex-1 truncate">{item.label}</span>}
                       {!collapsed && item.badge && (
-                        <span className="shrink-0 rounded-full bg-sidebar-primary/15 px-2 py-0.5 text-[0.7rem] font-semibold text-sidebar-primary">
+                        <span
+                          className={cn(
+                            'shrink-0 rounded-full px-2 py-0.5 text-[0.7rem] font-semibold',
+                            active
+                              ? 'bg-sidebar-primary-foreground/20 text-sidebar-primary-foreground'
+                              : 'bg-sidebar-primary/15 text-sidebar-primary',
+                          )}
+                        >
                           {item.badge}
                         </span>
                       )}

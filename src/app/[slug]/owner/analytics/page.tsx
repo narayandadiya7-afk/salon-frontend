@@ -119,7 +119,7 @@ function AnalyticsContent() {
         description="Track your salon's performance and growth."
         actions={
           <>
-            <Button variant="outline" onClick={() => {}}>
+            <Button variant="gold" onClick={() => {}}>
               <Download className="size-4" /> Download Report
             </Button>
           </>

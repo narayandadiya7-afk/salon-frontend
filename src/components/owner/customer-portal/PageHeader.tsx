@@ -10,14 +10,14 @@ export function PageHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="rise-in flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <h1 className="font-display text-3xl leading-tight sm:text-4xl">{title}</h1>
+    <header className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4 sm:flex sm:flex-wrap sm:items-end sm:justify-between">
+      <div className="min-w-0">
+        <h1 className="text-display text-2xl text-foreground sm:text-3xl">{title}</h1>
         {subtitle ? (
-          <p className="mt-1.5 text-sm text-muted-foreground">{subtitle}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
         ) : null}
       </div>
-      {action}
-    </div>
+      {action ? <div className="flex shrink-0 flex-wrap items-center gap-2">{action}</div> : null}
+    </header>
   );
 }

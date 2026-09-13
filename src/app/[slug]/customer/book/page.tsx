@@ -92,7 +92,7 @@ export default function BookPage() {
             <button
               key={d.date}
               onClick={() => setDay(d.date)}
-              className={cn('rounded-2xl border border-border px-5 py-3 text-center transition-colors', day === d.date ? 'bg-gradient-gold text-ink' : 'bg-card hover:border-gold/50')}
+              className={cn('rounded-2xl border border-border px-5 py-3 text-center transition-colors', day === d.date ? 'bg-primary text-primary-foreground' : 'bg-card hover:border-gold/50')}
             >
               <span className="block text-xs opacity-70">{d.label}</span>
               <span className="text-sm font-medium">{d.date}</span>
@@ -131,7 +131,8 @@ export default function BookPage() {
             <p className="font-display text-2xl">{formatCurrency(selected.price)}</p>
           </div>
           <Button
-            className="w-full rounded-full bg-gradient-gold text-ink hover:opacity-90"
+            variant="gold"
+            className="w-full"
             onClick={() => toast.success('Appointment requested', { description: `${selected.name} on ${day} at ${slot}.` })}
           >
             <Check className="size-4" /> Confirm booking

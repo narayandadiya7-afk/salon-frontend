@@ -40,9 +40,8 @@ export function CancelDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="rounded-full">Keep appointment</AlertDialogCancel>
+          <AlertDialogCancel>Keep appointment</AlertDialogCancel>
           <AlertDialogAction
-            className="rounded-full"
             onClick={() =>
               toast.success('Appointment cancelled', {
                 description: 'Your refund is on its way.',

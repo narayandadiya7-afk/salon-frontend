@@ -27,9 +27,9 @@ export default function SupportPage() {
           <p className="flex items-start gap-2 text-sm text-muted-foreground"><MapPin className="mt-0.5 size-4" /> {tenant.address}</p>
           <p className="text-sm text-muted-foreground">{tenant.hours}</p>
           <div className="flex flex-wrap gap-2 pt-2">
-            <Button asChild variant="secondary" className="rounded-full"><a href={`tel:${tenant.phone}`}><Phone className="size-4" /> Call</a></Button>
-            <Button asChild variant="secondary" className="rounded-full"><a href={`mailto:${tenant.email}`}><Mail className="size-4" /> Email</a></Button>
-            <Button asChild className="rounded-full"><Link href={`${basePath}/messages`}><MessageCircle className="size-4" /> Chat</Link></Button>
+            <Button asChild variant="secondary"><a href={`tel:${tenant.phone}`}><Phone className="size-4" /> Call</a></Button>
+            <Button asChild variant="secondary"><a href={`mailto:${tenant.email}`}><Mail className="size-4" /> Email</a></Button>
+            <Button asChild variant="secondary"><Link href={`${basePath}/messages`}><MessageCircle className="size-4" /> Chat</Link></Button>
           </div>
         </div>
         <div className="surface overflow-hidden">

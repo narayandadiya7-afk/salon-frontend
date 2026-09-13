@@ -55,7 +55,7 @@ export default function HistoryPage() {
             </article>
           ))}
         </div>
-        <Button variant="secondary" className="rounded-full" onClick={() => toast.success('Review form opened')}>
+        <Button variant="gold" onClick={() => toast.success('Review form opened')}>
           Leave a review
         </Button>
       </section>

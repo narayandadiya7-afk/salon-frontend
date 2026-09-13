@@ -84,13 +84,13 @@ function BookingCard({ a }: { a: Appointment }) {
         <p className="mt-3 rounded-lg bg-gold-soft px-3 py-2 text-xs text-gold">{a.notes}</p>
       )}
       <div className="mt-3 flex flex-wrap gap-2">
-        <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked in`)}>
+        <Button size="sm" variant="secondary" onClick={() => toast.success(`${a.customer} checked in`)}>
           <LogIn className="size-3.5" /> Check in
         </Button>
-        <Button size="sm" variant="subtle" onClick={() => toast.success(`${a.customer} checked out`)}>
+        <Button size="sm" variant="secondary" onClick={() => toast.success(`${a.customer} checked out`)}>
           <LogOut className="size-3.5" /> Check out
         </Button>
-        <Button size="sm" variant="ghost" onClick={() => toast('Reschedule drawer opened')}>
+        <Button size="sm" variant="secondary" onClick={() => toast('Reschedule drawer opened')}>
           <Repeat className="size-3.5" /> Reschedule
         </Button>
       </div>
@@ -120,10 +120,10 @@ function Appointments() {
         description="Every booking across the floor — drag between stages, resolve conflicts and manage the waiting list."
         actions={
           <>
-            <Button variant="outline" onClick={() => toast.success('Walk-in added to waiting list')}>
+            <Button variant="secondary" onClick={() => toast.success('Walk-in added to waiting list')}>
               Add walk-in
             </Button>
-            <Button variant="gold" onClick={() => toast.success('New booking drawer opened')}>
+            <Button variant="secondary" onClick={() => toast.success('New booking drawer opened')}>
               <Plus className="size-4" /> New booking
             </Button>
           </>
@@ -143,7 +143,7 @@ function Appointments() {
           Conflict detected — Leila Haddad is double-booked at 15:00. Suggested slot: 15:30 with Ivy
           Marchetti.
         </p>
-        <Button size="sm" variant="subtle" onClick={() => toast.success('Conflict resolved')}>
+        <Button size="sm" variant="gold" onClick={() => toast.success('Conflict resolved')}>
           Resolve
         </Button>
       </Surface>
@@ -185,7 +185,7 @@ function Appointments() {
                 ))}
               </SelectContent>
             </Select>
-            <Button variant="outline" size="icon" aria-label="Advanced filters">
+            <Button variant="secondary" size="icon" aria-label="Advanced filters">
               <Filter className="size-4" />
             </Button>
           </div>
@@ -200,7 +200,7 @@ function Appointments() {
                 description="Try clearing the search or staff filter to see the full day."
                 action={
                   <Button
-                    variant="outline"
+                    variant="gold"
                     onClick={() => {
                       setQuery('');
                       setStaffFilter('all');

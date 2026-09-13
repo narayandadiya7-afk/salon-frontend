@@ -29,7 +29,7 @@ export default function PackagesPage() {
             <ul className="text-sm text-muted-foreground">
               {p.services.map((s) => <li key={s}>· {s}</li>)}
             </ul>
-            <Button className="w-full rounded-full" onClick={() => toast.success('Session booked from package')}>
+            <Button variant="gold" className="w-full" onClick={() => toast.success('Session booked from package')}>
               Use a session
             </Button>
           </article>

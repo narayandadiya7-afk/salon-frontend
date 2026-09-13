@@ -22,10 +22,10 @@ function RolesPage() {
         description="Five default roles plus unlimited custom roles. Every sidebar item, widget and action respects this matrix."
         actions={
           <>
-            <Button variant="outline" onClick={() => toast.success(`${role.name} cloned`)}>
+            <Button variant="secondary" onClick={() => toast.success(`${role.name} cloned`)}>
               <Copy className="size-4" /> Clone role
             </Button>
-            <Button variant="gold" onClick={() => toast.success('New role drawer opened')}>
+            <Button variant="secondary" onClick={() => toast.success('New role drawer opened')}>
               <Plus className="size-4" /> New role
             </Button>
           </>

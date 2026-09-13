@@ -40,14 +40,13 @@ export default function MessagesPage() {
           ))}
         </div>
         <div className="flex items-center gap-2 border-t border-border p-3">
-          <Input
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder="Write a message…"
-            className="rounded-full"
-          />
-          <Button className="rounded-full" size="icon" aria-label="Send" onClick={send}>
+<Input
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && send()}
+              placeholder="Write a message…"
+            />
+            <Button variant="gold" size="icon" aria-label="Send" onClick={send}>
             <Send className="size-4" />
           </Button>
         </div>

@@ -40,7 +40,7 @@ export default function Overview() {
   const past = appointments.filter((a) => a.status === 'Completed');
   return (
     <div className="space-y-8">
-      <section className="rise-in surface overflow-hidden bg-gradient-ink p-6 text-sidebar-foreground sm:p-8">
+      <section className="rise-in surface overflow-hidden bg-sidebar p-6 text-sidebar-foreground sm:p-8">
         <p className="text-xs uppercase tracking-[0.2em] text-sidebar-foreground/60">{tenant.name}</p>
         <h1 className="mt-2 font-display text-4xl leading-tight sm:text-5xl">
           Welcome back, {customer.firstName}
@@ -50,12 +50,12 @@ export default function Overview() {
           appointments and {loyalty.points.toLocaleString('en-IN')} reward points ready to use.
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
-          <Button asChild className="rounded-full bg-gradient-gold text-ink hover:opacity-90">
+          <Button asChild variant="gold" className="bg-sidebar-primary text-sidebar-primary-foreground">
             <Link href={`${basePath}/book`}>
               <Sparkles className="size-4" /> Book Appointment
             </Link>
           </Button>
-          <Button asChild variant="ghost" className="rounded-full text-sidebar-foreground hover:bg-sidebar-accent">
+          <Button asChild variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
             <Link href={`${basePath}/messages`}>
               <MessageCircle className="size-4" /> Message salon
             </Link>
@@ -82,7 +82,7 @@ export default function Overview() {
           <p className="text-sm text-muted-foreground">
             {loyalty.points.toLocaleString('en-IN')} / {loyalty.nextRewardAt.toLocaleString('en-IN')} points towards your next reward.
           </p>
-          <Button asChild variant="secondary" className="rounded-full">
+          <Button asChild variant="gold">
             <Link href={portalHref(basePath, '/rewards')}>Redeem rewards</Link>
           </Button>
         </div>
@@ -115,7 +115,7 @@ export default function Overview() {
         <div className="grid gap-4">
           {past.map((a) => <AppointmentCard key={a.id} appointment={a} />)}
         </div>
-        <Button asChild variant="ghost" className="rounded-full">
+        <Button asChild variant="gold">
           <Link href={portalHref(basePath, '/history')}>
             <CreditCard className="size-4" /> Full booking history
           </Link>

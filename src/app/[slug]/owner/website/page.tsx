@@ -274,10 +274,10 @@ function TeamTab({ team, setTeam }: { team: TeamMember[]; setTeam: (f: TeamMembe
               <span className="mt-1 inline-block rounded-md bg-emerald-soft px-2 py-0.5 text-[11px] font-medium text-emerald">{m.role}</span>
               <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">{m.bio}</p>
               <div className="mt-3 flex gap-2">
-                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => { setEditing({ ...m }); setModalOpen(true); }}>
+                <Button variant="secondary" size="sm" className="h-7 px-2 text-xs" onClick={() => { setEditing({ ...m }); setModalOpen(true); }}>
                   Edit
                 </Button>
-                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-destructive hover:text-destructive" onClick={() => setTeam(team.filter((x) => x.id !== m.id))}>
+                <Button variant="secondary" size="sm" className="h-7 px-2 text-xs text-destructive hover:text-destructive" onClick={() => setTeam(team.filter((x) => x.id !== m.id))}>
                   Delete
                 </Button>
               </div>
@@ -311,8 +311,8 @@ function TeamTab({ team, setTeam }: { team: TeamMember[]; setTeam: (f: TeamMembe
               />
             </div>
             <div className="flex justify-end gap-2 pt-2">
-              <Button variant="outline" onClick={() => { setModalOpen(false); setEditing(null); }}>Cancel</Button>
-              <Button variant="gold" onClick={save}>Save</Button>
+              <Button variant="secondary" onClick={() => { setModalOpen(false); setEditing(null); }}>Cancel</Button>
+              <Button variant="secondary" onClick={save}>Save</Button>
             </div>
           </div>
         </DialogContent>
@@ -428,8 +428,8 @@ function WebsiteCMSContent() {
         description="Manage your salon website content."
         actions={
           <>
-            <Button variant="outline" onClick={() => toast.success('Preview opened')}><Eye className="size-4" /> Preview Website</Button>
-            <Button variant="gold" onClick={() => toast.success('Changes published')}><Check className="size-4" /> Publish Changes</Button>
+            <Button variant="secondary" onClick={() => toast.success('Preview opened')}><Eye className="size-4" /> Preview Website</Button>
+            <Button variant="secondary" onClick={() => toast.success('Changes published')}><Check className="size-4" /> Publish Changes</Button>
           </>
         }
       />

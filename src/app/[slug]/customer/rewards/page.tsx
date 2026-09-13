@@ -35,8 +35,8 @@ export default function RewardsPage() {
               <p className="font-display text-xl leading-tight">{r.name}</p>
               <p className="text-sm text-muted-foreground">{r.cost.toLocaleString('en-IN')} points</p>
               <Button
-                className="w-full rounded-full"
-                variant={r.available ? 'default' : 'secondary'}
+                className="w-full"
+                variant={r.available ? 'gold' : 'secondary'}
                 disabled={!r.available}
                 onClick={() => toast.success('Reward redeemed', { description: r.name })}
               >
@@ -52,7 +52,7 @@ export default function RewardsPage() {
           <h2 className="font-display text-2xl">Refer a friend</h2>
           <p className="mt-1 text-sm text-muted-foreground">You both get 300 points on their first visit.</p>
         </div>
-        <Button className="rounded-full bg-gradient-gold text-ink hover:opacity-90" onClick={() => toast.success('Referral link copied')}>
+        <Button variant="gold" onClick={() => toast.success('Referral link copied')}>
           <Share2 className="size-4" /> Share invite
         </Button>
       </section>
