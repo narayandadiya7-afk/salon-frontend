@@ -36,7 +36,7 @@ export default function RewardsPage() {
               <p className="text-sm text-muted-foreground">{r.cost.toLocaleString('en-IN')} points</p>
               <Button
                 className="w-full"
-                variant={r.available ? 'default' : 'secondary'}
+                variant={r.available ? 'gold' : 'secondary'}
                 disabled={!r.available}
                 onClick={() => toast.success('Reward redeemed', { description: r.name })}
               >

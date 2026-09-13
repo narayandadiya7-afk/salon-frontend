@@ -79,7 +79,7 @@ export function AppointmentDetails({
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            <Button asChild>
+            <Button asChild variant="secondary">
               <Link href={portalHref(basePath, '/messages')}>Contact Salon</Link>
             </Button>
             <Button
@@ -89,7 +89,7 @@ export function AppointmentDetails({
               Add to Calendar
             </Button>
             <Button
-              variant="ghost"
+              variant="secondary"
               onClick={() => toast.success('Opening directions')}
             >
               Get Directions

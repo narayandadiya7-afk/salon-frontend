@@ -40,7 +40,7 @@ export function ServiceCard({
           <span className="font-medium text-foreground">{formatCurrency(service.price)}</span>
         </div>
         {footnote ? <p className="text-xs text-muted-foreground">{footnote}</p> : null}
-        <Button asChild variant="secondary" className="w-full">
+        <Button asChild variant="gold" className="w-full">
           <Link href={portalHref(basePath, '/book')}>{ctaLabel}</Link>
         </Button>
       </div>

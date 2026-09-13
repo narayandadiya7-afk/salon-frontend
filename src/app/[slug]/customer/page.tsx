@@ -82,7 +82,7 @@ export default function Overview() {
           <p className="text-sm text-muted-foreground">
             {loyalty.points.toLocaleString('en-IN')} / {loyalty.nextRewardAt.toLocaleString('en-IN')} points towards your next reward.
           </p>
-          <Button asChild variant="secondary">
+          <Button asChild variant="gold">
             <Link href={portalHref(basePath, '/rewards')}>Redeem rewards</Link>
           </Button>
         </div>
@@ -115,7 +115,7 @@ export default function Overview() {
         <div className="grid gap-4">
           {past.map((a) => <AppointmentCard key={a.id} appointment={a} />)}
         </div>
-        <Button asChild variant="ghost">
+        <Button asChild variant="gold">
           <Link href={portalHref(basePath, '/history')}>
             <CreditCard className="size-4" /> Full booking history
           </Link>

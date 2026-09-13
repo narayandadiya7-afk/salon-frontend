@@ -35,7 +35,7 @@ export default function SettingsPage() {
         <div className="flex flex-wrap gap-2">
 <Button variant="secondary" onClick={() => toast.success('Password reset link sent')}>Change password</Button>
         <Button variant="secondary" onClick={() => toast.success('Data export requested')}>Download my data</Button>
-        <Button variant="ghost" className="text-destructive" onClick={() => toast('Account deletion requires confirmation by email')}>Delete account</Button>
+        <Button variant="secondary" className="text-destructive" onClick={() => toast('Account deletion requires confirmation by email')}>Delete account</Button>
         </div>
       </section>
     </div>

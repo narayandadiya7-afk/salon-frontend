@@ -29,7 +29,7 @@ export default function SupportPage() {
           <div className="flex flex-wrap gap-2 pt-2">
             <Button asChild variant="secondary"><a href={`tel:${tenant.phone}`}><Phone className="size-4" /> Call</a></Button>
             <Button asChild variant="secondary"><a href={`mailto:${tenant.email}`}><Mail className="size-4" /> Email</a></Button>
-            <Button asChild><Link href={`${basePath}/messages`}><MessageCircle className="size-4" /> Chat</Link></Button>
+            <Button asChild variant="secondary"><Link href={`${basePath}/messages`}><MessageCircle className="size-4" /> Chat</Link></Button>
           </div>
         </div>
         <div className="surface overflow-hidden">

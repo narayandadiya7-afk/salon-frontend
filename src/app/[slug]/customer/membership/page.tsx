@@ -71,7 +71,7 @@ export default function MembershipPage() {
                 ))}
               </ul>
               <Button
-                variant={p.name === membership.name ? 'secondary' : 'default'}
+                variant={p.name === membership.name ? 'secondary' : 'gold'}
                 className="w-full"
                 disabled={p.name === membership.name}
                 onClick={() => toast.success(`Switched to ${p.name}`)}

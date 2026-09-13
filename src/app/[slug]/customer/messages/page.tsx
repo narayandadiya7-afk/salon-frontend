@@ -46,7 +46,7 @@ export default function MessagesPage() {
               onKeyDown={(e) => e.key === 'Enter' && send()}
               placeholder="Write a message…"
             />
-            <Button size="icon" aria-label="Send" onClick={send}>
+            <Button variant="gold" size="icon" aria-label="Send" onClick={send}>
             <Send className="size-4" />
           </Button>
         </div>

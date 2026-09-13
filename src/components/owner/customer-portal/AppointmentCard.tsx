@@ -85,7 +85,7 @@ export function AppointmentCard({
           </div>
 
           <div className="flex flex-wrap gap-2 pt-1">
-            <Button size="sm" onClick={() => setDetails(true)}>
+            <Button size="sm" variant="secondary" onClick={() => setDetails(true)}>
               View Details
             </Button>
             {editable ? (
@@ -93,26 +93,26 @@ export function AppointmentCard({
                 <Button size="sm" variant="secondary" onClick={() => setReschedule(true)}>
                   Reschedule
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => setCancel(true)}>
+                <Button size="sm" variant="secondary" onClick={() => setCancel(true)}>
                   Cancel
                 </Button>
               </>
             ) : null}
             <Button
               size="sm"
-              variant="ghost"
+              variant="secondary"
               onClick={() => toast.success('Opening directions to Glam Studio')}
             >
               <Navigation className="size-4" /> Directions
             </Button>
             <Button
               size="sm"
-              variant="ghost"
+              variant="secondary"
               onClick={() => toast.success('Added to your calendar')}
             >
               <CalendarPlus className="size-4" /> Add to Calendar
             </Button>
-            <Button size="sm" variant="ghost" className="sm:hidden" aria-label="More">
+            <Button size="sm" variant="secondary" className="sm:hidden" aria-label="More">
               <MoreHorizontal className="size-4" />
             </Button>
           </div>
