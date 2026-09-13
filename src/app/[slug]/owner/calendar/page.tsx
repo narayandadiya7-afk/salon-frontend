@@ -50,11 +50,11 @@ function CalendarPage() {
         description="Resource-aware scheduling across stylists and treatment rooms. Drag to move, resize to extend."
         actions={
           <>
-            <Button variant="outline" size="icon" aria-label="Previous day">
+            <Button variant="secondary" size="icon" aria-label="Previous day">
               <ChevronLeft className="size-4" />
             </Button>
-            <Button variant="outline">Today · Mon 10 Aug</Button>
-            <Button variant="outline" size="icon" aria-label="Next day">
+            <Button variant="secondary">Today · Mon 10 Aug</Button>
+            <Button variant="secondary" size="icon" aria-label="Next day">
               <ChevronRight className="size-4" />
             </Button>
           </>

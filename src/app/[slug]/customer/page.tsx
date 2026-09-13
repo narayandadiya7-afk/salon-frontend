@@ -55,7 +55,7 @@ export default function Overview() {
               <Sparkles className="size-4" /> Book Appointment
             </Link>
           </Button>
-          <Button asChild variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent">
+          <Button asChild variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
             <Link href={`${basePath}/messages`}>
               <MessageCircle className="size-4" /> Message salon
             </Link>

@@ -40,7 +40,7 @@ export default function MembershipPage() {
           <Button variant="gold" className="bg-sidebar-primary text-sidebar-primary-foreground" onClick={() => toast.success('Membership renewed')}>
             Renew now
           </Button>
-          <Button variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent" onClick={() => toast('Cancellation request sent')}>
+          <Button variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" onClick={() => toast('Cancellation request sent')}>
             Cancel membership
           </Button>
         </div>

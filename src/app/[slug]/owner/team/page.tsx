@@ -302,10 +302,10 @@ function StaffContent() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="gold" className="flex-1" onClick={() => toast.success('Schedule opened')}>
+                  <Button variant="secondary" className="flex-1" onClick={() => toast.success('Schedule opened')}>
                     <CalendarDays className="size-4" /> Manage Schedule
                   </Button>
-                  <Button variant="outline" onClick={() => toast('Settings opened')}>
+                  <Button variant="secondary" onClick={() => toast('Settings opened')}>
                     Settings
                   </Button>
                 </div>

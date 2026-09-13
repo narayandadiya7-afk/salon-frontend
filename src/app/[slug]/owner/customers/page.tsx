@@ -54,8 +54,8 @@ function CustomersPage() {
         description="Every guest, their history, spend and preferences — one profile across all locations."
         actions={
           <>
-            <Button variant="outline" onClick={() => toast('Import wizard opened')}>Import</Button>
-            <Button variant="gold" onClick={() => toast.success('New customer drawer opened')}>
+            <Button variant="secondary" onClick={() => toast('Import wizard opened')}>Import</Button>
+            <Button variant="secondary" onClick={() => toast.success('New customer drawer opened')}>
               <Plus className="size-4" /> Add customer
             </Button>
           </>
@@ -102,7 +102,7 @@ function CustomersPage() {
             description="Adjust your filters or import a client list to get started."
             action={
               <Button
-                variant="outline"
+                variant="gold"
                 onClick={() => {
                   setQuery('');
                   setSegment('All');
@@ -156,7 +156,7 @@ function CustomersPage() {
 
               <div className="mt-4 flex items-center justify-between">
                 <p className="text-xs text-muted-foreground">Last visit · {c.lastVisit}</p>
-                <Button size="sm" variant="subtle" onClick={() => setActive(c)}>
+                <Button size="sm" variant="gold" onClick={() => setActive(c)}>
                   View profile
                 </Button>
               </div>
@@ -227,8 +227,8 @@ function CustomersPage() {
                 </Tabs>
 
                 <div className="flex flex-wrap gap-2">
-                  <Button variant="gold" onClick={() => toast.success('Booking drawer opened')}>Book appointment</Button>
-                  <Button variant="outline" onClick={() => toast('Message composer opened')}>Message</Button>
+                  <Button variant="secondary" onClick={() => toast.success('Booking drawer opened')}>Book appointment</Button>
+                  <Button variant="secondary" onClick={() => toast('Message composer opened')}>Message</Button>
                 </div>
               </div>
             </>
