@@ -33,9 +33,9 @@ export default function SettingsPage() {
       <section className="surface space-y-3 p-6">
         <h2 className="font-display text-2xl">Account</h2>
         <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" className="rounded-full" onClick={() => toast.success('Password reset link sent')}>Change password</Button>
-          <Button variant="secondary" className="rounded-full" onClick={() => toast.success('Data export requested')}>Download my data</Button>
-          <Button variant="ghost" className="rounded-full text-destructive" onClick={() => toast('Account deletion requires confirmation by email')}>Delete account</Button>
+<Button variant="secondary" onClick={() => toast.success('Password reset link sent')}>Change password</Button>
+        <Button variant="secondary" onClick={() => toast.success('Data export requested')}>Download my data</Button>
+        <Button variant="ghost" className="text-destructive" onClick={() => toast('Account deletion requires confirmation by email')}>Delete account</Button>
         </div>
       </section>
     </div>

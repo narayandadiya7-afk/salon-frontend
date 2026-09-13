@@ -24,7 +24,7 @@ export function EmptyState({
       </div>
       <h3 className="mt-5 font-display text-2xl">{title}</h3>
       <p className="mt-2 max-w-sm text-sm text-muted-foreground">{description}</p>
-      <Button asChild className="mt-6 rounded-full">
+      <Button asChild className="mt-6">
         <Link href={portalHref(basePath, ctaTo)}>{ctaLabel}</Link>
       </Button>
     </div>

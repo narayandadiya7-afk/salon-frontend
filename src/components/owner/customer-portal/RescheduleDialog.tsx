@@ -107,10 +107,10 @@ export function RescheduleDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="ghost" className="rounded-full" onClick={() => onOpenChange(false)}>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Keep current time
           </Button>
-          <Button className="rounded-full" disabled={!slot || saving} onClick={confirm}>
+          <Button disabled={!slot || saving} onClick={confirm}>
             {saving ? 'Confirming…' : 'Confirm change'}
           </Button>
         </DialogFooter>

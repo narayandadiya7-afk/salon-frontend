@@ -99,7 +99,7 @@ export function TopBar({
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur-xl">
-      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 px-4 py-3 sm:px-6">
+      <div className="mx-auto grid w-full max-w-[1500px] grid-cols-[auto_1fr_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-2">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -119,15 +119,15 @@ export function TopBar({
             </SheetContent>
           </Sheet>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hidden lg:inline-flex"
-            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            onClick={onToggle}
-          >
-            {collapsed ? <PanelLeft className="size-4.5" /> : <PanelLeftClose className="size-4.5" />}
-          </Button>
+<Button
+              variant="ghost"
+              size="icon"
+              className="-ml-3 hidden lg:inline-flex"
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              onClick={onToggle}
+            >
+              {collapsed ? <PanelLeft className="size-4.5" /> : <PanelLeftClose className="size-4.5" />}
+            </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

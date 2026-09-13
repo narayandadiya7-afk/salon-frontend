@@ -17,13 +17,5 @@ export default async function CustomerLayout({
 }) {
   const { slug } = await params;
 
-  return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Karla:wght@300;400;500;600;700&display=swap"
-      />
-      <CustomerShell slug={slug}>{children}</CustomerShell>
-    </>
-  );
+  return <CustomerShell slug={slug}>{children}</CustomerShell>;
 }

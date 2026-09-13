@@ -39,7 +39,7 @@ export default function PaymentsPage() {
               <div className="flex items-center gap-3">
                 <StatusBadge status={p.status} />
                 <span className="font-medium">{formatCurrency(p.amount)}</span>
-                <Button size="sm" variant="ghost" className="rounded-full" onClick={() => toast.success(`Invoice ${p.id} downloaded`)}>
+                <Button size="sm" variant="ghost" onClick={() => toast.success(`Invoice ${p.id} downloaded`)}>
                   <Download className="size-4" />
                 </Button>
               </div>
@@ -64,7 +64,7 @@ export default function PaymentsPage() {
             </div>
           ))}
         </div>
-        <Button variant="secondary" className="rounded-full" onClick={() => toast.success('Add payment method')}>
+        <Button variant="secondary" onClick={() => toast.success('Add payment method')}>
           Add payment method
         </Button>
       </section>

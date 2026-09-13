@@ -29,7 +29,7 @@ export default function AppointmentsPage() {
         title="My Appointments"
         subtitle="Everything you have booked at Glam Studio."
         action={
-          <Button asChild className="rounded-full bg-gradient-gold text-ink hover:opacity-90">
+          <Button asChild variant="gold">
             <Link href={`${basePath}/book`}>
               <CalendarPlus className="size-4" /> Book Appointment
             </Link>
@@ -37,10 +37,10 @@ export default function AppointmentsPage() {
         }
       />
       <Tabs defaultValue="upcoming">
-        <TabsList className="rounded-full">
-          <TabsTrigger className="rounded-full" value="upcoming">Upcoming ({upcoming.length})</TabsTrigger>
-          <TabsTrigger className="rounded-full" value="completed">Completed ({completed.length})</TabsTrigger>
-          <TabsTrigger className="rounded-full" value="cancelled">Cancelled ({cancelled.length})</TabsTrigger>
+        <TabsList>
+          <TabsTrigger value="upcoming">Upcoming ({upcoming.length})</TabsTrigger>
+          <TabsTrigger value="completed">Completed ({completed.length})</TabsTrigger>
+          <TabsTrigger value="cancelled">Cancelled ({cancelled.length})</TabsTrigger>
         </TabsList>
         <TabsContent value="upcoming" className="mt-5"><List items={upcoming} /></TabsContent>
         <TabsContent value="completed" className="mt-5"><List items={completed} /></TabsContent>

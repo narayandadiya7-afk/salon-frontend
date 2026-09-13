@@ -14,7 +14,7 @@ export default function NotificationsPage() {
         title="Notifications"
         subtitle="Reminders, offers and account updates."
         action={
-          <Button variant="secondary" className="rounded-full" onClick={() => toast.success('All notifications marked as read')}>
+          <Button variant="secondary" onClick={() => toast.success('All notifications marked as read')}>
             Mark all read
           </Button>
         }

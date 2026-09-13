@@ -46,7 +46,7 @@ export default function ProfilePage() {
           <Field label="Preferred stylist" defaultValue={customer.preferredStylist} />
           <Field label="Preferred services" defaultValue={customer.preferredServices.join(', ')} />
         </div>
-        <Button className="rounded-full" onClick={() => toast.success('Profile updated')}>Save changes</Button>
+        <Button onClick={() => toast.success('Profile updated')}>Save changes</Button>
       </div>
     </div>
   );
