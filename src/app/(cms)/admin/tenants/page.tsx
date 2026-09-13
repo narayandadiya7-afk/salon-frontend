@@ -47,8 +47,8 @@ export default function TenantsPage() {
         breadcrumb={["Home", "Tenants"]}
         actions={
           <>
-            <Button variant="outline"><Download className="size-4" /> Export CSV</Button>
-            <Button><Plus className="size-4" /> Add tenant</Button>
+            <Button variant="secondary"><Download className="size-4" /> Export CSV</Button>
+            <Button variant="secondary"><Plus className="size-4" /> Add tenant</Button>
           </>
         }
       />
@@ -60,7 +60,7 @@ export default function TenantsPage() {
         <KpiCard label="Suspended" value="74" delta={-3.1} icon={Ban} tone="destructive" />
       </div>
 
-      <Panel className="mt-6" bodyClassName="p-0">
+      <Panel className="mt-8" bodyClassName="p-0">
         <div className="flex flex-col gap-3 border-b border-border p-4 lg:flex-row lg:items-center">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -93,7 +93,7 @@ export default function TenantsPage() {
                 <SelectItem value="Enterprise">Enterprise</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline"><SlidersHorizontal className="size-4" /> More filters</Button>
+            <Button variant="secondary"><SlidersHorizontal className="size-4" /> More filters</Button>
           </div>
         </div>
 
@@ -101,9 +101,9 @@ export default function TenantsPage() {
           <div className="flex flex-wrap items-center gap-2 border-b border-border bg-accent/50 px-4 py-2.5 text-sm">
             <span className="font-medium">{selected.length} selected</span>
             <div className="ml-auto flex flex-wrap gap-2">
-              <Button size="sm" variant="outline">Change plan</Button>
-              <Button size="sm" variant="outline">Suspend</Button>
-              <Button size="sm" variant="ghost" className="text-destructive">Delete</Button>
+              <Button size="sm" variant="secondary">Change plan</Button>
+              <Button size="sm" variant="secondary">Suspend</Button>
+              <Button size="sm" variant="secondary" className="text-destructive">Delete</Button>
             </div>
           </div>
         )}
@@ -113,7 +113,7 @@ export default function TenantsPage() {
             <EmptyState
               title="No tenants match your filters"
               description="Try a different search term, or reset the status and plan filters."
-              action={<Button variant="outline" onClick={() => { setQuery(""); setStatus("all"); setPlan("all"); }}>Reset filters</Button>}
+              action={<Button variant="gold" onClick={() => { setQuery(""); setStatus("all"); setPlan("all"); }}>Reset filters</Button>}
             />
           </div>
         ) : (
@@ -203,9 +203,9 @@ export default function TenantsPage() {
             Showing {(current - 1) * PAGE_SIZE + 1}–{Math.min(current * PAGE_SIZE, filtered.length)} of {filtered.length}
           </p>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" disabled={current === 1} onClick={() => setPage(current - 1)}>Previous</Button>
+            <Button variant="secondary" size="sm" disabled={current === 1} onClick={() => setPage(current - 1)}>Previous</Button>
             <span className="text-muted-foreground">Page {current} of {pages}</span>
-            <Button variant="outline" size="sm" disabled={current === pages} onClick={() => setPage(current + 1)}>Next</Button>
+            <Button variant="secondary" size="sm" disabled={current === pages} onClick={() => setPage(current + 1)}>Next</Button>
           </div>
         </div>
       </Panel>

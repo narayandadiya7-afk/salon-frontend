@@ -25,7 +25,7 @@ export default function AuditLogsPage() {
         title="Audit Logs"
         description="Every privileged action is recorded and retained for 24 months."
         breadcrumb={["Home", "Audit Logs"]}
-        actions={<Button variant="outline"><Download className="size-4" /> Export logs</Button>}
+        actions={<Button variant="gold"><Download className="size-4" /> Export logs</Button>}
       />
 
       <Panel bodyClassName="p-0">

@@ -17,7 +17,7 @@ export default function SettingsPage() {
         title="Platform Settings"
         description="Global configuration applied across every tenant workspace."
         breadcrumb={["Home", "Platform Settings"]}
-        actions={<Button><Save className="size-4" /> Save changes</Button>}
+        actions={<Button variant="gold"><Save className="size-4" /> Save changes</Button>}
       />
 
       <Tabs defaultValue="branding">
@@ -43,7 +43,7 @@ export default function SettingsPage() {
                 <Label htmlFor="logo">Logo</Label>
                 <div className="flex items-center gap-3 rounded-lg border border-dashed border-border p-4">
                   <span className="flex size-11 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">SO</span>
-                  <Button id="logo" variant="outline" size="sm"><Upload className="size-4" /> Upload SVG or PNG</Button>
+                  <Button id="logo" variant="gold" size="sm"><Upload className="size-4" /> Upload SVG or PNG</Button>
                 </div>
               </div>
             </div>
@@ -142,8 +142,8 @@ export default function SettingsPage() {
               Irreversible operations affecting the whole platform. These require a second approver.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <Button variant="outline">Purge deleted tenants</Button>
-              <Button variant="destructive">Rotate all API keys</Button>
+              <Button variant="secondary">Purge deleted tenants</Button>
+              <Button variant="secondary" className="text-destructive">Rotate all API keys</Button>
             </div>
           </Panel>
         </TabsContent>

@@ -39,8 +39,8 @@ export default function DashboardPage() {
         breadcrumb={["Home", "Dashboard"]}
         actions={
           <>
-            <Button variant="outline"><Download className="size-4" /> Export report</Button>
-            <Button><Plus className="size-4" /> New tenant</Button>
+            <Button variant="secondary"><Download className="size-4" /> Export report</Button>
+            <Button variant="secondary"><Plus className="size-4" /> New tenant</Button>
           </>
         }
       />
@@ -60,7 +60,7 @@ export default function DashboardPage() {
         <KpiCard label="Pending Tickets" value="37" delta={-14.7} hint="4 breaching SLA" icon={LifeBuoy} tone="warning" />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel title="Recurring revenue" description="MRR growth over the last 8 months" className="lg:col-span-2" bodyClassName="p-4">
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={revenueSeries} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
@@ -94,7 +94,7 @@ export default function DashboardPage() {
         </Panel>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel title="Tenant growth" bodyClassName="p-4">
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={revenueSeries} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
@@ -138,12 +138,12 @@ export default function DashboardPage() {
         </Panel>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel
           title="Recent payments"
           className="lg:col-span-2"
           bodyClassName="p-0"
-          actions={<Button variant="ghost" size="sm" asChild><Link href="/admin/payments">View all <ArrowRight className="size-3.5" /></Link></Button>}
+          actions={<Button variant="gold" size="sm" asChild><Link href="/admin/payments">View all <ArrowRight className="size-3.5" /></Link></Button>}
         >
           <div className="divide-y divide-border">
             {recentPayments.map((p) => (
@@ -177,7 +177,7 @@ export default function DashboardPage() {
         </Panel>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel title="Expiring trials" description="Convert before renewal window closes" bodyClassName="p-0">
           <div className="divide-y divide-border">
             {expiringTrials.map((t) => (
@@ -219,7 +219,7 @@ export default function DashboardPage() {
         </Panel>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-8">
         <Panel title="Recent activity" description="Platform-wide admin and system events" bodyClassName="p-0">
           <ol className="divide-y divide-border">
             {activityFeed.map((a) => (

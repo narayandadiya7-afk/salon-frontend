@@ -16,7 +16,7 @@ export default function RevenuePage() {
         title="Revenue"
         description="Recurring revenue performance across plans, regions and cohorts."
         breadcrumb={["Home", "Revenue"]}
-        actions={<Button variant="outline"><Download className="size-4" /> Export</Button>}
+        actions={<Button variant="gold"><Download className="size-4" /> Export</Button>}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -26,7 +26,7 @@ export default function RevenuePage() {
         <KpiCard label="Net churn" value="1.5%" delta={-0.4} icon={Percent} tone="warning" />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel title="MRR vs ARR" className="lg:col-span-2" bodyClassName="p-4">
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={revenueSeries} margin={{ top: 8, right: 8, left: -6, bottom: 0 }}>
@@ -60,7 +60,7 @@ export default function RevenuePage() {
         </Panel>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+      <div className="mt-8 grid gap-4 lg:grid-cols-2">
         <Panel title="Churn trend" bodyClassName="p-4">
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={revenueSeries} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>

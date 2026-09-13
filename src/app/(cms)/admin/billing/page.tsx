@@ -27,7 +27,7 @@ export default function BillingPage() {
         title="Billing"
         description="Invoices, taxes and refunds across all subscriptions."
         breadcrumb={["Home", "Billing"]}
-        actions={<Button variant="outline"><Download className="size-4" /> Download statements</Button>}
+        actions={<Button variant="gold"><Download className="size-4" /> Download statements</Button>}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -37,7 +37,7 @@ export default function BillingPage() {
         <KpiCard label="Failed transactions" value="24" delta={-11.2} icon={AlertTriangle} tone="destructive" />
       </div>
 
-      <Tabs defaultValue="invoices" className="mt-6">
+      <Tabs defaultValue="invoices" className="mt-8">
         <TabsList>
           <TabsTrigger value="invoices">Invoices</TabsTrigger>
           <TabsTrigger value="refunds">Refund requests</TabsTrigger>
@@ -102,7 +102,7 @@ export default function BillingPage() {
                       <TableCell><StatusBadge status={r.status} /></TableCell>
                       <TableCell className="text-right tabular-nums">{currency(r.amount)}</TableCell>
                       <TableCell className="text-right">
-                        <Button size="sm" variant="outline" disabled={r.status === "resolved"}>Approve</Button>
+                        <Button size="sm" variant="gold" disabled={r.status === "resolved"}>Approve</Button>
                       </TableCell>
                     </TableRow>
                   ))}

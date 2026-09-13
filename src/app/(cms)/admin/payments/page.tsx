@@ -27,7 +27,7 @@ export default function PaymentsPage() {
         <KpiCard label="Failed (24h)" value="24" delta={-11.2} icon={XCircle} tone="destructive" />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <Panel title="Transactions" className="lg:col-span-2" bodyClassName="p-0">
           <div className="overflow-x-auto">
             <Table>

@@ -26,7 +26,7 @@ export default function TenantProfilePage() {
       <EmptyState
         title="Tenant not found"
         description="This salon may have been deleted or the link is out of date."
-        action={<Button asChild><Link href="/admin/tenants">Back to tenants</Link></Button>}
+        action={<Button variant="gold" asChild><Link href="/admin/tenants">Back to tenants</Link></Button>}
       />
     );
   }
@@ -39,10 +39,10 @@ export default function TenantProfilePage() {
         breadcrumb={["Home", "Tenants", tenant.name]}
         actions={
           <>
-            <Button variant="outline"><Pencil className="size-4" /> Edit</Button>
-            <Button variant="outline"><KeyRound className="size-4" /> Reset password</Button>
-            <Button variant="outline"><Ban className="size-4" /> Suspend</Button>
-            <Button><LogIn className="size-4" /> Impersonate</Button>
+            <Button variant="secondary"><Pencil className="size-4" /> Edit</Button>
+            <Button variant="secondary"><KeyRound className="size-4" /> Reset password</Button>
+            <Button variant="secondary"><Ban className="size-4" /> Suspend</Button>
+            <Button variant="secondary"><LogIn className="size-4" /> Impersonate</Button>
           </>
         }
       />
@@ -54,7 +54,7 @@ export default function TenantProfilePage() {
         <KpiCard label="Customers" value={tenant.customers.toLocaleString()} delta={2.8} />
       </div>
 
-      <Tabs defaultValue="overview" className="mt-6">
+      <Tabs defaultValue="overview" className="mt-8">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="subscription">Subscription</TabsTrigger>
@@ -82,8 +82,8 @@ export default function TenantProfilePage() {
               <dt className="text-muted-foreground">MFA</dt><dd><StatusBadge status="active" /></dd>
             </dl>
             <div className="mt-6 flex gap-2">
-              <Button variant="outline" size="sm">Send email</Button>
-              <Button variant="ghost" size="sm" className="text-destructive"><Trash2 className="size-4" /> Delete tenant</Button>
+              <Button variant="secondary" size="sm">Send email</Button>
+              <Button variant="secondary" size="sm" className="text-destructive"><Trash2 className="size-4" /> Delete tenant</Button>
             </div>
           </Panel>
         </TabsContent>
@@ -97,9 +97,9 @@ export default function TenantProfilePage() {
               <div><dt className="text-muted-foreground">Seats</dt><dd className="mt-1 font-medium">{tenant.users}</dd></div>
             </dl>
             <div className="mt-6 flex flex-wrap gap-2">
-              <Button>Upgrade plan</Button>
-              <Button variant="outline">Change billing cycle</Button>
-              <Button variant="outline">Extend trial</Button>
+              <Button variant="secondary">Upgrade plan</Button>
+              <Button variant="secondary">Change billing cycle</Button>
+              <Button variant="secondary">Extend trial</Button>
             </div>
           </Panel>
         </TabsContent>

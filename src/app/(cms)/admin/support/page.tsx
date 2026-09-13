@@ -34,7 +34,7 @@ export default function SupportPage() {
         <KpiCard label="SLA at risk" value="4" delta={2.1} icon={AlarmClock} tone="destructive" />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-[380px_1fr]">
+      <div className="mt-8 grid gap-4 lg:grid-cols-[380px_1fr]">
         <Panel title="Queue" bodyClassName="p-0">
           <ul className="divide-y divide-border">
             {tickets.map((t) => (
@@ -88,8 +88,8 @@ export default function SupportPage() {
                 <div className="rounded-xl border border-border p-3">
                   <Textarea placeholder="Write a reply to the tenant…" aria-label="Reply" className="min-h-24 border-0 p-0 shadow-none focus-visible:ring-0" />
                   <div className="mt-2 flex justify-end gap-2">
-                    <Button variant="outline" size="sm">Save draft</Button>
-                    <Button size="sm"><Send className="size-4" /> Send reply</Button>
+                    <Button variant="secondary" size="sm">Save draft</Button>
+                    <Button variant="secondary" size="sm"><Send className="size-4" /> Send reply</Button>
                   </div>
                 </div>
               </TabsContent>

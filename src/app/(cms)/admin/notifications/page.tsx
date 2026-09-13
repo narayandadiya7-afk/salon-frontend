@@ -28,7 +28,7 @@ export default function NotificationsPage() {
         title="Notifications"
         description="Everything the platform needs your attention on, plus delivery preferences."
         breadcrumb={["Home", "Notifications"]}
-        actions={<Button variant="outline">Mark all as read</Button>}
+        actions={<Button variant="gold">Mark all as read</Button>}
       />
 
       <div className="grid gap-4 lg:grid-cols-[1fr_380px]">
@@ -42,7 +42,7 @@ export default function NotificationsPage() {
                   <p className="text-sm text-muted-foreground">{n.body}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{n.when}</p>
                 </div>
-                <Button variant="ghost" size="sm">Dismiss</Button>
+                <Button variant="secondary" size="sm">Dismiss</Button>
               </li>
             ))}
           </ul>

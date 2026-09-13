@@ -21,7 +21,7 @@ export default function RolesPage() {
         breadcrumb={["Home", "Roles & Permissions"]}
         actions={
           <Dialog>
-            <DialogTrigger asChild><Button><Plus className="size-4" /> Create role</Button></DialogTrigger>
+            <DialogTrigger asChild><Button variant="gold"><Plus className="size-4" /> Create role</Button></DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Create role</DialogTitle>
@@ -38,8 +38,8 @@ export default function RolesPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
-                <Button>Create role</Button>
+                <Button variant="secondary">Cancel</Button>
+                <Button variant="secondary">Create role</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -65,7 +65,7 @@ export default function RolesPage() {
                   <TableCell className="text-sm text-muted-foreground">{r.description}</TableCell>
                   <TableCell><Badge variant="secondary">{r.scope}</Badge></TableCell>
                   <TableCell className="text-right tabular-nums">{r.users}</TableCell>
-                  <TableCell className="text-right"><Button size="sm" variant="outline">Edit permissions</Button></TableCell>
+                  <TableCell className="text-right"><Button size="sm" variant="secondary">Edit permissions</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -73,7 +73,7 @@ export default function RolesPage() {
         </div>
       </Panel>
 
-      <Panel className="mt-4" title="Permission matrix" description="Permissions granted to the Support Lead role" bodyClassName="p-0">
+      <Panel className="mt-8" title="Permission matrix" description="Permissions granted to the Support Lead role" bodyClassName="p-0">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -99,8 +99,8 @@ export default function RolesPage() {
           </Table>
         </div>
         <div className="flex justify-end gap-2 border-t border-border px-5 py-3">
-          <Button variant="outline">Discard</Button>
-          <Button>Save permissions</Button>
+          <Button variant="secondary">Discard</Button>
+          <Button variant="secondary">Save permissions</Button>
         </div>
       </Panel>
     </>

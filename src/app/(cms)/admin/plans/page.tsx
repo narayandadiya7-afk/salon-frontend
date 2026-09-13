@@ -28,7 +28,7 @@ export default function PlansPage() {
         breadcrumb={["Home", "Subscription Plans"]}
         actions={
           <Dialog>
-            <DialogTrigger asChild><Button><Plus className="size-4" /> Create plan</Button></DialogTrigger>
+            <DialogTrigger asChild><Button variant="gold"><Plus className="size-4" /> Create plan</Button></DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Create a plan</DialogTitle>
@@ -65,8 +65,8 @@ export default function PlansPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
-                <Button>Publish plan</Button>
+                <Button variant="secondary">Cancel</Button>
+                <Button variant="secondary">Publish plan</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -80,7 +80,7 @@ export default function PlansPage() {
         <KpiCard label="Upgrade rate" value="8.6%" delta={1.9} tone="success" />
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {planCatalog.map((p) => (
           <div
             key={p.name}
@@ -113,14 +113,14 @@ export default function PlansPage() {
               ))}
             </dl>
             <div className="mt-5 flex gap-2">
-              <Button variant="outline" className="flex-1">Edit</Button>
-              <Button className="flex-1">Promote</Button>
+              <Button variant="secondary" className="flex-1">Edit</Button>
+              <Button variant="secondary" className="flex-1">Promote</Button>
             </div>
           </div>
         ))}
       </div>
 
-      <Panel className="mt-6" title="Revenue by plan" description="Monthly recurring revenue contribution" bodyClassName="p-4">
+      <Panel className="mt-8" title="Revenue by plan" description="Monthly recurring revenue contribution" bodyClassName="p-4">
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={revenueByPlan} margin={{ top: 8, right: 8, left: -8, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />

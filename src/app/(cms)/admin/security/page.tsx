@@ -31,7 +31,7 @@ export default function SecurityPage() {
         <KpiCard label="Failed logins (24h)" value="18" delta={22.5} icon={AlertTriangle} tone="destructive" />
       </div>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+      <div className="mt-8 grid gap-4 lg:grid-cols-2">
         <Panel title="Authentication policy">
           <ul className="divide-y divide-border">
             {[
@@ -61,11 +61,11 @@ export default function SecurityPage() {
             <dt className="text-muted-foreground">Reuse window</dt><dd className="font-medium">Last 10 passwords</dd>
             <dt className="text-muted-foreground">Breach check</dt><dd><StatusBadge status="active" /></dd>
           </dl>
-          <Button className="mt-6" variant="outline">Edit policy</Button>
+          <Button className="mt-6" variant="gold">Edit policy</Button>
         </Panel>
       </div>
 
-      <Panel className="mt-4" title="Active sessions" bodyClassName="p-0">
+      <Panel className="mt-8" title="Active sessions" bodyClassName="p-0">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -87,7 +87,7 @@ export default function SecurityPage() {
                   <TableCell className="text-sm">{s.location}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{s.started}</TableCell>
                   <TableCell className="text-right">
-                    <Button size="sm" variant="ghost" className="text-destructive">Revoke</Button>
+                    <Button size="sm" variant="secondary" className="text-destructive">Revoke</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -96,8 +96,8 @@ export default function SecurityPage() {
         </div>
       </Panel>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <Panel title="API keys" actions={<Button size="sm" variant="outline"><Plus className="size-4" /> New key</Button>} bodyClassName="p-0">
+      <div className="mt-8 grid gap-4 lg:grid-cols-2">
+        <Panel title="API keys" actions={<Button size="sm" variant="gold"><Plus className="size-4" /> New key</Button>} bodyClassName="p-0">
           <ul className="divide-y divide-border">
             {apiKeys.map((k) => (
               <li key={k.prefix} className="flex items-center justify-between gap-3 px-5 py-3.5">
@@ -106,7 +106,7 @@ export default function SecurityPage() {
                   <p className="truncate font-mono text-xs text-muted-foreground">{k.prefix} · {k.scope}</p>
                   <p className="text-xs text-muted-foreground">Created {k.created} · used {k.lastUsed}</p>
                 </div>
-                <Button size="sm" variant="ghost">Rotate</Button>
+                <Button size="sm" variant="secondary">Rotate</Button>
               </li>
             ))}
           </ul>

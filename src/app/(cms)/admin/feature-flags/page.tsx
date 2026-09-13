@@ -43,7 +43,7 @@ export default function FeaturesPage() {
         ))}
       </div>
 
-      <Panel className="mt-6" title="Rollout policy" description="Applies to all staged feature releases">
+      <Panel className="mt-8" title="Rollout policy" description="Applies to all staged feature releases">
         <ul className="space-y-2 text-sm text-muted-foreground">
           <li>• Enterprise tenants are excluded from rollouts below 50% unless explicitly opted in.</li>
           <li>• Disabling a module hides its navigation and blocks its API endpoints within 60 seconds.</li>

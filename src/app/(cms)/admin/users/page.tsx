@@ -27,7 +27,7 @@ export default function UsersPage() {
         breadcrumb={["Home", "Users"]}
         actions={
           <Dialog>
-            <DialogTrigger asChild><Button><UserPlus className="size-4" /> Invite user</Button></DialogTrigger>
+            <DialogTrigger asChild><Button variant="gold"><UserPlus className="size-4" /> Invite user</Button></DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Invite a platform user</DialogTitle>
@@ -53,8 +53,8 @@ export default function UsersPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
-                <Button>Send invite</Button>
+                <Button variant="secondary">Cancel</Button>
+                <Button variant="secondary">Send invite</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -68,7 +68,7 @@ export default function UsersPage() {
         <KpiCard label="Suspended" value="1" icon={UserX} tone="destructive" />
       </div>
 
-      <Panel className="mt-6" bodyClassName="p-0">
+      <Panel className="mt-8" bodyClassName="p-0">
         <div className="border-b border-border p-4">
           <div className="relative max-w-sm">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
