@@ -104,7 +104,7 @@ export default function BookPage() {
             <button
               key={s}
               onClick={() => setSlot(s)}
-              className={cn('rounded-full border border-border px-4 py-2 text-sm transition-colors', slot === s ? 'bg-foreground text-background' : 'bg-card hover:border-gold/50')}
+              className={cn('rounded-full border border-border px-4 py-2 text-sm transition-colors', slot === s ? 'bg-primary text-primary-foreground' : 'bg-card hover:border-gold/50')}
             >
               {s}
             </button>

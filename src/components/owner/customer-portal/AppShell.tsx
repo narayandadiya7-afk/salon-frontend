@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bell, CalendarPlus, ChevronLeft, Menu, PanelLeft, PanelLeftClose, Search, Sparkles } from 'lucide-react';
+import { Bell, CalendarPlus, ChevronLeft, Menu, Moon, PanelLeft, PanelLeftClose, Search, Sparkles, Sun } from 'lucide-react';
 import { Button } from '@/components/owner/customer-portal/button';
 import { Avatar, AvatarFallback } from '@/components/owner/customer-portal/avatar';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/owner/customer-portal/sheet';
@@ -89,9 +89,26 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [mobileNav, setMobileNav] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const pathname = usePathname();
   const { basePath } = useCustomerPortal();
   const unread = notifications.filter((n) => !n.read).length;
+
+  useEffect(() => {
+    const stored = localStorage.getItem('salonos.theme');
+    const isDark = stored === 'dark';
+    setTheme(isDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', isDark);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      localStorage.setItem('salonos.theme', next);
+      return next;
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -162,6 +179,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2">
+              <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+                {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
+              </Button>
+
               <Button asChild variant="ghost" size="icon" className="relative" aria-label={`Notifications, ${unread} unread`}>
                 <Link href={`${basePath}/notifications`}>
                   <Bell className="size-5" />
@@ -171,13 +192,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </Link>
               </Button>
 
-              <Link href={`${basePath}/profile`} aria-label="Profile">
-                <Avatar className="size-8">
-                  <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">
-                    {customer.initials}
-                  </AvatarFallback>
-                </Avatar>
-              </Link>
+              <Button asChild variant="ghost" className="h-10 px-1.5 sm:px-2" aria-label="Profile">
+                <Link href={`${basePath}/profile`}>
+                  <Avatar className="size-8">
+                    <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">
+                      {customer.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                </Link>
+              </Button>
             </div>
           </div>
         </header>
