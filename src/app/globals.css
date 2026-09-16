@@ -295,18 +295,18 @@ body.theme-slate {
    The owner and customer portals must match their reference apps, which
    use the default browser scrollbar, so these custom rules only apply
    when no portal shell (.portal-shell, .admin-shell, .customer-shell)
-   is present on the page.
+   and no Avivane marketing site (.avivane-site) is present on the page.
    ========================================== */
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell))::-webkit-scrollbar,
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)) *::-webkit-scrollbar { width: 6px; height: 6px; }
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell))::-webkit-scrollbar-track,
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)) *::-webkit-scrollbar-track { background: var(--theme-background); }
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell))::-webkit-scrollbar-thumb,
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)) *::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell))::-webkit-scrollbar-thumb:hover,
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)) *::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)),
-:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)) * { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site))::-webkit-scrollbar,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)) *::-webkit-scrollbar { width: 6px; height: 6px; }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site))::-webkit-scrollbar-track,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)) *::-webkit-scrollbar-track { background: var(--theme-background); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site))::-webkit-scrollbar-thumb,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)) *::-webkit-scrollbar-thumb { background-color: var(--theme-border); border-radius: var(--radius-full); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site))::-webkit-scrollbar-thumb:hover,
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)) *::-webkit-scrollbar-thumb:hover { background-color: var(--theme-text-secondary); }
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)),
+:root:not(:has(.portal-shell)):not(:has(.admin-shell)):not(:has(.customer-shell)):not(:has(.avivane-site)) * { scrollbar-width: thin; scrollbar-color: var(--theme-border) var(--theme-background); }
 
 /* ==========================================
    ANT DESIGN BREADCRUMB

@@ -1,168 +1,225 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from 'antd';
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Pricing — SalonSaaS',
-  description: 'Simple, transparent pricing for salon businesses. Start with Basic or go Pro.',
-};
+import Link from "next/link";
+import { useState } from "react";
+import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
+import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
 
 const plans = [
   {
-    plan: 'Basic',
-    price: '₹499',
-    period: '/month',
-    planType: 'BASIC',
-    desc: 'Perfect for small salons just getting started.',
+    name: "Starter",
+    blurb: "For independent stylists",
+    monthly: 29,
+    yearly: 24,
     features: [
-      'Your own salon website',
-      'Online appointment booking',
-      'Up to 10 services',
-      'Working hours management',
-      'Basic analytics',
-      'Email support',
+      "Your own salon website",
+      "Unique salon URL",
+      "Online booking",
+      "Up to 2 staff",
+      "Customer management",
+      "Email support",
     ],
-    cta: 'Start Free Trial',
-    href: '/register',
+    cta: "Get Started",
     featured: false,
   },
   {
-    plan: 'Pro',
-    price: '₹999',
-    period: '/month',
-    planType: 'PRO',
-    desc: 'For growing salons that need more power.',
+    name: "Professional",
+    blurb: "For growing salons",
+    monthly: 79,
+    yearly: 63,
     features: [
-      'Everything in Basic',
-      'Unlimited services',
-      'Custom salon branding',
-      'Priority support',
-      'Advanced booking management',
-      'Appointment reminders',
-      'Revenue analytics',
-      'Custom domain support',
+      "Everything in Starter",
+      "Up to 10 staff",
+      "Payments & memberships",
+      "Custom domain",
+      "Analytics & reports",
+      "Priority email support",
     ],
-    cta: 'Start Free Trial',
-    href: '/register',
+    cta: "Get Your Salon Website",
     featured: true,
-    badge: 'Most Popular',
   },
   {
-    plan: 'Pro Yearly',
-    price: '₹8,999',
-    period: '/year',
-    planType: 'PRO_YEARLY',
-    desc: 'Best value — save 25% with annual billing.',
+    name: "Business",
+    blurb: "For multi-location groups",
+    monthly: 149,
+    yearly: 119,
     features: [
-      'Everything in Pro',
-      'Save ₹2,989/year',
-      'Priority onboarding',
-      'Dedicated account manager',
-      'Custom integrations',
-      'White-label option',
+      "Everything in Professional",
+      "Unlimited staff",
+      "Marketing & loyalty",
+      "Advanced reporting",
+      "Multi-location management",
+      "Priority support",
     ],
-    cta: 'Start Free Trial',
-    href: '/register',
+    cta: "Get Started",
     featured: false,
-    badge: 'Best Value',
-  },
-];
-
-const faqs = [
-  {
-    q: 'Can I change my plan later?',
-    a: 'Yes, you can upgrade or renew your plan at any time from your owner dashboard.',
   },
   {
-    q: 'What payment methods are accepted?',
-    a: 'We use Razorpay which supports UPI, credit/debit cards, net banking, and wallets.',
-  },
-  {
-    q: 'Is there a free trial?',
-    a: 'New accounts get a 1-month free trial with full access. No payment required at signup.',
-  },
-  {
-    q: 'What happens when my subscription expires?',
-    a: 'Your salon website will be temporarily suspended. You can renew from your dashboard to reactivate it.',
+    name: "Enterprise",
+    blurb: "For salon groups & franchises",
+    monthly: 0,
+    yearly: 0,
+    features: [
+      "Everything in Business",
+      "Custom onboarding",
+      "SSO & advanced permissions",
+      "Dedicated account manager",
+      "Custom SLAs",
+      "Bespoke integrations",
+    ],
+    cta: "Contact Sales",
+    featured: false,
   },
 ];
 
 export default function PricingPage() {
+  const [yearly, setYearly] = useState(true);
+
   return (
-    <>
-      <section className="section" style={{ background: 'var(--theme-background)' }}>
-        <div className="section-container">
-          <div className="section-header">
-            <span className="section-label">Pricing</span>
-            <h1 className="section-title">Simple, transparent pricing</h1>
-            <p className="section-subtitle">
-              No hidden fees. Pay once, get your salon website live. Cancel anytime.
-            </p>
-          </div>
+    <SiteShell>
+      <PageHero
+        eyebrow="Pricing"
+        title={<>A plan for every salon.</>}
+        intro="Every plan includes your own salon website, your unique URL and unlimited online bookings. Change or cancel any time."
+        image="/assets/admin-website/avivane-banner-interior.jpg"
+        imageAlt="Elegant modern salon interior with brass details"
+      />
 
-          <div className="pricing-grid">
-            {plans.map((p) => (
-              <div key={p.plan} className={`pricing-card ${p.featured ? 'featured' : ''}`}>
-                {p.badge && <div className="pricing-badge">{p.badge}</div>}
-                <div className="pricing-plan">{p.plan}</div>
-                <div className="pricing-price">
-                  {p.price}
-                  {p.period && <span>{p.period}</span>}
-                </div>
-                <p className="pricing-desc">{p.desc}</p>
-                <ul className="pricing-features">
-                  {p.features.map((f) => <li key={f}>✓ {f}</li>)}
-                </ul>
-                <Link href={p.href}>
-                  <Button
-                    type={p.featured ? 'primary' : 'default'}
-                    block
-                    size="large"
-                  >
-                    {p.cta}
-                  </Button>
-                </Link>
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="mb-10 flex items-center gap-3">
+          <span className="text-sm">Monthly</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={yearly}
+            aria-label="Toggle yearly billing"
+            onClick={() => setYearly((v) => !v)}
+            className="relative h-6 w-11 rounded-full bg-primary"
+          >
+            <span
+              className={`absolute top-0.5 size-5 rounded-full bg-surface transition-all ${
+                yearly ? "right-0.5" : "left-0.5"
+              }`}
+            />
+          </button>
+          <span className="text-sm font-semibold">Yearly</span>
+          <span className="rounded-full bg-brass/10 px-2.5 py-1 font-mono text-[11px] text-brass-soft">
+            Save 20%
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative flex flex-col rounded-2xl p-8 transition-all duration-500 hover:-translate-y-1 ${
+                plan.featured
+                  ? "bg-primary text-primary-foreground shadow-lift ring-1 ring-brass/40 lg:scale-[1.02]"
+                  : "card-lux"
+              }`}
+            >
+              {plan.featured && (
+                <span className="absolute -top-3 left-7 rounded-full bg-brass px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-accent-foreground">
+                  Most popular
+                </span>
+              )}
+              <h2 className="text-2xl">{plan.name}</h2>
+              <p
+                className={`mt-1 text-sm ${plan.featured ? "text-primary-foreground/60" : "text-muted-foreground"}`}
+              >
+                {plan.blurb}
+              </p>
+              <div className="mt-5 flex items-baseline gap-1">
+                {plan.monthly === 0 ? (
+                  <span className="font-display text-4xl font-semibold">Custom</span>
+                ) : (
+                  <>
+                    <span className="font-display text-5xl font-semibold">
+                      ${yearly ? plan.yearly : plan.monthly}
+                    </span>
+                    <span
+                      className={`text-sm ${plan.featured ? "text-primary-foreground/60" : "text-muted-foreground"}`}
+                    >
+                      /mo
+                    </span>
+                  </>
+                )}
               </div>
-            ))}
+              <p
+                className={`mt-1 font-mono text-xs ${plan.featured ? "text-primary-foreground/50" : "text-muted-foreground"}`}
+              >
+                {plan.monthly === 0
+                  ? "Tailored to your group"
+                  : yearly
+                    ? `billed yearly · $${plan.monthly}/mo monthly`
+                    : "billed monthly"}
+              </p>
+              <ul className="mt-6 space-y-3 text-sm">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex gap-2">
+                    <span className="text-brass">✓</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/register"
+                className={`mt-8 rounded-full px-5 py-3 text-center text-sm font-semibold transition-colors ${
+                  plan.featured
+                    ? "bg-brass text-accent-foreground hover:bg-brass-soft"
+                    : "text-foreground ring-1 ring-line hover:bg-background"
+                }`}
+              >
+                {plan.cta}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-line bg-surface py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-6">
+          <SectionHeading eyebrow="Included from day one" title="The essentials are not reserved for the most expensive plan." description="Every Avivane salon begins with a professional website, a direct booking journey and the operational foundation needed to serve clients well." />
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Your digital home", "A responsive salon website and a memorable Avivane address."],
+              ["Unlimited bookings", "No per-booking platform fee and no marketplace commission."],
+              ["Client records", "Visit history and preferences stay connected to appointments."],
+              ["Guided setup", "A clear path from account creation to a complete live website."],
+            ].map(([title, copy], i) => <div key={title} className="card-lux bg-background p-7"><span className="numeral">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{copy}</p></div>)}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="section" style={{ background: 'var(--theme-surface)' }}>
-        <div className="section-container" style={{ maxWidth: 720 }}>
-          <div className="section-header">
-            <span className="section-label">FAQ</span>
-            <h2 className="section-title">Common questions</h2>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {faqs.map((faq) => (
-              <div key={faq.q} style={{ padding: '20px 24px', background: 'var(--theme-background)', borderRadius: 12, border: '1px solid var(--theme-border)' }}>
-                <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 16 }}>{faq.q}</div>
-                <div style={{ color: 'var(--theme-text-secondary)', lineHeight: 1.6 }}>{faq.a}</div>
-              </div>
-            ))}
+      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4"><SectionHeading eyebrow="Choose with confidence" title="Match the plan to the way you operate today." /></div>
+          <div className="divide-y divide-line border-y border-line lg:col-span-8">
+            {[
+              ["Starter", "Choose this when one or two professionals need a polished website and dependable online booking."],
+              ["Professional", "Choose this when payments, memberships, reporting and a custom domain matter to growth."],
+              ["Business", "Choose this when several teams or locations need shared control and a wider performance view."],
+              ["Enterprise", "Choose this when rollout, governance, integrations and service commitments need to be tailored."],
+            ].map(([name, copy]) => <div key={name} className="grid gap-3 py-6 sm:grid-cols-3"><h3 className="text-2xl">{name}</h3><p className="sm:col-span-2 leading-relaxed text-muted-foreground">{copy}</p></div>)}
           </div>
         </div>
       </section>
 
-      <div className="cta-band">
-        <h2 className="cta-title">Ready to launch your salon website?</h2>
-        <p className="cta-subtitle">Join 500+ salon owners. Get started in minutes.</p>
-        <div className="cta-actions">
-          <Link href="/register">
-            <Button size="large" style={{ background: '#fff', color: '#1890ff', border: 'none', fontWeight: 600 }}>
-              Create Free Account
-            </Button>
-          </Link>
-          <Link href="/contact">
-            <Button size="large" style={{ background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.5)' }}>
-              Talk to Sales
-            </Button>
-          </Link>
+      <section className="border-y border-line bg-surface py-20">
+        <div className="mx-auto max-w-3xl px-6">
+          <SectionHeading eyebrow="Pricing questions" title="Straight answers before you decide." />
+          <div className="mt-8 divide-y divide-line border-y border-line">
+            {[
+              ["Can I change plans later?", "Yes. Move up or down as your team and operating needs change. Your salon website remains available throughout."],
+              ["Is online booking usage limited?", "No. Every plan includes unlimited online bookings without a per-booking platform fee."],
+              ["Can I use my own domain?", "Custom domains are included from the Professional plan. Your Avivane address continues to work as well."],
+              ["What does yearly billing mean?", "The discounted monthly equivalent is billed for the full year, giving you a 20% saving compared with monthly billing."],
+            ].map(([question, answer]) => <details key={question} className="group py-6"><summary className="flex cursor-pointer list-none justify-between gap-6 font-display text-2xl transition-colors duration-300 group-hover:text-brass-soft">{question}<span className="font-mono text-brass transition-transform duration-300 group-open:rotate-45">+</span></summary><p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">{answer}</p></details>)}
+          </div>
         </div>
-      </div>
-    </>
+      </section>
+
+      <ClosingCta title="Every plan ends the same way: your salon, online." description="Start with the plan that fits today, then grow without rebuilding your website or client experience." secondary={{ label: "Explore Features", to: "/features" }} />
+    </SiteShell>
   );
 }
