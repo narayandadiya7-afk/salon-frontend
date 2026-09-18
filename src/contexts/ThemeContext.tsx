@@ -14,8 +14,6 @@ const RESERVED_APP_SEGMENTS = new Set([
   'pricing',
   'account',
   'my-bookings',
-  'superadmin',
-  'super-admin',
   'tenant',
   'admin',
   'owner',

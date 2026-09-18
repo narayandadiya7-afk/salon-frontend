@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const ACCESS_TOKEN_KEY = process.env.NEXT_PUBLIC_ACCESS_TOKEN_KEY || 'access_token';
 
 // Routes that require authentication
-const PROTECTED_ROUTES = ['/admin', '/owner', '/superadmin', '/account', '/my-bookings'];
+const PROTECTED_ROUTES = ['/owner', '/account', '/my-bookings'];
 const PROTECTED_PATTERNS = [
   /^\/salon\/[^/]+\/portal\/dashboard(\/|$)/,
   /^\/salon\/[^/]+\/dashboard(\/|$)/,
@@ -48,17 +48,13 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname.startsWith('/superadmin') && !hasRole('SUPER_ADMIN', 'ADMIN')) {
-    return NextResponse.redirect(new URL('/owner/dashboard', request.url));
-  }
-
   if (pathname.startsWith('/owner') && !hasRole('OWNER', 'SALON_OWNER', 'TENANT_ADMIN', 'STAFF', 'ADMIN', 'SUPER_ADMIN')) {
     return NextResponse.redirect(new URL('/account', request.url));
   }
 
   // Authenticated user trying to access login/register → redirect to dashboard
   if (isAuthRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+    return NextResponse.redirect(new URL('/account', request.url));
   }
 
   return NextResponse.next();

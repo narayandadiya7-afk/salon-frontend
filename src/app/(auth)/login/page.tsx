@@ -41,8 +41,7 @@ const LoginPage: React.FC = () => {
         const salonSlug = data?.user?.salon?.slug || data?.user?.tenant?.slug;
         notification.success(dataResponse?.description || 'Login successful!');
 
-        if (role === 'SUPER_ADMIN' || role === 'ADMIN') router.push('/admin/dashboard');
-        else if ((role === 'SALON_OWNER' || role === 'SALON_STAFF') && salonSlug) router.push(`/${salonSlug}/owner/dashboard`);
+        if ((role === 'SALON_OWNER' || role === 'SALON_STAFF') && salonSlug) router.push(`/${salonSlug}/owner/dashboard`);
         else if (role === 'SALON_OWNER' || role === 'SALON_STAFF') router.push('/owner/dashboard');
         else if (salonSlug) router.push(`/${salonSlug}`);
         else router.push('/account');
