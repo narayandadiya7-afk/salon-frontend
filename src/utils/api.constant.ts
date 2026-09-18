@@ -62,8 +62,6 @@ export const ApiVerifyPayment = 'payments/verify';
 export const ApiTestPaymentSuccess = 'payments/test-success';
 export const ApiPaymentHistory = 'payments/history';
 
-// ─── Admin ────────────────────────────────────────────────────────────────────
-export const ApiAdminSalons = 'admin/salons';
-export const ApiSuperAdminTenants = 'superadmin/tenants';
+// ─── Owner ────────────────────────────────────────────────────────────────────
 export const ApiTenantRoles = (salonId: string) => `owner/salons/${salonId}/roles`;
 export const ApiAssignRole = 'roles/assign';
