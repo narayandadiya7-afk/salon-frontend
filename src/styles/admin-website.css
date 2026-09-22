@@ -54,6 +54,12 @@
 
 html .avivane-site {
   --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
   --background: oklch(0.968 0.014 85);
   --foreground: oklch(0.245 0.012 62);
   --surface: oklch(0.99 0.007 88);
@@ -258,6 +264,11 @@ html .avivane-site {
    ──────────────────────────────────────────────────────────────────── */
 .avivane-site a { color: inherit; text-decoration: inherit; }
 
+/* Anchors without an explicit transition utility must NOT carry antd's
+   `transition: color 0.35s` (the reference has no such transition, so a
+   bare anchor's computed transition there is `all 0s`). */
+.avivane-site a:not([class*="transition"]) { transition: all 0s; }
+
 .avivane-site a.bg-primary,
 .avivane-site a.bg-primary\/10,
 .avivane-site a.bg-primary\/20,
@@ -266,13 +277,51 @@ html .avivane-site {
 
 .avivane-site a.bg-brass { background-color: var(--brass); }
 .avivane-site a.hover\:bg-brass-soft:hover { background-color: var(--brass-soft); }
-.avivane-site a.hover\:bg-primary-foreground:hover,
-.avivane-site a.hover\:bg-primary-foreground\/10:hover { background-color: var(--primary-foreground); }
+.avivane-site a.hover\:bg-primary-foreground:hover { background-color: var(--primary-foreground); }
+.avivane-site a.hover\:bg-primary-foreground\/10:hover {
+  background-color: color-mix(in oklab, var(--primary-foreground) 10%, transparent);
+}
 .avivane-site a.hover\:bg-primary:hover { background-color: var(--primary); }
 .avivane-site a.hover\:bg-surface:hover { background-color: var(--surface); }
+.avivane-site a.hover\:bg-background:hover { background-color: var(--background); }
 .avivane-site a.hover\:bg-muted\/50:hover {
   background-color: color-mix(in oklab, var(--muted) 50%, transparent);
 }
+
+/* Antd's unlayered `a { transition: color var(--ant-motion-duration-slow) }`
+   beats Tailwind's layered transition utilities, collapsing the hover
+   animations (lift, shadow, tint) into an instant color-only change.
+   Re-declare the utilities unlayered + scoped, as above. */
+.avivane-site a.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.avivane-site a.transition-colors {
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.avivane-site a.transition-transform {
+  transition-property: transform, translate, scale, rotate;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.avivane-site a.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.avivane-site a.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.avivane-site a.duration-100 { transition-duration: 100ms; }
+.avivane-site a.duration-150 { transition-duration: 150ms; }
+.avivane-site a.duration-200 { transition-duration: 200ms; }
+.avivane-site a.duration-300 { transition-duration: 300ms; }
+.avivane-site a.duration-500 { transition-duration: 500ms; }
 
 .avivane-site a.text-muted-foreground,
 .avivane-site a.text-muted-foreground\/30,
@@ -292,6 +341,7 @@ html .avivane-site {
 .avivane-site a.hover\:text-foreground:hover { color: var(--foreground); }
 .avivane-site a.text-brass { color: var(--brass); }
 .avivane-site a.hover\:text-brass:hover { color: var(--brass); }
+.avivane-site a.hover\:text-brass-soft:hover { color: var(--brass-soft); }
 .avivane-site a.text-brass-soft { color: var(--brass-soft); }
 .avivane-site a.text-primary { color: var(--primary); }
 .avivane-site a.text-accent-foreground { color: var(--accent-foreground); }
