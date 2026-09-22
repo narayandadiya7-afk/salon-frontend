@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const nav = [
@@ -12,13 +13,19 @@ const nav = [
   { to: "/about", label: "About" },
 ] as const;
 
+function isActive(pathname: string, to: string) {
+  if (to === "/") return pathname === "/";
+  return pathname === to || pathname.startsWith(`${to}/`);
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-background/92 shadow-card backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-        <Link href="/" className="flex items-baseline gap-3">
+        <Link href="/" className={"flex items-baseline gap-3" + (isActive(pathname, "/") ? " active" : "")}>
           <span className="font-display text-3xl font-semibold tracking-tight">Avivane</span>
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
             salon platform
@@ -30,7 +37,7 @@ export function SiteHeader() {
             <Link
               key={item.to}
               href={item.to}
-              className="transition-colors hover:text-foreground"
+              className={"transition-colors hover:text-foreground" + (isActive(pathname, item.to) ? " text-foreground" : "")}
             >
               {item.label}
             </Link>
@@ -40,13 +47,13 @@ export function SiteHeader() {
         <div className="flex items-center gap-4">
           <Link
             href="/login"
-            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            className={"hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline" + (isActive(pathname, "/login") ? " active" : "")}
           >
             Log in
           </Link>
           <Link
             href="/register"
-            className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex"
+            className={"hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex" + (isActive(pathname, "/register") ? " active" : "")}
           >
             Get Your Salon Website
           </Link>

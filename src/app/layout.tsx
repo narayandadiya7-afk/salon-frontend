@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Fraunces, Jost, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
+import '@/styles/admin-website.css';
 import AppProviders from '../providers/AppProviders';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-cormorant',
   display: 'swap',
