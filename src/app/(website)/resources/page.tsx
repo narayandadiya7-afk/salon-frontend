@@ -3,9 +3,9 @@ import Link from "next/link";
 import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
 import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
 
-const TITLE = "Resources — Guides & Help for Salon Owners | Avivane";
+const TITLE = "Resources — Guides & Help for Beauty & Wellness Business Owners | Fyncho";
 const DESCRIPTION =
-  "Guides, articles and help centre resources on launching a salon website, filling your calendar and growing retention.";
+  "Guides, articles and help centre resources on launching a business website, filling your calendar and growing client retention — for salons, spas, barbershops and more.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -18,9 +18,9 @@ const groups = [
   {
     title: "Guides",
     items: [
-      "Naming your salon slug well",
+      "Naming your business slug well",
       "Writing a service menu that sells",
-      "Photographing your salon on a phone",
+      "Photographing your studio on a phone",
     ],
   },
   {
@@ -42,10 +42,10 @@ export default function ResourcesPage() {
     <SiteShell>
       <PageHero
         eyebrow="Resources"
-        title={<>Everything we know about filling a salon calendar.</>}
-        intro="Practical writing for owners — short, specific and free of platform jargon."
+        title={<>Everything we know about filling a booking calendar.</>}
+        intro="Practical writing for owners — short, specific and free of platform jargon. Useful for salons, barbershops, spas, wellness centres and independent professionals alike."
         image="/assets/admin-website/avivane-banner-business.jpg"
-        imageAlt="Professional salon tools and business notebook"
+        imageAlt="Professional beauty tools and business notebook"
       />
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
@@ -79,35 +79,61 @@ export default function ResourcesPage() {
             href="/register"
             className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
           >
-            Get Your Salon Website
+            Get Started Free
           </Link>
         </div>
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
-          <SectionHeading eyebrow="Start with the essentials" title="A practical library for building a salon clients can understand and trust." description="Use these topics to sharpen your offer, improve the booking journey and make each client touchpoint more consistent." />
+          <SectionHeading
+            eyebrow="Start with the essentials"
+            title="A practical library for building a business clients can understand and trust."
+            description="Use these topics to sharpen your offer, improve the booking journey and make each client touchpoint more consistent."
+          />
           <div className="mt-12 divide-y divide-line border-y border-line">
             {[
-              ["01", "Build your digital home", "Choose a memorable address, define your salon story, select useful imagery and organise information around the questions new clients ask first."],
+              ["01", "Build your digital home", "Choose a memorable address, define your business story, select useful imagery and organise information around the questions new clients ask first."],
               ["02", "Design a service menu", "Name services clearly, explain who they are for, set realistic durations and show pricing without making clients decode the details."],
               ["03", "Create better booking rules", "Balance client flexibility with deposits, cancellation windows, processing time and the real capacity of your team and space."],
               ["04", "Encourage the next visit", "Use rebooking, memberships, loyalty and thoughtful communication to turn a successful appointment into a lasting relationship."],
-            ].map(([number, title, copy]) => <article key={number} className="grid gap-4 py-8 sm:grid-cols-12"><span className="font-mono text-xs text-brass sm:col-span-1">{number}</span><h3 className="text-2xl sm:col-span-4">{title}</h3><p className="leading-relaxed text-muted-foreground sm:col-span-7">{copy}</p></article>)}
+            ].map(([number, title, copy]) => (
+              <article key={number} className="grid gap-4 py-8 sm:grid-cols-12">
+                <span className="font-mono text-xs text-brass sm:col-span-1">{number}</span>
+                <h3 className="text-2xl sm:col-span-4">{title}</h3>
+                <p className="leading-relaxed text-muted-foreground sm:col-span-7">{copy}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
-          <SectionHeading eyebrow="For owners and teams" title="Useful guidance should lead to a better working day." description="The library is organised around real moments in salon life: preparing to launch, training the front desk, refining policies, reading reports and planning growth." />
+          <SectionHeading
+            eyebrow="For owners and teams"
+            title="Useful guidance should lead to a better working day."
+            description="The library is organised around real moments in business life: preparing to launch, training the front desk, refining policies, reading reports and planning growth."
+          />
           <div className="grid gap-4 sm:grid-cols-2">
-            {["Launching", "Operating", "Retaining", "Growing"].map((item, index) => <div key={item} className="card-lux p-7"><span className="numeral">0{index + 1}</span><h3 className="mt-4 text-2xl">{item}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Focused advice, examples and checklists for this stage of the salon journey.</p></div>)}
+            {["Launching", "Operating", "Retaining", "Growing"].map((item, index) => (
+              <div key={item} className="card-lux p-7">
+                <span className="numeral">0{index + 1}</span>
+                <h3 className="mt-4 text-2xl">{item}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Focused advice, examples and checklists for this stage of the business journey.
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <ClosingCta title="Put the guidance into practice with your own salon website." description="Create your address, bring your business details together and turn what you know into a clearer client experience." secondary={{ label: "How It Works", to: "/how-it-works" }} />
+      <ClosingCta
+        title="Put the guidance into practice with your own business website."
+        description="Create your address, bring your business details together and turn what you know into a clearer client experience."
+        secondary={{ label: "How It Works", to: "/how-it-works" }}
+      />
     </SiteShell>
   );
 }

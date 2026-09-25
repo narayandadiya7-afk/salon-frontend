@@ -40,10 +40,10 @@ export function PageHero({
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-10 pb-10 pt-12 sm:px-14 sm:pb-14 lg:px-16">
         <div className="anim-rise flex items-center justify-between border-b border-primary-foreground/20 pb-5">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/70">
-            Avivane <span className="mx-2 text-brass">/</span> {eyebrow}
+            Fyncho <span className="mx-2 text-brass">/</span> {eyebrow}
           </p>
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/50 sm:block">
-            Salon platform
+            Beauty &amp; Wellness Platform
           </p>
         </div>
 
@@ -55,7 +55,7 @@ export function PageHero({
             </h1>
           </div>
           <div className="anim-rise-3 border-l border-brass/70 pl-5 lg:col-span-4 lg:mb-2 lg:pl-7">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brass">Designed for ownership</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brass">Built for your business</p>
             <p className="mt-4 max-w-[42ch] text-sm leading-relaxed text-pretty text-primary-foreground/90 sm:text-base">
               {intro}
             </p>
@@ -66,7 +66,7 @@ export function PageHero({
           <dl className="hidden grid-cols-3 gap-8 sm:grid">
             <div>
               <dt className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-foreground/45">Presence</dt>
-              <dd className="mt-2 text-xs text-primary-foreground/80">Your salon. Your address.</dd>
+              <dd className="mt-2 text-xs text-primary-foreground/80">Your business. Your address.</dd>
             </div>
             <div>
               <dt className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-foreground/45">Experience</dt>

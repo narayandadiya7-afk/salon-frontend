@@ -13,6 +13,51 @@ const nav = [
   { to: "/about", label: "About" },
 ] as const;
 
+const solutionsGroups = [
+  {
+    title: "Beauty",
+    links: [
+      { label: "Hair Salons", to: "/solutions/hair-salon" },
+      { label: "Beauty Salons", to: "/solutions/beauty-salon" },
+      { label: "Nail Salons", to: "/solutions/nail-salon" },
+      { label: "Makeup Artists", to: "/solutions/makeup-artist" },
+      { label: "Lash & Brow", to: "/solutions/lash-brow" },
+      { label: "Bridal", to: "/solutions/bridal" },
+    ],
+  },
+  {
+    title: "Grooming",
+    links: [
+      { label: "Barbershops", to: "/solutions/barbershop" },
+      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
+    ],
+  },
+  {
+    title: "Wellness",
+    links: [
+      { label: "Spa", to: "/solutions/spa" },
+      { label: "Massage Therapy", to: "/solutions/massage-therapy" },
+      { label: "Wellness Centers", to: "/solutions/wellness" },
+      { label: "Yoga & Pilates", to: "/solutions/yoga-pilates" },
+    ],
+  },
+  {
+    title: "Aesthetics",
+    links: [
+      { label: "Skin Care", to: "/solutions/skincare" },
+      { label: "Aesthetic Clinics", to: "/solutions/aesthetic-clinic" },
+      { label: "Med-Spa", to: "/solutions/med-spa" },
+    ],
+  },
+  {
+    title: "Professionals",
+    links: [
+      { label: "Freelancers", to: "/solutions/freelancers" },
+      { label: "Home-Service", to: "/solutions/home-services" },
+    ],
+  },
+] as const;
+
 function isActive(pathname: string, to: string) {
   if (to === "/") return pathname === "/";
   return pathname === to || pathname.startsWith(`${to}/`);
@@ -20,28 +65,81 @@ function isActive(pathname: string, to: string) {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-background/92 shadow-card backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
         <Link href="/" className={"flex items-baseline gap-3" + (isActive(pathname, "/") ? " active" : "")}>
-          <span className="font-display text-3xl font-semibold tracking-tight">Avivane</span>
+          <span className="font-display text-3xl font-semibold tracking-tight">Fyncho</span>
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
-            salon platform
+            beauty &amp; wellness
           </span>
         </Link>
 
         <nav className="hidden items-center gap-7 text-sm text-muted-foreground lg:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.to}
-              href={item.to}
-              className={"transition-colors hover:text-foreground" + (isActive(pathname, item.to) ? " text-foreground" : "")}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {nav.map((item) =>
+            item.to === "/solutions" ? (
+              <div
+                key={item.to}
+                className="relative"
+                onMouseEnter={() => setSolutionsOpen(true)}
+                onMouseLeave={() => setSolutionsOpen(false)}
+              >
+                <Link
+                  href={item.to}
+                  className={"transition-colors hover:text-foreground" + (isActive(pathname, item.to) ? " text-foreground" : "")}
+                >
+                  {item.label}
+                </Link>
+
+                {solutionsOpen && (
+                  <div className="absolute left-1/2 top-full z-50 mt-3 w-[580px] -translate-x-1/2 rounded-2xl border border-line bg-background p-6 shadow-lift">
+                    <div className="grid grid-cols-3 gap-6">
+                      {solutionsGroups.map((group) => (
+                        <div key={group.title}>
+                          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-brass">
+                            {group.title}
+                          </p>
+                          <ul className="space-y-1.5">
+                            {group.links.map((link) => (
+                              <li key={link.to}>
+                                <Link
+                                  href={link.to}
+                                  className="block text-xs text-muted-foreground transition-colors hover:text-foreground"
+                                  onClick={() => setSolutionsOpen(false)}
+                                >
+                                  {link.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-5 border-t border-line pt-4">
+                      <Link
+                        href="/solutions"
+                        className="font-mono text-[10px] uppercase tracking-[0.18em] text-brass-soft transition-colors hover:text-brass"
+                        onClick={() => setSolutionsOpen(false)}
+                      >
+                        View all solutions →
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={item.to}
+                href={item.to}
+                className={"transition-colors hover:text-foreground" + (isActive(pathname, item.to) ? " text-foreground" : "")}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -55,7 +153,7 @@ export function SiteHeader() {
             href="/register"
             className={"hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex" + (isActive(pathname, "/register") ? " active" : "")}
           >
-            Get Your Salon Website
+            Get Started Free
           </Link>
           <button
             type="button"

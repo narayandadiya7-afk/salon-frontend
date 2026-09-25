@@ -10,12 +10,25 @@ const columns = [
     ],
   },
   {
-    title: "Solutions",
+    title: "Beauty & Grooming",
     links: [
-      { label: "Salon", to: "/solutions" },
-      { label: "Spa", to: "/solutions" },
-      { label: "Barbershop", to: "/solutions" },
-      { label: "Beauty clinic", to: "/solutions" },
+      { label: "Hair Salons", to: "/solutions/hair-salon" },
+      { label: "Beauty Salons", to: "/solutions/beauty-salon" },
+      { label: "Nail Salons", to: "/solutions/nail-salon" },
+      { label: "Barbershops", to: "/solutions/barbershop" },
+      { label: "Makeup Artists", to: "/solutions/makeup-artist" },
+      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
+    ],
+  },
+  {
+    title: "Wellness & Aesthetics",
+    links: [
+      { label: "Spa", to: "/solutions/spa" },
+      { label: "Massage Therapy", to: "/solutions/massage-therapy" },
+      { label: "Skin Care", to: "/solutions/skincare" },
+      { label: "Wellness Centers", to: "/solutions/wellness" },
+      { label: "Lash & Brow", to: "/solutions/lash-brow" },
+      { label: "All Solutions", to: "/solutions" },
     ],
   },
   {
@@ -40,11 +53,11 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line">
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
-            <span className="font-display text-2xl font-semibold tracking-tight">Avivane</span>
+            <span className="font-display text-2xl font-semibold tracking-tight">Fyncho</span>
             <p className="mt-2 max-w-[30ch] font-mono text-xs leading-relaxed text-muted-foreground">
-              The platform for modern salons. Your salon, its own door on the avenue.
+              Business management and booking software for beauty, wellness, grooming, and personal-care businesses.
             </p>
           </div>
           {columns.map((col) => (
@@ -67,7 +80,7 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Avivane · Privacy · Terms · Cookie Policy
+            © {new Date().getFullYear()} Fyncho · Privacy · Terms · Cookie Policy
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-muted-foreground">
             <span>Instagram</span>

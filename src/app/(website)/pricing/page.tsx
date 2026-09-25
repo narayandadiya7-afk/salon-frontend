@@ -8,12 +8,12 @@ import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/mar
 const plans = [
   {
     name: "Starter",
-    blurb: "For independent stylists",
+    blurb: "For independent professionals",
     monthly: 29,
     yearly: 24,
     features: [
-      "Your own salon website",
-      "Unique salon URL",
+      "Your own business website",
+      "Unique business URL",
       "Online booking",
       "Up to 2 staff",
       "Customer management",
@@ -24,7 +24,7 @@ const plans = [
   },
   {
     name: "Professional",
-    blurb: "For growing salons",
+    blurb: "For growing businesses",
     monthly: 79,
     yearly: 63,
     features: [
@@ -35,7 +35,7 @@ const plans = [
       "Analytics & reports",
       "Priority email support",
     ],
-    cta: "Get Your Salon Website",
+    cta: "Get Started Free",
     featured: true,
   },
   {
@@ -56,7 +56,7 @@ const plans = [
   },
   {
     name: "Enterprise",
-    blurb: "For salon groups & franchises",
+    blurb: "For groups & franchises",
     monthly: 0,
     yearly: 0,
     features: [
@@ -79,10 +79,10 @@ export default function PricingPage() {
     <SiteShell>
       <PageHero
         eyebrow="Pricing"
-        title={<>A plan for every salon.</>}
-        intro="Every plan includes your own salon website, your unique URL and unlimited online bookings. Change or cancel any time."
+        title={<>A plan for every business.</>}
+        intro="Every plan includes your own website, your unique URL and unlimited online bookings. Works for salons, barbershops, spas, wellness centres and independent professionals. Change or cancel any time."
         image="/assets/admin-website/avivane-banner-interior.jpg"
-        imageAlt="Elegant modern salon interior with brass details"
+        imageAlt="Elegant modern beauty studio interior with brass details"
       />
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
@@ -179,28 +179,45 @@ export default function PricingPage() {
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
-          <SectionHeading eyebrow="Included from day one" title="The essentials are not reserved for the most expensive plan." description="Every Avivane salon begins with a professional website, a direct booking journey and the operational foundation needed to serve clients well." />
+          <SectionHeading
+            eyebrow="Included from day one"
+            title="The essentials are not reserved for the most expensive plan."
+            description="Every Fyncho business begins with a professional website, a direct booking journey and the operational foundation needed to serve clients well."
+          />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              ["Your digital home", "A responsive salon website and a memorable Avivane address."],
+              ["Your digital home", "A responsive website and a memorable Fyncho address."],
               ["Unlimited bookings", "No per-booking platform fee and no marketplace commission."],
               ["Client records", "Visit history and preferences stay connected to appointments."],
               ["Guided setup", "A clear path from account creation to a complete live website."],
-            ].map(([title, copy], i) => <div key={title} className="card-lux bg-background p-7"><span className="numeral">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{copy}</p></div>)}
+            ].map(([title, copy], i) => (
+              <div key={title} className="card-lux bg-background p-7">
+                <span className="numeral">0{i + 1}</span>
+                <h3 className="mt-4 text-2xl">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4"><SectionHeading eyebrow="Choose with confidence" title="Match the plan to the way you operate today." /></div>
+          <div className="lg:col-span-4">
+            <SectionHeading eyebrow="Choose with confidence" title="Match the plan to the way you operate today." />
+          </div>
           <div className="divide-y divide-line border-y border-line lg:col-span-8">
             {[
               ["Starter", "Choose this when one or two professionals need a polished website and dependable online booking."],
               ["Professional", "Choose this when payments, memberships, reporting and a custom domain matter to growth."],
               ["Business", "Choose this when several teams or locations need shared control and a wider performance view."],
               ["Enterprise", "Choose this when rollout, governance, integrations and service commitments need to be tailored."],
-            ].map(([name, copy]) => <div key={name} className="grid gap-3 py-6 sm:grid-cols-3"><h3 className="text-2xl">{name}</h3><p className="sm:col-span-2 leading-relaxed text-muted-foreground">{copy}</p></div>)}
+            ].map(([name, copy]) => (
+              <div key={name} className="grid gap-3 py-6 sm:grid-cols-3">
+                <h3 className="text-2xl">{name}</h3>
+                <p className="sm:col-span-2 leading-relaxed text-muted-foreground">{copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -210,16 +227,29 @@ export default function PricingPage() {
           <SectionHeading eyebrow="Pricing questions" title="Straight answers before you decide." />
           <div className="mt-8 divide-y divide-line border-y border-line">
             {[
-              ["Can I change plans later?", "Yes. Move up or down as your team and operating needs change. Your salon website remains available throughout."],
+              ["Can I change plans later?", "Yes. Move up or down as your team and operating needs change. Your website remains available throughout."],
               ["Is online booking usage limited?", "No. Every plan includes unlimited online bookings without a per-booking platform fee."],
-              ["Can I use my own domain?", "Custom domains are included from the Professional plan. Your Avivane address continues to work as well."],
+              ["Can I use my own domain?", "Custom domains are included from the Professional plan. Your Fyncho address continues to work as well."],
               ["What does yearly billing mean?", "The discounted monthly equivalent is billed for the full year, giving you a 20% saving compared with monthly billing."],
-            ].map(([question, answer]) => <details key={question} className="group py-6"><summary className="flex cursor-pointer list-none justify-between gap-6 font-display text-2xl transition-colors duration-300 group-hover:text-brass-soft">{question}<span className="font-mono text-brass transition-transform duration-300 group-open:rotate-45">+</span></summary><p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">{answer}</p></details>)}
+              ["Does it work for my type of business?", "Fyncho supports hair salons, barbershops, spas, nail studios, makeup artists, massage therapists, wellness centres, aesthetic clinics and independent professionals. See the Solutions page for details."],
+            ].map(([question, answer]) => (
+              <details key={question} className="group py-6">
+                <summary className="flex cursor-pointer list-none justify-between gap-6 font-display text-2xl transition-colors duration-300 group-hover:text-brass-soft">
+                  {question}
+                  <span className="font-mono text-brass transition-transform duration-300 group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">{answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
-      <ClosingCta title="Every plan ends the same way: your salon, online." description="Start with the plan that fits today, then grow without rebuilding your website or client experience." secondary={{ label: "Explore Features", to: "/features" }} />
+      <ClosingCta
+        title="Every plan ends the same way: your business, online."
+        description="Start with the plan that fits today, then grow without rebuilding your website or client experience."
+        secondary={{ label: "Explore Features", to: "/features" }}
+      />
     </SiteShell>
   );
 }

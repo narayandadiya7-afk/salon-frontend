@@ -66,7 +66,7 @@ export function ClosingCta({
     <section className="closing-glow relative isolate overflow-hidden bg-primary py-24 sm:py-32">
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <span className="rule-brass mx-auto mb-6" />
-        <p className="eyebrow">Your salon, ready for what is next</p>
+        <p className="eyebrow">Your business, ready for what is next</p>
         <h2 className="mt-5 font-display text-5xl leading-[0.98] text-balance text-primary-foreground sm:text-6xl">
           {title}
         </h2>
@@ -78,7 +78,7 @@ export function ClosingCta({
             href="/register"
             className="rounded-full bg-brass px-8 py-4 text-sm font-semibold text-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary-foreground"
           >
-            Get Your Salon Website
+            Get Started Free
           </Link>
           {secondary && (
             <Link

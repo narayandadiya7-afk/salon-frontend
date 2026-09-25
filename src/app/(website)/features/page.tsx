@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
 import { ClosingCta, MetricBand, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
 
-const TITLE = "Features — One Platform for Your Whole Salon | Avivane";
+const TITLE = "Features — Business Management & Booking Software | Fyncho";
 const DESCRIPTION =
-  "Salon website, online booking, customers, staff, services, payments, memberships, loyalty, analytics and marketing — all in one salon platform.";
+  "Online booking, customer management, staff scheduling, payments, memberships, loyalty, analytics and marketing — everything beauty and wellness businesses need in one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -14,17 +14,17 @@ export const metadata: Metadata = {
 };
 
 const features = [
-  { t: "Salon Website", d: "A branded, responsive website at your own URL, with services, team and gallery." },
-  { t: "Online Booking", d: "Customers pick a service, a stylist and a time — around the clock." },
+  { t: "Business Software", d: "A branded, powerful software at your own URL, with services, team and gallery." },
+  { t: "Online Booking", d: "Customers pick a service, a professional and a time — around the clock." },
   { t: "Customer Management", d: "Profiles, visit history, notes and preferences in one tidy record." },
-  { t: "Staff Management", d: "Rosters, working hours, availability and per-stylist performance." },
+  { t: "Staff Management", d: "Rosters, working hours, availability and per-professional performance." },
   { t: "Services", d: "Menus, durations, pricing tiers and add-ons for every treatment you offer." },
   { t: "Appointments", d: "A calendar built for the floor — reschedules, no-shows and walk-ins." },
-  { t: "Payments", d: "Deposits, card payments and tipping handled at checkout." },
+  { t: "Payments", d: "Secure online payments that make it easy for customers to pay and businesses to manage transactions." },
   { t: "Memberships", d: "Recurring plans that turn occasional visitors into monthly regulars." },
-  { t: "Loyalty", d: "Points, rewards and referral perks that bring clients back." },
+  { t: "Loyalty", d: "Points, rewards and referral perks that bring customers back." },
   { t: "Analytics", d: "Revenue, retention and utilisation, read at a glance." },
-  { t: "Marketing", d: "Campaigns, reminders and win-back messages sent from your salon." },
+  { t: "Marketing", d: "Campaigns, reminders and win-back messages sent from your business." },
   { t: "Reports", d: "Exportable reporting across staff, services and locations." },
 ];
 
@@ -32,26 +32,26 @@ const chapters = [
   {
     number: "01",
     eyebrow: "Attract and convert",
-    title: "A website that makes your salon look as considered as the work you do.",
+    title: "A software that makes your business look as considered as the work you do.",
     description:
-      "Your Avivane website brings your services, team, portfolio, policies and booking journey into one branded destination. It gives new clients the confidence to choose you and existing clients the shortest route back to your chair.",
-    points: ["Unique salon URL", "Responsive page system", "Service and team profiles", "Gallery and contact details"],
+      "Your Fyncho software brings your services, team, portfolio, policies and booking journey into one branded destination. It gives new customers the confidence to choose you and existing customers the shortest route back to your chair.",
+    points: ["Unique business URL", "Professional business presence", "Service and team profiles", "Gallery and contact details"],
   },
   {
     number: "02",
     eyebrow: "Book with confidence",
     title: "Availability, deposits and reminders work together behind every booking.",
     description:
-      "Clients see only the services and times they can actually book. Duration, staff eligibility, preparation time and working hours are resolved before a slot appears, while confirmations keep everyone aligned.",
-    points: ["Real-time availability", "Stylist and resource rules", "Deposits and cancellation terms", "Automatic confirmations"],
+      "Customers see only the services and times they can actually book. Duration, staff eligibility, preparation time and working hours are resolved before a slot appears, while confirmations keep everyone aligned.",
+    points: ["Real-time availability", "Staff and resource rules", "Deposits and cancellation terms", "Automatic confirmations"],
   },
   {
     number: "03",
-    eyebrow: "Know every client",
+    eyebrow: "Know every customer",
     title: "Turn appointment history into thoughtful, consistent service.",
     description:
-      "Keep preferences, notes, visit history, spend and membership status in one client record. Your team gets the useful context before the appointment without searching through messages or separate systems.",
-    points: ["Client profiles and notes", "Visit and purchase history", "Membership and loyalty status", "Consent-aware communications"],
+      "Keep preferences, notes, visit history, spend and membership status in one customer record. Your team gets the useful context before the appointment without searching through messages or separate systems.",
+    points: ["Customer profiles and notes", "Visit and purchase history", "Membership and loyalty status", "Consent-aware communications"],
   },
 ];
 
@@ -60,10 +60,10 @@ export default function FeaturesPage() {
     <SiteShell>
       <PageHero
         eyebrow="Platform features"
-        title={<>Everything unlocks the moment your salon goes live.</>}
-        intro="Avivane isn't a dozen separate apps. Create your salon once, and every capability below is part of the same platform, behind the same address."
+        title={<>Everything unlocks the moment your business goes live.</>}
+        intro="Fyncho isn't a dozen separate apps. Create your business once, and every capability below is part of the same platform, behind the same address."
         image="/assets/admin-website/avivane-banner-business.jpg"
-        imageAlt="Premium salon workspace with professional tools and appointment book"
+        imageAlt="Professional beauty workspace with tools and appointment book"
       />
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
@@ -82,13 +82,13 @@ export default function FeaturesPage() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
             eyebrow="Built as one system"
-            title="Each part understands the rest of your salon."
-            description="A booking updates the calendar, the client record and the business view at once. That shared foundation is what keeps Avivane simple as your team, menu and locations grow."
+            title="Each part understands the rest of your business."
+            description="A booking updates the calendar, the customer record and the business view at once. That shared foundation is what keeps Fyncho simple as your team, menu and locations grow."
           />
           <div className="mt-12">
             <MetricBand items={[
-              { value: "24/7", label: "Booking", detail: "Clients book while you focus on the floor." },
-              { value: "1", label: "Client record", detail: "History, notes and value in one place." },
+              { value: "24/7", label: "Booking", detail: "Customers book while you focus on the floor." },
+              { value: "1", label: "Customer record", detail: "History, notes and value in one place." },
               { value: "0", label: "Marketplace commission", detail: "Direct bookings stay direct." },
               { value: "100%", label: "Your identity", detail: "Your name leads every interaction." },
             ]} />
@@ -124,18 +124,18 @@ export default function FeaturesPage() {
       <section className="border-y border-line bg-surface py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-xl">
-            <p className="eyebrow">Salon management preview</p>
+            <p className="eyebrow">Business management preview</p>
             <h2 className="mt-3 text-4xl leading-tight text-balance sm:text-5xl">
               A dashboard that reads like your morning briefing.
             </h2>
             <p className="mt-4 text-pretty text-muted-foreground">
-              Appointments, revenue, customers, staff, services and analytics — the salon dashboard
-              opens the moment your salon is created.
+              Appointments, revenue, customers, staff, services and analytics — the dashboard opens
+              the moment your business is created.
             </p>
           </div>
           <img
             src="/assets/admin-website/dashboard-preview.jpg"
-            alt="Salon dashboard with appointments calendar and revenue chart"
+            alt="Business dashboard with appointments calendar and revenue chart"
             loading="lazy"
             width={1408}
             height={912}
@@ -147,9 +147,9 @@ export default function FeaturesPage() {
       <section className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:py-28">
         <img src="/assets/admin-website/mobile-booking.jpg" alt="Client booking journey on a mobile phone" loading="lazy" width={912} height={1104} className="aspect-4/5 w-full rounded-2xl object-cover" />
         <div>
-          <p className="eyebrow">The client side</p>
+          <p className="eyebrow">The customer side</p>
           <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">Fast enough for a repeat booking. Beautiful enough for a first impression.</h2>
-          <p className="mt-5 leading-relaxed text-pretty text-muted-foreground">Clients move from service discovery to confirmation without leaving your branded website. Returning clients can manage appointments and rebook with less friction.</p>
+          <p className="mt-5 leading-relaxed text-pretty text-muted-foreground">Customers move from service discovery to confirmation without leaving your branded software. Returning customers can manage appointments and rebook with less friction.</p>
           <dl className="mt-8 divide-y divide-line border-y border-line">
             {[["Discover", "Clear services, prices, durations and team expertise."], ["Decide", "Live availability and policies presented before checkout."], ["Return", "Accounts, appointment history and simple rebooking."]].map(([term, detail]) => (
               <div key={term} className="grid grid-cols-3 gap-4 py-5"><dt className="font-display text-xl">{term}</dt><dd className="col-span-2 text-sm leading-relaxed text-muted-foreground">{detail}</dd></div>
@@ -158,7 +158,11 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <ClosingCta title="Start with the website. Grow into the whole platform." description="Create your salon once, then manage every booking, client, service and decision from the same connected place." secondary={{ label: "View Pricing", to: "/pricing" }} />
+      <ClosingCta
+        title="Start with the software. Grow into the whole platform."
+        description="Create your business once, then manage every booking, customer, service and decision from the same connected place."
+        secondary={{ label: "View Pricing", to: "/pricing" }}
+      />
     </SiteShell>
   );
 }
