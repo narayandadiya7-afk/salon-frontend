@@ -204,13 +204,28 @@ export default function SolutionsPage() {
             description="Begin with the essentials, then introduce more staff, rooms, membership programmes or locations when the business is ready."
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            {["Independent", "Growing team", "Specialist studio", "Multi-location group"].map((item, index) => (
-              <div key={item} className="card-lux p-7">
+            {[
+              [
+                "Independent",
+                "Everything you need to run your business, manage customers, and stay in control.",
+              ],
+              [
+                "Growing Team",
+                "Bring your team, appointments, services, and customers together in one place.",
+              ],
+              [
+                "Specialist Studio",
+                "Showcase your expertise, manage bookings, and build lasting customer relationships.",
+              ],
+              [
+                "Multi-Location Group",
+                "Manage multiple locations, teams, and day-to-day operations from one platform.",
+              ],
+            ].map(([title, copy], index) => (
+              <div key={title} className="card-lux p-7">
                 <span className="numeral">0{index + 1}</span>
-                <h3 className="mt-4 text-2xl">{item}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  One identity, clear controls and the right level of operational visibility.
-                </p>
+                <h3 className="mt-4 text-2xl">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{copy}</p>
               </div>
             ))}
           </div>
