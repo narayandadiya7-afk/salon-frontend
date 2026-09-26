@@ -11,6 +11,7 @@ const nav = [
   { to: "/how-it-works", label: "How it works" },
   { to: "/customers", label: "Stories" },
   { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" },
 ] as const;
 
 const solutionsGroups = [

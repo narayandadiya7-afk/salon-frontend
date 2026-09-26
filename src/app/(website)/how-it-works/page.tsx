@@ -42,8 +42,8 @@ export default function HowItWorksPage() {
     <SiteShell>
       <PageHero
         eyebrow="How it works"
-        title={<>Four steps between here and your own business website.</>}
-        intro="No developers, no migration project, no waiting on an agency. You leave this page with a live address and a dashboard behind it."
+        title={<>Four steps between here and your own business software.</>}
+        intro="Get started quickly and have everything you need to run your business from day one — your own business software, business address, and management tools, all in one place."
         image="/assets/admin-website/avivane-banner-business.jpg"
         imageAlt="Beauty and wellness business workspace prepared for a new day"
       />
