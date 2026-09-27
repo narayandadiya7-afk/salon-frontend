@@ -23,7 +23,7 @@ const steps = [
   {
     n: "02",
     t: "Choose your URL",
-    d: "Pick a unique slug. Glam Studio becomes fyncho.com/glam-studio — checked for availability as you type.",
+    d: "Choose a unique name for your business and get your own easy-to-remember address, such as fyncho.com/glam-studio — with availability checked as you choose.",
   },
   {
     n: "03",
@@ -33,7 +33,7 @@ const steps = [
   {
     n: "04",
     t: "Go live",
-    d: "Share your website with customers and start taking bookings the same day.",
+    d: "Share your software with customers and start taking bookings the same day.",
   },
 ];
 
