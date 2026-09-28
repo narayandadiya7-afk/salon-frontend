@@ -68,7 +68,7 @@ export default function HowItWorksPage() {
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="What you prepare"
-          title="A polished launch starts with the details clients already ask for."
+          title="A polished launch starts with the details customers already ask for."
           description="Bring your service menu, team information, opening hours and a few strong images. Fyncho turns those essentials into a structured business presence."
         />
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -76,7 +76,7 @@ export default function HowItWorksPage() {
             ["Your identity", "Business name, logo, colours and a short introduction."],
             ["Your services", "Prices, durations, categories and booking rules."],
             ["Your team", "Profiles, skills, working hours and availability."],
-            ["Your policies", "Deposits, cancellations and client information."],
+            ["Your policies", "Deposits, cancellations and customer information."],
           ].map(([title, copy], i) => (
             <div key={title} className="card-lux p-7">
               <span className="numeral">0{i + 1}</span>
@@ -94,7 +94,7 @@ export default function HowItWorksPage() {
             Your business ecosystem takes over.
           </h2>
           <p className="mx-auto mt-4 max-w-[52ch] text-pretty text-muted-foreground">
-            Your public website, your business dashboard and your customer portal all live at
+            Your public software, your business dashboard and your customer portal all live at
             your address from day one.
           </p>
           <Link
@@ -111,14 +111,14 @@ export default function HowItWorksPage() {
           <div className="lg:col-span-5">
             <SectionHeading
               eyebrow="After launch"
-              title="Your address becomes the front door to the whole client relationship."
+              title="Your address becomes the front door to the whole customer relationship."
             />
           </div>
           <div className="divide-y divide-line border-y border-line lg:col-span-7">
             {[
               ["Be discovered", "Share one memorable address across search, social profiles, messages and printed material."],
-              ["Take bookings", "Let clients choose the right service, professional and time without waiting for a reply."],
-              ["Build loyalty", "Use client history, memberships and thoughtful follow-up to encourage the next visit."],
+              ["Take bookings", "Let customers choose the right service, professional and time without waiting for a reply."],
+              ["Build loyalty", "Use customer history, memberships and thoughtful follow-up to encourage the next visit."],
               ["Understand growth", "Read revenue, retention, utilisation and service performance from the same system."],
             ].map(([title, copy]) => (
               <div key={title} className="grid gap-3 py-6 sm:grid-cols-3">
@@ -132,7 +132,7 @@ export default function HowItWorksPage() {
 
       <ClosingCta
         title="Your business can be live before the day is over."
-        description="Create your account, claim your address and build a professional destination for every new and returning client."
+        description="Create your account, claim your address and build a professional destination for every new and returning customer."
         secondary={{ label: "View Pricing", to: "/pricing" }}
       />
     </SiteShell>

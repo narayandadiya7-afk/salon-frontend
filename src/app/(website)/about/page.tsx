@@ -59,14 +59,10 @@ export default function AboutPage() {
       <section className="mx-auto max-w-3xl px-6 py-20">
         <h2 className="text-4xl text-balance sm:text-5xl">What we build toward</h2>
         <p className="mt-6 text-lg leading-relaxed text-pretty text-muted-foreground">
-          One platform, many businesses — each with its own identity, its own clients and its own URL.
-          Whether you run a hair salon, a barbershop, a spa, a nail studio, a massage practice or
-          a wellness centre, Fyncho keeps the platform out of the way so the brand your customers
-          remember is yours.
+          One platform, many businesses — each with its own identity, its own customers, and its own place online. Whether you run a salon, barbershop, spa, nail studio, massage practice, wellness business, clinic, studio, or another service-based business, Fyncho gives you the tools to manage your business while keeping your brand at the center.
         </p>
         <p className="mt-4 text-lg leading-relaxed text-pretty text-muted-foreground">
-          Fyncho is built by a distributed team across Europe, working with beauty and wellness
-          businesses in 25 countries. If you want to talk to us, we answer.
+          We’re building Fyncho to make running a service business simpler — from bookings and customers to payments, memberships, loyalty, teams, and day-to-day operations.
         </p>
         <Link
           href="/register"
@@ -81,11 +77,11 @@ export default function AboutPage() {
           <SectionHeading
             eyebrow="Our point of view"
             title="The platform should be recognised by what it enables — not by how much space it occupies."
-            description="Business owners invest years in a name, reputation and client experience. The technology beneath it should reinforce that identity rather than replace it."
+            description="Business owners invest years in a name, reputation and customer experience. The technology beneath it should reinforce that identity rather than replace it."
           />
           <div className="mt-12 grid gap-10 lg:grid-cols-3">
             {[
-              ["Ownership", "Your website, audience and client relationships should remain centred on your business brand."],
+              ["Ownership", "Your software, audience and customer relationships should remain centred on your business brand."],
               ["Clarity", "Powerful operations should feel understandable to the people running a busy floor."],
               ["Hospitality", "Every digital interaction should carry the same care as the welcome at reception."],
             ].map(([title, copy], i) => (
@@ -108,7 +104,7 @@ export default function AboutPage() {
           />
           <blockquote className="border-l border-brass pl-8">
             <p className="font-display text-3xl leading-snug text-balance sm:text-4xl">
-              "The best business software disappears into the experience. The client remembers the business, not the software."
+              "The best business software disappears into the experience. The customer remembers the business, not the software."
             </p>
             <footer className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
               The principle behind Fyncho

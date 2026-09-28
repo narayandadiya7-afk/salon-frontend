@@ -15,18 +15,18 @@ export const metadata: Metadata = {
 
 const stories = [
   {
-    business: "Glam Studio",
+    business: "Aura Hair & Beauty",
     type: "Hair salon · Lisbon",
     challenge: "Bookings lived in DMs and a paper diary.",
-    help: "A website at fyncho.com/glam-studio with 24/7 booking and automatic reminders.",
+    help: "A professional business software with 24/7 booking and automatic reminders.",
     result: "+38% online bookings in three months.",
   },
   {
     business: "Nordlys Spa",
     type: "Spa · Oslo",
     challenge: "Treatment packages were impossible to sell online.",
-    help: "Memberships and packages sold directly from the business website.",
-    result: "1 in 4 clients now on a monthly plan.",
+    help: "Memberships and packages sold directly from the business software.",
+    result: "1 in 4 customers now on a monthly plan.",
   },
   {
     business: "Baxter & Son",
@@ -52,9 +52,9 @@ const stories = [
   {
     business: "Priya Raman",
     type: "Freelance nail artist · London",
-    challenge: "No professional online presence — clients found her only through Instagram.",
-    help: "Her own website at fyncho.com/priya-nails with a portfolio, service menu and direct booking.",
-    result: "New clients up 45% in the first two months.",
+    challenge: "No professional online presence — customers found her only through Instagram.",
+    help: "Her own business software with everything customers need to explore her work, view services, and book directly.",
+    result: "New customers up 45% in the first two months.",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function CustomersPage() {
       <PageHero
         eyebrow="Customer stories"
         title={<>Businesses that gave themselves an address.</>}
-        intro="Every story starts the same way — a business claims its slug — and then diverges into whatever growth looks like for that operation."
+        intro="Every story starts the same way — a business claims its address — and then diverges into whatever growth looks like for that operation."
         image="/assets/admin-website/avivane-banner-craft.jpg"
         imageAlt="Beauty and wellness business owner creating a polished client experience"
       />
@@ -73,7 +73,7 @@ export default function CustomersPage() {
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
           <img
             src="/assets/admin-website/owner-portrait.jpg"
-            alt="Marielle Okonkwo, owner of Glam Studio"
+            alt="Marielle Okonkwo, owner of Aura Hair & Beauty"
             loading="lazy"
             width={912}
             height={1104}
@@ -81,11 +81,11 @@ export default function CustomersPage() {
           />
           <blockquote className="lg:col-span-8">
             <p className="font-display text-3xl leading-snug text-balance sm:text-4xl">
-              "Clients used to ask where to book. Now they just type our name. Having our own site
+              "Customers used to ask where to book. Now they just type our name. Having our own site
               changed how the salon is seen."
             </p>
             <footer className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Marielle Okonkwo · Owner, Glam Studio · Lisbon
+              Marielle Okonkwo · Owner, Aura Hair & Beauty · Lisbon
             </footer>
           </blockquote>
         </div>
@@ -130,10 +130,10 @@ export default function CustomersPage() {
         />
         <div className="mt-12">
           <MetricBand items={[
-            { value: "+38%", label: "Online bookings", detail: "Glam Studio after three months." },
-            { value: "25%", label: "Members", detail: "Nordlys Spa clients on a plan." },
+            { value: "+38%", label: "Online bookings", detail: "Aura Hair & Beauty after three months." },
+            { value: "25%", label: "Members", detail: "Nordlys Spa customers on a plan." },
             { value: "−61%", label: "No-shows", detail: "Baxter & Son with deposits." },
-            { value: "+45%", label: "New clients", detail: "Priya Raman, nail artist." },
+            { value: "+45%", label: "New customers", detail: "Priya Raman, nail artist." },
           ]} />
         </div>
       </section>
@@ -143,16 +143,16 @@ export default function CustomersPage() {
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHeading
-                eyebrow="Glam Studio, Lisbon"
+                eyebrow="Aura Hair & Beauty, Lisbon"
                 title="From messages and paper notes to a booking experience that feels like the brand."
                 description="Marielle wanted the salon to look established online without losing its independent personality. The team also needed fewer interruptions during appointments."
               />
             </div>
             <div className="divide-y divide-line border-y border-line lg:col-span-7">
               {[
-                ["Before", "Clients asked for prices and availability through social messages. Staff copied bookings into a paper diary."],
-                ["Launch", "Glam Studio claimed its address, published services and team profiles, and enabled direct online booking."],
-                ["After", "More clients booked independently, reminders reduced manual follow-up, and the salon finally had one authoritative destination."],
+                ["Before", "Customers asked for prices and availability through social messages. Staff copied bookings into a paper diary."],
+                ["Launch", "Aura Hair & Beauty claimed its address, published services and team profiles, and enabled direct online booking."],
+                ["After", "More customers booked independently, reminders reduced manual follow-up, and the salon finally had one authoritative destination."],
               ].map(([title, copy], index) => (
                 <div key={title} className="grid gap-4 py-7 sm:grid-cols-4">
                   <span className="font-mono text-xs text-brass">0{index + 1}</span>
@@ -171,9 +171,9 @@ export default function CustomersPage() {
         <SectionHeading eyebrow="Across every story" title="The outcomes began with a few practical changes." />
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            ["One trusted address", "Clients always know where to view accurate services, prices, policies and availability."],
+            ["One trusted address", "Customers always know where to view accurate services, prices, policies and availability."],
             ["Less front-desk friction", "Routine questions, confirmations and rebooking move into a clear self-service journey."],
-            ["Better business context", "Bookings, client behaviour and revenue contribute to one useful performance view."],
+            ["Better business context", "Bookings, customer behaviour and revenue contribute to one useful performance view."],
           ].map(([title, copy], index) => (
             <article key={title} className="border-t border-brass pt-6">
               <span className="font-mono text-xs text-brass">0{index + 1}</span>
@@ -185,8 +185,8 @@ export default function CustomersPage() {
       </section>
 
       <ClosingCta
-        title="Make your business the next story clients remember."
-        description="Start with a direct digital home, then build a calmer operation and a stronger reason for clients to return."
+        title="Make your business the next story customers remember."
+        description="Start with a direct digital home, then build a calmer operation and a stronger reason for customers to return."
         secondary={{ label: "How It Works", to: "/how-it-works" }}
       />
     </SiteShell>
