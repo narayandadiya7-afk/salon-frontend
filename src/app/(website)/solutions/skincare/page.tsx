@@ -57,7 +57,7 @@ export default function SkincareePage() {
         },
         {
           title: "Payments",
-          description: "Accept deposits for course bookings and card payments at checkout. Track revenue by treatment and practitioner.",
+          description: "Accept secure online payments at checkout and track revenue by treatment and practitioner.",
         },
         {
           title: "Memberships",

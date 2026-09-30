@@ -78,14 +78,14 @@ export function LoginForm() {
         <span className="rule-brass mb-5" />
         <p className="eyebrow">Welcome back</p>
         <h1 className="mt-4 font-display text-5xl leading-[0.95] text-balance">
-          Open your salon.
+          Open your business.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          Sign in to manage appointments, clients and everything behind your salon address.
+          Sign in to manage appointments, customers, services, and everything that keeps your business running.
         </p>
 
         <form className="mt-9 space-y-4" onSubmit={handleSubmit}>
-          <Field label="Email" type="email" name="email" placeholder="you@salon.com" />
+          <Field label="Email" type="email" name="email" placeholder="you@business.com" />
           <Field label="Password" type="password" name="password" placeholder="••••••••" />
 
           <div className="flex items-center justify-between">
@@ -115,9 +115,9 @@ export function LoginForm() {
         )}
 
         <p className="mt-8 text-sm text-muted-foreground">
-          No salon yet?{' '}
+          No business yet?{' '}
           <Link href="/register" className="text-brass-soft hover:text-brass">
-            Get your salon website
+            Get your business software
           </Link>
         </p>
       </div>

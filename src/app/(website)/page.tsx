@@ -159,7 +159,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="anim-rise-4 mt-10 flex flex-wrap gap-x-8 gap-y-2 border-t border-primary-foreground/20 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-foreground/60">
-              <span>No card required</span><span>Live in minutes</span><span>Your URL · Your customers · Your brand</span>
+              <span>No card required</span><span>Live in minutes</span><span>Your Address · Your customers · Your brand</span>
             </div>
           </div>
         </div>
@@ -482,11 +482,11 @@ export default function HomePage() {
           />
           <blockquote className="lg:col-span-8">
             <p className="font-display text-3xl leading-snug text-balance sm:text-4xl">
-              "Glam Studio increased online bookings by 38% within three months of launching on
+              "Aura Hair & Beauty increased online bookings by 38% within three months of launching on
               Fyncho. Customers finally have one place that feels like us."
             </p>
             <footer className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Marielle Okonkwo · Owner, Glam Studio · Lisbon
+              Marielle Okonkwo · Owner, Aura Hair & Beauty · Lisbon
             </footer>
             <Link
               href="/customers"

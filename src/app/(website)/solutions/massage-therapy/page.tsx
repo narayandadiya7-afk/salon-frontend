@@ -61,7 +61,7 @@ export default function MassageTherapyPage() {
         },
         {
           title: "Payments",
-          description: "Accept card payments and track revenue by treatment type and period.",
+          description: "Accept secure online payments at checkout and track revenue by treatment type and period.",
         },
       ]}
       useCases={[

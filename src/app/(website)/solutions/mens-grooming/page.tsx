@@ -61,7 +61,7 @@ export default function MensGroomingPage() {
         },
         {
           title: "Payments",
-          description: "Accept card payments and tips at checkout. Track revenue by service and professional.",
+          description: "Accept secure online payments at checkout and track revenue by service and professional.",
         },
       ]}
       useCases={[

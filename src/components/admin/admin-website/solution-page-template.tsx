@@ -192,7 +192,7 @@ export function SolutionPageTemplate({
 
       <ClosingCta
         title="Ready to take your business online?"
-        description="Create your account, choose your URL and start managing bookings from a single connected platform."
+        description="Create your account, choose your unique business address, and manage bookings, customers, and daily operations from one connected platform."
         secondary={{ label: "View Pricing", to: "/pricing" }}
       />
     </SiteShell>

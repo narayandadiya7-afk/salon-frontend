@@ -16,8 +16,8 @@ export default function BeautySalonPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Beauty Salons"
-      heroTitle={<>Beauty salon management that covers every service, every professional, every client.</>}
-      heroIntro="Fyncho gives full-service beauty salons a branded website, online booking and the operational tools to manage hair, skin, nails and more — across the whole team."
+      heroTitle={<>Beauty salon management that covers every service, every professional, every customer.</>}
+      heroIntro="Fyncho gives full-service beauty salons a branded software, online booking and the operational tools to manage hair, skin, nails and more — across the whole team."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
       heroImageAlt="Full-service beauty salon with multiple treatment stations"
       challenges={[
@@ -27,21 +27,21 @@ export default function BeautySalonPage() {
         },
         {
           title: "Cross-category scheduling",
-          description: "A client may book a haircut and a facial on the same visit. Managing simultaneous services across staff and rooms is complex without the right tools.",
+          description: "A customer may book a haircut and a facial on the same visit. Managing simultaneous services across staff and rooms is complex without the right tools.",
         },
         {
           title: "Staff specialisations",
           description: "Not every professional offers every service. Booking rules need to reflect individual skills and availability accurately.",
         },
         {
-          title: "Client retention",
-          description: "A beauty salon's best clients visit regularly across several services. Memberships, loyalty and consistent records are key to keeping them.",
+          title: "Customer retention",
+          description: "A beauty salon's best customers visit regularly across several services. Memberships, loyalty and consistent records are key to keeping them.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients browse your full service menu, pick their professional and book a time — from your own website, not a marketplace.",
+          description: "Customers browse your full service menu, pick their professional and book a time — from your own software, not a marketplace.",
         },
         {
           title: "Service management",
@@ -53,15 +53,15 @@ export default function BeautySalonPage() {
         },
         {
           title: "Customer management",
-          description: "Client profiles hold visit history across all service categories, preferences, notes and spend — keeping the whole team informed.",
+          description: "Customer profiles hold visit history across all service categories, preferences, notes and spend — keeping the whole team informed.",
         },
         {
           title: "Memberships & loyalty",
-          description: "Offer memberships and loyalty programmes that reward clients for regular visits and encourage them to explore more of your menu.",
+          description: "Offer memberships and loyalty programmes that reward customers for regular visits and encourage them to explore more of your menu.",
         },
         {
           title: "Payments",
-          description: "Handle deposits, card payments and tips at checkout. Track revenue across services, staff and time periods.",
+          description: "Manage secure online payments at checkout and track revenue across services, team members, and time periods.",
         },
       ]}
       useCases={[
@@ -72,12 +72,12 @@ export default function BeautySalonPage() {
         "Brow and lash services",
         "Body treatments and massage",
         "Multi-service combination bookings",
-        "Cross-department scheduling for the same client",
+        "Cross-department scheduling for the same customer",
       ]}
       benefits={[
-        "One website and one dashboard for the whole salon — not one per department",
-        "Clients can book across your full menu in a single visit",
-        "Memberships and loyalty keep multi-service clients returning",
+        "One software and one dashboard for the whole salon — not one per department",
+        "Customers can book across your full menu in a single visit",
+        "Memberships and loyalty keep multi-service customers returning",
       ]}
       relatedSolutions={[
         { label: "Hair Salons", to: "/solutions/hair-salon" },

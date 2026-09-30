@@ -17,7 +17,7 @@ export default function NailSalonPage() {
     <SolutionPageTemplate
       eyebrow="Nail Salons"
       heroTitle={<>Nail salon management as polished as the results you deliver.</>}
-      heroIntro="Fyncho gives nail salons a professional website, direct online booking and the tools to manage every technician, service and client — without the admin overhead."
+      heroIntro="Fyncho gives nail salons a professional software, direct online booking and the tools to manage every technician, service and customer — without the admin overhead."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Nail technician working at a modern nail studio"
       challenges={[
@@ -27,25 +27,25 @@ export default function NailSalonPage() {
         },
         {
           title: "Add-ons and upgrade decisions",
-          description: "Clients often decide on gel, nail art or extra treatments at the point of booking. The service menu needs to support this clearly.",
+          description: "Customers often decide on gel, nail art or extra treatments at the point of booking. The service menu needs to support this clearly.",
         },
         {
           title: "Portfolio and gallery",
-          description: "Nail work is visual. New clients need to see your style before they commit — a static Instagram profile isn't the same as a branded gallery.",
+          description: "Nail work is visual. New customers need to see your style before they commit — a static Instagram profile isn't the same as a branded gallery.",
         },
         {
-          title: "Repeat client management",
-          description: "Regular clients want their favourite technician and their preferred service easy to rebook without starting from scratch.",
+          title: "Repeat customer management",
+          description: "Regular customers want their favourite technician and their preferred service easy to rebook without starting from scratch.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book service, technician and time from your nail salon website. Add-ons are presented clearly in the flow.",
+          description: "Customers book service, technician and time from your nail salon software. Add-ons are presented clearly in the flow.",
         },
         {
           title: "Service & add-on management",
-          description: "Build a service menu with base services, gel upgrades, nail art options and durations. Clients see exactly what they are booking.",
+          description: "Build a service menu with base services, gel upgrades, nail art options and durations. Customers see exactly what they are booking.",
         },
         {
           title: "Staff management",
@@ -53,15 +53,15 @@ export default function NailSalonPage() {
         },
         {
           title: "Gallery",
-          description: "Show your work through your branded website gallery — giving new clients the confidence to book and returning clients a reason to try something new.",
+          description: "Show your work through your branded software gallery — giving new customers the confidence to book and returning customers a reason to try something new.",
         },
         {
           title: "Customer management",
-          description: "Client profiles hold visit history, preferred technician, notes and spend — all in one record.",
+          description: "Customer profiles hold visit history, preferred technician, notes and spend — all in one record.",
         },
         {
           title: "Payments",
-          description: "Accept deposits and card payments at checkout. Track revenue by technician and service.",
+          description: "Accept secure online payments at checkout. Track revenue by technician and service.",
         },
       ]}
       useCases={[
@@ -72,12 +72,12 @@ export default function NailSalonPage() {
         "Russian manicure and cuticle care",
         "Warm stone pedicure treatments",
         "Technician-specific bookings",
-        "Repeat client rebooking with history",
+        "Repeat customer rebooking with history",
       ]}
       benefits={[
-        "Clients book service, add-ons and technician in a single flow",
+        "Customers book service, add-ons and technician in a single flow",
         "Your gallery turns scroll time into confirmed appointments",
-        "Repeat clients rebook their favourites in seconds",
+        "Repeat customers rebook their favourites in seconds",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },

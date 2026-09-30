@@ -31,7 +31,7 @@ export default function HomeServicesPage() {
         { title: "Online booking", description: "Clients book directly from your website. You manage your availability once, and the calendar handles the coordination." },
         { title: "Deposits", description: "Require a deposit for bookings to protect your time and cover the cost of travel when a client cancels." },
         { title: "Customer management", description: "Client profiles hold visit history, address notes and preferences — useful context when you are going to them." },
-        { title: "Payments", description: "Accept card payments and track earnings by service and period." },
+        { title: "Payments", description: "Accept secure online payments at checkout and track earnings by service and period." },
         { title: "Notifications & reminders", description: "Automated reminders keep clients informed before their appointment, reducing last-minute cancellations." },
       ]}
       useCases={[

@@ -17,7 +17,7 @@ export default function BarbershopPage() {
     <SolutionPageTemplate
       eyebrow="Barbershops"
       heroTitle={<>Barbershop management as sharp as the work behind the chair.</>}
-      heroIntro="Fyncho gives barbershops a professional website, fast online booking and the tools to manage every barber, service and client — built around the high-frequency rhythm of a busy shop."
+      heroIntro="Fyncho gives barbershops a professional software, fast online booking and the tools to manage every barber, service and customer — built around the high-frequency rhythm of a busy shop."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Barber working with a client in a modern barbershop"
       challenges={[
@@ -27,7 +27,7 @@ export default function BarbershopPage() {
         },
         {
           title: "Fast repeat visits",
-          description: "Clients return every two to four weeks. Rebooking should be quick — for both the client and the front desk.",
+          description: "Customers return every two to four weeks. Rebooking should be quick — for both the customer and the front desk.",
         },
         {
           title: "No-shows on peak days",
@@ -41,7 +41,7 @@ export default function BarbershopPage() {
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book their preferred barber and service from your own website, 24 hours a day. No calls, no waiting.",
+          description: "Customers book their preferred barber and service from your own software, 24 hours a day. No calls, no waiting.",
         },
         {
           title: "Staff management",
@@ -53,15 +53,15 @@ export default function BarbershopPage() {
         },
         {
           title: "Loyalty",
-          description: "Reward returning clients with points and perks that give them a reason to rebook — and to choose you over the shop down the road.",
+          description: "Reward returning customers with points and perks that give them a reason to rebook — and to choose you over the shop down the road.",
         },
         {
           title: "Customer management",
-          description: "Profiles hold visit history and preferences so every client gets consistent, personalised service.",
+          description: "Profiles hold visit history and preferences so every customer gets consistent, personalised service.",
         },
         {
           title: "Payments",
-          description: "Accept card payments at checkout. Track revenue by barber and service from the dashboard.",
+          description: "Accept secure online payments at checkout. Track revenue by barber and service from the dashboard.",
         },
       ]}
       useCases={[
@@ -72,7 +72,7 @@ export default function BarbershopPage() {
         "Children's cuts",
         "Per-barber availability and scheduling",
         "Loyalty rewards for regulars",
-        "Repeat client rebooking in two taps",
+        "Repeat customer rebooking in two taps",
       ]}
       benefits={[
         "Regulars rebook in seconds from their phone",

@@ -16,10 +16,10 @@ export default function MakeupArtistPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Makeup Artists"
-      heroTitle={<>Booking and client management for makeup artists who want to stay focused on the work.</>}
-      heroIntro="Fyncho gives makeup artists a professional website, direct client bookings and the tools to manage every appointment, package and enquiry — without the back-and-forth."
+      heroTitle={<>Booking and customer management for makeup artists who want to stay focused on the work.</>}
+      heroIntro="Fyncho gives makeup artists a professional software, direct customer bookings and the tools to manage every appointment, package and enquiry — without the back-and-forth."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
-      heroImageAlt="Makeup artist working with a client in a professional studio"
+      heroImageAlt="Makeup artist working with a customer in a professional studio"
       challenges={[
         {
           title: "Booking coordination via messages",
@@ -31,7 +31,7 @@ export default function MakeupArtistPage() {
         },
         {
           title: "Presenting a professional portfolio",
-          description: "Clients want to see your work before committing. A social profile works, but a branded website with a gallery creates a more professional first impression.",
+          description: "Customers want to see your work before committing. A social profile works, but a branded software with a gallery creates a more professional first impression.",
         },
         {
           title: "Managing multiple event types",
@@ -41,7 +41,7 @@ export default function MakeupArtistPage() {
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book directly from your own website — selecting service type, date and time. No inbox coordination required.",
+          description: "Customers book directly from your own software — selecting service type, date and time. No inbox coordination required.",
         },
         {
           title: "Services & packages",
@@ -49,19 +49,19 @@ export default function MakeupArtistPage() {
         },
         {
           title: "Deposits",
-          description: "Require a deposit at checkout for high-value bookings. This protects your time and gives clients clear confirmation.",
+          description: "Require a deposit at checkout for high-value bookings. This protects your time and gives customers clear confirmation.",
         },
         {
           title: "Customer management",
-          description: "Client profiles hold booking history, event notes and preferences — so every consultation starts from an informed position.",
+          description: "Customer profiles hold booking history, event notes and preferences — so every consultation starts from an informed position.",
         },
         {
           title: "Gallery & portfolio",
-          description: "Your Fyncho website includes a gallery to showcase your work and give prospective clients the evidence they need to book.",
+          description: "Your Fyncho software includes a gallery to showcase your work and give prospective customers the evidence they need to book.",
         },
         {
           title: "Payments",
-          description: "Accept deposits and final payments through your website. Track earnings by service and period.",
+          description: "Accept deposits and final payments through your software. Track earnings by service and period.",
         },
       ]}
       useCases={[
@@ -76,8 +76,8 @@ export default function MakeupArtistPage() {
       ]}
       benefits={[
         "Deposits protect your diary and set professional expectations from the start",
-        "A branded website and gallery replaces a link-in-bio as your professional home",
-        "Client records mean every bridal and event booking starts with full context",
+        "A branded software and gallery replaces a link-in-bio as your professional home",
+        "Customer records mean every bridal and event booking starts with full context",
       ]}
       relatedSolutions={[
         { label: "Bridal Services", to: "/solutions/bridal" },

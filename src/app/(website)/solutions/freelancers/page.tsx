@@ -57,7 +57,7 @@ export default function FreelancersPage() {
         },
         {
           title: "Payments",
-          description: "Accept card payments and track your earnings by service and period — without a separate invoicing tool.",
+          description: "Accept secure online payments at checkout and track your earnings by service and period — without a separate invoicing tool.",
         },
         {
           title: "Notifications & reminders",

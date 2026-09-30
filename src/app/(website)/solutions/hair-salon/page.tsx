@@ -17,13 +17,13 @@ export default function HairSalonPage() {
     <SolutionPageTemplate
       eyebrow="Hair Salons"
       heroTitle={<>Hair salon management built around the chair, not the spreadsheet.</>}
-      heroIntro="Fyncho gives hair salons a professional website, online booking and the operational tools to manage every stylist, service and client — without juggling separate apps."
+      heroIntro="Fyncho gives hair salons a professional software, online booking and the operational tools to manage every stylist, service and customer — without juggling separate apps."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Hair stylist working with a client in a modern salon"
       challenges={[
         {
           title: "Booking across multiple stylists",
-          description: "Clients want to choose their preferred stylist and see real availability — not send a message and wait for a reply.",
+          description: "Customers want to choose their preferred stylist and see real availability — not send a message and wait for a reply.",
         },
         {
           title: "Colour service timing",
@@ -34,8 +34,8 @@ export default function HairSalonPage() {
           description: "Empty chairs during peak hours have a direct impact on revenue, yet enforcing a cancellation policy is awkward without a system.",
         },
         {
-          title: "Client records scattered across messages",
-          description: "Knowing what colour formula a client had six months ago — or their preferred stylist — shouldn't require searching through old chats.",
+          title: "Customer records scattered across messages",
+          description: "Knowing what colour formula a customer had six months ago — or their preferred stylist — shouldn't require searching through old chats.",
         },
         {
           title: "Managing a growing team",
@@ -45,7 +45,7 @@ export default function HairSalonPage() {
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book directly from your salon website, choosing service, stylist and time. No calls, no DMs, no double bookings.",
+          description: "Customers book directly from your salon software, choosing service, stylist and time. No calls, no DMs, no double bookings.",
         },
         {
           title: "Service & duration management",
@@ -61,11 +61,11 @@ export default function HairSalonPage() {
         },
         {
           title: "Deposits & confirmations",
-          description: "Collect deposits at checkout to reduce no-shows. Automated reminders keep clients informed and your calendar fuller.",
+          description: "Collect deposits at checkout to help reduce no-shows. Automated reminders keep customers informed and your schedule running smoothly.",
         },
         {
           title: "Payments",
-          description: "Accept card payments at checkout. Track revenue by service, stylist and period from the dashboard.",
+          description: "Secure online payments make it easy for customers to pay and businesses to manage transactions. Track revenue by service, team member, and period from your business dashboard.",
         },
       ]}
       useCases={[
@@ -76,12 +76,12 @@ export default function HairSalonPage() {
         "Multi-stylist scheduling with individual availability",
         "Hair extension consultations",
         "Bridal and event hair appointments",
-        "Repeat client rebooking with visit history",
+        "Repeat customer rebooking with visit history",
       ]}
       benefits={[
-        "Clients book themselves — fewer interruptions during services",
+        "Customers book themselves — fewer interruptions during services",
         "Colour and treatment timings resolve automatically in the calendar",
-        "Client history and notes travel with every appointment",
+        "Customer history and notes travel with every appointment",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },

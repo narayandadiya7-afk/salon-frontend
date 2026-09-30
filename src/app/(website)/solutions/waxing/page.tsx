@@ -32,7 +32,7 @@ export default function WaxingPage() {
         { title: "Staff management", description: "Set each technician's availability and service menu. Preferred-technician bookings are handled without manual coordination." },
         { title: "Deposits & reminders", description: "Collect deposits for new clients and send automated reminders to protect your tightly scheduled calendar." },
         { title: "Customer management", description: "Client profiles hold visit history, preferences and any notes — supporting a consistent, personalised experience." },
-        { title: "Payments", description: "Accept card payments at checkout and track revenue by service and technician." },
+        { title: "Payments", description: "Accept secure online payments at checkout and track revenue by service and technician." },
       ]}
       useCases={[
         "Full and half leg waxing",

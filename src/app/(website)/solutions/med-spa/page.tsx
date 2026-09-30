@@ -32,7 +32,7 @@ export default function MedSpaPage() {
         { title: "Staff management", description: "Set availability, qualifications and treatment eligibility per practitioner. Clinical bookings route to the right person automatically." },
         { title: "Customer management", description: "Client profiles hold treatment history, clinical notes and wellness preferences — supporting the continuity of a premium care relationship." },
         { title: "Memberships", description: "Offer wellness membership programmes that keep med-spa clients engaged with regular treatments." },
-        { title: "Payments", description: "Accept deposits, package payments and card payments at checkout. Track clinical and wellness revenue separately." },
+        { title: "Payments", description: "Accept secure online payments at checkout and track clinical and wellness revenue separately." },
       ]}
       useCases={[
         "Injectables and skin treatment consultations",

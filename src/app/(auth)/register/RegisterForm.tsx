@@ -30,7 +30,7 @@ function slugify(value: string) {
     .slice(0, 40);
 }
 
-const stepLabels = ['Your account', 'Your salon', 'Your URL'];
+const stepLabels = ['Your account', 'Your business', 'Your Address'];
 
 function Field({
   label,
@@ -173,7 +173,7 @@ export function RegisterForm() {
 
   return (
     <section className="mx-auto max-w-xl px-6 py-16">
-      <p className="eyebrow">Create your salon</p>
+      <p className="eyebrow">Set up your business</p>
       <h1 className="mt-4 font-display text-5xl leading-[0.95] text-balance">
         Claim your address.
       </h1>
