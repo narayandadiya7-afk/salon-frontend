@@ -70,7 +70,7 @@ const solutionGroups = [
     solutions: [
       {
         t: "Spa",
-        d: "Room-based scheduling, spa packages and treatment series with a calm, editorial software.",
+        d: "Spa bookings, treatment packages, memberships, and therapist scheduling with calm, professional business software.",
         to: "/solutions/spa",
       },
       {

@@ -16,14 +16,14 @@ export default function MensGroomingPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Men's Grooming"
-      heroTitle={<>Men's grooming management built for a modern, returning clientele.</>}
-      heroIntro="Fyncho gives men's grooming businesses a professional website, direct online booking and the tools to manage services, memberships and client relationships — designed for businesses where loyalty and repeat visits are everything."
+      heroTitle={<>Men's grooming management built for a modern, returning customers.</>}
+      heroIntro="Fyncho gives men's grooming businesses a professional software, direct online booking and the tools to manage services, memberships and customer relationships — designed for businesses where loyalty and repeat visits are everything."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Modern men's grooming studio with premium tools and finishes"
       challenges={[
         {
           title: "Frequent repeat visits",
-          description: "Men's grooming clients return regularly. The booking experience needs to be fast, familiar and easy — or they'll go somewhere that makes it simpler.",
+          description: "Men's grooming customers return regularly. The booking experience needs to be fast, familiar and easy — or they'll go somewhere that makes it simpler.",
         },
         {
           title: "Packages and bundles",
@@ -31,7 +31,7 @@ export default function MensGroomingPage() {
         },
         {
           title: "Membership and loyalty",
-          description: "Monthly grooming memberships are a natural fit for this clientele. Managing them manually creates billing and communication complexity.",
+          description: "Monthly grooming memberships are a natural fit for customers. Managing them manually can create unnecessary billing and communication complexity.",
         },
         {
           title: "Premium positioning online",
@@ -41,7 +41,7 @@ export default function MensGroomingPage() {
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book their service, professional and time from your branded website — in under a minute.",
+          description: "Customers book their service, professional and time from your branded software — in under a minute.",
         },
         {
           title: "Services & packages",
@@ -53,11 +53,11 @@ export default function MensGroomingPage() {
         },
         {
           title: "Loyalty",
-          description: "Reward returning clients with points and perks that reinforce the habit of choosing your business.",
+          description: "Reward returning customers with points and perks that reinforce the habit of choosing your business.",
         },
         {
           title: "Customer management",
-          description: "Client profiles hold visit history, preferences and notes — so every visit reflects the relationship built over time.",
+          description: "Customer profiles hold visit history, preferences and notes — so every visit reflects the relationship built over time.",
         },
         {
           title: "Payments",
@@ -72,12 +72,12 @@ export default function MensGroomingPage() {
         "Grooming packages — cut, beard and skin",
         "Monthly grooming memberships",
         "Skin care consultations for men",
-        "Repeat client scheduling and rebooking",
+        "Repeat customer scheduling and rebooking",
       ]}
       benefits={[
         "Memberships create a predictable monthly revenue base",
         "Fast rebooking keeps your regulars on the right cadence",
-        "A premium website matches the environment you have created in-studio",
+        "A premium software matches the environment you have created in-studio",
       ]}
       relatedSolutions={[
         { label: "Barbershops", to: "/solutions/barbershop" },

@@ -17,21 +17,21 @@ export default function SpaPage() {
     <SolutionPageTemplate
       eyebrow="Spa"
       heroTitle={<>Spa management as serene as the experience you deliver.</>}
-      heroIntro="Fyncho gives spas a polished booking website, treatment room scheduling and the operational tools to manage every therapist, package and guest journey — in one connected platform."
+      heroIntro="Fyncho gives spas a polished booking software, treatment room scheduling and the operational tools to manage every therapist, package and customer journey — in one connected platform."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
       heroImageAlt="Serene spa treatment room with soft lighting and premium linens"
       challenges={[
         {
-          title: "Room and resource scheduling",
-          description: "Treatment rooms, specialist equipment and therapist availability all need to align before a booking is confirmed.",
+          title: "Service and staff scheduling",
+          description: "Different treatments require specific team members and durations. Fyncho helps align service availability, staff schedules, and appointment times to create a smoother booking experience.",
         },
         {
           title: "Package and series bookings",
           description: "Spa packages often span multiple sessions and treatments. Managing these manually leads to errors and missed appointments.",
         },
         {
-          title: "Client experience consistency",
-          description: "Returning guests expect their preferences, therapist choices and treatment history to be known without re-explaining every visit.",
+          title: "Customer experience consistency",
+          description: "Returning customers expect their preferences, therapist choices and treatment history to be known without re-explaining every visit.",
         },
         {
           title: "Memberships and recurring revenue",
@@ -41,7 +41,7 @@ export default function SpaPage() {
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Guests book treatments, choose their therapist and select available times directly from your spa website — at any hour.",
+          description: "Customers book treatments, choose their therapist and select available times directly from your spa software — at any hour.",
         },
         {
           title: "Staff management",
@@ -49,15 +49,15 @@ export default function SpaPage() {
         },
         {
           title: "Services & packages",
-          description: "Build your treatment menu with durations, add-ons and packages. Guests see exactly what is available and what it includes.",
+          description: "Build your treatment menu with durations, add-ons and packages. Customers see exactly what is available and what it includes.",
         },
         {
           title: "Memberships",
-          description: "Offer recurring spa memberships with defined entitlements. Turn occasional visitors into committed monthly guests.",
+          description: "Offer recurring spa memberships with defined entitlements. Turn occasional visitors into committed monthly customers.",
         },
         {
           title: "Customer management",
-          description: "Guest profiles hold treatment history, preferences and notes — so every visit feels considered from the first greeting.",
+          description: "Customer profiles hold treatment history, preferences and notes — so every visit feels considered from the first greeting.",
         },
         {
           title: "Payments",
@@ -75,9 +75,9 @@ export default function SpaPage() {
         "Treatment series and course bookings",
       ]}
       benefits={[
-        "Guests book the full spa experience — package, therapist and time — in one flow",
+        "Customers book the full spa experience — package, therapist and time — in one flow",
         "Memberships create a predictable recurring revenue stream",
-        "Guest history and preferences inform every visit before it begins",
+        "Customer history and preferences inform every visit before it begins",
       ]}
       relatedSolutions={[
         { label: "Massage Therapy", to: "/solutions/massage-therapy" },
