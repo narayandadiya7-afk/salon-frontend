@@ -82,7 +82,6 @@ export default function WellnessPage() {
       relatedSolutions={[
         { label: "Spa", to: "/solutions/spa" },
         { label: "Massage Therapy", to: "/solutions/massage-therapy" },
-        { label: "Yoga & Pilates", to: "/solutions/yoga-pilates" },
         { label: "Skin Care", to: "/solutions/skincare" },
       ]}
     />

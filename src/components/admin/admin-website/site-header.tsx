@@ -39,7 +39,6 @@ const solutionsGroups = [
       { label: "Spa", to: "/solutions/spa" },
       { label: "Massage Therapy", to: "/solutions/massage-therapy" },
       { label: "Wellness Centers", to: "/solutions/wellness" },
-      { label: "Yoga & Pilates", to: "/solutions/yoga-pilates" },
     ],
   },
   {

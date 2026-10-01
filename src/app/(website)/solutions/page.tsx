@@ -83,11 +83,6 @@ const solutionGroups = [
         d: "Multi-practitioner scheduling, memberships and a clean customer journey for mind-and-body businesses.",
         to: "/solutions/wellness",
       },
-      {
-        t: "Yoga & Pilates Studios",
-        d: "Session scheduling, memberships, packages and a booking flow that works for both regular and drop-in customers.",
-        to: "/solutions/yoga-pilates",
-      },
     ],
   },
   {
