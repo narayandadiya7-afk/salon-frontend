@@ -85,7 +85,7 @@ const solutionGroups = [
       },
       {
         t: "Yoga & Pilates Studios",
-        d: "Class scheduling, memberships, packages and a booking flow that works for both regular and drop-in customers.",
+        d: "Session scheduling, memberships, packages and a booking flow that works for both regular and drop-in customers.",
         to: "/solutions/yoga-pilates",
       },
     ],

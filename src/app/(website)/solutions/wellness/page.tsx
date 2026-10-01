@@ -3,7 +3,7 @@ import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-
 
 const TITLE = "Wellness Center Management & Booking Software | Fyncho";
 const DESCRIPTION =
-  "Fyncho helps wellness centres manage online bookings, multi-practitioner scheduling, memberships and client records — all from one platform.";
+  "Fyncho helps wellness centres manage online bookings, multi-practitioner scheduling, memberships and customer records — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,8 +16,8 @@ export default function WellnessPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Wellness Centers"
-      heroTitle={<>Wellness centre management designed for the whole client journey.</>}
-      heroIntro="Fyncho gives wellness centres a professional website, multi-practitioner booking and the operational tools to manage services, memberships and client relationships — in one connected platform."
+      heroTitle={<>Wellness centre management designed for the whole customer journey.</>}
+      heroIntro="Fyncho gives wellness centres a professional software, multi-practitioner booking and the operational tools to manage services, memberships and customer relationships — in one connected platform."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
       heroImageAlt="Wellness centre with calm treatment space and natural light"
       challenges={[
@@ -30,18 +30,18 @@ export default function WellnessPage() {
           description: "A wellness centre may offer massage, nutrition consultations, holistic therapy and energy work — each with different durations and booking requirements.",
         },
         {
-          title: "Client retention and regular visits",
-          description: "Wellness clients benefit most from consistent, ongoing care. Memberships and loyalty programmes support this but need a system to manage them.",
+          title: "Customer retention and regular visits",
+          description: "Wellness customers benefit most from consistent, ongoing care. Memberships and loyalty programmes support this but need a system to manage them.",
         },
         {
           title: "Professional online presence",
-          description: "A wellness centre's credibility depends partly on how it presents itself online. A generic booking page is not the same as a branded website.",
+          description: "A wellness centre's credibility depends partly on how it presents itself online. A generic booking page is not the same as a branded software.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients book their preferred practitioner, service and time directly from your wellness centre website — any time of day.",
+          description: "Customers book their preferred practitioner, service and time directly from your wellness centre software — any time of day.",
         },
         {
           title: "Staff management",
@@ -53,11 +53,11 @@ export default function WellnessPage() {
         },
         {
           title: "Memberships",
-          description: "Offer wellness membership programmes that commit clients to a regular schedule and provide predictable recurring revenue.",
+          description: "Offer wellness membership programmes that commit customers to a regular schedule and provide predictable recurring revenue.",
         },
         {
           title: "Customer management",
-          description: "Client profiles hold visit history, preferences and practitioner notes — supporting the continuity of care that wellness clients value.",
+          description: "Customer profiles hold visit history, preferences and practitioner notes — supporting the continuity of care that wellness customers value.",
         },
         {
           title: "Payments",
@@ -71,11 +71,11 @@ export default function WellnessPage() {
         "Meditation and mindfulness sessions",
         "Wellness packages and programmes",
         "Multi-practitioner scheduling on the same day",
-        "Ongoing client care with visit history",
+        "Ongoing customer care with visit history",
         "Wellness membership management",
       ]}
       benefits={[
-        "Clients can explore your full practice and book any service from one website",
+        "Customers can explore your full practice and book any service from one software",
         "Memberships support the regular cadence of wellness care",
         "Practitioner notes and visit history ensure continuity across sessions",
       ]}
