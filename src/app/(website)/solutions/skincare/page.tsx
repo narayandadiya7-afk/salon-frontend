@@ -17,7 +17,7 @@ export default function SkincareePage() {
     <SolutionPageTemplate
       eyebrow="Skin Care & Facials"
       heroTitle={<>Skin care management as considered as the treatments you offer.</>}
-      heroIntro="Fyncho gives skin care businesses a professional website, direct client bookings and the tools to manage every treatment, professional and client record — from one place."
+      heroIntro="Fyncho gives skin care businesses a professional software, direct customer bookings and the tools to manage every treatment, professional and customer record — from one place."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
       heroImageAlt="Skin care treatment room with professional equipment and soft lighting"
       challenges={[
@@ -26,8 +26,8 @@ export default function SkincareePage() {
           description: "Facial treatments vary significantly in preparation, duration and aftercare. Booking rules need to reflect this accurately.",
         },
         {
-          title: "Client skin history",
-          description: "Effective skin care depends on knowing what has been used before, any sensitivities and the treatment progression. This needs a structured client record.",
+          title: "Customer and service history",
+          description: "Building strong customer relationships requires easy access to customer details, past appointments, and the services they've booked. Keeping this information organized helps businesses provide a more consistent experience.",
         },
         {
           title: "Course and series bookings",

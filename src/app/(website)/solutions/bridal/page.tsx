@@ -23,7 +23,7 @@ export default function BridalPage() {
       challenges={[
         { title: "Complex multi-appointment planning", description: "Bridal bookings span months — a trial, wedding morning prep and sometimes a party. Managing the full timeline needs structure." },
         { title: "Deposits for high-value dates", description: "Wedding-day bookings deserve a deposit. Without a system, this is awkward to request and hard to track." },
-        { title: "One-time, high-value clients", description: "A bridal client is usually a one-off booking with no visit history to lean on. Every preference has to be captured carefully at the trial so the wedding day runs smoothly." },
+        { title: "One-time, high-value customers", description: "A bridal customer is usually a one-off booking with no visit history to lean on. Every preference has to be captured carefully at the trial so the wedding day runs smoothly." },
         { title: "Professional portfolio presentation", description: "Brides research extensively before booking. A gallery of real bridal work on a professional software builds the confidence to enquire." },
       ]}
       howFynchoHelps={[
