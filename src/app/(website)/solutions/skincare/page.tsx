@@ -3,7 +3,7 @@ import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-
 
 const TITLE = "Skin Care & Facial Business Management Software | Fyncho";
 const DESCRIPTION =
-  "Fyncho helps skin care businesses and facial studios manage online bookings, treatment schedules, client records and payments — all from one platform.";
+  "Fyncho helps skin care businesses and facial studios manage online bookings, treatment schedules, customer records and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -30,18 +30,18 @@ export default function SkincareePage() {
           description: "Building strong customer relationships requires easy access to customer details, past appointments, and the services they've booked. Keeping this information organized helps businesses provide a more consistent experience.",
         },
         {
-          title: "Course and series bookings",
-          description: "Many skin care protocols require multiple sessions. Managing a course of treatments manually creates admin and communication overhead.",
+          title: "Repeat treatment bookings",
+          description: "Many skin care services require customers to return for multiple appointments. Managing repeat bookings manually can create unnecessary administrative and communication work.",
         },
         {
           title: "Presenting the treatment menu clearly",
-          description: "Clients booking skin treatments need clear descriptions of what each treatment involves before they commit.",
+          description: "Customers booking skin treatments need clear descriptions of what each treatment involves before they commit.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Clients browse your treatment menu and book directly from your own website — with clear descriptions, durations and pricing for every service.",
+          description: "Customers browse your treatment menu and book directly from your own software — with clear descriptions, durations and pricing for every service.",
         },
         {
           title: "Service management",
@@ -49,11 +49,11 @@ export default function SkincareePage() {
         },
         {
           title: "Customer management",
-          description: "Client profiles hold treatment history, skin notes, preferences and visit records — giving your practitioners the context they need before every appointment.",
+          description: "Keep customer profiles, appointment history, preferences, and important customer information organized in one place — giving your team the context they need to provide a consistent experience.",
         },
         {
           title: "Staff management",
-          description: "Set practitioner availability, specialisations and booking eligibility. Clients book the right person for their treatment.",
+          description: "Set practitioner availability, specialisations and booking eligibility. Customers book the right person for their treatment.",
         },
         {
           title: "Payments",
@@ -61,7 +61,7 @@ export default function SkincareePage() {
         },
         {
           title: "Memberships",
-          description: "Offer skin care membership plans that bring clients in for regular treatments on a predictable schedule.",
+          description: "Offer skin care membership plans that bring customers in for regular treatments on a predictable schedule.",
         },
       ]}
       useCases={[
@@ -71,13 +71,12 @@ export default function SkincareePage() {
         "Hydrating and anti-ageing facial treatments",
         "Hydrafacial and aqua dermabrasion",
         "Lymphatic facial massage",
-        "Multi-session treatment courses",
         "Skin consultation appointments",
       ]}
       benefits={[
-        "Client skin history is always accessible before the appointment begins",
-        "Treatment courses can be booked and managed as a series, not individual sessions",
-        "Your website presents treatments clearly — so clients arrive informed",
+        "Customer details and appointment history are organized in one place, so your team has the information they need before each appointment.",
+        "Services, durations, team availability, and bookings are managed together, making it easier to keep appointments organized.",
+        "Your business presence presents services and information clearly, helping customers understand what you offer and book with confidence.",
       ]}
       relatedSolutions={[
         { label: "Spa", to: "/solutions/spa" },
