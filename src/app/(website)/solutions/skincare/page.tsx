@@ -68,7 +68,7 @@ export default function SkincareePage() {
         "Classic and deep-cleansing facials",
         "Enzyme resurfacing and peels",
         "LED light therapy sessions",
-        "Microneedling and collagen treatments",
+        "Hydrating and anti-ageing facial treatments",
         "Hydrafacial and aqua dermabrasion",
         "Lymphatic facial massage",
         "Multi-session treatment courses",
@@ -80,10 +80,9 @@ export default function SkincareePage() {
         "Your website presents treatments clearly — so clients arrive informed",
       ]}
       relatedSolutions={[
-        { label: "Aesthetic Clinics", to: "/solutions/aesthetic-clinic" },
-        { label: "Med-Spa", to: "/solutions/med-spa" },
         { label: "Spa", to: "/solutions/spa" },
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },
+        { label: "Nail Salons", to: "/solutions/nail-salon" },
       ]}
     />
   );

@@ -70,7 +70,7 @@ export default function MakeupArtistPage() {
         "Event and party makeup",
         "Editorial and photoshoot sessions",
         "Makeup lesson and tutorial appointments",
-        "Group bookings for bridal parties",
+        "Bridal package and bundle bookings",
         "Portfolio gallery presentation",
         "Deposit collection for event bookings",
       ]}

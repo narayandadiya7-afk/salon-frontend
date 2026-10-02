@@ -59,7 +59,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-3xl px-6 py-20">
         <h2 className="text-4xl text-balance sm:text-5xl">What we build toward</h2>
         <p className="mt-6 text-lg leading-relaxed text-pretty text-muted-foreground">
-          One platform, many businesses — each with its own identity, its own customers, and its own place online. Whether you run a salon, barbershop, spa, nail studio, massage practice, wellness business, clinic, studio, or another service-based business, Fyncho gives you the tools to manage your business while keeping your brand at the center.
+          One platform, many businesses — each with its own identity, its own customers, and its own place online. Whether you run a salon, barbershop, spa, nail studio, massage practice, wellness business, or another service-based business, Fyncho gives you the tools to manage your business while keeping your brand at the center.
         </p>
         <p className="mt-4 text-lg leading-relaxed text-pretty text-muted-foreground">
           We’re building Fyncho to make running a service business simpler — from bookings and customers to payments, memberships, loyalty, teams, and day-to-day operations.

@@ -83,7 +83,6 @@ export default function SpaPage() {
         { label: "Massage Therapy", to: "/solutions/massage-therapy" },
         { label: "Wellness Centers", to: "/solutions/wellness" },
         { label: "Skin Care", to: "/solutions/skincare" },
-        { label: "Med-Spa", to: "/solutions/med-spa" },
       ]}
     />
   );

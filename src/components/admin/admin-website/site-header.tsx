@@ -16,44 +16,32 @@ const nav = [
 
 const solutionsGroups = [
   {
-    title: "Beauty",
+    title: "Salons & Studios",
     links: [
       { label: "Hair Salons", to: "/solutions/hair-salon" },
       { label: "Beauty Salons", to: "/solutions/beauty-salon" },
       { label: "Nail Salons", to: "/solutions/nail-salon" },
-      { label: "Makeup Artists", to: "/solutions/makeup-artist" },
       { label: "Lash & Brow", to: "/solutions/lash-brow" },
+      { label: "Makeup Artists", to: "/solutions/makeup-artist" },
       { label: "Bridal", to: "/solutions/bridal" },
     ],
   },
   {
-    title: "Grooming",
-    links: [
-      { label: "Barbershops", to: "/solutions/barbershop" },
-      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
-    ],
-  },
-  {
-    title: "Wellness",
+    title: "Wellness, Skin & Body",
     links: [
       { label: "Spa", to: "/solutions/spa" },
       { label: "Massage Therapy", to: "/solutions/massage-therapy" },
       { label: "Wellness Centers", to: "/solutions/wellness" },
-    ],
-  },
-  {
-    title: "Aesthetics",
-    links: [
       { label: "Skin Care", to: "/solutions/skincare" },
-      { label: "Aesthetic Clinics", to: "/solutions/aesthetic-clinic" },
-      { label: "Med-Spa", to: "/solutions/med-spa" },
+      { label: "Waxing & Hair Removal", to: "/solutions/waxing" },
     ],
   },
   {
-    title: "Professionals",
+    title: "Grooming & Solo",
     links: [
+      { label: "Barbershops", to: "/solutions/barbershop" },
+      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
       { label: "Freelancers", to: "/solutions/freelancers" },
-      { label: "Home-Service", to: "/solutions/home-services" },
     ],
   },
 ] as const;

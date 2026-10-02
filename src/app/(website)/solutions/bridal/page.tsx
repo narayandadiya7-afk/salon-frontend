@@ -23,7 +23,7 @@ export default function BridalPage() {
       challenges={[
         { title: "Complex multi-appointment planning", description: "Bridal bookings span months — a trial, wedding morning prep and sometimes a party. Managing the full timeline needs structure." },
         { title: "Deposits for high-value dates", description: "Wedding-day bookings deserve a deposit. Without a system, this is awkward to request and hard to track." },
-        { title: "Group and party coordination", description: "Bridal parties may need several professionals on the same morning. Coordinating availability and timing manually is error-prone." },
+        { title: "One-time, high-value clients", description: "A bridal client is usually a one-off booking with no visit history to lean on. Every preference has to be captured carefully at the trial so the wedding day runs smoothly." },
         { title: "Professional portfolio presentation", description: "Brides research extensively before booking. A gallery of real bridal work on a professional software builds the confidence to enquire." },
       ]}
       howFynchoHelps={[
@@ -37,7 +37,7 @@ export default function BridalPage() {
       useCases={[
         "Bridal hair and makeup trial appointments",
         "Wedding morning preparation bookings",
-        "Bridal party hair and makeup scheduling",
+        "Bridal hair styling and makeup services",
         "Destination wedding booking management",
         "Pre-wedding skin preparation treatments",
         "Bridal package and bundle management",

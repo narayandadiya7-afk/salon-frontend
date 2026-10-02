@@ -83,7 +83,7 @@ export default function MassageTherapyPage() {
         { label: "Spa", to: "/solutions/spa" },
         { label: "Wellness Centers", to: "/solutions/wellness" },
         { label: "Freelancers", to: "/solutions/freelancers" },
-        { label: "Home-Service", to: "/solutions/home-services" },
+        { label: "Skincare", to: "/solutions/skincare" },
       ]}
     />
   );

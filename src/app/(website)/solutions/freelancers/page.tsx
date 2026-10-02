@@ -80,7 +80,6 @@ export default function FreelancersPage() {
         "Deposits and reminders protect the diary you work hard to fill",
       ]}
       relatedSolutions={[
-        { label: "Home-Service", to: "/solutions/home-services" },
         { label: "Makeup Artists", to: "/solutions/makeup-artist" },
         { label: "Massage Therapy", to: "/solutions/massage-therapy" },
         { label: "Lash & Brow", to: "/solutions/lash-brow" },

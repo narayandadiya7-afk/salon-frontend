@@ -5,7 +5,7 @@ import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/mar
 
 const TITLE = "Solutions — Beauty, Wellness, Grooming & Personal-Care Software | Fyncho";
 const DESCRIPTION =
-  "Fyncho fits hair salons, barbershops, spas, nail studios, massage therapists, skin care clinics, makeup artists, wellness centres and independent professionals.";
+  "Fyncho fits hair salons, barbershops, spas, nail studios, massage therapists, skin care studios, makeup artists, wellness centres and independent professionals.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const solutionGroups = [
   {
-    group: "Beauty",
+    group: "Salons & Studios",
     solutions: [
       {
         t: "Hair Salons",
@@ -34,14 +34,14 @@ const solutionGroups = [
         to: "/solutions/nail-salon",
       },
       {
-        t: "Makeup Artists",
-        d: "Bridal, event and party bookings with packages, deposits and a polished professional profile.",
-        to: "/solutions/makeup-artist",
-      },
-      {
         t: "Lash & Brow Studios",
         d: "Appointment-based scheduling with precise treatment durations and customer patch-test records.",
         to: "/solutions/lash-brow",
+      },
+      {
+        t: "Makeup Artists",
+        d: "Bridal, event and party bookings with packages, deposits and a polished professional profile.",
+        to: "/solutions/makeup-artist",
       },
       {
         t: "Bridal Services",
@@ -51,22 +51,7 @@ const solutionGroups = [
     ],
   },
   {
-    group: "Grooming",
-    solutions: [
-      {
-        t: "Barbershops",
-        d: "Fast rebooking, walk-in management and loyalty for customers who return every few weeks.",
-        to: "/solutions/barbershop",
-      },
-      {
-        t: "Men's Grooming",
-        d: "Grooming packages, memberships and a modern booking experience built for today's grooming customer.",
-        to: "/solutions/mens-grooming",
-      },
-    ],
-  },
-  {
-    group: "Wellness",
+    group: "Wellness, Skin & Body",
     solutions: [
       {
         t: "Spa",
@@ -83,40 +68,35 @@ const solutionGroups = [
         d: "Multi-practitioner scheduling, memberships and a clean customer journey for mind-and-body businesses.",
         to: "/solutions/wellness",
       },
-    ],
-  },
-  {
-    group: "Aesthetics & Skin",
-    solutions: [
       {
         t: "Skin Care & Facials",
         d: "Consultation flows, treatment records and a customer-facing booking experience suited to aesthetic services.",
         to: "/solutions/skincare",
       },
       {
-        t: "Aesthetic Clinics",
-        d: "Deposits, consent records and appointment management for higher-value clinical treatments.",
-        to: "/solutions/aesthetic-clinic",
-      },
-      {
-        t: "Med-Spa",
-        d: "The operational depth of a clinic with the customer experience of a luxury spa — in one platform.",
-        to: "/solutions/med-spa",
+        t: "Waxing & Hair Removal",
+        d: "Short, high-frequency appointments with preferred-technician booking and reminders that keep clients on cycle.",
+        to: "/solutions/waxing",
       },
     ],
   },
   {
-    group: "Independent Professionals",
+    group: "Grooming & Solo Professionals",
     solutions: [
+      {
+        t: "Barbershops",
+        d: "Fast rebooking, walk-in management and loyalty for customers who return every few weeks.",
+        to: "/solutions/barbershop",
+      },
+      {
+        t: "Men's Grooming",
+        d: "Grooming packages, memberships and a modern booking experience built for today's grooming customer.",
+        to: "/solutions/mens-grooming",
+      },
       {
         t: "Freelancers",
         d: "A professional software, direct bookings and customer management for beauty and wellness freelancers.",
         to: "/solutions/freelancers",
-      },
-      {
-        t: "Home-Service Professionals",
-        d: "Manage appointments, travel logistics and customer records as a mobile beauty or wellness professional.",
-        to: "/solutions/home-services",
       },
     ],
   },

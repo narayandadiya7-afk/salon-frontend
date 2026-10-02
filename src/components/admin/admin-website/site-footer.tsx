@@ -12,25 +12,33 @@ const columns = [
     ],
   },
   {
-    title: "Beauty & Grooming",
+    title: "Salons & Studios",
     links: [
       { label: "Hair Salons", to: "/solutions/hair-salon" },
       { label: "Beauty Salons", to: "/solutions/beauty-salon" },
       { label: "Nail Salons", to: "/solutions/nail-salon" },
-      { label: "Barbershops", to: "/solutions/barbershop" },
+      { label: "Lash & Brow", to: "/solutions/lash-brow" },
       { label: "Makeup Artists", to: "/solutions/makeup-artist" },
-      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
+      { label: "Bridal Services", to: "/solutions/bridal" },
     ],
   },
   {
-    title: "Wellness & Aesthetics",
+    title: "Wellness & Skin",
     links: [
       { label: "Spa", to: "/solutions/spa" },
       { label: "Massage Therapy", to: "/solutions/massage-therapy" },
-      { label: "Skin Care", to: "/solutions/skincare" },
       { label: "Wellness Centers", to: "/solutions/wellness" },
-      { label: "Lash & Brow", to: "/solutions/lash-brow" },
+      { label: "Skin Care", to: "/solutions/skincare" },
+      { label: "Waxing & Hair Removal", to: "/solutions/waxing" },
       { label: "All Solutions", to: "/solutions" },
+    ],
+  },
+  {
+    title: "Grooming & Solo",
+    links: [
+      { label: "Barbershops", to: "/solutions/barbershop" },
+      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
+      { label: "Freelancers", to: "/solutions/freelancers" },
     ],
   },
   {
@@ -56,8 +64,8 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line">
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-7">
-          <div className="col-span-2 sm:col-span-3 lg:col-span-2">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
+          <div className="col-span-2 sm:col-span-3 lg:col-span-4 xl:col-span-2">
             <span className="font-display text-2xl font-semibold tracking-tight">Fyncho</span>
             <p className="mt-2 max-w-[34ch] font-mono text-xs leading-relaxed text-muted-foreground">
               Business management and booking software for beauty, wellness, grooming, and personal-care businesses.

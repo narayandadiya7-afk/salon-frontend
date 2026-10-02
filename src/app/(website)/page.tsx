@@ -45,44 +45,32 @@ const bookingFlow = [
 
 const businessCategories = [
   {
-    group: 'Beauty',
+    group: 'Salons & Studios',
     items: [
       { label: 'Hair Salons', to: '/solutions/hair-salon' },
       { label: 'Beauty Salons', to: '/solutions/beauty-salon' },
       { label: 'Nail Salons', to: '/solutions/nail-salon' },
-      { label: 'Makeup Artists', to: '/solutions/makeup-artist' },
       { label: 'Lash & Brow', to: '/solutions/lash-brow' },
+      { label: 'Makeup Artists', to: '/solutions/makeup-artist' },
       { label: 'Bridal', to: '/solutions/bridal' },
     ],
   },
   {
-    group: 'Grooming',
-    items: [
-      { label: 'Barbershops', to: '/solutions/barbershop' },
-      { label: "Men's Grooming", to: '/solutions/mens-grooming' },
-    ],
-  },
-  {
-    group: 'Wellness',
+    group: 'Wellness, Skin & Body',
     items: [
       { label: 'Spa', to: '/solutions/spa' },
       { label: 'Massage Therapy', to: '/solutions/massage-therapy' },
       { label: 'Wellness Centers', to: '/solutions/wellness' },
-    ],
-  },
-  {
-    group: 'Aesthetics',
-    items: [
       { label: 'Skin Care', to: '/solutions/skincare' },
-      { label: 'Aesthetic Clinics', to: '/solutions/aesthetic-clinic' },
-      { label: 'Med-Spa', to: '/solutions/med-spa' },
+      { label: 'Waxing', to: '/solutions/waxing' },
     ],
   },
   {
-    group: 'Professionals',
+    group: 'Grooming & Solo',
     items: [
+      { label: 'Barbershops', to: '/solutions/barbershop' },
+      { label: "Men's Grooming", to: '/solutions/mens-grooming' },
       { label: 'Freelancers', to: '/solutions/freelancers' },
-      { label: 'Home-Service', to: '/solutions/home-services' },
     ],
   },
 ];
@@ -114,7 +102,7 @@ const faqs = [
   },
   {
     q: 'What types of businesses does Fyncho support?',
-    a: 'Fyncho is built for service-based businesses including salons, barbershops, spas, wellness businesses, beauty professionals, studios, clinics, and independent professionals.',
+    a: 'Fyncho is built for service-based businesses including salons, barbershops, spas, wellness businesses, beauty professionals, studios, and independent professionals.',
   },
 ];
 
@@ -210,7 +198,7 @@ export default function HomePage() {
             Whether you run a hair salon, a barbershop, a spa, a nail studio, or work independently — Fyncho adapts to the way your business operates.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {businessCategories.map((cat) => (
             <div key={cat.group} className="card-lux p-6">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brass">{cat.group}</p>
