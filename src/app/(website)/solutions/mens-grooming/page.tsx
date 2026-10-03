@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Men's Grooming Business Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps men's grooming businesses manage online bookings, stylist schedules, grooming packages, memberships and client records — all from one platform.";
+  "Fyncho helps men's grooming businesses manage online bookings, services, team schedules, customers, memberships and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,52 +18,64 @@ export default function MensGroomingPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Men's Grooming"
-      heroTitle={<>Men's grooming management built for a modern, returning customers.</>}
-      heroIntro="Fyncho gives men's grooming businesses a professional software, direct online booking and the tools to manage services, memberships and customer relationships — designed for businesses where loyalty and repeat visits are everything."
+      heroTitle={
+        <>Men's grooming management built for modern businesses and returning customers.</>
+      }
+      heroIntro="Fyncho gives men's grooming businesses professional business software, online booking, and the tools to manage services, team schedules, customers, memberships, and payments — all in one place."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Modern men's grooming studio with premium tools and finishes"
       challenges={[
         {
           title: "Frequent repeat visits",
-          description: "Men's grooming customers return regularly. The booking experience needs to be fast, familiar and easy — or they'll go somewhere that makes it simpler.",
+          description:
+            "Men's grooming customers often return regularly. Making it easy to book services again creates a smoother experience and encourages customers to keep coming back.",
         },
         {
-          title: "Packages and bundles",
-          description: "Grooming businesses that offer combined services — cut, beard and skin treatment — need a booking flow that handles packages cleanly.",
+          title: "Managing different services",
+          description:
+            "Grooming businesses can offer hair, beard, shaving, and other services with different durations and pricing. Keeping the service menu organized can become difficult to manage manually.",
         },
         {
           title: "Membership and loyalty",
-          description: "Monthly grooming memberships are a natural fit for customers. Managing them manually can create unnecessary billing and communication complexity.",
+          description:
+            "Regular customers can benefit from memberships and loyalty programs. Managing these alongside bookings and customer information should not create unnecessary administrative work.",
         },
         {
           title: "Premium positioning online",
-          description: "Men's grooming businesses often invest in a premium environment. Their online presence should reflect the same standard.",
+          description:
+            "A premium grooming business needs a professional online presence that clearly presents its services, work, and booking experience to potential customers.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book their service, professional and time from your branded software — in under a minute.",
+          description:
+            "Customers can explore your services and book directly with your business, making it easy to schedule appointments whenever they need to.",
         },
         {
-          title: "Services & packages",
-          description: "Define individual services and combined grooming packages with clear durations and pricing.",
+          title: "Service management",
+          description:
+            "Define your grooming services with clear descriptions, durations, and pricing so customers know what they are booking.",
         },
         {
           title: "Memberships",
-          description: "Offer monthly grooming memberships that lock in regular visits and create a dependable revenue stream.",
+          description:
+            "Offer memberships that encourage regular visits and make it easier to build lasting customer relationships.",
         },
         {
           title: "Loyalty",
-          description: "Reward returning customers with points and perks that reinforce the habit of choosing your business.",
+          description:
+            "Use loyalty features to reward returning customers and encourage them to keep choosing your business.",
         },
         {
           title: "Customer management",
-          description: "Customer profiles hold visit history, preferences and notes — so every visit reflects the relationship built over time.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
         },
         {
           title: "Payments",
-          description: "Accept secure online payments at checkout and track revenue by service and professional.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
         },
       ]}
       useCases={[
@@ -69,15 +83,15 @@ export default function MensGroomingPage() {
         "Beard shaping and maintenance",
         "Hot towel shaving services",
         "Scalp treatments",
-        "Grooming packages — cut, beard and skin",
-        "Monthly grooming memberships",
-        "Skin care consultations for men",
-        "Repeat customer scheduling and rebooking",
+        "Hair and beard services",
+        "Men's grooming memberships",
+        "Men's skin care services",
+        "Online booking and repeat appointments",
       ]}
       benefits={[
-        "Memberships create a predictable monthly revenue base",
-        "Fast rebooking keeps your regulars on the right cadence",
-        "A premium software matches the environment you have created in-studio",
+        "Manage grooming services, customers, bookings, memberships, and payments from one place",
+        "Online booking makes repeat appointments simple for returning customers",
+        "Memberships and loyalty programs help encourage customers to come back regularly",
       ]}
       relatedSolutions={[
         { label: "Barbershops", to: "/solutions/barbershop" },

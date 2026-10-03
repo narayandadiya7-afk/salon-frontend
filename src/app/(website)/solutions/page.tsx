@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
-import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
+import {
+  SiteShell,
+  PageHero,
+} from "@/components/admin/admin-website/site-shell";
+import {
+  ClosingCta,
+  SectionHeading,
+} from "@/components/admin/admin-website/marketing-sections";
 
 const TITLE = "Solutions — Beauty, Wellness, Grooming & Personal-Care Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho fits hair salons, barbershops, spas, nail studios, massage therapists, skin care studios, makeup artists, wellness centres and independent professionals.";
+  "Fyncho fits hair salons, barbershops, spas, nail studios, massage therapists, skin care studios, makeup artists, wellness centers, and independent professionals.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -20,32 +27,32 @@ const solutionGroups = [
     solutions: [
       {
         t: "Hair Salons",
-        d: "Colour timings, multi-stage services and stylist-level booking rules built into the calendar.",
+        d: "Manage hair services, durations, stylist schedules, online bookings, customers, and payments in one place.",
         to: "/solutions/hair-salon",
       },
       {
         t: "Beauty Salons",
-        d: "Full-service booking, service menus with add-ons, and a customer-facing software that matches your brand.",
+        d: "Manage a wide range of beauty services, team schedules, customers, bookings, memberships, and payments.",
         to: "/solutions/beauty-salon",
       },
       {
         t: "Nail Salons",
-        d: "Short-service menus, technician scheduling, add-ons and a gallery that shows the work clearly.",
+        d: "Manage nail services, team availability, online bookings, customer information, and payments with ease.",
         to: "/solutions/nail-salon",
       },
       {
         t: "Lash & Brow Studios",
-        d: "Appointment-based scheduling with precise treatment durations and customer patch-test records.",
+        d: "Manage lash and brow services, team schedules, customer appointments, gallery content, and online bookings.",
         to: "/solutions/lash-brow",
       },
       {
         t: "Makeup Artists",
-        d: "Bridal, event and party bookings with packages, deposits and a polished professional profile.",
+        d: "Manage makeup services, online bookings, customers, deposits, payments, and your professional gallery.",
         to: "/solutions/makeup-artist",
       },
       {
         t: "Bridal Services",
-        d: "Trial appointments, wedding-day bookings, packages and the detailed planning that bridal customers expect.",
+        d: "Manage bridal beauty services, important appointments, customers, deposits, payments, and your professional presence.",
         to: "/solutions/bridal",
       },
     ],
@@ -55,27 +62,27 @@ const solutionGroups = [
     solutions: [
       {
         t: "Spa",
-        d: "Spa bookings, treatment packages, memberships, and therapist scheduling with calm, professional business software.",
+        d: "Manage spa services, team schedules, online bookings, customers, memberships, and payments in one place.",
         to: "/solutions/spa",
       },
       {
         t: "Massage Therapy",
-        d: "Therapist availability, treatment types, intake forms and series bookings managed from one place.",
+        d: "Manage massage services, practitioner availability, online bookings, customers, deposits, and payments.",
         to: "/solutions/massage-therapy",
       },
       {
         t: "Wellness Centers",
-        d: "Multi-practitioner scheduling, memberships and a clean customer journey for mind-and-body businesses.",
+        d: "Bring wellness services, team schedules, customers, bookings, memberships, and payments together in one platform.",
         to: "/solutions/wellness",
       },
       {
         t: "Skin Care & Facials",
-        d: "Consultation flows, treatment records and a customer-facing booking experience suited to aesthetic services.",
+        d: "Manage skin care services, appointment scheduling, team availability, customers, memberships, and payments.",
         to: "/solutions/skincare",
       },
       {
         t: "Waxing & Hair Removal",
-        d: "Short, high-frequency appointments with preferred-technician booking and reminders that keep clients on cycle.",
+        d: "Manage waxing services, team schedules, repeat bookings, customers, deposits, and payments from one place.",
         to: "/solutions/waxing",
       },
     ],
@@ -85,17 +92,17 @@ const solutionGroups = [
     solutions: [
       {
         t: "Barbershops",
-        d: "Fast rebooking, walk-in management and loyalty for customers who return every few weeks.",
+        d: "Manage grooming services, barber schedules, online bookings, customers, loyalty, and payments.",
         to: "/solutions/barbershop",
       },
       {
         t: "Men's Grooming",
-        d: "Grooming packages, memberships and a modern booking experience built for today's grooming customer.",
+        d: "Manage grooming services, memberships, loyalty, customer relationships, bookings, and payments.",
         to: "/solutions/mens-grooming",
       },
       {
         t: "Freelancers",
-        d: "A professional software, direct bookings and customer management for beauty and wellness freelancers.",
+        d: "Professional business software for independent beauty and wellness professionals with online booking and customer management.",
         to: "/solutions/freelancers",
       },
     ],
@@ -108,7 +115,7 @@ export default function SolutionsPage() {
       <PageHero
         eyebrow="Solutions"
         title={<>Built for the way your business actually runs.</>}
-        intro="The platform is the same. The fit is not. Fyncho adapts to the rhythm of your trade — from a single-chair studio to a multi-location group."
+        intro="The platform is the same. The fit is not. Fyncho adapts to the needs of service-based businesses — from an independent professional to a growing team or multi-location business."
         image="/assets/admin-website/avivane-banner-craft.jpg"
         imageAlt="Beauty professional styling a customer in a premium studio"
       />
@@ -116,18 +123,32 @@ export default function SolutionsPage() {
       {solutionGroups.map((group, gi) => (
         <section
           key={group.group}
-          className={`py-16 sm:py-20 ${gi % 2 === 1 ? "border-y border-line bg-surface" : ""}`}
+          className={`py-16 sm:py-20 ${
+            gi % 2 === 1 ? "border-y border-line bg-surface" : ""
+          }`}
         >
           <div className="mx-auto max-w-6xl px-6">
             <div className="mb-10">
               <p className="eyebrow">{group.group}</p>
             </div>
+
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {group.solutions.map((s, i) => (
-                <Link key={s.t} href={s.to} className="card-lux block p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
-                  <span className="numeral">{String(i + 1).padStart(2, "0")}</span>
+                <Link
+                  key={s.t}
+                  href={s.to}
+                  className="card-lux block p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+                >
+                  <span className="numeral">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
                   <h2 className="mt-4 text-2xl">{s.t}</h2>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
+
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {s.d}
+                  </p>
+
                   <span className="mt-5 block font-mono text-xs uppercase tracking-[0.18em] text-brass">
                     Learn more →
                   </span>
@@ -151,20 +172,42 @@ export default function SolutionsPage() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
             eyebrow="A platform that fits the trade"
-            title="Different businesses need different rules — not different systems."
-            description="Fyncho adapts scheduling, service structure and customer journeys to the operating model behind your brand."
+            title="Different businesses need different services — not different systems."
+            description="Fyncho brings services, team management, customers, bookings, payments, memberships, and loyalty together in one business platform."
           />
+
           <div className="mt-12 divide-y divide-line border-y border-line">
             {[
-              ["Time", "Control service duration, processing time, buffers, simultaneous appointments and room availability."],
-              ["People", "Set working hours, skills, pricing levels and booking eligibility for every professional on your team."],
-              ["Value", "Support deposits, packages, memberships, add-ons and repeat-booking incentives."],
-              ["Scale", "Keep each location distinct while seeing performance across the whole business."],
+              [
+                "Services",
+                "Manage your services with clear descriptions, durations, and pricing so customers know exactly what they are booking.",
+              ],
+              [
+                "People",
+                "Manage team members, availability, schedules, services, and appointments in one place.",
+              ],
+              [
+                "Customers",
+                "Keep customer profiles and appointment history organized so your team can provide a consistent experience.",
+              ],
+              [
+                "Growth",
+                "Use online booking, deposits, payments, memberships, loyalty, and business reports to support your day-to-day operations and customer relationships.",
+              ],
             ].map(([title, copy], index) => (
-              <div key={title} className="grid gap-4 py-7 sm:grid-cols-12">
-                <span className="font-mono text-xs text-brass sm:col-span-1">0{index + 1}</span>
+              <div
+                key={title}
+                className="grid gap-4 py-7 sm:grid-cols-12"
+              >
+                <span className="font-mono text-xs text-brass sm:col-span-1">
+                  0{index + 1}
+                </span>
+
                 <h3 className="text-2xl sm:col-span-3">{title}</h3>
-                <p className="leading-relaxed text-muted-foreground sm:col-span-8">{copy}</p>
+
+                <p className="leading-relaxed text-muted-foreground sm:col-span-8">
+                  {copy}
+                </p>
               </div>
             ))}
           </div>
@@ -174,33 +217,38 @@ export default function SolutionsPage() {
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
-            eyebrow="From one chair to many locations"
-            title="Your operating model can change without rebuilding your digital presence."
-            description="Begin with the essentials, then introduce more staff, rooms, membership programmes or locations when the business is ready."
+            eyebrow="From independent professionals to growing businesses"
+            title="Your business can grow without changing the platform."
+            description="Start with the tools you need today and manage more customers, team members, services, and locations as your business grows."
           />
+
           <div className="grid gap-4 sm:grid-cols-2">
             {[
               [
                 "Independent",
-                "Everything you need to run your business, manage customers, and stay in control.",
+                "Everything you need to manage your services, customers, bookings, payments, and daily business operations.",
               ],
               [
                 "Growing Team",
-                "Bring your team, appointments, services, and customers together in one place.",
+                "Bring your team, appointments, services, schedules, and customers together in one place.",
               ],
               [
                 "Specialist Studio",
-                "Showcase your expertise, manage bookings, and build lasting customer relationships.",
+                "Present your services professionally, manage bookings, and build lasting customer relationships.",
               ],
               [
                 "Multi-Location Group",
-                "Manage multiple locations, teams, and day-to-day operations from one platform.",
+                "Manage multiple locations, teams, services, customers, and bookings from one platform.",
               ],
             ].map(([title, copy], index) => (
               <div key={title} className="card-lux p-7">
                 <span className="numeral">0{index + 1}</span>
+
                 <h3 className="mt-4 text-2xl">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{copy}</p>
+
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {copy}
+                </p>
               </div>
             ))}
           </div>
@@ -209,7 +257,7 @@ export default function SolutionsPage() {
 
       <ClosingCta
         title="Choose a platform that fits the business you are building."
-        description="Launch your software now and add the operational depth your business needs as it grows."
+        description="Launch your business software with the tools you need today and grow with Fyncho as your business evolves."
         secondary={{ label: "Explore Features", to: "/features" }}
       />
     </SiteShell>

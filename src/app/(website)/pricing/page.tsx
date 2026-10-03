@@ -3,33 +3,35 @@ import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell
 import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
 
 /**
- * Fyncho charges a single platform fee on the eligible booking and payment
- * value processed through it, not a monthly subscription. Components must not
- * hardcode the percentage — import these so one change updates the whole site.
+ * Fyncho uses a percentage-based platform fee rather than monthly plans.
+ * Keep the percentage configurable so it can be changed from one place.
  */
 const configured = Number.parseFloat(process.env.NEXT_PUBLIC_PLATFORM_FEE_PERCENTAGE ?? "");
 const PLATFORM_FEE_PERCENTAGE = Number.isFinite(configured) ? configured : 1;
 
-/** The fee as it appears in headings, e.g. "1%". */
 const PLATFORM_FEE_LABEL = `${PLATFORM_FEE_PERCENTAGE}%`;
-
-/** The fee written out, for body copy and structured data. */
 const PLATFORM_FEE_LONG_LABEL = `${PLATFORM_FEE_PERCENTAGE} percent`;
 
-const TITLE = "Pricing — Pay Only on Bookings Processed Through Fyncho";
-const DESCRIPTION = `One clear rate. Fyncho has no monthly plans, no setup fee and no feature tiers — every salon gets the full platform and pays ${PLATFORM_FEE_LONG_LABEL} of the booking value processed through it.`;
+const TITLE = "Pricing — Simple Percentage-Based Pricing | Fyncho";
+const DESCRIPTION = `Fyncho has no monthly subscription, setup fee or feature tiers. Businesses pay ${PLATFORM_FEE_LONG_LABEL} on eligible booking and payment value processed through Fyncho, plus any applicable payment gateway processing fees.`;
 
 export const metadata: Metadata = {
   title: `${TITLE} | Fyncho`,
   description: DESCRIPTION,
-  openGraph: { title: `${TITLE} | Fyncho`, description: DESCRIPTION, type: "website" },
-  twitter: { card: "summary_large_image" },
+  openGraph: {
+    title: `${TITLE} | Fyncho`,
+    description: DESCRIPTION,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 const GATEWAY_LABEL = "Payment gateway processing fee";
 const GATEWAY_VALUE = "Applicable";
 const GATEWAY_DETAIL =
-  "charged on online payments and varying by payment method. Fyncho configures the payment gateway for your business.";
+  "A separate fee may apply to online payments depending on the payment gateway and payment method.";
 
 const chargeTone = {
   onDark: {
@@ -46,13 +48,6 @@ const chargeTone = {
   },
 } as const;
 
-/**
- * The second charge that can apply to a booking, always presented directly
- * beneath the Fyncho platform fee so the two are read together. The amount is
- * deliberately not a number: payment gateways set their own rates and Fyncho
- * configures the gateway for each business, so it is labelled as applicable
- * rather than estimated.
- */
 function GatewayCharge({ tone }: { tone: keyof typeof chargeTone }) {
   const t = chargeTone[tone];
 
@@ -61,8 +56,10 @@ function GatewayCharge({ tone }: { tone: keyof typeof chargeTone }) {
       <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${t.label}`}>
         <span className="text-brass">+</span> {GATEWAY_LABEL}
       </p>
+
       <p className={`mt-3 max-w-[42ch] text-sm leading-relaxed ${t.body}`}>
-        <span className={`font-semibold ${t.value}`}>{GATEWAY_VALUE}</span> — {GATEWAY_DETAIL}
+        <span className={`font-semibold ${t.value}`}>{GATEWAY_VALUE}</span> —{" "}
+        {GATEWAY_DETAIL}
       </p>
     </div>
   );
@@ -71,15 +68,18 @@ function GatewayCharge({ tone }: { tone: keyof typeof chargeTone }) {
 const assurances = [
   {
     title: "No monthly subscription",
-    description: "There is no fixed amount to keep your software online, and no bill waiting at the end of the month.",
+    description:
+      "There is no fixed monthly software subscription. Your Fyncho platform fee follows the eligible booking and payment value processed through the platform.",
   },
   {
     title: "No setup fee",
-    description: "Creating your business, claiming your address and publishing your first listings costs nothing.",
+    description:
+      "Creating your business and setting up your Fyncho business software does not require a separate setup fee.",
   },
   {
-    title: "No feature-based plans",
-    description: "The whole platform is standard from day one. Every capability is included as part of it.",
+    title: "No feature tiers",
+    description:
+      "There are no Starter, Professional or Business plans. The Fyncho platform is available without feature-based subscription tiers.",
   },
 ];
 
@@ -87,17 +87,17 @@ const steps = [
   {
     n: "01",
     t: "Set up your business",
-    d: "Create your Fyncho business software, services, team, booking experience, and business profile. Your unique business address is ready from the moment you go live.",
+    d: "Create your Fyncho business software, add your services and team, configure your booking settings and publish your business presence.",
   },
   {
     n: "02",
     t: "Accept bookings",
-    d: "Customers discover your services and book appointments through your Fyncho-powered booking experience, and pay online where you enable it.",
+    d: "Customers explore your services, see available appointment times and book through your Fyncho business presence.",
   },
   {
     n: "03",
     t: "Pay as you grow",
-    d: `Fyncho charges ${PLATFORM_FEE_LABEL} of eligible booking and payment value processed through the platform. A quieter month simply costs less.`,
+    d: `Fyncho charges ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Your platform fee therefore follows the activity coming through Fyncho.`,
   },
 ];
 
@@ -106,56 +106,57 @@ const included = [
     title: "Your business presence",
     points: [
       "Professional business software",
-      "Unique business URL",
+      "Unique business address",
       "Services, gallery and team profiles",
-      "Business profile and information",
-      "Content management for your pages",
+      "Business information and contact details",
+      "Business content management",
     ],
   },
   {
     title: "The booking journey",
     points: [
       "Online booking",
-      "Real-time availability",
+      "Service availability",
       "Appointment management",
       "Booking status and queue visibility",
-      "Customer notifications",
+      "Appointment reminders and notifications",
     ],
   },
   {
     title: "Services and team",
     points: [
       "Service management",
-      "Team and staff management",
-      "Rosters, working hours and availability",
-      "Roles and permissions for your staff",
+      "Service descriptions, durations and pricing",
+      "Team management",
+      "Working hours and availability",
+      "Staff roles and permissions",
     ],
   },
   {
     title: "Customers",
     points: [
       "Customer management",
-      "Customer portal for your customers",
-      "Visit history and preferences",
-      "Membership and loyalty capabilities",
+      "Customer accounts",
+      "Appointment history",
+      "Memberships and loyalty",
     ],
   },
   {
-    title: "Payments and reporting",
+    title: "Payments",
     points: [
-      "Payment collection",
-      "Revenue analytics",
-      "Booking analytics",
-      "Finance and reporting views",
+      "Online payment collection",
+      "Booking deposits",
+      "Payment requirements",
+      "Payment and booking information",
     ],
   },
   {
-    title: "Running the business",
+    title: "Business management",
     points: [
-      "Business Management Dashboard",
-      "Customer insights",
-      "Marketing and follow-up",
-      "Guided setup from account to live site",
+      "Business management dashboard",
+      "Revenue reporting",
+      "Booking reporting",
+      "Business activity overview",
     ],
   },
 ];
@@ -164,99 +165,95 @@ const audiences = [
   {
     title: "Independent",
     description:
-      "For independent professionals and business owners who want professional tools to manage customers, services, bookings, and daily operations.",
+      "For independent professionals and business owners who want professional tools to manage services, customers, bookings and daily operations.",
   },
-
   {
     title: "Growing Team",
     description:
-      "For businesses with a growing team that need to manage staff, services, schedules, appointments, and customers in one place.",
+      "For businesses with a growing team that need to manage staff, services, schedules, appointments and customers in one place.",
   },
-
   {
     title: "Specialist Studio",
     description:
-      "For focused service businesses where specialized services, customer relationships, and a smooth booking experience matter most.",
+      "For focused service businesses where specialised services, customer relationships and a smooth booking experience matter most.",
   },
-
   {
     title: "Multi-location Group",
     description:
-      "For businesses operating across multiple locations, with the tools to manage teams, services, customers, bookings, and operations across each location.",
+      "For businesses operating across multiple locations that want to manage their business activity through one platform.",
   },
 ];
-
 
 const faqs = [
   {
     q: "Is there a monthly subscription?",
-    a: "No. Fyncho's pricing is based on the eligible booking and payment value processed through the platform, rather than a fixed monthly subscription.",
-  },
-  {
-    q: "Are features restricted by plan?",
-    a: `No. Fyncho does not use feature-based subscription tiers. Every business receives the same platform capabilities and the same ${PLATFORM_FEE_LABEL} rate.`,
+    a: "No. Fyncho uses a percentage-based platform fee instead of a fixed monthly subscription.",
   },
   {
     q: "What percentage does Fyncho charge?",
-    a: `Fyncho charges ${PLATFORM_FEE_LABEL} of the eligible booking and payment value processed through your Fyncho software. That single figure is the complete platform charge, and it never changes.`,
+    a: `The Fyncho platform fee is ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through Fyncho.`,
   },
   {
-    q: "How will I know what this costs me each month?",
-    a: `The fee follows the booking value your customers bring through Fyncho, so your figure is ${PLATFORM_FEE_LABEL} of whatever you actually take — visible against real bookings rather than a fixed monthly bill. Because the rate never changes, only the value it applies to moves.`,
+    q: "Are features restricted by plan?",
+    a: "No. Fyncho does not use feature-based subscription tiers. The platform is available without separate feature plans.",
   },
   {
     q: "Is there a setup fee?",
-    a: "No. Creating your business, claiming your Fyncho address and publishing your software carry no setup fee.",
+    a: "No. Fyncho does not charge a separate setup fee for creating and setting up your business software.",
   },
   {
-    q: "Do payment gateways charge separately?",
-    a: `A payment gateway processing fee applies to online payments where applicable, and it is a separate amount from the Fyncho platform fee. Fyncho configures the payment gateway for your business, so there is nothing for you to set up or research. Your Fyncho fee remains ${PLATFORM_FEE_LABEL} as stated — the two amounts are never combined.`,
+    q: "Are payment gateway fees included in the Fyncho fee?",
+    a: `No. The ${PLATFORM_FEE_LABEL} Fyncho platform fee is separate from any payment gateway processing fee that may apply to online payments.`,
+  },
+  {
+    q: "How much is the payment gateway fee?",
+    a: "Payment gateway processing fees vary by gateway, payment method and market. They are separate from the Fyncho platform fee and are not included in the percentage shown above.",
   },
   {
     q: "What happens if I have fewer bookings?",
-    a: "A lighter period carries a lighter fee. Because the platform fee is calculated on booking and payment volume, it follows your calendar down as readily as it follows it up.",
+    a: `Because the Fyncho platform fee is percentage-based, the fee applied to your eligible processed value decreases when the value processed through Fyncho decreases.`,
   },
   {
     q: "What happens as my business grows?",
-    a: "Your platform cost scales with your booking activity, so the pricing model grows with the business. The rate itself never changes — only the booking value it applies to.",
+    a: `The platform fee remains ${PLATFORM_FEE_LABEL}. As more eligible booking and payment value is processed through Fyncho, the amount paid in platform fees increases proportionally.`,
   },
 ];
 
 type ChargeLine = {
   label: string;
   detail: string;
-  /** A rate Fyncho can state outright. */
   rate?: string;
-  /** Used when the rate belongs to a third party and cannot be stated. */
   rateNote?: string;
 };
 
 const charges: ChargeLine[] = [
   {
     label: "Fyncho platform fee",
-    detail: `${PLATFORM_FEE_LABEL} of the eligible booking and payment value processed through your Fyncho software. One rate, the same for every business, covering the entire platform.`,
+    detail: `${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through your Fyncho software.`,
     rate: PLATFORM_FEE_LABEL,
   },
   {
     label: "Payment gateway processing fee",
     detail:
-      "Where applicable, charged on each online transaction and varying by payment method. Fyncho configures the payment gateway for your business, so this is handled as part of your setup.",
+      "A separate third-party processing fee may apply to online payments. The applicable amount depends on the payment gateway and payment method.",
     rateNote: "Applicable",
   },
 ];
 
 const modelComparison = {
   traditional: {
-    label: "Traditional model",
-    headline: "Fixed monthly subscription",
-    detail: "A flat figure that stays the same whether bookings are low or high.",
-    formula: "Fixed monthly fee → the same amount regardless of volume",
+    label: "Subscription model",
+    headline: "Fixed monthly payment",
+    detail:
+      "A recurring software charge that remains due regardless of how much booking activity your business has.",
+    formula: "Monthly subscription → fixed software cost",
   },
   fyncho: {
     label: "Fyncho model",
-    headline: `${PLATFORM_FEE_LABEL} on bookings processed`,
-    detail: "A single rate that settles in proportion to the business you run.",
-    formula: "Booking activity → small platform fee → cost scales with usage",
+    headline: `${PLATFORM_FEE_LABEL} on eligible processed value`,
+    detail:
+      "A percentage-based platform fee that follows the eligible booking and payment value processed through Fyncho.",
+    formula: "Processed booking value → platform fee → usage-based cost",
   },
 };
 
@@ -265,35 +262,47 @@ export default function PricingPage() {
     <SiteShell>
       <PageHero
         eyebrow="Pricing"
-        title={<>Pay as you grow.</>}
-        intro={`No monthly plans. No feature restrictions. Just a simple fee of ${PLATFORM_FEE_LABEL} on bookings processed through Fyncho — a single rate that stays clear, steady and easy to forecast. Online payments also carry a payment gateway processing fee, stated separately as applicable.`}
+        title={<>Pay as your business grows.</>}
+        intro={`No monthly subscription. No feature tiers. Fyncho charges ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Online payments may also carry a separate payment gateway processing fee.`}
         image="/assets/admin-website/avivane-banner-interior.jpg"
-        imageAlt="Elegant modern beauty studio interior with brass details"
+        imageAlt="Elegant modern service business interior"
       />
 
-      {/* Pricing model — the percentage is the focal point, not a plan card. */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
         <div className="relative overflow-hidden rounded-3xl bg-primary px-8 py-14 shadow-lift ring-1 ring-brass/30 sm:px-14 sm:py-20">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-6">
               <span className="rule-brass" />
-              <p className="eyebrow mt-7">A simple fee on bookings</p>
+
+              <p className="eyebrow mt-7">One clear platform fee</p>
+
               <p className="mt-5 font-display text-7xl leading-[0.85] text-brass sm:text-8xl lg:text-9xl">
                 {PLATFORM_FEE_LABEL}
               </p>
+
               <p className="mt-6 max-w-[34ch] text-lg leading-relaxed text-pretty text-primary-foreground/70">
-                of eligible booking and payment value processed through your Fyncho software.
+                on eligible booking and payment value processed through your Fyncho
+                business software.
               </p>
+
               <GatewayCharge tone="onDark" />
             </div>
+
             <ul className="divide-y divide-primary-foreground/15 border-y border-primary-foreground/15 lg:col-span-6">
               {assurances.map((item, i) => (
-                <li key={item.title} className="grid grid-cols-[auto_1fr] gap-x-5 py-6">
+                <li
+                  key={item.title}
+                  className="grid grid-cols-[auto_1fr] gap-x-5 py-6"
+                >
                   <span className="font-mono text-[11px] tracking-[0.18em] text-brass/70">
                     {String(i + 1).padStart(2, "0")}
                   </span>
+
                   <div>
-                    <h2 className="text-2xl text-primary-foreground">{item.title}</h2>
+                    <h2 className="text-2xl text-primary-foreground">
+                      {item.title}
+                    </h2>
+
                     <p className="mt-2 max-w-[44ch] text-sm leading-relaxed text-primary-foreground/60">
                       {item.description}
                     </p>
@@ -305,39 +314,46 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Traditional vs Fyncho */}
       <section className="border-y border-line bg-surface py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
             eyebrow="Why it works differently"
-            title="Fyncho grows with your business, not against it."
-            description="With a booking-based fee, the amount settles where the work is. A lighter week costs proportionately less and a full one proportionately more, which keeps the figure easy to read and easy to plan around."
+            title="A pricing model that follows your booking activity."
+            description="Instead of paying a fixed software subscription every month, your Fyncho platform fee is based on the eligible booking and payment value processed through the platform."
           />
+
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             <div className="card-lux bg-background p-8 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                 {modelComparison.traditional.label}
               </p>
+
               <p className="mt-5 font-display text-3xl leading-tight sm:text-4xl">
                 {modelComparison.traditional.headline}
               </p>
+
               <p className="mt-3 max-w-[44ch] text-sm leading-relaxed text-muted-foreground">
                 {modelComparison.traditional.detail}
               </p>
+
               <p className="mt-6 border-t border-line pt-5 font-mono text-xs leading-relaxed text-muted-foreground">
                 {modelComparison.traditional.formula}
               </p>
             </div>
+
             <div className="rounded-2xl bg-primary p-8 text-primary-foreground shadow-lift ring-1 ring-brass/40 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brass">
                 {modelComparison.fyncho.label}
               </p>
+
               <p className="mt-5 font-display text-3xl leading-tight sm:text-4xl">
                 {modelComparison.fyncho.headline}
               </p>
+
               <p className="mt-3 max-w-[44ch] text-sm leading-relaxed text-primary-foreground/70">
                 {modelComparison.fyncho.detail}
               </p>
+
               <p className="mt-6 border-t border-primary-foreground/20 pt-5 font-mono text-xs leading-relaxed text-primary-foreground/60">
                 {modelComparison.fyncho.formula}
               </p>
@@ -346,13 +362,13 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* How it works */}
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="How it works"
-          title="Three steps, and the fee follows the bookings."
-          description="The fee settles alongside the bookings you actually take, which keeps your monthly figure proportionate and straightforward to anticipate."
+          title="Three steps, and the platform fee follows the value processed."
+          description="Set up your business, start accepting bookings and let the percentage-based platform fee follow the eligible booking and payment value processed through Fyncho."
         />
+
         <ol className="mt-12 border-t border-line">
           {steps.map((step) => (
             <li
@@ -362,37 +378,49 @@ export default function PricingPage() {
               <span className="font-display text-4xl text-brass/70 transition-colors duration-300 group-hover:text-brass sm:col-span-2">
                 {step.n}
               </span>
+
               <h3 className="text-3xl sm:col-span-4">{step.t}</h3>
-              <p className="max-w-[56ch] text-pretty text-muted-foreground sm:col-span-6">{step.d}</p>
+
+              <p className="max-w-[56ch] text-pretty text-muted-foreground sm:col-span-6">
+                {step.d}
+              </p>
             </li>
           ))}
         </ol>
       </section>
 
-      {/* Everything included */}
       <section className="border-y border-line bg-surface py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
             eyebrow="No feature restrictions"
             title="Everything you need. One platform."
-            description="Every capability below is part of the standard Fyncho platform, available to your business from the first day. There are no tiers to choose between and nothing to upgrade in order to use it."
+            description="Every capability below is part of the standard Fyncho platform. There are no feature-based subscription tiers."
           />
+
           <img
             src="/assets/admin-website/dashboard-preview.jpg"
-            alt="The Fyncho owner dashboard showing appointments, revenue and customers"
+            alt="Fyncho business management dashboard showing appointments, revenue and customers"
             loading="lazy"
             width={1408}
             height={912}
             className="mt-10 w-full rounded-2xl border border-line bg-background shadow-lift"
           />
+
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {included.map((group, i) => (
               <div key={group.title} className="card-lux bg-background p-7">
-                <span className="numeral">{String(i + 1).padStart(2, "0")}</span>
+                <span className="numeral">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
                 <h3 className="mt-4 text-2xl">{group.title}</h3>
+
                 <ul className="mt-5 space-y-3 text-sm">
                   {group.points.map((point) => (
-                    <li key={point} className="flex gap-3 text-muted-foreground">
+                    <li
+                      key={point}
+                      className="flex gap-3 text-muted-foreground"
+                    >
                       <span aria-hidden="true" className="text-brass">
                         ✓
                       </span>
@@ -406,13 +434,13 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Who Fyncho is for */}
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="Who Fyncho is for"
-          title="The same platform, whichever kind of business you run."
-          description="These are business types, not pricing tiers. Each one runs on the same platform with the same capabilities and the same booking-based fee — Fyncho simply scales with whichever you are."
+          title="The same platform, whichever kind of service business you run."
+          description="These are business types, not pricing tiers. The platform and percentage-based pricing model remain the same."
         />
+
         <div className="mt-12 divide-y divide-line border-y border-line">
           {audiences.map((audience, i) => (
             <article
@@ -422,9 +450,11 @@ export default function PricingPage() {
               <span className="font-mono text-xs text-brass transition-colors duration-300 group-hover:text-brass-soft sm:col-span-1">
                 {String(i + 1).padStart(2, "0")}
               </span>
+
               <h3 className="text-2xl transition-colors duration-300 group-hover:text-brass-soft sm:col-span-3">
                 {audience.title}
               </h3>
+
               <p className="max-w-[62ch] leading-relaxed text-muted-foreground sm:col-span-8">
                 {audience.description}
               </p>
@@ -433,15 +463,14 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Payment transparency */}
       <section className="border-y border-line bg-surface py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHeading
                 eyebrow="Payment transparency"
-                title="Payment processing is separate."
-                description="When a customer pays you through Fyncho, two clearly labelled amounts can apply to the same booking. Both are stated here as rates, so there is nothing further to work out before you start."
+                title="Your platform fee and payment gateway fee are separate."
+                description="When customers pay online through Fyncho, the Fyncho platform fee and any payment gateway processing fee are separate charges."
               />
             </div>
 
@@ -455,15 +484,21 @@ export default function PricingPage() {
                     >
                       <div>
                         <dt className="flex items-center gap-3 text-lg font-semibold">
-                          <span aria-hidden="true" className="font-mono text-xs text-brass/60">
+                          <span
+                            aria-hidden="true"
+                            className="font-mono text-xs text-brass/60"
+                          >
                             {String(i + 1).padStart(2, "0")}
                           </span>
+
                           {charge.label}
                         </dt>
+
                         <dd className="mt-2 max-w-[46ch] pl-7 text-sm leading-relaxed text-muted-foreground">
                           {charge.detail}
                         </dd>
                       </div>
+
                       {charge.rate ? (
                         <p className="font-display text-5xl leading-none sm:text-6xl">
                           {charge.rate}
@@ -479,10 +514,9 @@ export default function PricingPage() {
 
                 <div className="border-t border-line bg-surface px-7 py-6">
                   <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                    The two are shown separately and are never combined, so your Fyncho platform fee
-                    stays at {PLATFORM_FEE_LABEL}. Gateway processing rates vary by payment method,
-                    which is why Fyncho does not quote a figure here — the rate that applies to your
-                    business is confirmed when we configure the gateway as part of your setup.
+                    Fyncho's platform fee remains {PLATFORM_FEE_LABEL}. Any payment
+                    gateway processing fee is separate and depends on the gateway and
+                    payment method used.
                   </p>
                 </div>
               </div>
@@ -491,30 +525,34 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 py-20 sm:py-28">
-        <SectionHeading eyebrow="Pricing questions" title="Straight answers before you decide." />
+        <SectionHeading
+          eyebrow="Pricing questions"
+          title="Straight answers before you decide."
+        />
+
         <div className="mt-8 divide-y divide-line border-y border-line">
           {faqs.map((faq) => (
             <details key={faq.q} className="group py-6">
               <summary className="flex cursor-pointer list-none justify-between gap-6 font-display text-2xl transition-colors duration-300 group-hover:text-brass-soft">
                 {faq.q}
+
                 <span className="font-mono text-brass transition-transform duration-300 group-open:rotate-45">
                   +
                 </span>
               </summary>
+
               <p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
                 {faq.a}
               </p>
             </details>
           ))}
         </div>
-    
       </section>
 
       <ClosingCta
-        title="Your business, online — at one clear rate."
-        description={`Create your business software, start taking bookings, and pay a single ${PLATFORM_FEE_LABEL} platform fee on the bookings that come through it. Online payments also carry a payment gateway processing fee, shown separately as applicable.`}
+        title="Your business, online — at one clear platform rate."
+        description={`Create your Fyncho business software, start taking bookings and pay ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Any payment gateway processing fee is separate.`}
         primary={{ label: "Start with Fyncho", to: "/register" }}
         secondary={{ label: "Talk to us", to: "/contact" }}
       />

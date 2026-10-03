@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Bridal Beauty Services Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps bridal beauty professionals manage wedding bookings, trial appointments, packages, deposits and client planning — all from one platform.";
+  "Fyncho helps bridal beauty professionals manage online bookings, services, customers, deposits and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,38 +18,80 @@ export default function BridalPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Bridal Services"
-      heroTitle={<>Bridal beauty management built for the detail that weddings demand.</>}
-      heroIntro="Fyncho gives bridal beauty professionals a professional software, structured booking flows and the tools to manage every trial, wedding-day appointment and bridal party — without losing a detail."
+      heroTitle={
+        <>Bridal beauty management built for the detail that weddings demand.</>
+      }
+      heroIntro="Fyncho gives bridal beauty professionals professional business software, online booking, and the tools to manage services, customers, appointments, and payments in one place."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
       heroImageAlt="Bridal beauty preparation with professional hair and makeup setup"
       challenges={[
-        { title: "Complex multi-appointment planning", description: "Bridal bookings span months — a trial, wedding morning prep and sometimes a party. Managing the full timeline needs structure." },
-        { title: "Deposits for high-value dates", description: "Wedding-day bookings deserve a deposit. Without a system, this is awkward to request and hard to track." },
-        { title: "One-time, high-value customers", description: "A bridal customer is usually a one-off booking with no visit history to lean on. Every preference has to be captured carefully at the trial so the wedding day runs smoothly." },
-        { title: "Professional portfolio presentation", description: "Brides research extensively before booking. A gallery of real bridal work on a professional software builds the confidence to enquire." },
+        {
+          title: "Managing important appointments",
+          description:
+            "Bridal services often involve appointments that need careful planning. Keeping services, durations, team availability, and bookings organized helps create a smoother experience.",
+        },
+        {
+          title: "Deposits for important bookings",
+          description:
+            "High-value appointments can benefit from payment requirements at booking. Managing deposits manually can create unnecessary administrative work.",
+        },
+        {
+          title: "Customer information",
+          description:
+            "Bridal customers need a smooth and consistent experience throughout their appointments. Keeping customer profiles and appointment history organized helps your team stay informed.",
+        },
+        {
+          title: "Professional presentation",
+          description:
+            "Brides often explore a business before deciding to book. A professional online presence with clear services, team information, and a gallery helps customers understand what you offer.",
+        },
       ]}
       howFynchoHelps={[
-        { title: "Online booking", description: "Brides book trial and wedding-day appointments directly from your software, with clear service descriptions and durations." },
-        { title: "Services & packages", description: "Define bridal packages — trial only, trial + wedding day, bridal party rates — with pricing and booking rules." },
-        { title: "Deposits", description: "Collect a deposit to secure wedding-date bookings. This protects your diary and sets professional expectations." },
-        { title: "Customer management", description: "Customer profiles hold trial notes, wedding-day preferences, timeline requirements and any agreed details." },
-        { title: "Gallery", description: "Showcase real bridal work through your branded software gallery — the most persuasive tool for a booking decision." },
-        { title: "Payments", description: "Accept deposits and final payments through your software. Track bridal booking revenue by period." },
+        {
+          title: "Online booking",
+          description:
+            "Customers can explore your services and book appointments directly with your business, making it easy to schedule bridal beauty services.",
+        },
+        {
+          title: "Service management",
+          description:
+            "Define your bridal beauty services with clear descriptions, durations, and pricing so customers know what they are booking.",
+        },
+        {
+          title: "Deposits",
+          description:
+            "Require deposits as part of your booking process to help confirm important appointments and reduce unnecessary cancellations.",
+        },
+        {
+          title: "Customer management",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
+        },
+        {
+          title: "Gallery",
+          description:
+            "Showcase your bridal work through your business gallery so potential customers can explore your services and see your work before booking.",
+        },
+        {
+          title: "Payments",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
+        },
       ]}
       useCases={[
-        "Bridal hair and makeup trial appointments",
-        "Wedding morning preparation bookings",
-        "Bridal hair styling and makeup services",
-        "Destination wedding booking management",
-        "Pre-wedding skin preparation treatments",
-        "Bridal package and bundle management",
-        "Deposit collection for wedding-date holds",
-        "Timeline planning notes per customer",
+        "Bridal hair and makeup appointments",
+        "Bridal hair styling services",
+        "Bridal makeup services",
+        "Wedding beauty appointments",
+        "Pre-wedding beauty services",
+        "Bridal beauty service scheduling",
+        "Deposit collection for appointments",
+        "Online booking and appointment management",
       ]}
       benefits={[
-        "Every bridal booking from first enquiry to wedding day is managed in one place",
-        "Deposits and structured packages protect your most important bookings",
-        "A gallery software builds the trust that converts a research browse into a booking",
+        "Manage bridal services, customers, appointments, and payments from one platform",
+        "Deposits and reminders help keep important appointments organized",
+        "A professional business presence helps customers explore your work and book with confidence",
       ]}
       relatedSolutions={[
         { label: "Makeup Artists", to: "/solutions/makeup-artist" },

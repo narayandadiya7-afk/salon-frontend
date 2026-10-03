@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Hair Salon Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps hair salons manage online bookings, stylist schedules, colour services, client records and payments — all from one platform.";
+  "Fyncho helps hair salons manage online bookings, stylist schedules, services, customers and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,72 +18,85 @@ export default function HairSalonPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Hair Salons"
-      heroTitle={<>Hair salon management built around the chair, not the spreadsheet.</>}
-      heroIntro="Fyncho gives hair salons a professional software, online booking and the operational tools to manage every stylist, service and customer — without juggling separate apps."
+      heroTitle={
+        <>Hair salon management built around the chair, not the spreadsheet.</>
+      }
+      heroIntro="Fyncho gives hair salons professional business software, online booking, and the tools to manage services, stylists, customers, and daily operations — all in one place."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
-      heroImageAlt="Hair stylist working with a client in a modern salon"
+      heroImageAlt="Hair stylist working with a customer in a modern salon"
       challenges={[
         {
           title: "Booking across multiple stylists",
-          description: "Customers want to choose their preferred stylist and see real availability — not send a message and wait for a reply.",
+          description:
+            "Hair salons often have multiple stylists with different schedules and availability. Keeping appointments organized across the team can become difficult to manage manually.",
         },
         {
-          title: "Colour service timing",
-          description: "Multi-stage services like colour, processing and finish need precise scheduling so the calendar doesn't overrun.",
+          title: "Managing different service durations",
+          description:
+            "Haircuts, colour services, treatments, and styling can all require different amounts of time. Keeping service durations accurate helps create a smoother booking experience.",
         },
         {
           title: "No-shows and last-minute cancellations",
-          description: "Empty chairs during peak hours have a direct impact on revenue, yet enforcing a cancellation policy is awkward without a system.",
+          description:
+            "Empty appointment slots can have a direct impact on a salon's schedule. Deposits and reminders help businesses manage bookings and reduce unnecessary cancellations.",
         },
         {
-          title: "Customer records scattered across messages",
-          description: "Knowing what colour formula a customer had six months ago — or their preferred stylist — shouldn't require searching through old chats.",
+          title: "Managing customer information",
+          description:
+            "Keeping customer profiles and appointment history organized helps your team provide a more consistent experience every time a customer returns.",
         },
         {
           title: "Managing a growing team",
-          description: "As the team grows, keeping track of individual availability, skills and performance adds up.",
+          description:
+            "As the team grows, keeping track of staff information, availability, services, and appointments becomes more difficult without a central system.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book directly from your salon software, choosing service, stylist and time. No calls, no DMs, no double bookings.",
+          description:
+            "Customers can explore your services and book directly with your salon, making it easier to schedule appointments without calls or messages.",
         },
         {
           title: "Service & duration management",
-          description: "Set precise durations for cuts, colour, processing time and finish. The calendar resolves overlap automatically.",
+          description:
+            "Set durations and pricing for haircuts, colour services, treatments, styling, and other services so customers have clear information when booking.",
         },
         {
-          title: "Staff management",
-          description: "Define working hours, skills and booking eligibility per stylist. Availability updates in real time as bookings come in.",
+          title: "Team management",
+          description:
+            "Manage your stylists, their availability, schedules, and services in one place to keep appointments organized.",
         },
         {
           title: "Customer management",
-          description: "Profiles hold visit history, notes, preferences and spend — so your team always has the context they need before the appointment.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
         },
         {
-          title: "Deposits & confirmations",
-          description: "Collect deposits at checkout to help reduce no-shows. Automated reminders keep customers informed and your schedule running smoothly.",
+          title: "Deposits & reminders",
+          description:
+            "Collect deposits at checkout to help reduce no-shows. Automated reminders keep customers informed and your schedule running smoothly.",
         },
         {
           title: "Payments",
-          description: "Secure online payments make it easy for customers to pay and businesses to manage transactions. Track revenue by service, team member, and period from your business dashboard.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
         },
       ]}
       useCases={[
         "Haircuts and styling appointments",
-        "Colour services — highlights, balayage, full colour",
-        "Hair treatments and keratin smoothing",
+        "Colour services — highlights, balayage, and full colour",
+        "Hair treatments and smoothing services",
         "Blow-dry and finish bookings",
         "Multi-stylist scheduling with individual availability",
-        "Hair extension consultations",
+        "Hair extension services",
         "Bridal and event hair appointments",
-        "Repeat customer rebooking with visit history",
+        "Online booking and repeat appointments",
       ]}
       benefits={[
-        "Customers book themselves — fewer interruptions during services",
-        "Colour and treatment timings resolve automatically in the calendar",
-        "Customer history and notes travel with every appointment",
+        "Customers can book services online while your team stays focused on their work",
+        "Manage services, durations, stylists, customers, and appointments from one place",
+        "Customer information and appointment history stay organized for returning customers",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },

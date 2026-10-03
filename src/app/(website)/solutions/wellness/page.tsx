@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Wellness Center Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps wellness centres manage online bookings, multi-practitioner scheduling, memberships and customer records — all from one platform.";
+  "Fyncho helps wellness centers manage online bookings, services, team schedules, customers, memberships and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,68 +18,80 @@ export default function WellnessPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Wellness Centers"
-      heroTitle={<>Wellness centre management designed for the whole customer journey.</>}
-      heroIntro="Fyncho gives wellness centres a professional software, multi-practitioner booking and the operational tools to manage services, memberships and customer relationships — in one connected platform."
+      heroTitle={
+        <>Wellness center management designed for a smooth customer experience.</>
+      }
+      heroIntro="Fyncho gives wellness centers professional business software, online booking, and the tools to manage services, team schedules, customers, memberships, and payments — all in one place."
       heroImage="/assets/admin-website/avivane-banner-interior.jpg"
-      heroImageAlt="Wellness centre with calm treatment space and natural light"
+      heroImageAlt="Wellness center with calm treatment space and natural light"
       challenges={[
         {
-          title: "Multi-practitioner coordination",
-          description: "Wellness centres often have practitioners across multiple disciplines. Coordinating availability without overlaps is difficult without a central system.",
+          title: "Managing multiple team members",
+          description:
+            "Wellness centers may have team members offering different services and working at different times. Keeping availability, services, and appointments organized can become difficult to manage manually.",
         },
         {
-          title: "Diverse service offerings",
-          description: "A wellness centre may offer massage, nutrition consultations, holistic therapy and energy work — each with different durations and booking requirements.",
+          title: "Managing diverse services",
+          description:
+            "Wellness businesses can offer a range of services with different durations and pricing. Keeping the service menu and booking information organized helps create a smoother customer experience.",
         },
         {
           title: "Customer retention and regular visits",
-          description: "Wellness customers benefit most from consistent, ongoing care. Memberships and loyalty programmes support this but need a system to manage them.",
+          description:
+            "Wellness customers often return regularly. Memberships and loyalty programs can encourage repeat visits while keeping customer and booking information organized.",
         },
         {
           title: "Professional online presence",
-          description: "A wellness centre's credibility depends partly on how it presents itself online. A generic booking page is not the same as a branded software.",
+          description:
+            "Customers often explore a wellness business before booking. A professional online presence with clear services, business information, and booking options makes it easier to understand what you offer.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book their preferred practitioner, service and time directly from your wellness centre software — any time of day.",
+          description:
+            "Customers can explore your services and book directly with your wellness center, making it easy to schedule appointments whenever they need to.",
         },
         {
-          title: "Staff management",
-          description: "Set each practitioner's availability, disciplines and booking rules. The calendar handles coordination automatically.",
+          title: "Team management",
+          description:
+            "Manage your team members, availability, schedules, and services in one place to keep appointments organized.",
         },
         {
           title: "Service management",
-          description: "Define your full service menu across disciplines, with durations, pricing and any specific booking requirements.",
+          description:
+            "Define your services across different wellness disciplines with clear descriptions, durations, and pricing.",
         },
         {
-          title: "Memberships",
-          description: "Offer wellness membership programmes that commit customers to a regular schedule and provide predictable recurring revenue.",
+          title: "Memberships & loyalty",
+          description:
+            "Offer memberships and loyalty programs that encourage customers to return regularly and build lasting relationships with your wellness center.",
         },
         {
           title: "Customer management",
-          description: "Customer profiles hold visit history, preferences and practitioner notes — supporting the continuity of care that wellness customers value.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
         },
         {
           title: "Payments",
-          description: "Accept payments and deposits at checkout. Track revenue by practitioner, service and period.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
         },
       ]}
       useCases={[
-        "Holistic therapy and energy healing appointments",
+        "Holistic therapy appointments",
         "Nutritional consultation bookings",
-        "Naturopathy and integrative health sessions",
+        "Naturopathy and wellness sessions",
         "Meditation and mindfulness sessions",
-        "Wellness packages and programmes",
-        "Multi-practitioner scheduling on the same day",
-        "Ongoing customer care with visit history",
-        "Wellness membership management",
+        "Massage and relaxation services",
+        "Multi-team-member scheduling",
+        "Online booking and repeat appointments",
+        "Wellness memberships",
       ]}
       benefits={[
-        "Customers can explore your full practice and book any service from one software",
-        "Memberships support the regular cadence of wellness care",
-        "Practitioner notes and visit history ensure continuity across sessions",
+        "Customers can explore your services and book directly with your wellness center",
+        "Manage services, team schedules, customers, bookings, memberships, and payments from one place",
+        "Customer profiles and appointment history help your team provide a consistent experience",
       ]}
       relatedSolutions={[
         { label: "Spa", to: "/solutions/spa" },

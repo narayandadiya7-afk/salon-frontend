@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Makeup Artist Booking & Management Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps makeup artists manage client bookings, packages, deposits, bridal appointments and their professional portfolio — all from one platform.";
+  "Fyncho helps makeup artists manage online bookings, services, customers, deposits and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,68 +18,80 @@ export default function MakeupArtistPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Makeup Artists"
-      heroTitle={<>Booking and customer management for makeup artists who want to stay focused on the work.</>}
-      heroIntro="Fyncho gives makeup artists a professional software, direct customer bookings and the tools to manage every appointment, package and enquiry — without the back-and-forth."
+      heroTitle={
+        <>Booking and customer management for makeup artists who want to stay focused on the work.</>
+      }
+      heroIntro="Fyncho gives makeup artists professional business software, direct customer bookings, and the tools to manage services, appointments, customers, and payments — without the back-and-forth."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Makeup artist working with a customer in a professional studio"
       challenges={[
         {
           title: "Booking coordination via messages",
-          description: "Managing bridal and event bookings through social messages and emails is time-consuming and prone to scheduling errors.",
+          description:
+            "Managing appointments through social messages and calls can be time-consuming. An online booking experience gives customers a simpler way to schedule.",
         },
         {
-          title: "Deposits and cancellation terms",
-          description: "High-value bookings need a deposit to be taken seriously. Enforcing this without a payment system is awkward.",
+          title: "Deposits and cancellations",
+          description:
+            "Important bookings can benefit from a deposit at the time of booking. Managing payment requirements manually can create unnecessary administrative work.",
         },
         {
-          title: "Presenting a professional portfolio",
-          description: "Customers want to see your work before committing. A social profile works, but a branded software with a gallery creates a more professional first impression.",
+          title: "Presenting your work professionally",
+          description:
+            "Customers often want to see your work before booking. A professional business presence with services and a gallery gives them an easy way to explore what you offer.",
         },
         {
-          title: "Managing multiple event types",
-          description: "Bridal, editorial, party and event makeup have different requirements, durations and pricing. The booking flow needs to reflect these accurately.",
+          title: "Managing different makeup services",
+          description:
+            "Makeup artists may offer bridal, event, party, editorial, and other services with different durations and pricing. Keeping everything organized can become difficult to manage manually.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book directly from your own software — selecting service type, date and time. No inbox coordination required.",
+          description:
+            "Customers can explore your services and book directly with your business, making it easier to schedule appointments without inbox coordination.",
         },
         {
-          title: "Services & packages",
-          description: "Define your service menu — bridal trial, wedding day, party makeup, editorial — with individual durations, pricing and add-ons.",
+          title: "Service management",
+          description:
+            "Define your makeup services with clear descriptions, durations, and pricing so customers know what they are booking.",
         },
         {
           title: "Deposits",
-          description: "Require a deposit at checkout for high-value bookings. This protects your time and gives customers clear confirmation.",
+          description:
+            "Require deposits as part of the booking process to help confirm important appointments and reduce unnecessary cancellations.",
         },
         {
           title: "Customer management",
-          description: "Customer profiles hold booking history, event notes and preferences — so every consultation starts from an informed position.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving you the information you need for a consistent experience.",
         },
         {
-          title: "Gallery & portfolio",
-          description: "Your Fyncho software includes a gallery to showcase your work and give prospective customers the evidence they need to book.",
+          title: "Gallery",
+          description:
+            "Showcase your makeup work through your business gallery so potential customers can explore your work before booking.",
         },
         {
           title: "Payments",
-          description: "Accept deposits and final payments through your software. Track earnings by service and period.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service and time period from your business dashboard.",
         },
       ]}
       useCases={[
-        "Bridal makeup trials",
-        "Wedding day makeup bookings",
+        "Bridal makeup appointments",
+        "Wedding day makeup services",
         "Event and party makeup",
-        "Editorial and photoshoot sessions",
-        "Makeup lesson and tutorial appointments",
-        "Bridal package and bundle bookings",
-        "Portfolio gallery presentation",
-        "Deposit collection for event bookings",
+        "Editorial and photoshoot makeup",
+        "Makeup lessons and appointments",
+        "Makeup service scheduling",
+        "Portfolio and gallery presentation",
+        "Online booking and appointment management",
       ]}
       benefits={[
-        "Deposits protect your diary and set professional expectations from the start",
-        "A branded software and gallery replaces a link-in-bio as your professional home",
-        "Customer records mean every bridal and event booking starts with full context",
+        "Manage your makeup services, customers, bookings, and payments from one place",
+        "Customers can explore your work and book directly with your business",
+        "Deposits and reminders help keep important appointments organized",
       ]}
       relatedSolutions={[
         { label: "Bridal Services", to: "/solutions/bridal" },

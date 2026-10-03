@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Nail Salon Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps nail salons manage online bookings, technician schedules, nail service menus, add-ons and client records — all from one platform.";
+  "Fyncho helps nail salons manage online bookings, services, team schedules, customers and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,52 +18,64 @@ export default function NailSalonPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Nail Salons"
-      heroTitle={<>Nail salon management as polished as the results you deliver.</>}
-      heroIntro="Fyncho gives nail salons a professional software, direct online booking and the tools to manage every technician, service and customer — without the admin overhead."
+      heroTitle={
+        <>Nail salon management as polished as the results you deliver.</>
+      }
+      heroIntro="Fyncho gives nail salons professional business software, online booking, and the tools to manage services, team schedules, customers, and appointments — all in one place."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
-      heroImageAlt="Nail technician working at a modern nail studio"
+      heroImageAlt="Nail professional working at a modern nail studio"
       challenges={[
         {
-          title: "Short services, high volume",
-          description: "Nail services are short but high-frequency. Managing a full day of back-to-back appointments across technicians needs precision.",
+          title: "Busy appointment schedules",
+          description:
+            "Nail salons often manage many appointments throughout the day. Keeping services, durations, team availability, and bookings organized can become difficult to manage manually.",
         },
         {
-          title: "Add-ons and upgrade decisions",
-          description: "Customers often decide on gel, nail art or extra treatments at the point of booking. The service menu needs to support this clearly.",
+          title: "Managing different services",
+          description:
+            "Manicures, pedicures, gel services, extensions, and nail art can all have different durations and pricing. Keeping the service menu organized helps create a smoother booking experience.",
         },
         {
-          title: "Portfolio and gallery",
-          description: "Nail work is visual. New customers need to see your style before they commit — a static Instagram profile isn't the same as a branded gallery.",
+          title: "Presenting your work",
+          description:
+            "Nail services are highly visual. New customers often want to see your work before booking, making a professional business gallery an important part of your online presence.",
         },
         {
-          title: "Repeat customer management",
-          description: "Regular customers want their favourite technician and their preferred service easy to rebook without starting from scratch.",
+          title: "Repeat customer bookings",
+          description:
+            "Regular customers often return for their favourite services and team members. Keeping customer profiles and appointment history organized makes repeat bookings easier to manage.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book service, technician and time from your nail salon software. Add-ons are presented clearly in the flow.",
+          description:
+            "Customers can explore your services and book directly with your nail salon, making it easy to schedule appointments whenever they need to.",
         },
         {
-          title: "Service & add-on management",
-          description: "Build a service menu with base services, gel upgrades, nail art options and durations. Customers see exactly what they are booking.",
+          title: "Service management",
+          description:
+            "Define your nail services with clear descriptions, durations, and pricing so customers know what they are booking.",
         },
         {
-          title: "Staff management",
-          description: "Set each technician's working hours and availability. Bookings land in the right column without double-booking.",
+          title: "Team management",
+          description:
+            "Manage your team members, availability, schedules, and services in one place to keep appointments organized.",
         },
         {
           title: "Gallery",
-          description: "Show your work through your branded software gallery — giving new customers the confidence to book and returning customers a reason to try something new.",
+          description:
+            "Showcase your nail work through your business gallery so potential customers can explore your services and see your work before booking.",
         },
         {
           title: "Customer management",
-          description: "Customer profiles hold visit history, preferred technician, notes and spend — all in one record.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
         },
         {
           title: "Payments",
-          description: "Accept secure online payments at checkout. Track revenue by technician and service.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
         },
       ]}
       useCases={[
@@ -70,14 +84,14 @@ export default function NailSalonPage() {
         "Acrylic and structured extensions",
         "Nail art and custom designs",
         "Russian manicure and cuticle care",
-        "Warm stone pedicure treatments",
-        "Technician-specific bookings",
-        "Repeat customer rebooking with history",
+        "Spa and luxury pedicure services",
+        "Team member-specific bookings",
+        "Online booking and repeat appointments",
       ]}
       benefits={[
-        "Customers book service, add-ons and technician in a single flow",
-        "Your gallery turns scroll time into confirmed appointments",
-        "Repeat customers rebook their favourites in seconds",
+        "Manage nail services, team schedules, customers, bookings, and payments from one place",
+        "Customers can explore your work and book directly with your business",
+        "Customer profiles and appointment history make repeat bookings easier to manage",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },

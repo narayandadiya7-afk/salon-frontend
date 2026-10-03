@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, Clock, MessageCircle, ArrowUpRight } from "lucide-react";
-import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  MessageCircle,
+  ArrowUpRight,
+} from "lucide-react";
+import {
+  SiteShell,
+  PageHero,
+} from "@/components/admin/admin-website/site-shell";
 import { ClosingCta } from "@/components/admin/admin-website/marketing-sections";
 import { ContactForm } from "./contact-form";
 import { CONTACT, toTelHref, toWhatsAppHref } from "@/utils/constants";
 
-const TITLE = "Contact Fyncho — Call, Message or Email the Team";
+const TITLE = "Contact Fyncho — Talk to the Fyncho Team";
+
 const DESCRIPTION =
-  "Reach the Fyncho team about your salon, spa or wellness business. Call us on our official mobile number, send a message, or email us — whichever is easiest.";
+  "Get in touch with Fyncho about your service business, business software, bookings, payments, or getting started. Call, message, or email the team.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -19,8 +30,7 @@ export const metadata: Metadata = {
 const WHATSAPP_MESSAGE = "Hello Fyncho, I would like to know more.";
 
 /**
- * The two ways a visitor can reach the team directly, shown as a matched pair
- * so neither reads as secondary. Phone is first so it still leads on mobile.
+ * The two primary ways a visitor can reach the team directly.
  */
 const primaryChannels = [
   {
@@ -39,14 +49,19 @@ const primaryChannels = [
   },
 ].filter((channel) => Boolean(channel.value && channel.href));
 
-/** Everything else. Omitted entirely unless a real value is configured. */
+/**
+ * Additional contact information.
+ * Omitted entirely unless a real value is configured.
+ */
 const otherChannels = [
   {
     icon: MessageCircle,
     label: "WhatsApp",
     value: CONTACT.whatsapp,
-    href: CONTACT.whatsapp ? toWhatsAppHref(CONTACT.whatsapp, WHATSAPP_MESSAGE) : null,
-    note: "Send a quick note without filling in a form.",
+    href: CONTACT.whatsapp
+      ? toWhatsAppHref(CONTACT.whatsapp, WHATSAPP_MESSAGE)
+      : null,
+    note: "Send a quick message without filling in a form.",
   },
   {
     icon: MapPin,
@@ -60,30 +75,32 @@ const otherChannels = [
     label: "Hours",
     value: CONTACT.hours,
     href: null,
-    note: "We answer around salon working hours.",
+    note: "Our usual business hours.",
   },
 ].filter((channel) => Boolean(channel.value));
 
-/** What happens to an enquiry once it is sent. Sets expectations, not promises. */
+/**
+ * What happens after an enquiry is submitted.
+ */
 const expectations = [
   {
     n: "01",
     title: "You reach us",
     detail:
-      "Through the form, the number above, or email — whichever is quickest for you. No account needed to get started.",
+      "Use the form, phone number, email, or WhatsApp — whichever is easiest for you. No account is needed to get started.",
   },
   {
     n: "02",
-    title: "A person reads it",
+    title: "We review your enquiry",
     detail:
-      "Every enquiry is read by someone on the team who knows the product. There is no ticket queue and no chatbot in between.",
+      "Your message is reviewed by someone on the Fyncho team so we can understand what you need and respond appropriately.",
   },
   {
     n: "03",
     title: "We come back to you",
     detail: CONTACT.responseTime
       ? `${CONTACT.responseTime} We reply by email or phone, whichever you prefer.`
-      : "By email or phone, whichever you prefer, with a straight answer rather than a brochure.",
+      : "We reply by email or phone, whichever you prefer, with a clear answer to your question.",
   },
 ];
 
@@ -92,10 +109,10 @@ export default function ContactPage() {
     <SiteShell>
       <PageHero
         eyebrow="Contact"
-        title={<>Let&rsquo;s talk about your business.</>}
-        intro="A real person reads every message. Call us, send a note, or tell us what you are building — and we will come back to you with a straight answer."
+        title={<>Let's talk about your business.</>}
+        intro="Have a question about Fyncho, getting started, bookings, or managing your business? Send us a message, call us, or reach out directly."
         image="/assets/admin-website/avivane-banner-craft.jpg"
-        imageAlt="Beauty professional preparing a treatment room for a client"
+        imageAlt="Professional service business preparing for a customer appointment"
       />
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
@@ -107,12 +124,12 @@ export default function ContactPage() {
 
             <div className="lg:col-span-5">
               <div className="lg:sticky lg:top-28">
-                {/* One card, two routes. Keeping them in a single unit makes the
-                    choice obvious instead of making one look secondary. */}
                 <div className="closing-glow relative overflow-hidden rounded-2xl bg-primary p-6 text-primary-foreground shadow-lift ring-1 ring-brass/30 sm:p-7">
                   <p className="eyebrow text-brass">Reach us directly</p>
+
                   <p className="mt-3 max-w-[38ch] text-sm leading-relaxed text-primary-foreground/70">
-                    Both reach the same small team. Pick whichever suits the moment.
+                    Choose the way that works best for you. All enquiries reach
+                    the Fyncho team.
                   </p>
 
                   {primaryChannels.length > 0 && (
@@ -131,10 +148,14 @@ export default function ContactPage() {
                             </span>
 
                             <span className="min-w-0 flex-1">
-                              <span className="eyebrow text-brass">{channel.label}</span>
+                              <span className="eyebrow text-brass">
+                                {channel.label}
+                              </span>
+
                               <span className="mt-1.5 block font-display text-lg leading-tight break-words sm:text-xl">
                                 {channel.value}
                               </span>
+
                               <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-primary-foreground/45">
                                 {channel.action}
                               </span>
@@ -161,22 +182,30 @@ export default function ContactPage() {
                   <ul className="mt-8 divide-y divide-line border-y border-line">
                     {otherChannels.map((channel) => {
                       const Icon = channel.icon;
+
                       const content = (
                         <>
                           <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-line">
-                            <Icon aria-hidden="true" className="size-4 text-brass" />
+                            <Icon
+                              aria-hidden="true"
+                              className="size-4 text-brass"
+                            />
                           </span>
+
                           <span className="min-w-0 flex-1">
                             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                               {channel.label}
                             </span>
+
                             <span className="mt-1 block break-words font-medium text-foreground">
                               {channel.value}
                             </span>
+
                             <span className="mt-1 block text-sm text-muted-foreground">
                               {channel.note}
                             </span>
                           </span>
+
                           {channel.href && (
                             <ArrowUpRight
                               aria-hidden="true"
@@ -196,7 +225,9 @@ export default function ContactPage() {
                               {content}
                             </a>
                           ) : (
-                            <div className="flex items-start gap-4 py-5">{content}</div>
+                            <div className="flex items-start gap-4 py-5">
+                              {content}
+                            </div>
                           )}
                         </li>
                       );
@@ -209,17 +240,20 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* What happens to an enquiry */}
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="max-w-3xl">
           <span className="rule-brass" />
+
           <p className="eyebrow mt-7">After you send it</p>
+
           <h2 className="mt-5 font-display text-4xl leading-tight sm:text-5xl">
-            You will hear back from a person.
+            You will hear back from the Fyncho team.
           </h2>
+
           <p className="mt-5 max-w-[54ch] leading-relaxed text-muted-foreground">
-            No automated sales sequence, and nothing that needs unsubscribing from. Here is simply
-            what happens next.
+            We keep the process simple. Send your question, tell us what you
+            need, and we will get back to you with the information that is
+            relevant to your business.
           </p>
         </div>
 
@@ -227,7 +261,9 @@ export default function ContactPage() {
           {expectations.map((item) => (
             <li key={item.n} className="border-t border-line pt-7">
               <span className="numeral">{item.n}</span>
+
               <h3 className="mt-4 text-2xl">{item.title}</h3>
+
               <p className="mt-3 max-w-[40ch] text-sm leading-relaxed text-muted-foreground">
                 {item.detail}
               </p>
@@ -237,8 +273,8 @@ export default function ContactPage() {
       </section>
 
       <ClosingCta
-        title="Prefer to skip the conversation?"
-        description="You can create your Fyncho business and start taking bookings straight away. Nothing is charged until customers book through your site."
+        title="Ready to get started?"
+        description="Create your Fyncho business software, choose your unique business address, and start building your online presence."
         primary={{ label: "Start with Fyncho", to: "/register" }}
         secondary={{ label: "Log in", to: "/login" }}
       />

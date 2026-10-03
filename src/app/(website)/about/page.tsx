@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
-import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
+import {
+  SiteShell,
+  PageHero,
+} from "@/components/admin/admin-website/site-shell";
+import {
+  ClosingCta,
+  SectionHeading,
+} from "@/components/admin/admin-website/marketing-sections";
 
-const TITLE = "About Fyncho — Business Management & Booking Platform for Beauty & Wellness";
+const TITLE =
+  "About Fyncho — Business Management & Booking Software for Service Businesses";
+
 const DESCRIPTION =
-  "Fyncho gives beauty salons, barbershops, spas, wellness centres and personal-care professionals their own website, their own address and the tools to run the business behind it.";
+  "Fyncho gives service-based businesses their own professional business software, business address, booking experience, and tools to manage customers, teams, services, payments, and daily operations.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -14,28 +22,25 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-const stats = [
-  { v: "10,000+", l: "businesses" },
-  { v: "1M+", l: "bookings" },
-  { v: "50,000+", l: "professionals" },
-  { v: "25+", l: "countries" },
-];
-
 export default function AboutPage() {
   return (
     <SiteShell>
       <PageHero
         eyebrow="About"
-        title={<>We think every beauty and wellness business deserves a door of its own.</>}
-        intro="Beauty, wellness and grooming businesses spent a decade renting their customers from marketplaces. Fyncho exists so a business's digital presence belongs to the business."
+        title={
+          <>
+            We believe every service business deserves a place of its own.
+          </>
+        }
+        intro="Fyncho exists to give service-based businesses their own professional business software — bringing their services, customers, bookings, team, and daily operations together in one place."
         image="/assets/admin-website/avivane-banner-interior.jpg"
-        imageAlt="Sunlit premium salon interior designed around the client experience"
+        imageAlt="Sunlit premium service business interior designed around the customer experience"
       />
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <img
           src="/assets/admin-website/salon-hero.jpg"
-          alt="A modern beauty studio in warm daylight"
+          alt="A modern service business in warm daylight"
           loading="lazy"
           width={1200}
           height={800}
@@ -43,27 +48,26 @@ export default function AboutPage() {
         />
       </section>
 
-      <section className="border-y border-line bg-surface py-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-6 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.l} className="card-lux bg-background px-6 py-9 text-center">
-              <p className="font-display text-5xl leading-none">{s.v}</p>
-              <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                {s.l}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="mx-auto max-w-3xl px-6 py-20">
-        <h2 className="text-4xl text-balance sm:text-5xl">What we build toward</h2>
+        <h2 className="text-4xl text-balance sm:text-5xl">
+          What we are building
+        </h2>
+
         <p className="mt-6 text-lg leading-relaxed text-pretty text-muted-foreground">
-          One platform, many businesses — each with its own identity, its own customers, and its own place online. Whether you run a salon, barbershop, spa, nail studio, massage practice, wellness business, or another service-based business, Fyncho gives you the tools to manage your business while keeping your brand at the center.
+          One platform, many businesses — each with its own identity, its own
+          customers, and its own place online. Whether you run a salon,
+          barbershop, spa, nail studio, massage practice, wellness business,
+          beauty studio, or another service-based business, Fyncho gives you
+          the tools to manage the business while keeping your brand at the
+          center.
         </p>
+
         <p className="mt-4 text-lg leading-relaxed text-pretty text-muted-foreground">
-          We’re building Fyncho to make running a service business simpler — from bookings and customers to payments, memberships, loyalty, teams, and day-to-day operations.
+          We are building Fyncho to make running a service business simpler —
+          from services and bookings to customers, payments, memberships,
+          loyalty, team management, and everyday operations.
         </p>
+
         <Link
           href="/register"
           className="mt-9 inline-block rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
@@ -76,19 +80,35 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionHeading
             eyebrow="Our point of view"
-            title="The platform should be recognised by what it enables — not by how much space it occupies."
-            description="Business owners invest years in a name, reputation and customer experience. The technology beneath it should reinforce that identity rather than replace it."
+            title="Your business should remain at the center of the experience."
+            description="Business owners invest years in building a name, reputation, and customer relationships. The technology behind the business should support that identity rather than get in the way."
           />
+
           <div className="mt-12 grid gap-10 lg:grid-cols-3">
             {[
-              ["Ownership", "Your software, audience and customer relationships should remain centred on your business brand."],
-              ["Clarity", "Powerful operations should feel understandable to the people running a busy floor."],
-              ["Hospitality", "Every digital interaction should carry the same care as the welcome at reception."],
+              [
+                "Ownership",
+                "Your business software, customer relationships, and online presence should remain centred on your business.",
+              ],
+              [
+                "Clarity",
+                "Powerful business tools should feel simple and understandable for the people using them every day.",
+              ],
+              [
+                "Experience",
+                "Every interaction should make it easier for customers to discover your business, book, return, and stay connected.",
+              ],
             ].map(([title, copy], i) => (
               <article key={title} className="border-t border-brass pt-6">
-                <span className="font-mono text-xs text-brass">0{i + 1}</span>
+                <span className="font-mono text-xs text-brass">
+                  0{i + 1}
+                </span>
+
                 <h3 className="mt-4 text-3xl">{title}</h3>
-                <p className="mt-3 leading-relaxed text-muted-foreground">{copy}</p>
+
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  {copy}
+                </p>
               </article>
             ))}
           </div>
@@ -98,24 +118,27 @@ export default function AboutPage() {
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
-            eyebrow="Global by design"
-            title="Built for local businesses, wherever local happens to be."
-            description="From independent studios to international groups, Fyncho is designed around different service menus, teams, currencies and ways of working — without losing the simplicity of one platform."
+            eyebrow="Built to grow with you"
+            title="Start with what your business needs today."
+            description="Fyncho is designed for independent professionals, growing teams, specialist studios, and businesses operating across multiple locations — all within one platform."
           />
-          <blockquote className="border-l border-brass pl-8">
+
+          <div className="border-l border-brass pl-8">
             <p className="font-display text-3xl leading-snug text-balance sm:text-4xl">
-              "The best business software disappears into the experience. The customer remembers the business, not the software."
+              Your business should be remembered for the experience you create,
+              not the technology behind it.
             </p>
-            <footer className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+
+            <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
               The principle behind Fyncho
-            </footer>
-          </blockquote>
+            </p>
+          </div>
         </div>
       </section>
 
       <ClosingCta
-        title="Give your business a digital home worthy of its name."
-        description="Join beauty and wellness owners building stronger direct relationships with the people they serve."
+        title="Give your business a place of its own."
+        description="Create your business software, choose your unique business address, and bring your customers, bookings, services, and daily operations together."
         secondary={{ label: "How It Works", to: "/how-it-works" }}
       />
     </SiteShell>

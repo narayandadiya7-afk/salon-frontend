@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Booking & Management Software for Beauty & Wellness Freelancers | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps independent beauty and wellness professionals manage online bookings, client records, payments and their professional website — without needing a team.";
+  "Fyncho helps independent beauty and wellness professionals manage online bookings, services, customers, payments, and daily business operations — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,68 +18,80 @@ export default function FreelancersPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Freelancers & Independent Professionals"
-      heroTitle={<>Your own professional website and booking system — without needing a team to run it.</>}
-      heroIntro="Fyncho gives independent beauty and wellness professionals a complete digital presence, direct client bookings and the tools to manage the business side — so you can stay focused on the work."
+      heroTitle={
+        <>Professional business software built for independent professionals.</>
+      }
+      heroIntro="Fyncho gives independent beauty and wellness professionals online booking and the tools to manage services, customers, appointments, payments, and daily business operations — without needing a team."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
-      heroImageAlt="Independent beauty professional preparing for a client appointment"
+      heroImageAlt="Independent beauty professional preparing for a customer appointment"
       challenges={[
         {
-          title: "No professional online presence",
-          description: "A social media profile is not the same as a website. Without a branded destination, independent professionals appear less established than they are.",
+          title: "Managing bookings alone",
+          description:
+            "When you manage your business yourself, keeping track of appointments, services, availability, and customer information can quickly become time-consuming.",
         },
         {
-          title: "Booking via messages and calls",
-          description: "Managing every enquiry, confirmation and change through personal messages takes time away from doing the actual work.",
+          title: "Booking through messages and calls",
+          description:
+            "Handling every booking and appointment change manually takes time away from your work. A simple online booking experience gives customers a more convenient way to schedule.",
         },
         {
           title: "Protecting your time",
-          description: "Late cancellations and no-shows have a disproportionate impact when you work alone. A deposit system needs to be effortless to enforce.",
+          description:
+            "Late cancellations and missed appointments can have a significant impact when you work independently. Deposits and reminders can help keep your schedule more organized.",
         },
         {
-          title: "Building a client base",
-          description: "Independent professionals grow through repeat business and referrals. Systematic follow-up and loyalty require a client management system.",
+          title: "Building lasting customer relationships",
+          description:
+            "Independent professionals often rely on returning customers. Keeping customer information and appointment history organized helps create a consistent experience and encourages customers to return.",
         },
       ]}
       howFynchoHelps={[
         {
-          title: "Your own website",
-          description: "A complete, branded professional website at your own Fyncho URL — with services, portfolio, about and contact pages.",
+          title: "Professional business presence",
+          description:
+            "Give your business a professional online presence with your own business address, services, team information, gallery, and contact details.",
         },
         {
           title: "Online booking",
-          description: "Clients book directly from your website. You manage your availability once, and the calendar handles the rest.",
+          description:
+            "Customers can book directly with your business whenever they need to, while you manage your services, availability, and appointments in one place.",
         },
         {
           title: "Deposits",
-          description: "Require a deposit for bookings to protect your diary and reduce last-minute cancellations.",
+          description:
+            "Require deposits as part of the booking process to help confirm appointments and reduce unnecessary cancellations.",
         },
         {
           title: "Customer management",
-          description: "Client profiles hold visit history, preferences and notes — so you always have context before the appointment.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving you the information you need for a consistent experience.",
         },
         {
           title: "Payments",
-          description: "Accept secure online payments at checkout and track your earnings by service and period — without a separate invoicing tool.",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service and time period from your business dashboard.",
         },
         {
           title: "Notifications & reminders",
-          description: "Automated booking confirmations and reminders keep clients informed without requiring manual follow-up.",
+          description:
+            "Automatic booking confirmations and reminders keep customers informed without requiring you to follow up manually.",
         },
       ]}
       useCases={[
         "Freelance hair stylist bookings",
         "Independent makeup artist appointments",
-        "Solo massage therapist scheduling",
-        "Nail technician bookings",
-        "Lash and brow artist appointments",
+        "Solo massage therapy services",
+        "Nail service bookings",
+        "Lash and brow appointments",
         "Waxing and threading services",
         "Skin care and facial treatments",
-        "Portfolio and gallery presentation",
+        "Independent beauty and wellness services",
       ]}
       benefits={[
-        "A professional website gives your business a presence that matches your skills",
-        "Clients book themselves — fewer interruptions, fewer missed messages",
-        "Deposits and reminders protect the diary you work hard to fill",
+        "Manage your services, customers, bookings, payments, and daily operations from one place",
+        "Customers can book directly with your business without relying on messages or calls",
+        "Deposits and reminders help keep your schedule organized",
       ]}
       relatedSolutions={[
         { label: "Makeup Artists", to: "/solutions/makeup-artist" },

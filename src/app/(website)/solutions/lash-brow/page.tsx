@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Lash & Brow Studio Management & Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps lash and brow studios manage online bookings, technician schedules, treatment durations and client records — all from one platform.";
+  "Fyncho helps lash and brow studios manage online bookings, team schedules, service durations, customers and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,68 +18,80 @@ export default function LashBrowPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Lash & Brow Studios"
-      heroTitle={<>Lash and brow studio management built around precision and repeat customers.</>}
-      heroIntro="Fyncho gives lash and brow studios a professional software, direct online booking and the tools to manage every technician, treatment and customer record — without the admin."
+      heroTitle={
+        <>Lash and brow studio management built around precision and repeat customers.</>
+      }
+      heroIntro="Fyncho gives lash and brow studios professional business software, online booking, and the tools to manage services, team schedules, customers, and appointments — all in one place."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
-      heroImageAlt="Lash technician performing a lash extension treatment"
+      heroImageAlt="Lash professional performing a lash extension treatment"
       challenges={[
         {
-          title: "Precise treatment durations",
-          description: "Lash and brow services have specific durations that vary by treatment type and technician. The calendar needs to handle this accurately to prevent overruns.",
+          title: "Precise service durations",
+          description:
+            "Lash and brow services can have different durations depending on the treatment. Keeping service durations and appointments organized helps create a smoother booking experience.",
         },
         {
-          title: "High repeat visit frequency",
-          description: "Lash fills and brow maintenance are booked every two to six weeks. Rebooking at the end of each appointment is important for customer retention.",
+          title: "Frequent repeat visits",
+          description:
+            "Many lash and brow customers return regularly for maintenance and new treatments. Making it easy to book again helps create a smoother experience and encourages repeat visits.",
         },
         {
-          title: "Patch test tracking",
-          description: "Many lash and brow treatments require a patch test record before proceeding. Tracking this for each customer needs a reliable system.",
+          title: "Managing a busy schedule",
+          description:
+            "With multiple services and appointments throughout the day, keeping team availability and bookings organized can become difficult to manage manually.",
         },
         {
-          title: "Presenting work visually",
-          description: "New customers want to see your work before booking. A gallery on your own software is more effective than a social feed.",
+          title: "Presenting your work visually",
+          description:
+            "New customers often want to see your work before booking. A professional business gallery gives them an easy way to explore your services and work.",
         },
       ]}
       howFynchoHelps={[
         {
           title: "Online booking",
-          description: "Customers book their treatment and technician from your own software. Durations are set per service, so the calendar never overruns.",
+          description:
+            "Customers can explore your services and book directly with your business, making it easy to schedule appointments whenever they need to.",
         },
         {
           title: "Service management",
-          description: "Define each treatment — classic lashes, volume, hybrid, brow lamination, tinting — with precise durations and pricing.",
+          description:
+            "Define treatments such as classic lashes, volume, hybrid, brow lamination, and tinting with clear durations and pricing.",
         },
         {
-          title: "Staff management",
-          description: "Set each technician's availability and treatment menu. Customers book the right person for their service automatically.",
+          title: "Team management",
+          description:
+            "Manage your team members, availability, schedules, and services in one place to keep appointments organized.",
         },
         {
           title: "Customer management",
-          description: "Customer profiles hold treatment history, notes and any patch test records — so your team is always working from the right information.",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
         },
         {
           title: "Gallery",
-          description: "Showcase your work through your branded software gallery to convert prospective customers.",
+          description:
+            "Showcase your work through your business gallery so potential customers can explore your services and see your work before booking.",
         },
         {
           title: "Deposits & reminders",
-          description: "Require a deposit for new customers and send automated reminders to reduce no-shows on your tightly scheduled days.",
+          description:
+            "Require deposits as part of the booking process and send automatic reminders to help reduce unnecessary cancellations and missed appointments.",
         },
       ]}
       useCases={[
-        "Classic, hybrid and volume lash extensions",
+        "Classic, hybrid, and volume lash extensions",
         "Lash lift and tint",
         "Lash fill appointments",
         "Brow lamination",
         "Brow tinting and shaping",
         "HD and combination brow treatments",
-        "Patch test tracking and records",
-        "Repeat customer rebooking at end of appointment",
+        "Lash and brow service scheduling",
+        "Online booking and repeat appointments",
       ]}
       benefits={[
-        "Precise service durations keep your schedule running without overruns",
-        "Customer records include treatment history and notes for consistent results",
-        "Deposits and reminders protect your tightly scheduled diary",
+        "Manage lash and brow services, team schedules, customers, and bookings from one place",
+        "Clear service durations help customers choose the right appointment",
+        "Deposits and reminders help keep your schedule organized",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },

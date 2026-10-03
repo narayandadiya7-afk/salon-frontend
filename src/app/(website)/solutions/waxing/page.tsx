@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+
 import { SolutionPageTemplate } from "@/components/admin/admin-website/solution-page-template";
 
 const TITLE = "Waxing & Hair Removal Business Booking Software | Fyncho";
+
 const DESCRIPTION =
-  "Fyncho helps waxing and hair removal businesses manage online bookings, technician schedules, service menus and client records — all from one platform.";
+  "Fyncho helps waxing and hair removal businesses manage online bookings, services, team schedules, customers and payments — all from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -16,23 +18,65 @@ export default function WaxingPage() {
   return (
     <SolutionPageTemplate
       eyebrow="Waxing & Hair Removal"
-      heroTitle={<>Waxing and hair removal management built for high-frequency, returning clients.</>}
-      heroIntro="Fyncho gives waxing and hair removal businesses a professional website, direct online booking and the tools to manage every technician, service and client — designed for the repeat cadence of hair removal."
+      heroTitle={
+        <>Waxing and hair removal management built for high-frequency, returning customers.</>
+      }
+      heroIntro="Fyncho gives waxing and hair removal businesses professional business software, online booking, and the tools to manage services, team schedules, customers, appointments, and payments — all in one place."
       heroImage="/assets/admin-website/avivane-banner-craft.jpg"
       heroImageAlt="Waxing treatment room set up for a professional appointment"
       challenges={[
-        { title: "High repeat visit volume", description: "Waxing clients return every four to six weeks. Fast rebooking and automated reminders are essential to keep the calendar full." },
-        { title: "Service clarity for new clients", description: "A new client booking waxing services needs to know exactly what is included, what to prepare and what to expect." },
-        { title: "Technician-specific bookings", description: "Clients often prefer the same technician for intimate services. The booking system needs to support this preference easily." },
-        { title: "No-shows on tightly scheduled days", description: "Waxing appointments are short and tightly scheduled. A missed booking is hard to fill at short notice." },
+        {
+          title: "Frequent repeat visits",
+          description:
+            "Waxing customers often return regularly for maintenance. Making it easy to book again and keeping appointment reminders organized can help create a smoother experience.",
+        },
+        {
+          title: "Managing different services",
+          description:
+            "Waxing businesses can offer many services with different durations and pricing. Keeping the service menu organized helps customers understand what they are booking.",
+        },
+        {
+          title: "Managing team availability",
+          description:
+            "Customers may prefer to book with a particular team member. Keeping team availability, services, and appointments organized can become difficult to manage manually.",
+        },
+        {
+          title: "No-shows and cancellations",
+          description:
+            "Short, frequently scheduled appointments can be affected by missed bookings. Deposits and reminders help businesses keep their schedules organized.",
+        },
       ]}
       howFynchoHelps={[
-        { title: "Online booking", description: "Clients book their service, technician and time from your own website — with clear service descriptions and durations." },
-        { title: "Service management", description: "Define your waxing menu with individual service durations, pricing and any pre-appointment instructions." },
-        { title: "Staff management", description: "Set each technician's availability and service menu. Preferred-technician bookings are handled without manual coordination." },
-        { title: "Deposits & reminders", description: "Collect deposits for new clients and send automated reminders to protect your tightly scheduled calendar." },
-        { title: "Customer management", description: "Client profiles hold visit history, preferences and any notes — supporting a consistent, personalised experience." },
-        { title: "Payments", description: "Accept secure online payments at checkout and track revenue by service and technician." },
+        {
+          title: "Online booking",
+          description:
+            "Customers can explore your services and book directly with your business, with clear service descriptions, durations, and pricing.",
+        },
+        {
+          title: "Service management",
+          description:
+            "Define your waxing services with clear descriptions, durations, and pricing so customers know what they are booking.",
+        },
+        {
+          title: "Team management",
+          description:
+            "Manage your team members, availability, schedules, and services in one place to keep appointments organized.",
+        },
+        {
+          title: "Deposits & reminders",
+          description:
+            "Require deposits as part of the booking process and send automatic reminders to help reduce unnecessary cancellations and missed appointments.",
+        },
+        {
+          title: "Customer management",
+          description:
+            "Keep customer profiles and appointment history organized in one place, giving your team the information they need for a consistent experience.",
+        },
+        {
+          title: "Payments",
+          description:
+            "Accept deposits and online payments at checkout. Track revenue by service, team member, and time period from your business dashboard.",
+        },
       ]}
       useCases={[
         "Full and half leg waxing",
@@ -40,14 +84,14 @@ export default function WaxingPage() {
         "Brow and facial waxing",
         "Underarm and arm waxing",
         "Back and chest waxing",
-        "Full body waxing packages",
-        "Preferred technician scheduling",
-        "Repeat client fast rebooking",
+        "Full body waxing services",
+        "Team member-specific bookings",
+        "Online booking and repeat appointments",
       ]}
       benefits={[
-        "Clients rebook their preferred technician in seconds from their phone",
-        "Reminders keep your repeat clients on the right cycle",
-        "Deposits protect a calendar built on short, high-frequency appointments",
+        "Manage waxing services, team schedules, customers, bookings, and payments from one place",
+        "Customers can book their preferred service and team member online",
+        "Deposits and reminders help keep a busy appointment schedule organized",
       ]}
       relatedSolutions={[
         { label: "Beauty Salons", to: "/solutions/beauty-salon" },
