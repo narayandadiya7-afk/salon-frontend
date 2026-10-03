@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/admin/admin-website/site-shell";
 import { ClosingCta } from "@/components/admin/admin-website/marketing-sections";
+import { homePageFeatures } from "@/data/fyncho-website";
 
 const TITLE =
   "Fyncho — Business Management & Booking Software for Beauty & Wellness";
@@ -43,37 +44,11 @@ const steps = [
   },
 ];
 
-const features = [
-  {
-    t: "Your Own Business Software",
-    d: "A professional business software built around your services, customers, team, and daily operations.",
-  },
-  {
-    t: "Online Booking",
-    d: "Customers can explore your services and book appointments directly with your business.",
-  },
-  {
-    t: "Customer Management",
-    d: "Keep customer profiles and appointment history organized in one place.",
-  },
-  {
-    t: "Team & Services",
-    d: "Manage your team members, schedules, services, durations, and pricing from one place.",
-  },
-  {
-    t: "Memberships & Loyalty",
-    d: "Offer memberships and loyalty programs that encourage customers to keep coming back.",
-  },
-  {
-    t: "Reports & Revenue",
-    d: "Track bookings, revenue, and business activity from your management dashboard.",
-  },
-];
-
 const bookingFlow = [
   "Visits fyncho.com/glam-studio",
   "Explores your services",
   "Selects a service",
+  "Selects a team member",
   "Chooses an available time",
   "Logs in & confirms",
   "Receives confirmation",
@@ -438,7 +413,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f, i) => (
+          {homePageFeatures.map((f, i) => (
             <div key={f.t} className="card-lux p-7">
               <span className="numeral">
                 {String(i + 1).padStart(2, "0")}
@@ -453,10 +428,14 @@ export default function HomePage() {
           ))}
         </div>
 
-        <p className="mt-6 font-mono text-xs text-muted-foreground">
-          Also included: appointments, deposits, online payments, memberships,
-          loyalty, business information, gallery, and reports.
-        </p>
+        <div className="mt-8">
+          <Link
+            href="/features"
+            className="font-mono text-xs uppercase tracking-[0.2em] text-brass-soft hover:text-brass"
+          >
+            Explore all features →
+          </Link>
+        </div>
       </section>
 
       {/* ONLINE BOOKING */}
@@ -518,13 +497,6 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-
-            <Link
-              href="/features"
-              className="mt-8 inline-block font-mono text-xs uppercase tracking-[0.2em] text-brass-soft hover:text-brass"
-            >
-              Explore all features →
-            </Link>
           </div>
 
           <div className="lg:col-span-8">
