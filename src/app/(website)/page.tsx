@@ -519,21 +519,21 @@ export default function HomePage() {
             <p className="eyebrow">Customer experience</p>
 
             <h2 className="mt-3 text-4xl leading-tight text-balance sm:text-5xl">
-              A simple experience for your customers, wherever they are.
+              A simple experience for your customers, on any device.
             </h2>
 
             <p className="mt-4 max-w-[46ch] text-pretty text-muted-foreground">
-              From discovering your business to booking, managing appointments,
-              and returning again, Fyncho keeps the customer experience simple
-              and connected.
+              Fyncho gives your customers a smooth experience across mobile,
+              tablet, and desktop — from discovering your business and booking
+              appointments to managing their bookings and returning again.
             </p>
 
             <ol className="mt-8 space-y-3 font-display text-2xl">
               {[
-                "Discover business",
+                "Discover your business",
                 "View services",
-                "Book appointment",
-                "Manage appointment",
+                "Book an appointment",
+                "Manage bookings",
                 "Return & book again",
               ].map((s) => (
                 <li
@@ -548,7 +548,7 @@ export default function HomePage() {
 
           <img
             src="/assets/admin-website/mobile-booking.jpg"
-            alt="Fyncho business booking experience shown on a mobile phone"
+            alt="Fyncho customer booking experience on a mobile device"
             loading="lazy"
             width={912}
             height={1104}
