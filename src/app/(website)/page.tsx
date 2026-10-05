@@ -48,7 +48,7 @@ const bookingFlow = [
   "Visits fyncho.com/glam-studio",
   "Explores your services",
   "Selects a service",
-  "Selects a team member",
+  "Chooses a professional",
   "Chooses an available time",
   "Logs in & confirms",
   "Receives confirmation",
@@ -123,7 +123,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="page-banner relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden bg-primary">
         <img
-          src="/assets/admin-website/avivane-banner-interior.jpg"
+          src="/assets/admin-website/banner-image.png"
           alt="Premium modern salon interior with warm light and brass details"
           width={1920}
           height={1088}
@@ -353,7 +353,7 @@ export default function HomePage() {
             </p>
 
             <img
-              src="/assets/admin-website/salon-hero.jpg"
+              src="/assets/admin-website/home-business.png"
               alt="Preview of a business software profile on Fyncho"
               loading="lazy"
               width={1200}

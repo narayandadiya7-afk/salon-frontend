@@ -116,7 +116,7 @@ export default function SolutionsPage() {
         eyebrow="Solutions"
         title={<>Built for the way your business actually runs.</>}
         intro="The platform is the same. The fit is not. Fyncho adapts to the needs of service-based businesses — from an independent professional to a growing team or multi-location business."
-        image="/assets/admin-website/avivane-banner-craft.jpg"
+        image="/assets/admin-website/solution-banner.png"
         imageAlt="Beauty professional styling a customer in a premium studio"
       />
 

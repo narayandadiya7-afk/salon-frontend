@@ -22,7 +22,7 @@ export default function BridalPage() {
         <>Bridal beauty management built for the detail that weddings demand.</>
       }
       heroIntro="Fyncho gives bridal beauty professionals professional business software, online booking, and the tools to manage services, customers, appointments, and payments in one place."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/bridal-banner.png"
       heroImageAlt="Bridal beauty preparation with professional hair and makeup setup"
       challenges={[
         {

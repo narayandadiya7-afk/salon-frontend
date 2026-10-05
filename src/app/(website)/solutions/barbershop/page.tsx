@@ -20,7 +20,7 @@ export default function BarbershopPage() {
       eyebrow="Barbershops"
       heroTitle={<>Barbershop management as sharp as the work behind the chair.</>}
       heroIntro="Fyncho gives barbershops professional business software with online booking and the tools to manage services, barbers, customers, and daily operations — built around the fast-paced rhythm of a busy shop."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/barbershop-banner.png"
       heroImageAlt="Barber working with a customer in a modern barbershop"
       challenges={[
         {

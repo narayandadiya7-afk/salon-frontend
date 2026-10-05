@@ -63,7 +63,7 @@ export default function FeaturesPage() {
         eyebrow="Platform features"
         title={<>Everything your service business needs to run in one place.</>}
         intro="Fyncho brings your business presence, services, team, customers, bookings, payments and day-to-day management together in one connected platform."
-        image="/assets/admin-website/avivane-banner-business.jpg"
+        image="/assets/admin-website/feature-banner.jpg"
         imageAlt="Professional service business workspace"
       />
 

@@ -22,7 +22,7 @@ export default function BeautySalonPage() {
         <>Beauty salon management that brings your services, team, and customers together.</>
       }
       heroIntro="Fyncho gives beauty salons professional business software, online booking, and the tools to manage services, team schedules, customers, and daily operations — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/beauty-salon-banner.png"
       heroImageAlt="Full-service beauty salon with multiple treatment stations"
       challenges={[
         {
