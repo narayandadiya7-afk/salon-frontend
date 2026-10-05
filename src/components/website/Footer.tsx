@@ -26,9 +26,9 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Link href="/" className={styles.logo}>✂️ SalonSaaS</Link>
+            <Link href="/" className={styles.logo}>Fyncho</Link>
             <p className={styles.tagline}>
-              The all-in-one platform for salon businesses. Launch your salon website, manage bookings, and grow your clientele.
+              Business management and booking software for beauty, wellness, grooming, and personal-care businesses.
             </p>
           </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <p className={styles.copyright}>
-            © {new Date().getFullYear()} SalonSaaS. All rights reserved. Powered by Razorpay.
+            © {new Date().getFullYear()} Fyncho. All rights reserved.
           </p>
           <div className={styles.socials}>
             <a href="#" className={styles.social} aria-label="Twitter">𝕏</a>

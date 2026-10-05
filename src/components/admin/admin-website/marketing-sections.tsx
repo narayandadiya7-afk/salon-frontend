@@ -1,6 +1,19 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+/** Internal destinations the marketing site can link a call to action to. */
+type MarketingRoute =
+  | "/pricing"
+  | "/features"
+  | "/how-it-works"
+  | "/customers"
+  | "/contact"
+  | "/about"
+  | "/solutions"
+  | "/resources"
+  | "/register"
+  | "/login";
+
 export function SectionHeading({
   eyebrow,
   title,
@@ -56,17 +69,19 @@ export function MetricBand({
 export function ClosingCta({
   title,
   description,
+  primary,
   secondary,
 }: {
   title: string;
   description: string;
-  secondary?: { label: string; to: "/pricing" | "/features" | "/how-it-works" | "/customers" };
+  primary?: { label: string; to: MarketingRoute };
+  secondary?: { label: string; to: MarketingRoute };
 }) {
   return (
     <section className="closing-glow relative isolate overflow-hidden bg-primary py-24 sm:py-32">
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <span className="rule-brass mx-auto mb-6" />
-        <p className="eyebrow">Your salon, ready for what is next</p>
+        <p className="eyebrow">Your business, ready for what is next</p>
         <h2 className="mt-5 font-display text-5xl leading-[0.98] text-balance text-primary-foreground sm:text-6xl">
           {title}
         </h2>
@@ -75,10 +90,10 @@ export function ClosingCta({
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link
-            href="/register"
+            href={primary ? primary.to : "/register"}
             className="rounded-full bg-brass px-8 py-4 text-sm font-semibold text-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary-foreground"
           >
-            Get Your Salon Website
+            {primary ? primary.label : "Get Started Free"}
           </Link>
           {secondary && (
             <Link

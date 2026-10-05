@@ -62,6 +62,10 @@ export const ApiVerifyPayment = 'payments/verify';
 export const ApiTestPaymentSuccess = 'payments/test-success';
 export const ApiPaymentHistory = 'payments/history';
 
+// ─── Public / Marketing ───────────────────────────────────────────────────────
+/** Public contact form on /contact. Must be callable without authentication. */
+export const ApiContactEnquiry = 'contact/enquiry';
+
 // ─── Owner ────────────────────────────────────────────────────────────────────
 export const ApiTenantRoles = (salonId: string) => `owner/salons/${salonId}/roles`;
 export const ApiAssignRole = 'roles/assign';

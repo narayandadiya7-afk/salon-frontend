@@ -29,7 +29,7 @@ export default function Navbar() {
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          ✂️ SalonSaaS
+          Fyncho
         </Link>
 
         <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
@@ -51,7 +51,7 @@ export default function Navbar() {
             <Button variant="outlined" className={styles.loginBtn}>Sign In</Button>
           </Link>
           <Link href="/register">
-            <Button type="primary" className={styles.ctaBtn}>Get Your Salon Website</Button>
+            <Button type="primary" className={styles.ctaBtn}>Get Started Free</Button>
           </Link>
         </div>
 
@@ -84,7 +84,7 @@ export default function Navbar() {
               <Button variant="outlined" block>Sign In</Button>
             </Link>
             <Link href="/register" onClick={() => setMenuOpen(false)}>
-              <Button type="primary" block>Get Your Salon Website</Button>
+              <Button type="primary" block>Get Started Free</Button>
             </Link>
           </div>
         </div>

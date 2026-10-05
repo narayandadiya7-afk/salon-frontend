@@ -35,8 +35,8 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'SalonSaaS — Launch Your Salon Website in Minutes',
-  description: 'The all-in-one SaaS platform for salon businesses. Online booking, subscription management, and a beautiful website.',
+  title: 'Fyncho — Business Management & Booking Software for Beauty & Wellness',
+  description: 'Fyncho helps beauty salons, barbershops, spas, nail studios, wellness centres and personal-care professionals manage bookings, staff, services and customers from one platform.',
 };
 
 const scrollRestorationScript = `(function () {

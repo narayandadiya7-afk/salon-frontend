@@ -3,9 +3,9 @@ import Link from "next/link";
 import { SiteShell, PageHero } from "@/components/admin/admin-website/site-shell";
 import { ClosingCta, SectionHeading } from "@/components/admin/admin-website/marketing-sections";
 
-const TITLE = "How It Works — From Sign Up to Live Salon Website | Avivane";
+const TITLE = "How It Works — Get Your Business Live with Fyncho";
 const DESCRIPTION =
-  "Four steps: create your account, choose your salon URL, set up your salon, and go live with your own website.";
+  "Create your Fyncho account, choose your unique business address, add your services and team, and start managing bookings, customers and payments from one platform.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -18,22 +18,22 @@ const steps = [
   {
     n: "01",
     t: "Create your account",
-    d: "Register your salon business with your name, email and phone. It takes about a minute.",
+    d: "Register your business and create your Fyncho account with your basic business information.",
   },
   {
     n: "02",
-    t: "Choose your salon URL",
-    d: "Pick a unique slug. Glam Studio becomes avivane.com/glam-studio — checked for availability as you type.",
+    t: "Choose your business address",
+    d: "Choose a unique name for your business and get your own easy-to-remember address, such as fyncho.com/glam-studio.",
   },
   {
     n: "03",
-    t: "Set up your salon",
-    d: "Add your services, team, opening hours, business information and branding.",
+    t: "Set up your business",
+    d: "Add your business information, services, pricing, durations, team members, availability and gallery.",
   },
   {
     n: "04",
-    t: "Go live",
-    d: "Share your salon website with customers and start taking bookings the same day.",
+    t: "Start taking bookings",
+    d: "Once your business is ready, share your Fyncho address and let customers explore your services and book online.",
   },
 ];
 
@@ -42,10 +42,10 @@ export default function HowItWorksPage() {
     <SiteShell>
       <PageHero
         eyebrow="How it works"
-        title={<>Four steps between here and your own salon website.</>}
-        intro="No developers, no migration project, no waiting on an agency. You leave this website with a live address and a dashboard behind it."
+        title={<>Four simple steps to your own business platform.</>}
+        intro="Fyncho brings your business presence, services, team, customers, bookings and payments together in one place, so you can get started without managing separate systems."
         image="/assets/admin-website/avivane-banner-business.jpg"
-        imageAlt="Salon business workspace prepared for a new day"
+        imageAlt="Professional service business workspace"
       />
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
@@ -58,35 +58,69 @@ export default function HowItWorksPage() {
               <span className="font-display text-4xl text-brass/70 transition-colors duration-300 group-hover:text-brass sm:col-span-2">
                 {s.n}
               </span>
+
               <h2 className="text-3xl sm:col-span-4">{s.t}</h2>
-              <p className="max-w-[56ch] text-pretty text-muted-foreground sm:col-span-6">{s.d}</p>
+
+              <p className="max-w-[56ch] text-pretty text-muted-foreground sm:col-span-6">
+                {s.d}
+              </p>
             </li>
           ))}
         </ol>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-        <SectionHeading eyebrow="What you prepare" title="A polished launch starts with the details clients already ask for." description="Bring your service menu, team information, opening hours and a few strong images. Avivane turns those essentials into a structured salon presence." />
+        <SectionHeading
+          eyebrow="What you prepare"
+          title="Start with the information your customers already need."
+          description="Bring together your business details, services, team information and images. Fyncho turns those essentials into a clear professional business presence."
+        />
+
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            ["Your identity", "Salon name, logo, colours and a short introduction."],
-            ["Your services", "Prices, durations, categories and booking rules."],
-            ["Your team", "Profiles, skills, working hours and availability."],
-            ["Your policies", "Deposits, cancellations and client information."],
-          ].map(([title, copy], i) => <div key={title} className="card-lux p-7"><span className="numeral">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{copy}</p></div>)}
+            [
+              "Your business",
+              "Business name, contact details, introduction and gallery images.",
+            ],
+            [
+              "Your services",
+              "Service descriptions, prices and durations.",
+            ],
+            [
+              "Your team",
+              "Team member profiles, working hours and availability.",
+            ],
+            [
+              "Your booking settings",
+              "Deposits, cancellation requirements and appointment settings.",
+            ],
+          ].map(([title, copy], i) => (
+            <div key={title} className="card-lux p-7">
+              <span className="numeral">0{i + 1}</span>
+
+              <h3 className="mt-4 text-2xl">{title}</h3>
+
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {copy}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="border-y border-line bg-surface py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="eyebrow">And after that</p>
+          <p className="eyebrow">Once you're ready</p>
+
           <h2 className="mt-4 text-4xl text-balance sm:text-5xl">
-            Your salon ecosystem takes over.
+            Your business has a place customers can return to.
           </h2>
+
           <p className="mx-auto mt-4 max-w-[52ch] text-pretty text-muted-foreground">
-            Your public salon website, your salon dashboard and your customer portal all live at
-            your address from day one.
+            Share your Fyncho business address, let customers explore your services and
+            make appointments online, while you manage the business from your dashboard.
           </p>
+
           <Link
             href="/register"
             className="mt-8 inline-block rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
@@ -98,19 +132,49 @@ export default function HowItWorksPage() {
 
       <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5"><SectionHeading eyebrow="After launch" title="Your address becomes the front door to the whole client relationship." /></div>
+          <div className="lg:col-span-5">
+            <SectionHeading
+              eyebrow="After launch"
+              title="Your business address becomes the place customers return to."
+            />
+          </div>
+
           <div className="divide-y divide-line border-y border-line lg:col-span-7">
             {[
-              ["Be discovered", "Share one memorable address across search, social profiles, messages and printed material."],
-              ["Take bookings", "Let clients choose the right service, professional and time without waiting for a reply."],
-              ["Build loyalty", "Use client history, memberships and thoughtful follow-up to encourage the next visit."],
-              ["Understand growth", "Read revenue, retention, utilisation and service performance from the same system."],
-            ].map(([title, copy]) => <div key={title} className="grid gap-3 py-6 sm:grid-cols-3"><h3 className="text-2xl">{title}</h3><p className="sm:col-span-2 leading-relaxed text-muted-foreground">{copy}</p></div>)}
+              [
+                "Be discovered",
+                "Share one memorable business address across search, social profiles, messages and printed material.",
+              ],
+              [
+                "Take bookings",
+                "Let customers explore services, see available times and book without waiting for a reply.",
+              ],
+              [
+                "Build relationships",
+                "Use customer accounts, appointment history, memberships and loyalty to support repeat visits.",
+              ],
+              [
+                "Manage your business",
+                "Keep appointments, customers, services, team members, payments and business activity together.",
+              ],
+            ].map(([title, copy]) => (
+              <div key={title} className="grid gap-3 py-6 sm:grid-cols-3">
+                <h3 className="text-2xl">{title}</h3>
+
+                <p className="sm:col-span-2 leading-relaxed text-muted-foreground">
+                  {copy}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <ClosingCta title="Your salon can be live before the day is over." description="Create your account, claim your address and build a professional destination for every new and returning client." secondary={{ label: "View Pricing", to: "/pricing" }} />
+      <ClosingCta
+        title="Give your business a place of its own."
+        description="Create your account, choose your business address and bring your services, team, customers and bookings together with Fyncho."
+        secondary={{ label: "View Pricing", to: "/pricing" }}
+      />
     </SiteShell>
   );
 }
