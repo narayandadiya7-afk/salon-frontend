@@ -20,7 +20,7 @@ export default function SkincareePage() {
       eyebrow="Skin Care & Facials"
       heroTitle={<>Skin care management as considered as the treatments you offer.</>}
       heroIntro="Fyncho gives skin care businesses professional business software, online booking, and the tools to manage services, team schedules, customers, and appointments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/skincare-banner.png"
       heroImageAlt="Skin care treatment room with professional equipment and soft lighting"
       challenges={[
         {

@@ -22,7 +22,7 @@ export default function NailSalonPage() {
         <>Nail salon management as polished as the results you deliver.</>
       }
       heroIntro="Fyncho gives nail salons professional business software, online booking, and the tools to manage services, team schedules, customers, and appointments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/nail-salon-banner.png"
       heroImageAlt="Nail professional working at a modern nail studio"
       challenges={[
         {

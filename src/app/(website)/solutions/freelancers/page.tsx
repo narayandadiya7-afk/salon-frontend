@@ -22,7 +22,7 @@ export default function FreelancersPage() {
         <>Professional business software built for independent professionals.</>
       }
       heroIntro="Fyncho gives independent beauty and wellness professionals online booking and the tools to manage services, customers, appointments, payments, and daily business operations — without needing a team."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/freelancer-banner.png"
       heroImageAlt="Independent beauty professional preparing for a customer appointment"
       challenges={[
         {

@@ -22,7 +22,7 @@ export default function WaxingPage() {
         <>Waxing and hair removal management built for high-frequency, returning customers.</>
       }
       heroIntro="Fyncho gives waxing and hair removal businesses professional business software, online booking, and the tools to manage services, team schedules, customers, appointments, and payments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/waxing-banner.png"
       heroImageAlt="Waxing treatment room set up for a professional appointment"
       challenges={[
         {

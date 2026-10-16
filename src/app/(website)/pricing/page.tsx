@@ -264,7 +264,7 @@ export default function PricingPage() {
         eyebrow="Pricing"
         title={<>Pay as your business grows.</>}
         intro={`No monthly subscription. No feature tiers. Fyncho charges ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Online payments may also carry a separate payment gateway processing fee.`}
-        image="/assets/admin-website/avivane-banner-interior.jpg"
+        image="/assets/admin-website/pricing-banner.png"
         imageAlt="Elegant modern service business interior"
       />
 

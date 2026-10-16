@@ -22,7 +22,7 @@ export default function MensGroomingPage() {
         <>Men's grooming management built for modern businesses and returning customers.</>
       }
       heroIntro="Fyncho gives men's grooming businesses professional business software, online booking, and the tools to manage services, team schedules, customers, memberships, and payments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/mens-grooming-banner.jpg"
       heroImageAlt="Modern men's grooming studio with premium tools and finishes"
       challenges={[
         {

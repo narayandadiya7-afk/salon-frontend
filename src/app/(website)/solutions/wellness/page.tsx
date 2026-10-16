@@ -22,7 +22,7 @@ export default function WellnessPage() {
         <>Wellness center management designed for a smooth customer experience.</>
       }
       heroIntro="Fyncho gives wellness centers professional business software, online booking, and the tools to manage services, team schedules, customers, memberships, and payments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/wellness-banner.png"
       heroImageAlt="Wellness center with calm treatment space and natural light"
       challenges={[
         {
