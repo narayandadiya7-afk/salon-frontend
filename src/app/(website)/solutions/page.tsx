@@ -96,11 +96,6 @@ const solutionGroups = [
         to: "/solutions/barbershop",
       },
       {
-        t: "Men's Grooming",
-        d: "Manage grooming services, memberships, loyalty, customer relationships, bookings, and payments.",
-        to: "/solutions/mens-grooming",
-      },
-      {
         t: "Freelancers",
         d: "Professional business software for independent beauty and wellness professionals with online booking and customer management.",
         to: "/solutions/freelancers",

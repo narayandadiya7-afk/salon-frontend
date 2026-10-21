@@ -40,7 +40,6 @@ const solutionsGroups = [
     title: "Grooming & Solo",
     links: [
       { label: "Barbershops", to: "/solutions/barbershop" },
-      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
       { label: "Freelancers", to: "/solutions/freelancers" },
     ],
   },

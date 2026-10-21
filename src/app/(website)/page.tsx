@@ -80,7 +80,6 @@ const businessCategories = [
     group: "Grooming & Solo Professionals",
     items: [
       { label: "Barbershops", to: "/solutions/barbershop" },
-      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
       { label: "Freelancers", to: "/solutions/freelancers" },
     ],
   },
