@@ -22,7 +22,7 @@ export default function LashBrowPage() {
         <>Lash and brow studio management built around precision and repeat customers.</>
       }
       heroIntro="Fyncho gives lash and brow studios professional business software, online booking, and the tools to manage services, team schedules, customers, and appointments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/lash-brow-banner.png"
       heroImageAlt="Lash professional performing a lash extension treatment"
       challenges={[
         {

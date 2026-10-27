@@ -22,7 +22,7 @@ export default function HairSalonPage() {
         <>Hair salon management built around the chair, not the spreadsheet.</>
       }
       heroIntro="Fyncho gives hair salons professional business software, online booking, and the tools to manage services, stylists, customers, and daily operations — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/hair-salon-banner.png"
       heroImageAlt="Hair stylist working with a customer in a modern salon"
       challenges={[
         {

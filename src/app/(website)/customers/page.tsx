@@ -94,7 +94,7 @@ export default function CustomersPage() {
         eyebrow="Customer stories"
         title={<>Built around the businesses that use it.</>}
         intro="Every service business works a little differently. Fyncho brings the essential tools together while giving each business its own professional business software and customer experience."
-        image="/assets/admin-website/avivane-banner-craft.jpg"
+        image="/assets/admin-website/stories-banner.png"
         imageAlt="Service business owner creating a polished customer experience"
       />
 

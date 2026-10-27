@@ -44,7 +44,7 @@ export default function HowItWorksPage() {
         eyebrow="How it works"
         title={<>Four simple steps to your own business platform.</>}
         intro="Fyncho brings your business presence, services, team, customers, bookings and payments together in one place, so you can get started without managing separate systems."
-        image="/assets/admin-website/avivane-banner-business.jpg"
+        image="/assets/admin-website/how-it-works-banner.png"
         imageAlt="Professional service business workspace"
       />
 

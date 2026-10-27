@@ -80,7 +80,6 @@ const businessCategories = [
     group: "Grooming & Solo Professionals",
     items: [
       { label: "Barbershops", to: "/solutions/barbershop" },
-      { label: "Men's Grooming", to: "/solutions/mens-grooming" },
       { label: "Freelancers", to: "/solutions/freelancers" },
     ],
   },
@@ -122,13 +121,20 @@ export default function HomePage() {
     <SiteShell>
       {/* HERO */}
       <section className="page-banner relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden bg-primary">
-        <img
-          src="/assets/admin-website/banner-image.png"
-          alt="Premium modern salon interior with warm light and brass details"
-          width={1920}
-          height={1088}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/assets/admin-website/home-banner.png"
+          aria-label="Premium modern salon interior with warm light and brass details"
           className="banner-image absolute inset-0 h-full w-full object-cover"
-        />
+        >
+          <source
+            src="/assets/admin-website/home-banner.mp4"
+            type="video/mp4"
+          />
+        </video>
         <div className="banner-shade absolute inset-0" />
 
         <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col justify-end px-6 py-14 sm:py-20">

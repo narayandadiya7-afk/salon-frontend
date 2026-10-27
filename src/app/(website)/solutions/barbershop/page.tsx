@@ -92,7 +92,6 @@ export default function BarbershopPage() {
         "Manage services, barbers, customers, bookings, and revenue from one place",
       ]}
       relatedSolutions={[
-        { label: "Men's Grooming", to: "/solutions/mens-grooming" },
         { label: "Hair Salons", to: "/solutions/hair-salon" },
         { label: "Freelancers", to: "/solutions/freelancers" },
       ]}

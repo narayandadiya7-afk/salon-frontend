@@ -20,7 +20,7 @@ export default function SpaPage() {
       eyebrow="Spa"
       heroTitle={<>Spa management as serene as the experience you deliver.</>}
       heroIntro="Fyncho gives spas professional business software, online booking, and the tools to manage services, team schedules, customers, appointments, and payments — all in one place."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/spa-banner.png"
       heroImageAlt="Serene spa treatment room with soft lighting and premium linens"
       challenges={[
         {

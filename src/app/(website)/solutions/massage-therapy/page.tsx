@@ -22,7 +22,7 @@ export default function MassageTherapyPage() {
         <>Massage therapy management that keeps you focused on the treatment, not the admin.</>
       }
       heroIntro="Fyncho gives massage therapists professional business software, online booking, and the tools to manage services, appointments, customers, payments, and team schedules — whether you practice solo or with a team."
-      heroImage="/assets/admin-website/avivane-banner-interior.jpg"
+      heroImage="/assets/admin-website/massage-therapy-banner.png"
       heroImageAlt="Massage therapy treatment room with soft lighting and professional equipment"
       challenges={[
         {

@@ -111,7 +111,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title={<>Let's talk about your business.</>}
         intro="Have a question about Fyncho, getting started, bookings, or managing your business? Send us a message, call us, or reach out directly."
-        image="/assets/admin-website/avivane-banner-craft.jpg"
+        image="/assets/admin-website/contact-banner.jpg"
         imageAlt="Professional service business preparing for a customer appointment"
       />
 

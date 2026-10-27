@@ -22,7 +22,7 @@ export default function MakeupArtistPage() {
         <>Booking and customer management for makeup artists who want to stay focused on the work.</>
       }
       heroIntro="Fyncho gives makeup artists professional business software, direct customer bookings, and the tools to manage services, appointments, customers, and payments — without the back-and-forth."
-      heroImage="/assets/admin-website/avivane-banner-craft.jpg"
+      heroImage="/assets/admin-website/makeup-artist-banner.png"
       heroImageAlt="Makeup artist working with a customer in a professional studio"
       challenges={[
         {
