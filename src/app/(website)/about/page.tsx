@@ -33,7 +33,7 @@ export default function AboutPage() {
           </>
         }
         intro="Fyncho exists to give service-based businesses their own professional business software — bringing their services, customers, bookings, team, and daily operations together in one place."
-        image="/assets/admin-website/avivane-banner-interior.jpg"
+        image="/assets/admin-website/about-banner.png"
         imageAlt="Sunlit premium service business interior designed around the customer experience"
       />
 
