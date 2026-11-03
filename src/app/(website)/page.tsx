@@ -55,9 +55,9 @@ const metrics = [
     detail: "Services, team, customers, and payments together.",
   },
   {
-    value: "1%",
-    label: "Fyncho fee",
-    detail: "A simple percentage-based model as you grow.",
+    value: "✓",
+    label: "Payments",
+    detail: "Deposits and online payments built into booking.",
   },
 ];
 
@@ -209,16 +209,17 @@ const dashboardHighlights = [
 const businessTypes = [
   "Hair Salons",
   "Beauty Salons",
-  "Nail Studios",
-  "Spas & Wellness",
-  "Barbershops",
-  "Bridal Studios",
-  "Massage Therapy",
-  "Skin & Facials",
-  "Lash & Brow",
+  "Nail Salons",
+  "Lash & Brow Studios",
   "Makeup Artists",
-  "Tattoo Studios",
-  "Holistic Therapies",
+  "Bridal Services",
+  "Spa",
+  "Massage Therapy",
+  "Wellness Centers",
+  "Skin Care & Facials",
+  "Waxing & Hair Removal",
+  "Barbershops",
+  "Freelancers",
 ];
 
 const faqs = [
@@ -274,7 +275,7 @@ export default function HomePage() {
         <div className="banner-shade absolute inset-0" />
         <div className="pointer-events-none absolute inset-4 border border-primary-foreground/15 sm:inset-6" />
 
-        <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col justify-end px-6 py-14 sm:px-8 sm:py-18">
+        <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col justify-center px-6 py-14 sm:px-8 sm:py-18">
           <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-12 xl:col-span-8">
               <p className="anim-rise eyebrow text-brass">
@@ -296,7 +297,7 @@ export default function HomePage() {
               <div className="anim-rise-3 mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href="/register"
-                  className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:shadow-lift"
+                  className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift"
                 >
                   Get Started Free
                 </Link>
