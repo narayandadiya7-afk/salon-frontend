@@ -23,7 +23,7 @@ const steps = [
   {
     n: "02",
     t: "Choose your business address",
-    d: "Choose a unique name for your business and get your own easy-to-remember address, such as fyncho.com/glam-studio.",
+    d: "Choose a unique name for your business and get your own easy-to-remember address, such as glam-studio.fyncho.com.",
   },
   {
     n: "03",
@@ -110,7 +110,7 @@ export default function HowItWorksPage() {
 
       <section className="border-y border-line bg-surface py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="eyebrow">Once you're ready</p>
+          <p className="eyebrow">Once you&apos;re ready</p>
 
           <h2 className="mt-4 text-4xl text-balance sm:text-5xl">
             Your business has a place customers can return to.
