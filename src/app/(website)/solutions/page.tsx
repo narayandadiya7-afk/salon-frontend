@@ -122,7 +122,7 @@ export default function SolutionsPage() {
             gi % 2 === 1 ? "border-y border-line bg-surface" : ""
           }`}
         >
-          <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-7xl px-6">
             <div className="mb-10">
               <p className="eyebrow">{group.group}</p>
             </div>
@@ -154,7 +154,7 @@ export default function SolutionsPage() {
         </section>
       ))}
 
-      <section className="mx-auto max-w-6xl px-6 py-16 text-center">
+      <section className="mx-auto max-w-7xl px-6 py-16 text-center">
         <Link
           href="/register"
           className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
@@ -164,7 +164,7 @@ export default function SolutionsPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="A platform that fits the trade"
             title="Different businesses need different services — not different systems."
@@ -209,7 +209,7 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
             eyebrow="From independent professionals to growing businesses"

@@ -14,7 +14,7 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { SiteShell } from "@/components/admin/admin-website/site-shell";
+import { SiteShell, HeroShell } from "@/components/admin/admin-website/site-shell";
 import {
   ClosingCta,
   MetricBand,
@@ -257,120 +257,97 @@ export default function HomePage() {
   return (
     <SiteShell>
       {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className="page-banner relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden bg-primary">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/assets/admin-website/home-banner.png"
-          aria-label="Premium modern salon interior with warm light and brass details"
-          className="banner-image absolute inset-0 h-full w-full object-cover"
-        >
-          <source
-            src="/assets/admin-website/home-banner.mp4"
-            type="video/mp4"
-          />
-        </video>
-        <div className="banner-shade absolute inset-0" />
-        <div className="pointer-events-none absolute inset-4 border border-primary-foreground/15 sm:inset-6" />
+      <HeroShell
+        eyebrow="Home"
+        flushBottom
+        videoSrc="/assets/admin-website/home-banner.mp4"
+        poster="/assets/admin-website/home-banner.png"
+        imageAlt="Premium modern salon interior with warm light and brass details"
+        bottom={
+          <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-foreground/60">
+            <span>No card required</span>
+            <span>Live in minutes</span>
+            <span>Your address · Your customers · Your business</span>
+          </div>
+        }
+      >
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-end">
+          <div className="lg:col-span-12 xl:col-span-8">
+            <p className="anim-rise eyebrow text-brass">
+              Business management &amp; booking software
+            </p>
 
-        <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col justify-center px-6 py-14 sm:px-8 sm:py-18">
-          <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-12 xl:col-span-8">
-              <p className="anim-rise eyebrow text-brass">
-                Business management &amp; booking software
-              </p>
+            <h1 className="anim-rise-2 mt-5 max-w-5xl font-display text-5xl leading-[0.88] text-balance text-primary-foreground sm:text-7xl lg:text-8xl">
+              Your business.{" "}
+              <em className="italic text-brass">Your platform.</em>
+            </h1>
 
-              <h1 className="anim-rise-2 mt-5 max-w-4xl font-display text-5xl leading-[0.88] text-balance text-primary-foreground sm:text-7xl lg:text-8xl">
-                Your business.{" "}
-                <em className="italic text-brass">Your platform.</em>
-              </h1>
+            <p className="anim-rise-3 mt-6 max-w-[62ch] text-base leading-relaxed text-pretty text-primary-foreground/75 sm:text-lg">
+              Fyncho gives beauty, wellness, grooming, and other
+              service-based businesses professional business software, online
+              booking, and the tools to manage services, teams, customers,
+              and daily operations — all from one connected platform.
+            </p>
 
-              <p className="anim-rise-3 mt-6 max-w-[54ch] text-base leading-relaxed text-pretty text-primary-foreground/75 sm:text-lg">
-                Fyncho gives beauty, wellness, grooming, and other
-                service-based businesses professional business software, online
-                booking, and the tools to manage services, teams, customers,
-                and daily operations — all from one connected platform.
-              </p>
+            <div className="anim-rise-3 mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="/register"
+                className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift"
+              >
+                Get Started Free
+              </Link>
 
-              <div className="anim-rise-3 mt-8 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/register"
-                  className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift"
-                >
-                  Get Started Free
-                </Link>
+              <Link
+                href="/how-it-works"
+                className="rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/35 transition-colors hover:bg-primary-foreground/10"
+              >
+                See how it works
+              </Link>
+            </div>
+          </div>
 
-                <Link
-                  href="/how-it-works"
-                  className="rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/35 transition-colors hover:bg-primary-foreground/10"
-                >
-                  See how it works
-                </Link>
+          {/* Small product moment keeps the hero from feeling like a poster. */}
+          <aside className="anim-rise-4 hidden xl:col-span-4 xl:block">
+            <div className="float-soft rounded-2xl border border-primary-foreground/15 bg-primary/35 p-5 shadow-lift backdrop-blur-md">
+              <div className="flex items-center justify-between gap-4">
+                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary-foreground/55">
+                  Your business software
+                </p>
+                <span className="flex items-center gap-1.5 rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
+                  <span className="pulse-dot size-1.5 rounded-full bg-brass" />
+                  Live
+                </span>
               </div>
 
-              <div className="anim-rise-4 mt-10 flex flex-wrap gap-x-8 gap-y-2 border-t border-primary-foreground/20 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-foreground/60">
-                <span>No card required</span>
-                <span>Live in minutes</span>
-                <span>Your address · Your customers · Your business</span>
+              <p className="mt-4 font-display text-2xl leading-tight text-primary-foreground">
+                Glam Studio
+              </p>
+              <p className="mt-1 text-xs text-primary-foreground/55">
+                glam-studio.fyncho.com
+              </p>
+
+              <ul className="mt-5 grid grid-cols-2 gap-2">
+                {["Home", "Services", "Team", "Gallery", "About", "Booking"].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-3 py-2 text-xs text-primary-foreground/85"
+                  >
+                    <Check size={12} strokeWidth={2.5} className="text-brass" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-4 flex items-center justify-between rounded-xl bg-brass px-4 py-3 text-primary">
+                <span className="text-xs font-semibold">
+                  Create your business software
+                </span>
+                <span className="text-xs">→</span>
               </div>
             </div>
-
-            {/* Small product moment keeps the hero from feeling like a poster. */}
-            <aside className="anim-rise-4 hidden xl:col-span-4 xl:block">
-              <div className="float-soft rounded-2xl border border-primary-foreground/15 bg-primary/35 p-5 shadow-lift backdrop-blur-md">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary-foreground/55">
-                    Live booking preview
-                  </p>
-                  <span className="flex items-center gap-1.5 rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
-                    <span className="pulse-dot size-1.5 rounded-full bg-brass" />
-                    Open
-                  </span>
-                </div>
-
-                <p className="mt-4 font-display text-2xl leading-tight text-primary-foreground">
-                  Signature cut &amp; finish
-                </p>
-                <p className="mt-1 text-xs text-primary-foreground/55">
-                  Glam Studio · 60 min
-                </p>
-
-                <dl className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-3 py-2.5">
-                    <dt className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/45">
-                      Date
-                    </dt>
-                    <dd className="mt-1 text-xs text-primary-foreground/90">
-                      Friday, 24 May
-                    </dd>
-                  </div>
-                  <div className="rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-3 py-2.5">
-                    <dt className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/45">
-                      Time
-                    </dt>
-                    <dd className="mt-1 text-xs text-primary-foreground/90">
-                      10:30 AM
-                    </dd>
-                  </div>
-                </dl>
-
-                <div className="mt-4 flex items-center justify-between rounded-xl bg-brass px-4 py-3 text-primary">
-                  <span className="text-xs font-semibold">
-                    Appointment confirmed
-                  </span>
-                  <Check size={16} strokeWidth={2.5} />
-                </div>
-
-                <p className="mt-3 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-primary-foreground/35">
-                  Illustrative preview
-                </p>
-              </div>
-            </aside>
-          </div>
+          </aside>
         </div>
-      </section>
+      </HeroShell>
 
       {/* ── BUSINESS TYPES MARQUEE ────────────────────────────────────── */}
       <section
@@ -404,13 +381,13 @@ export default function HomePage() {
 
       {/* ── PROOF POINTS ──────────────────────────────────────────────── */}
       <section className="bg-background py-10 sm:py-12">
-        <div className="scroll-reveal mx-auto max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <MetricBand items={metrics} />
         </div>
       </section>
 
       {/* ── SOLUTIONS ─────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
         <div className="scroll-reveal flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="rule-brass mb-5" />
@@ -441,29 +418,29 @@ export default function HomePage() {
             <Link
               key={solution.to}
               href={solution.to}
-              className="group overflow-hidden rounded-2xl border border-primary-foreground/15 bg-primary shadow-card transition-transform duration-300 hover:-translate-y-1"
+              className="group overflow-hidden rounded-2xl border border-primary-foreground/15 bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
-              <div className="relative aspect-video bg-background">
+              <div className="relative aspect-[16/10] overflow-hidden bg-background">
                 <Image
                   src={solution.image}
                   alt={solution.alt}
                   fill
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
-                  className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
-              <div className="flex items-end justify-between gap-3 border-t border-primary-foreground/10 px-5 py-5 sm:px-6">
+              <div className="flex items-center justify-between gap-3 border-t border-primary-foreground/10 px-5 py-4 sm:px-5">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brass">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-brass">
                     {solution.group}
                   </p>
-                  <h3 className="mt-1 font-display text-xl leading-tight text-primary-foreground sm:text-2xl">
+                  <h3 className="mt-1 font-display text-xl leading-tight text-primary-foreground">
                     {solution.label}
                   </h3>
                 </div>
 
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-primary">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-primary">
                   →
                 </span>
               </div>
@@ -474,8 +451,8 @@ export default function HomePage() {
 
       {/* ── BUSINESS ADDRESS ──────────────────────────────────────────── */}
       <section className="border-y border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 lg:grid-cols-12 lg:gap-16">
-          <div className="scroll-reveal lg:col-span-6 xl:col-span-5">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12 lg:gap-16">
+          <div className="scroll-reveal lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Your business address</p>
 
@@ -489,7 +466,7 @@ export default function HomePage() {
               customers.
             </p>
 
-            <div className="mt-8 rounded-2xl border border-line bg-background p-2 shadow-card">
+            <div className="mt-8 rounded-xl border border-line bg-background p-2 shadow-card">
               <div className="flex flex-col gap-2">
                 <div className="flex min-w-0 flex-1 items-center overflow-hidden rounded-full bg-surface px-4 py-3 ring-1 ring-line sm:px-5">
                   <span className="whitespace-nowrap font-mono text-xs text-muted-foreground sm:text-sm">
@@ -517,14 +494,14 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="scroll-reveal relative lg:col-span-6 xl:col-span-7">
+          <div className="scroll-reveal relative lg:col-span-7">
             <div
               aria-hidden="true"
               className="glow-pulse absolute -inset-4 rounded-[2rem] bg-brass/10 blur-2xl"
             />
 
-            <div className="relative overflow-hidden rounded-2xl border border-line bg-background shadow-lift">
-              <div className="flex items-center gap-1.5 border-b border-primary px-4 py-3">
+            <div className="relative w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift">
+              <div className="flex items-center gap-1.5 border-b border-line px-4 py-3">
                 <span className="size-2 rounded-full bg-muted-foreground/25" />
                 <span className="size-2 rounded-full bg-muted-foreground/25" />
                 <span className="size-2 rounded-full bg-muted-foreground/25" />
@@ -536,25 +513,23 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <div className="relative overflow-hidden">
-                <Image
-                  src="/assets/admin-website/home-business.png"
-                  alt="Preview of a business software profile on Fyncho"
-                  width={1024}
-                  height={572}
-                  sizes="(min-width: 1024px) 640px, 92vw"
-                  className="ken-burns h-auto w-full"
-                />
-              </div>
+              <Image
+                src="/assets/admin-website/home-business.png"
+                alt="Preview of a business software profile on Fyncho"
+                width={1024}
+                height={572}
+                sizes="(min-width: 1024px) 640px, 92vw"
+                className="aspect-[16/9] w-full object-cover"
+              />
 
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-primary px-5 py-4">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line bg-primary px-5 py-4 text-primary-foreground">
                 <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-brass">
                   Glam Studio
                 </span>
                 {["Home", "Services", "Team", "Gallery"].map((item) => (
                   <span
                     key={item}
-                    className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground"
+                    className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/55"
                   >
                     {item}
                   </span>
@@ -578,35 +553,33 @@ export default function HomePage() {
       {/* ── BUSINESS SOFTWARE SHOWCASE ────────────────────────────────── */}
       {/* Image: /assets/admin-website/salon-hero.jpg (existing asset).
           A bespoke replacement prompt is in docs/homepage-image-prompts.md. */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="scroll-reveal lg:col-span-7">
-            <figure className="overflow-hidden rounded-2xl border border-line bg-primary shadow-card">
+          <div className="scroll-reveal order-2 lg:order-none lg:col-span-7">
+            <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-primary shadow-card">
               <Image
                 src="/assets/admin-website/salon-hero.jpg"
                 alt="A modern service business in warm daylight"
                 width={1200}
                 height={800}
                 sizes="(min-width: 1024px) 640px, 92vw"
-                className="ken-burns aspect-4/3 w-full object-cover"
+                className="aspect-[16/9] w-full object-cover"
               />
-              <figcaption className="border-t border-line px-5 py-5 text-primary-foreground sm:px-6 sm:py-6">
-                <div className="flex items-start gap-4">
-                  <span aria-hidden="true" className="mt-1 h-10 w-px shrink-0 bg-brass" />
-                  <div>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
-                      Your business, online
-                    </p>
-                    <p className="mt-1.5 max-w-[32ch] font-display text-xl leading-tight text-primary-foreground sm:text-2xl">
-                      A presence that feels as considered as your service.
-                    </p>
-                  </div>
+              <figcaption className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
+                <span aria-hidden="true" className="mb-1 h-10 w-px shrink-0 bg-brass" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
+                    Your business, online
+                  </p>
+                  <p className="mt-1 w-full font-display text-xl leading-tight sm:text-2xl">
+                    A presence that feels as considered as your service.
+                  </p>
                 </div>
               </figcaption>
             </figure>
           </div>
 
-          <div className="scroll-reveal lg:col-span-5">
+          <div className="scroll-reveal order-1 lg:order-none lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Your own business software</p>
 
@@ -636,9 +609,9 @@ export default function HomePage() {
 
             <Link
               href="/register"
-              className="btn-shine mt-9 inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
+              className="btn-shine mt-9 flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex sm:w-auto"
             >
-              Create My Business Software
+              <span className="block sm:inline">Create My Business Software</span>
             </Link>
           </div>
         </div>
@@ -646,75 +619,88 @@ export default function HomePage() {
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
       <section className="border-y border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="scroll-reveal flex flex-wrap items-end justify-between gap-8">
-            <div className="max-w-2xl">
-              <span className="rule-brass mb-5" />
-              <p className="eyebrow">How it works</p>
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="scroll-reveal max-w-2xl">
+            <span className="rule-brass mb-5" />
+            <p className="eyebrow">How it works</p>
 
-              <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
-                Live in four considered steps.
-              </h2>
+            <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
+              Live in four considered steps.
+            </h2>
 
-              <p className="mt-4 max-w-[52ch] text-pretty text-muted-foreground">
-                From creating your account to taking your first booking, setup
-                is guided, quick, and entirely yours.
-              </p>
-            </div>
-
-            <Link
-              href="/register"
-              className="btn-shine inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
-            >
-              Get Started
-            </Link>
+            <p className="mt-4 max-w-[52ch] text-pretty text-muted-foreground">
+              From creating your account to taking your first booking, setup
+              is guided, quick, and entirely yours.
+            </p>
           </div>
 
-          <div className="scroll-reveal mt-12 grid gap-6">
-            <figure className="overflow-hidden rounded-3xl border border-line bg-primary shadow-lift">
+          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-stretch">
+            <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift order-2 lg:order-2 lg:col-span-7">
               <Image
                 src="/assets/admin-website/how-it-works-banner.png"
                 alt="Business owner setting up a professional online presence"
                 width={2048}
                 height={1152}
-                sizes="(min-width: 1024px) 1152px, 92vw"
-                className="ken-burns aspect-4/3 w-full object-cover sm:aspect-16/9"
+                sizes="(min-width: 1024px) 66vw, 92vw"
+                className="aspect-[16/9] w-full object-cover"
               />
-              <figcaption className="border-t border-line bg-primary px-5 py-5 text-primary-foreground sm:px-7 sm:py-6">
-                <div className="flex items-start gap-4">
-                  <span aria-hidden="true" className="mt-1 h-10 w-px shrink-0 bg-brass" />
-                  <div>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
-                      From sign-up to live
-                    </p>
-                    <p className="mt-1.5 max-w-[48ch] font-display text-xl leading-tight text-primary-foreground sm:text-2xl">
-                      Create your account, add your business, and go live — no
-                      technical setup required.
-                    </p>
-                  </div>
+              <figcaption className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
+                <span aria-hidden="true" className="mb-1 h-10 w-px shrink-0 bg-brass" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
+                    Guided setup
+                  </p>
+                  <p className="mt-1 w-full font-display text-xl leading-tight sm:text-2xl">
+                    From sign-up to accepting your first booking.
+                  </p>
                 </div>
               </figcaption>
             </figure>
 
-            <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="flex min-h-full flex-col justify-between rounded-xl border border-line bg-background p-6 shadow-card sm:p-8 order-1 lg:order-1 lg:col-span-5">
+              <div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass">Your launch plan</span>
+                <p className="mt-4 font-display text-2xl leading-tight sm:text-3xl">
+                  One guided setup. No technical work.
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  Create your account, shape your business website, add your services, and open your booking calendar.
+                </p>
+              </div>
+
+              <Link
+                href="/register"
+                className="btn-shine mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
+              >
+                Start your business
+              </Link>
+            </div>
+
+            <ol className="order-3 grid gap-5 sm:grid-cols-2 lg:order-none lg:col-span-12 lg:grid-cols-4">
               {steps.map((step, index) => {
                 const Icon = stepIcons[index] ?? Sparkles;
 
                 return (
                   <li
                     key={step.n}
-                    className="group rounded-2xl border border-line bg-background p-5 transition-colors duration-300 sm:p-6"
+                    className="group relative min-h-72 rounded-xl border border-line bg-background p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex size-11 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-colors duration-300 group-hover:bg-brass group-hover:text-accent-foreground">
+                    <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
+                      <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
                         <Icon size={19} strokeWidth={1.75} aria-hidden="true" />
-                      </div>
-                      <span className="numeral">{step.n}</span>
+                      </span>
+                      <span className="font-mono text-xs tracking-[0.18em] text-muted-foreground/70">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                     </div>
-                    <h3 className="mt-5 text-xl leading-snug">{step.t}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    <h3 className="mt-7 font-display text-2xl leading-tight">{step.t}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {step.d}
                     </p>
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                    />
                   </li>
                 );
               })}
@@ -724,7 +710,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FEATURES ──────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
         <div className="scroll-reveal flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
             <span className="rule-brass mb-5" />
@@ -745,14 +731,14 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="scroll-reveal mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="scroll-reveal mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {homePageFeatures.map((feature, index) => {
             const Icon = featureIcons[index] ?? Sparkles;
 
             return (
               <div
                 key={feature.t}
-                className="group relative min-h-72 rounded-2xl border border-line bg-background p-7 transition-colors duration-300 sm:p-8"
+                className="group relative min-h-72 rounded-xl border border-line bg-background p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
               >
                 <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
                   <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
@@ -774,7 +760,7 @@ export default function HomePage() {
 
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-2xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
                 />
               </div>
             );
@@ -784,7 +770,7 @@ export default function HomePage() {
 
       {/* ── GALLERY ───────────────────────────────────────────────────── */}
       <section className="bg-primary py-20 text-primary-foreground sm:py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="scroll-reveal flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
               <span className="rule-brass mb-5" />
@@ -812,13 +798,13 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="scroll-reveal mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="scroll-reveal mt-12 grid grid-cols-1 gap-5 sm:grid-cols-12">
             {gallery.map((item, index) => (
               <figure
                 key={item.label}
                 className={
-                  "group relative overflow-hidden rounded-2xl border border-line" +
-                  (index % 2 === 1 ? " lg:translate-y-8" : "")
+                  "group relative overflow-hidden rounded-xl border border-primary-foreground/15 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:col-span-6 " +
+                  (index === 0 || index === 3 ? "lg:col-span-5" : "lg:col-span-7")
                 }
               >
                 <Image
@@ -826,8 +812,8 @@ export default function HomePage() {
                   alt={item.alt}
                   width={900}
                   height={1100}
-                  sizes="(min-width: 1024px) 22vw, 45vw"
-                  className="aspect-3/4 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 92vw"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9] 2xl:aspect-[16/8.5]"
                 />
 
                 <div className="absolute inset-0 bg-linear-to-t from-primary/85 via-transparent to-transparent" />
@@ -847,9 +833,9 @@ export default function HomePage() {
       </section>
 
       {/* ── ONLINE BOOKING ────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
-        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-          <div className="scroll-reveal lg:col-span-5">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="scroll-reveal order-1 lg:order-2 lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Online booking</p>
 
@@ -865,14 +851,14 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 href="/register"
-                className="btn-shine inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
+                className="btn-shine inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:w-auto sm:px-6"
               >
                 Get Started Free
               </Link>
 
               <Link
                 href="/how-it-works"
-                className="rounded-full px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-line transition-colors hover:bg-surface"
+                className="flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-foreground ring-1 ring-line transition-colors hover:bg-surface sm:w-auto"
               >
                 See how booking works
               </Link>
@@ -885,22 +871,26 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="scroll-reveal lg:col-span-7">
-            <div className="relative mx-auto max-w-xl">
-              <div
-                aria-hidden="true"
-                className="glow-pulse absolute -inset-6 rounded-[3rem] bg-brass/10 blur-2xl"
+          <div className="scroll-reveal order-2 lg:order-1 lg:col-span-7">
+            <div className="overflow-hidden rounded-xl border border-line bg-background shadow-lift">
+              <Image
+                src="/assets/admin-website/mobile-booking.png"
+                alt="Fyncho customer booking experience"
+                width={1600}
+                height={900}
+                sizes="(min-width: 1024px) 58vw, 92vw"
+                className="aspect-[16/9] w-full object-cover"
               />
-
-              <div className="relative overflow-hidden rounded-[2rem] border border-line bg-surface shadow-lift">
-                <Image
-                  src="/assets/admin-website/mobile-booking.jpg"
-                  alt="Fyncho customer booking experience on a mobile device"
-                  width={912}
-                  height={1104}
-                  sizes="(min-width: 1024px) 576px, 92vw"
-                  className="h-auto w-full"
-                />
+              <div className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
+                <span aria-hidden="true" className="mb-1 h-10 w-px shrink-0 bg-brass" />
+                <div className="min-w-0">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
+                    Online booking
+                  </p>
+                  <p className="mt-1 w-full text-balance font-display text-xl leading-tight sm:text-2xl">
+                    A complete booking experience, available around the clock.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -914,15 +904,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <ol className="mt-8 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+          <ol className="mt-8 grid overflow-hidden rounded-xl border border-line bg-background sm:grid-cols-2 lg:grid-cols-5">
             {bookingFlow.map((step, index) => (
-              <li key={step.t}>
-                <div className="flex items-center gap-3">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-brass/40 bg-surface font-mono text-[10px] text-brass">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span aria-hidden="true" className="h-px flex-1 bg-line" />
-                </div>
+              <li key={step.t} className="border-line p-5 sm:p-6 lg:border-l lg:first:border-l-0">
+                <span className="flex size-8 items-center justify-center rounded-full border border-brass/40 bg-surface font-mono text-[10px] text-brass">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
                 <p className="mt-4 font-display text-xl leading-snug">
                   {step.t}
@@ -938,7 +925,7 @@ export default function HomePage() {
 
       {/* ── DASHBOARD ─────────────────────────────────────────────────── */}
       <section className="border-y border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="scroll-reveal grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
               <span className="rule-brass mb-5" />
@@ -947,65 +934,83 @@ export default function HomePage() {
               <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
                 Run your business from one dashboard.
               </h2>
-            </div>
 
-            <div className="lg:col-span-5">
-              <p className="text-pretty text-muted-foreground">
+              <p className="mt-4 max-w-[52ch] text-pretty text-muted-foreground">
                 Appointments, revenue, customers, team activity, services, and
                 reports stay connected — so you always have a clear view of the
                 day ahead.
               </p>
+            </div>
 
+            <div className="flex justify-start lg:col-span-5 lg:justify-end lg:self-end">
               <Link
                 href="/features"
-                className="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
+                className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
               >
-                See the full feature set →
+                See the full feature set
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </div>
           </div>
 
-          <div className="scroll-reveal relative mt-12">
-            <div className="relative overflow-hidden rounded-2xl border border-line bg-background shadow-lift">
+          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-stretch">
+            <div className="order-2 mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift lg:order-2 lg:col-span-7">
+              <div className="flex items-center gap-1.5 border-b border-line px-4 py-3">
+                <span className="size-2 rounded-full bg-muted-foreground/25" />
+                <span className="size-2 rounded-full bg-muted-foreground/25" />
+                <span className="size-2 rounded-full bg-muted-foreground/25" />
+                <span className="ml-3 min-w-0 flex-1 truncate rounded-full border border-line bg-muted px-3 py-1 font-mono text-[9px] text-muted-foreground sm:text-[10px]">
+                  Fyncho business dashboard
+                </span>
+              </div>
               <Image
                 src="/assets/admin-website/dashboard-preview.jpg"
                 alt="Fyncho business dashboard showing appointments, revenue, customers, and services"
                 width={1408}
                 height={912}
-                sizes="(min-width: 1024px) 1152px, 92vw"
-                className="h-auto w-full"
+                sizes="(min-width: 1024px) 72vw, 92vw"
+                className="aspect-[16/10] w-full object-cover"
               />
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3 lg:grid-cols-6">
-              {dashboardHighlights.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-2 border-t border-line pt-3 text-sm text-muted-foreground"
-                >
-                  <Check
-                    size={13}
-                    strokeWidth={2.5}
-                    aria-hidden="true"
-                    className="shrink-0 text-brass"
-                  />
-                  {item}
-                </div>
-              ))}
+            <div className="order-1 min-h-full rounded-xl border border-line bg-background p-6 shadow-card sm:p-8 lg:order-1 lg:col-span-5">
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass">
+                One clear overview
+              </p>
+              <p className="mt-4 font-display text-2xl leading-tight sm:text-3xl">
+                Everything important, connected.
+              </p>
+
+              <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-1">
+                {dashboardHighlights.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 bg-background px-3 py-3 text-sm text-muted-foreground"
+                  >
+                    <Check
+                      size={13}
+                      strokeWidth={2.5}
+                      aria-hidden="true"
+                      className="shrink-0 text-brass"
+                    />
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── TRUST ─────────────────────────────────────────────────────── */}
-      <section className="relative isolate overflow-clip bg-primary py-24 sm:py-28">
+      <section className="relative isolate overflow-clip bg-primary py-20 sm:py-24">
         <Image
           src="/assets/admin-website/avivane-banner-craft.jpg"
           alt=""
           aria-hidden="true"
           fill
           sizes="100vw"
-          className="ken-burns object-cover opacity-25"
+          className="object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-linear-to-b from-primary/75 via-primary/85 to-primary" />
 
@@ -1043,7 +1048,7 @@ export default function HomePage() {
 
       {/* ── FAQ ───────────────────────────────────────────────────────── */}
       <section className="border-t border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12 lg:gap-16">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-16">
           <div className="scroll-reveal lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Questions</p>

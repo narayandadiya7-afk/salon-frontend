@@ -116,7 +116,7 @@ export default function ContactPage() {
       />
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <ContactForm />
@@ -240,7 +240,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="max-w-3xl">
           <span className="rule-brass" />
 

@@ -48,7 +48,7 @@ export default function HowItWorksPage() {
         imageAlt="Professional service business workspace"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-7xl px-6 pb-16">
         <ol className="border-t border-line">
           {steps.map((s) => (
             <li
@@ -69,7 +69,7 @@ export default function HowItWorksPage() {
         </ol>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="What you prepare"
           title="Start with the information your customers already need."
@@ -130,7 +130,7 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeading

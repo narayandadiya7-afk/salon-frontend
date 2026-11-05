@@ -57,7 +57,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-background/92 shadow-card backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+      <div className="mx-auto flex max-w-[90rem] items-center justify-between px-6 py-3.5">
         <Link href="/" className={"flex items-baseline gap-3" + (isActive(pathname, "/") ? " active" : "")}>
           <span className="font-display text-3xl font-semibold tracking-tight">Fyncho</span>
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
