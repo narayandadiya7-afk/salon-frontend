@@ -148,9 +148,12 @@ export function SolutionPageTemplate({
             </p>
             <Link
               href="/features"
-              className="mt-8 inline-block font-mono text-xs uppercase tracking-[0.2em] text-brass-soft hover:text-brass"
+              className="group mt-8 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
             >
-              Explore all features →
+              Explore all features
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </Link>
           </div>
           <img
@@ -181,9 +184,12 @@ export function SolutionPageTemplate({
               ))}
               <Link
                 href="/solutions"
-                className="rounded-full border border-brass/40 bg-background px-5 py-2.5 text-sm text-brass-soft transition-colors hover:border-brass hover:text-brass"
+                className="group inline-flex items-center gap-2 rounded-full border border-brass/40 bg-background px-5 py-2.5 text-sm text-brass-soft transition-colors hover:border-brass hover:text-brass"
               >
-                All solutions →
+                All solutions
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </Link>
             </div>
           </div>

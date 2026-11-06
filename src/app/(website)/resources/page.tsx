@@ -79,7 +79,7 @@ export default function ResourcesPage() {
             href="/register"
             className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
           >
-            Get Started Free
+            Get Your Business Software
           </Link>
         </div>
       </section>

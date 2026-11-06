@@ -108,10 +108,13 @@ export function SiteHeader() {
                     <div className="mt-5 border-t border-line pt-4">
                       <Link
                         href="/solutions"
-                        className="font-mono text-[10px] uppercase tracking-[0.18em] text-brass-soft transition-colors hover:text-brass"
+                        className="group inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-brass-soft transition-colors hover:text-brass"
                         onClick={() => setSolutionsOpen(false)}
                       >
-                        View all solutions →
+                        View all solutions
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">
+                          →
+                        </span>
                       </Link>
                     </div>
                   </div>
@@ -138,9 +141,9 @@ export function SiteHeader() {
           </Link>
           <Link
             href="/register"
-            className={"hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex" + (isActive(pathname, "/register") ? " active" : "")}
+            className={"hidden whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex" + (isActive(pathname, "/register") ? " active" : "")}
           >
-            Get Started Free
+            Get Your Business Software
           </Link>
           <button
             type="button"

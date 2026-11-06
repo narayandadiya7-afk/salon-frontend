@@ -275,7 +275,7 @@ export default function ContactPage() {
       <ClosingCta
         title="Ready to get started?"
         description="Create your Fyncho business software, choose your unique business address, and start building your online presence."
-        primary={{ label: "Start with Fyncho", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "Log in", to: "/login" }}
       />
     </SiteShell>

@@ -197,6 +197,8 @@ const featureIcons = [
 
 const stepIcons = [UserPlus, Link2, Settings2, Rocket];
 
+const bookingFlowIcons = [Globe2, Sparkles, CalendarClock, Check, CalendarCheck2];
+
 const dashboardHighlights = [
   "Appointments",
   "Revenue",
@@ -294,7 +296,7 @@ export default function HomePage() {
                 href="/register"
                 className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift"
               >
-                Get Started Free
+                Get Your Business Software
               </Link>
 
               <Link
@@ -404,7 +406,7 @@ export default function HomePage() {
 
           <Link
             href="/solutions"
-            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
+            className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
           >
             View all solutions
             <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -611,7 +613,7 @@ export default function HomePage() {
               href="/register"
               className="btn-shine mt-9 flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:inline-flex sm:w-auto"
             >
-              <span className="block sm:inline">Create My Business Software</span>
+              <span className="block sm:inline">Get Your Business Software</span>
             </Link>
           </div>
         </div>
@@ -672,7 +674,7 @@ export default function HomePage() {
                 href="/register"
                 className="btn-shine mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
               >
-                Start your business
+                Get Your Business Software
               </Link>
             </div>
 
@@ -722,7 +724,7 @@ export default function HomePage() {
 
           <Link
             href="/features"
-            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
+            className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
           >
             Explore all features
             <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -834,7 +836,50 @@ export default function HomePage() {
 
       {/* ── ONLINE BOOKING ────────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="scroll-reveal max-w-2xl">
+          <span className="rule-brass mb-5" />
+          <p className="eyebrow">The customer journey</p>
+
+          <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
+            Five steps from discovery to repeat booking.
+          </h2>
+        </div>
+
+        <ol className="scroll-reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {bookingFlow.map((step, index) => {
+            const Icon = bookingFlowIcons[index] ?? Sparkles;
+
+            return (
+              <li
+                key={step.t}
+                className="group relative flex min-h-72 flex-col rounded-xl border border-line bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
+              >
+                <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
+                  <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
+                    <Icon size={19} strokeWidth={1.75} aria-hidden="true" />
+                  </span>
+                  <span className="font-mono text-xs tracking-[0.18em] text-muted-foreground/70">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <h3 className="mt-6 font-display text-xl leading-tight sm:text-2xl">
+                  {step.t}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {step.d}
+                </p>
+
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                />
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="mt-16 grid items-center gap-12 border-t border-line pt-10 lg:grid-cols-12 lg:gap-16">
           <div className="scroll-reveal order-1 lg:order-2 lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Online booking</p>
@@ -853,7 +898,7 @@ export default function HomePage() {
                 href="/register"
                 className="btn-shine inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card sm:w-auto sm:px-6"
               >
-                Get Started Free
+                Get Your Business Software
               </Link>
 
               <Link
@@ -894,32 +939,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="scroll-reveal mt-16 border-t border-line pt-10">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <p className="eyebrow">The customer journey</p>
-            <p className="text-sm text-muted-foreground">
-              Five steps from discovery to repeat booking.
-            </p>
-          </div>
-
-          <ol className="mt-8 grid overflow-hidden rounded-xl border border-line bg-background sm:grid-cols-2 lg:grid-cols-5">
-            {bookingFlow.map((step, index) => (
-              <li key={step.t} className="border-line p-5 sm:p-6 lg:border-l lg:first:border-l-0">
-                <span className="flex size-8 items-center justify-center rounded-full border border-brass/40 bg-surface font-mono text-[10px] text-brass">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <p className="mt-4 font-display text-xl leading-snug">
-                  {step.t}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.d}
-                </p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
@@ -1064,9 +1083,12 @@ export default function HomePage() {
 
             <Link
               href="/contact"
-              className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
+              className="group mt-6 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
             >
-              Talk to us →
+              Talk to us
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </Link>
           </div>
 

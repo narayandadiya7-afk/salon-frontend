@@ -553,7 +553,7 @@ export default function PricingPage() {
       <ClosingCta
         title="Your business, online — at one clear platform rate."
         description={`Create your Fyncho business software, start taking bookings and pay ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Any payment gateway processing fee is separate.`}
-        primary={{ label: "Start with Fyncho", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "Talk to us", to: "/contact" }}
       />
     </SiteShell>

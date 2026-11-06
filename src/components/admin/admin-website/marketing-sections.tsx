@@ -98,7 +98,7 @@ export function ClosingCta({
             href={primary ? primary.to : "/register"}
             className="rounded-full bg-brass px-8 py-4 text-sm font-semibold text-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary-foreground"
           >
-            {primary ? primary.label : "Get Started Free"}
+            {primary ? primary.label : "Get Your Business Software"}
           </Link>
           {secondary && (
             <Link

@@ -72,7 +72,7 @@ export default function AboutPage() {
           href="/register"
           className="mt-9 inline-block rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
         >
-          Get Started Free
+          Get Your Business Software
         </Link>
       </section>
 

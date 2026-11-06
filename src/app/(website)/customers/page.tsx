@@ -334,7 +334,7 @@ export default function CustomersPage() {
       <ClosingCta
         title="Give your business a place of its own."
         description="Create your Fyncho business software, choose your unique business address, and bring your services, customers, bookings, and daily operations together."
-        primary={{ label: "Get Started Free", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "How It Works", to: "/how-it-works" }}
       />
     </SiteShell>

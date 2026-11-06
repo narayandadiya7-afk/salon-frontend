@@ -125,7 +125,7 @@ export default function HowItWorksPage() {
             href="/register"
             className="mt-8 inline-block rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
           >
-            Get Started
+            Get Your Business Software
           </Link>
         </div>
       </section>
