@@ -645,7 +645,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-stretch">
+          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
             <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift order-2 lg:order-2 lg:col-span-7">
               <Image
                 src="/assets/admin-website/how-it-works-banner.png"
@@ -675,7 +675,7 @@ export default function HomePage() {
                   One guided setup. No technical work.
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Create your account, shape your business software, add your services, and open your booking calendar — all in a single, guided flow designed for business owners, not developers.
+                  Create your account, shape your business software, add services, and open your booking calendar — all in one guided flow.
                 </p>
 
                 <div className="mt-6 rounded-xl border border-line bg-surface/60 p-4">
@@ -709,9 +709,6 @@ export default function HomePage() {
                   </ul>
                 </div>
 
-                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                  No coding · No designers · No hosting to manage
-                </p>
               </div>
 
               <Link
@@ -1123,15 +1120,15 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-16">
           <div className="scroll-reveal lg:col-span-5">
             <span className="rule-brass mb-5" />
-            <p className="eyebrow">Questions</p>
+            <p className="eyebrow">Frequently asked</p>
 
             <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
-              Questions, answered.
+              Frequently asked questions.
             </h2>
 
             <p className="mt-4 max-w-[38ch] text-pretty text-muted-foreground">
               Everything you need to know before giving your business its own
-              software.
+              software — answered clearly, in one place.
             </p>
 
             <Link
@@ -1146,22 +1143,48 @@ export default function HomePage() {
           </div>
 
           <div className="scroll-reveal lg:col-span-7">
-            <div className="divide-y divide-line border-y border-line">
-              {faqs.map((faq) => (
-                <details key={faq.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl leading-snug">
-                    {faq.q}
-
-                    <span className="font-mono text-brass transition-transform duration-300 group-open:rotate-45">
+            <div className="grid gap-3">
+              {faqs.map((faq, index) => (
+                <details
+                  key={faq.q}
+                  className="group overflow-hidden rounded-xl border border-line bg-background shadow-card transition-all duration-300 hover:border-brass/40 hover:shadow-lift"
+                >
+                  <summary className="flex cursor-pointer list-none items-center gap-4 px-5 py-4 sm:px-6 sm:py-5">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-brass/30 bg-brass/10 font-mono text-xs text-brass">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 font-display text-lg leading-snug sm:text-xl">
+                      {faq.q}
+                    </span>
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-line text-brass transition-transform duration-300 group-open:rotate-45">
                       +
                     </span>
                   </summary>
 
-                  <p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
-                    {faq.a}
-                  </p>
+                  <div className="border-t border-line bg-surface/40 px-5 py-4 sm:px-6 sm:py-5">
+                    <p className="max-w-[68ch] text-sm leading-relaxed text-muted-foreground">
+                      {faq.a}
+                    </p>
+                  </div>
                 </details>
               ))}
+            </div>
+
+            <div className="mt-6 flex flex-col items-start gap-3 rounded-xl border border-dashed border-brass/40 bg-brass/5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <div>
+                <p className="font-display text-lg leading-tight">
+                  Still have a question?
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Our team is happy to help you get started.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="btn-shine inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
+              >
+                Talk to us →
+              </Link>
             </div>
           </div>
         </div>
