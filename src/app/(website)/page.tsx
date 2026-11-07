@@ -729,7 +729,7 @@ export default function HomePage() {
                 return (
                   <li
                     key={step.n}
-                    className="group relative min-h-72 rounded-xl border border-line bg-background p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
+                    className="group relative min-h-72 overflow-hidden rounded-xl border border-line bg-background p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
                   >
                     <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
                       <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
@@ -745,7 +745,7 @@ export default function HomePage() {
                     </p>
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                      className="pointer-events-none absolute inset-0 rounded-xl border-b-4 border-brass [clip-path:inset(0_100%_0_0)] transition-[clip-path] duration-400 group-hover:[clip-path:inset(0)]"
                     />
                   </li>
                 );
@@ -789,7 +789,7 @@ export default function HomePage() {
             return (
               <div
                 key={feature.t}
-                className="group relative min-h-72 rounded-xl border border-line bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
+                className="group relative min-h-72 overflow-hidden rounded-xl border border-line bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
               >
                 <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
                   <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
@@ -811,7 +811,7 @@ export default function HomePage() {
 
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                  className="pointer-events-none absolute inset-0 rounded-xl border-b-4 border-brass [clip-path:inset(0_100%_0_0)] transition-[clip-path] duration-400 group-hover:[clip-path:inset(0)]"
                 />
               </div>
             );
@@ -905,7 +905,7 @@ export default function HomePage() {
             return (
               <li
                 key={step.t}
-                className="group relative flex min-h-72 flex-col rounded-xl border border-line bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
+                className="group relative flex min-h-72 flex-col overflow-hidden rounded-xl border border-line bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
               >
                 <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
                   <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
@@ -925,7 +925,7 @@ export default function HomePage() {
 
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 origin-left scale-x-0 rounded-xl border-b-4 border-brass transition-transform duration-500 group-hover:scale-x-100"
+                  className="pointer-events-none absolute inset-0 rounded-xl border-b-4 border-brass [clip-path:inset(0_100%_0_0)] transition-[clip-path] duration-400 group-hover:[clip-path:inset(0)]"
                 />
               </li>
             );
