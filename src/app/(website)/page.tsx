@@ -5,6 +5,7 @@ import {
   CalendarCheck2,
   CalendarClock,
   Check,
+  CreditCard,
   Globe2,
   Link2,
   Rocket,
@@ -199,6 +200,15 @@ const stepIcons = [UserPlus, Link2, Settings2, Rocket];
 
 const bookingFlowIcons = [Globe2, Sparkles, CalendarClock, Check, CalendarCheck2];
 
+const heroIncludes = [
+  { icon: Globe2, label: "Your own address" },
+  { icon: CalendarCheck2, label: "24/7 booking" },
+  { icon: Sparkles, label: "Services & pricing" },
+  { icon: Users, label: "Team & schedules" },
+  { icon: UserCog, label: "Customers & loyalty" },
+  { icon: CreditCard, label: "Payments & deposits" },
+];
+
 const dashboardHighlights = [
   "Appointments",
   "Revenue",
@@ -263,7 +273,6 @@ export default function HomePage() {
         eyebrow="Home"
         flushBottom
         videoSrc="/assets/admin-website/home-banner.mp4"
-        poster="/assets/admin-website/home-banner.png"
         imageAlt="Premium modern salon interior with warm light and brass details"
         bottom={
           <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-foreground/60">
@@ -308,44 +317,44 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Small product moment keeps the hero from feeling like a poster. */}
+          {/* What the platform actually hands over — six things a business
+              owner wants, with no sample business data. */}
           <aside className="anim-rise-4 hidden xl:col-span-4 xl:block">
             <div className="float-soft rounded-2xl border border-primary-foreground/15 bg-primary/35 p-5 shadow-lift backdrop-blur-md">
               <div className="flex items-center justify-between gap-4">
                 <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary-foreground/55">
-                  Your business software
+                  Everything included
                 </p>
-                <span className="flex items-center gap-1.5 rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
-                  <span className="pulse-dot size-1.5 rounded-full bg-brass" />
-                  Live
+                <span className="rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
+                  One login
                 </span>
               </div>
 
-              <p className="mt-4 font-display text-2xl leading-tight text-primary-foreground">
-                Glam Studio
-              </p>
-              <p className="mt-1 text-xs text-primary-foreground/55">
-                glam-studio.fyncho.com
-              </p>
-
-              <ul className="mt-5 grid grid-cols-2 gap-2">
-                {["Home", "Services", "Team", "Gallery", "About", "Booking"].map((item) => (
+              <ul className="mt-4 grid grid-cols-2 gap-2">
+                {heroIncludes.map(({ icon: Icon, label }) => (
                   <li
-                    key={item}
-                    className="flex items-center gap-2 rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-3 py-2 text-xs text-primary-foreground/85"
+                    key={label}
+                    className="flex items-center gap-2.5 rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-3 py-2.5"
                   >
-                    <Check size={12} strokeWidth={2.5} className="text-brass" />
-                    {item}
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass">
+                      <Icon size={13} strokeWidth={1.75} aria-hidden="true" />
+                    </span>
+                    <span className="text-[11px] font-medium leading-snug text-primary-foreground/90">
+                      {label}
+                    </span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-4 flex items-center justify-between rounded-xl bg-brass px-4 py-3 text-primary">
-                <span className="text-xs font-semibold">
-                  Create your business software
+              <Link
+                href="/features"
+                className="group mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-brass transition-colors hover:text-primary-foreground"
+              >
+                See everything included
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
                 </span>
-                <span className="text-xs">→</span>
-              </div>
+              </Link>
             </div>
           </aside>
         </div>
@@ -420,7 +429,7 @@ export default function HomePage() {
             <Link
               key={solution.to}
               href={solution.to}
-              className="group overflow-hidden rounded-2xl border border-primary-foreground/15 bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              className="group overflow-hidden rounded-2xl bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-background">
                 <Image
@@ -558,7 +567,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="scroll-reveal order-2 lg:order-none lg:col-span-7">
-            <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-primary shadow-card">
+            <figure className="mx-auto w-full overflow-hidden rounded-xl bg-primary shadow-card">
               <Image
                 src="/assets/admin-website/salon-hero.jpg"
                 alt="A modern service business in warm daylight"
@@ -666,7 +675,42 @@ export default function HomePage() {
                   One guided setup. No technical work.
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Create your account, shape your business website, add your services, and open your booking calendar.
+                  Create your account, shape your business software, add your services, and open your booking calendar — all in a single, guided flow designed for business owners, not developers.
+                </p>
+
+                <div className="mt-6 rounded-xl border border-line bg-surface/60 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                      What you&apos;ll have at the end
+                    </p>
+                    <span className="rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
+                      ~10 min
+                    </span>
+                  </div>
+
+                  <ul className="mt-4 grid gap-2.5">
+                    {[
+                      "Your own professional business address",
+                      "Services, pricing, and team configured",
+                      "A live booking calendar customers can use",
+                      "Payments and deposits ready to accept",
+                      "A polished presence that reflects your brand",
+                    ].map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2.5 text-sm text-foreground"
+                      >
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brass/15 text-brass">
+                          <Check size={12} strokeWidth={3} aria-hidden="true" />
+                        </span>
+                        <span className="leading-snug">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                  No coding · No designers · No hosting to manage
                 </p>
               </div>
 
@@ -720,6 +764,11 @@ export default function HomePage() {
             <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
               Everything your business needs, in one place.
             </h2>
+            <p className="mt-4 max-w-[52ch] text-pretty text-muted-foreground">
+              From your business presence and online booking to team, customers,
+              payments, and reports — everything you need to run your business,
+              connected in one platform.
+            </p>
           </div>
 
           <Link
@@ -740,7 +789,7 @@ export default function HomePage() {
             return (
               <div
                 key={feature.t}
-                className="group relative min-h-72 rounded-xl border border-line bg-background p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
+                className="group relative min-h-72 rounded-xl border border-line bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-lift sm:p-8"
               >
                 <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
                   <span className="flex size-12 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-accent-foreground">
@@ -843,6 +892,10 @@ export default function HomePage() {
           <h2 className="mt-4 text-4xl leading-tight text-balance sm:text-5xl">
             Five steps from discovery to repeat booking.
           </h2>
+          <p className="mt-4 max-w-[52ch] text-pretty text-muted-foreground">
+            A seamless path from first visit to loyal customer — discover,
+            book, confirm, and return with ease.
+          </p>
         </div>
 
         <ol className="scroll-reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">

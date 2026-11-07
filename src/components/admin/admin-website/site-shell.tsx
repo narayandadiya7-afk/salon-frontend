@@ -18,7 +18,6 @@ export function HeroShell({
   image,
   imageAlt,
   videoSrc,
-  poster,
   children,
   bottom,
   flushBottom = false,
@@ -28,7 +27,6 @@ export function HeroShell({
   image?: string;
   imageAlt?: string;
   videoSrc?: string;
-  poster?: string;
   children: ReactNode;
   bottom?: ReactNode;
   flushBottom?: boolean;
@@ -46,7 +44,7 @@ export function HeroShell({
           muted
           loop
           playsInline
-          poster={poster}
+          preload="auto"
           aria-label={imageAlt}
           className="banner-image absolute inset-0 h-full w-full object-cover"
         >
