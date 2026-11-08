@@ -569,7 +569,7 @@ export default function HomePage() {
           <div className="scroll-reveal order-2 lg:order-none lg:col-span-7">
             <figure className="mx-auto w-full overflow-hidden rounded-xl bg-primary shadow-card">
               <Image
-                src="/assets/admin-website/salon-hero.jpg"
+                src="/assets/admin-website/salon-hero.png"
                 alt="A modern service business in warm daylight"
                 width={1200}
                 height={800}
@@ -648,7 +648,7 @@ export default function HomePage() {
           <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
             <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift order-2 lg:order-2 lg:col-span-7">
               <Image
-                src="/assets/admin-website/how-it-works-banner.png"
+                src="/assets/admin-website/launch-plan-banner.png"
                 alt="Business owner setting up a professional online presence"
                 width={2048}
                 height={1152}
