@@ -438,7 +438,8 @@ export default function HomePage() {
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                unoptimized
+              />
               </div>
 
               <div className="flex items-center justify-between gap-3 border-t border-primary-foreground/10 px-5 py-4 sm:px-5">
@@ -531,6 +532,7 @@ export default function HomePage() {
                 height={572}
                 sizes="(min-width: 1024px) 640px, 92vw"
                 className="aspect-[16/9] w-full object-cover"
+              unoptimized
               />
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line bg-primary px-5 py-4 text-primary-foreground">
@@ -574,6 +576,7 @@ export default function HomePage() {
                 width={1200}
                 height={800}
                 sizes="(min-width: 1024px) 640px, 92vw"
+                unoptimized
                 className="aspect-[16/9] w-full object-cover"
               />
               <figcaption className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
@@ -654,6 +657,7 @@ export default function HomePage() {
                 height={1152}
                 sizes="(min-width: 1024px) 66vw, 92vw"
                 className="aspect-[16/9] w-full object-cover"
+              unoptimized
               />
               <figcaption className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
                 <span aria-hidden="true" className="mb-1 h-10 w-px shrink-0 bg-brass" />
@@ -862,7 +866,8 @@ export default function HomePage() {
                   height={1100}
                   sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 92vw"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9] 2xl:aspect-[16/8.5]"
-                />
+                unoptimized
+              />
 
                 <div className="absolute inset-0 bg-linear-to-t from-primary/85 via-transparent to-transparent" />
 
@@ -975,6 +980,7 @@ export default function HomePage() {
                 height={900}
                 sizes="(min-width: 1024px) 58vw, 92vw"
                 className="aspect-[16/9] w-full object-cover"
+              unoptimized
               />
               <div className="flex min-h-24 items-end gap-4 border-t border-line bg-primary px-5 py-4 text-primary-foreground sm:px-7">
                 <span aria-hidden="true" className="mb-1 h-10 w-px shrink-0 bg-brass" />
@@ -1039,6 +1045,7 @@ export default function HomePage() {
                 height={912}
                 sizes="(min-width: 1024px) 72vw, 92vw"
                 className="aspect-[16/10] w-full object-cover"
+              unoptimized
               />
             </div>
 
@@ -1080,7 +1087,8 @@ export default function HomePage() {
           fill
           sizes="100vw"
           className="object-cover opacity-20"
-        />
+        unoptimized
+              />
         <div className="absolute inset-0 bg-linear-to-b from-primary/75 via-primary/85 to-primary" />
 
         <div className="scroll-reveal relative mx-auto max-w-4xl px-6 text-center">
