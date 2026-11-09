@@ -169,22 +169,22 @@ const softwareIncludes = [
 const gallery = [
   {
     label: "Hair & styling",
-    image: "/assets/owner-website/service-hair.jpg",
+    image: "/assets/admin-website/hair-salon-banner.png",
     alt: "Hair styling service in progress",
   },
   {
     label: "Skin & facials",
-    image: "/assets/owner-website/service-skin.jpg",
+    image: "/assets/admin-website/skincare-banner.png",
     alt: "Skin care treatment in a calm studio",
   },
   {
     label: "Nails & detail",
-    image: "/assets/owner-website/service-nails.jpg",
+    image: "/assets/admin-website/nail-salon-banner.png",
     alt: "Nail service detail",
   },
   {
     label: "Bridal & occasion",
-    image: "/assets/owner-website/service-bridal.jpg",
+    image: "/assets/admin-website/bridal-banner.png",
     alt: "Bridal beauty preparation",
   },
 ];
