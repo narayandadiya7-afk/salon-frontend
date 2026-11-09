@@ -14,6 +14,7 @@ import {
   UserCog,
   UserPlus,
   Users,
+  ArrowRight,
 } from "lucide-react";
 import { SiteShell, HeroShell } from "@/components/admin/admin-website/site-shell";
 import {
@@ -351,9 +352,11 @@ export default function HomePage() {
                 className="group mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-brass transition-colors hover:text-primary-foreground"
               >
                 See everything included
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </aside>
@@ -418,9 +421,11 @@ export default function HomePage() {
             className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
           >
             View all solutions
-            <span className="transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
+            <ArrowRight
+              size={14}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </Link>
         </div>
 
@@ -453,7 +458,7 @@ export default function HomePage() {
                 </div>
 
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-primary">
-                  →
+                  <ArrowRight size={14} aria-hidden="true" />
                 </span>
               </div>
             </Link>
@@ -537,18 +542,14 @@ export default function HomePage() {
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line bg-primary px-5 py-4 text-primary-foreground">
                 <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-brass">
-                  Glam Studio
+                  glam-studio.fyncho.com
                 </span>
-                {["Home", "Services", "Team", "Gallery"].map((item) => (
-                  <span
-                    key={item}
-                    className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/55"
-                  >
-                    {item}
-                  </span>
-                ))}
-                <span className="ml-auto rounded-full bg-primary px-4 py-1.5 text-[10px] font-semibold text-primary-foreground">
-                  Book now
+                <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/55">
+                  Your business · Your address
+                </span>
+                <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-brass/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-brass">
+                  <span className="size-1.5 rounded-full bg-brass" />
+                  Live
                 </span>
               </div>
             </div>
@@ -777,9 +778,11 @@ export default function HomePage() {
             className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
           >
             Explore all features
-            <span className="transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
+            <ArrowRight
+              size={14}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </Link>
         </div>
 
@@ -844,9 +847,11 @@ export default function HomePage() {
               className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brass transition-colors hover:text-primary-foreground"
             >
               Explore the platform
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
+              <ArrowRight
+                size={14}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
           </div>
 
@@ -1023,7 +1028,11 @@ export default function HomePage() {
                 className="group inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
               >
                 See the full feature set
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </div>
@@ -1144,9 +1153,11 @@ export default function HomePage() {
               className="group mt-6 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
             >
               Talk to us
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
+              <ArrowRight
+                size={14}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
           </div>
 
@@ -1189,9 +1200,14 @@ export default function HomePage() {
               </div>
               <Link
                 href="/contact"
-                className="btn-shine inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
+                className="group btn-shine inline-flex items-center justify-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-soft hover:shadow-card"
               >
-                Talk to us →
+                Talk to us
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </div>
