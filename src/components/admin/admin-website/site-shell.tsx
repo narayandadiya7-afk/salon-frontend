@@ -18,6 +18,7 @@ export function HeroShell({
   image,
   imageAlt,
   videoSrc,
+  poster,
   children,
   bottom,
   flushBottom = false,
@@ -27,6 +28,7 @@ export function HeroShell({
   image?: string;
   imageAlt?: string;
   videoSrc?: string;
+  poster?: string;
   children: ReactNode;
   bottom?: ReactNode;
   flushBottom?: boolean;
@@ -39,17 +41,28 @@ export function HeroShell({
       }
     >
       {videoSrc ? (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-label={imageAlt}
-          className="banner-image absolute inset-0 h-full w-full object-cover"
-        >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
+        <>
+          {poster && (
+            <img
+              src={poster}
+              alt={imageAlt ?? ""}
+              width={1920}
+              height={1088}
+              className="banner-image absolute inset-0 h-full w-full object-cover sm:hidden"
+            />
+          )}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-label={imageAlt}
+            className="banner-image absolute inset-0 h-full w-full object-cover hidden sm:block"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </>
       ) : (
         <img
           src={image}
@@ -60,7 +73,7 @@ export function HeroShell({
         />
       )}
       <div className="banner-shade absolute inset-0" />
-      <div className="pointer-events-none absolute inset-5 border border-primary-foreground/15 sm:inset-8" />
+      <div className="pointer-events-none absolute inset-4 border border-primary-foreground/15 sm:inset-6" />
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-10 pt-12 sm:px-8 sm:pb-14 lg:px-12">
         <div className="anim-rise flex items-center justify-between border-b border-primary-foreground/20 pb-5">

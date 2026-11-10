@@ -275,6 +275,7 @@ export default function HomePage() {
         eyebrow="Home"
         flushBottom
         videoSrc="/assets/admin-website/home-banner.mp4"
+        poster="/assets/admin-website/home-banner.png"
         imageAlt="Premium modern salon interior with warm light and brass details"
         bottom={
           <div className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary-foreground/60">
@@ -284,8 +285,8 @@ export default function HomePage() {
           </div>
         }
       >
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-end">
-          <div className="lg:col-span-12 xl:col-span-8">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-6 sm:gap-8 lg:gap-12 items-end">
+          <div className="lg:col-span-8">
             <p className="anim-rise eyebrow text-brass">
               Business management &amp; booking software
             </p>
@@ -321,7 +322,7 @@ export default function HomePage() {
 
           {/* What the platform actually hands over — six things a business
               owner wants, with no sample business data. */}
-          <aside className="anim-rise-4 hidden xl:col-span-4 xl:block">
+          <aside className="anim-rise-4 hidden lg:col-span-4 lg:block">
             <div className="float-soft rounded-2xl border border-primary-foreground/15 bg-primary/35 p-5 shadow-lift backdrop-blur-md">
               <div className="flex items-center justify-between gap-4">
                 <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary-foreground/55">
@@ -402,7 +403,7 @@ export default function HomePage() {
       </section>
 
       {/* ── SOLUTIONS ─────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:py-20 xl:py-24">
         <div className="scroll-reveal flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="rule-brass mb-5" />
@@ -468,8 +469,8 @@ export default function HomePage() {
       </section>
 
       {/* ── BUSINESS ADDRESS ──────────────────────────────────────────── */}
-      <section className="border-y border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12 lg:gap-16">
+      <section className="border-y border-line bg-surface py-12 sm:py-16 lg:py-20 xl:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-6 sm:gap-8 lg:gap-12 px-6 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16">
           <div className="scroll-reveal lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Your business address</p>
@@ -568,8 +569,8 @@ export default function HomePage() {
       {/* ── BUSINESS SOFTWARE SHOWCASE ────────────────────────────────── */}
       {/* Image: /assets/admin-website/salon-hero.jpg (existing asset).
           A bespoke replacement prompt is in docs/homepage-image-prompts.md. */}
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+      <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:py-20 xl:py-24">
+        <div className="grid items-center gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16">
           <div className="scroll-reveal order-2 lg:order-none lg:col-span-7">
             <figure className="mx-auto w-full overflow-hidden rounded-xl bg-primary shadow-card">
               <Image
@@ -634,7 +635,7 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
-      <section className="border-y border-line bg-surface py-20 sm:py-24">
+      <section className="border-y border-line bg-surface py-12 sm:py-16 lg:py-20 xl:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="scroll-reveal max-w-2xl">
             <span className="rule-brass mb-5" />
@@ -650,7 +651,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+          <div className="scroll-reveal mt-12 grid gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16 lg:items-center">
             <figure className="mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift order-2 lg:order-2 lg:col-span-7">
               <Image
                 src="/assets/admin-website/launch-plan-banner.png"
@@ -759,7 +760,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FEATURES ──────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:py-20 xl:py-24">
         <div className="scroll-reveal flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
             <span className="rule-brass mb-5" />
@@ -892,7 +893,7 @@ export default function HomePage() {
       </section>
 
       {/* ── ONLINE BOOKING ────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:py-20 xl:py-24">
         <div className="scroll-reveal max-w-2xl">
           <span className="rule-brass mb-5" />
           <p className="eyebrow">The customer journey</p>
@@ -906,7 +907,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <ol className="scroll-reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="scroll-reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {bookingFlow.map((step, index) => {
             const Icon = bookingFlowIcons[index] ?? Sparkles;
 
@@ -940,7 +941,7 @@ export default function HomePage() {
           })}
         </ol>
 
-        <div className="mt-16 grid items-center gap-12 border-t border-line pt-10 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-16 grid items-center gap-6 sm:gap-8 lg:gap-12 border-t border-line pt-10 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16">
           <div className="scroll-reveal order-1 lg:order-2 lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Online booking</p>
@@ -1005,9 +1006,9 @@ export default function HomePage() {
       </section>
 
       {/* ── DASHBOARD ─────────────────────────────────────────────────── */}
-      <section className="border-y border-line bg-surface py-20 sm:py-24">
+      <section className="border-y border-line bg-surface py-12 sm:py-16 lg:py-20 xl:py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="scroll-reveal grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className="scroll-reveal grid items-end gap-8 lg:grid-cols-12 lg:gap-6 sm:gap-8 lg:gap-12">
             <div className="lg:col-span-7">
               <span className="rule-brass mb-5" />
               <p className="eyebrow">Business management</p>
@@ -1038,7 +1039,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="scroll-reveal mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-stretch">
+          <div className="scroll-reveal mt-12 grid gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16 lg:items-stretch">
             <div className="order-2 mx-auto w-full overflow-hidden rounded-xl border border-line bg-background shadow-lift lg:order-2 lg:col-span-7">
               <div className="flex items-center gap-1.5 border-b border-line px-4 py-3">
                 <span className="size-2 rounded-full bg-muted-foreground/25" />
@@ -1089,7 +1090,7 @@ export default function HomePage() {
       </section>
 
       {/* ── TRUST ─────────────────────────────────────────────────────── */}
-      <section className="relative isolate overflow-clip bg-primary py-20 sm:py-24">
+      <section className="relative isolate overflow-clip bg-primary py-12 sm:py-16 lg:py-20 xl:py-24">
         <Image
           src="/assets/admin-website/avivane-banner-craft.jpg"
           alt=""
@@ -1134,8 +1135,8 @@ export default function HomePage() {
       </section>
 
       {/* ── FAQ ───────────────────────────────────────────────────────── */}
-      <section className="border-t border-line bg-surface py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-16">
+      <section className="border-t border-line bg-surface py-12 sm:py-16 lg:py-20 xl:py-24">
+        <div className="mx-auto grid max-w-7xl gap-6 sm:gap-8 lg:gap-12 px-6 lg:grid-cols-12 lg:gap-8 sm:gap-12 lg:gap-16">
           <div className="scroll-reveal lg:col-span-5">
             <span className="rule-brass mb-5" />
             <p className="eyebrow">Frequently asked</p>
