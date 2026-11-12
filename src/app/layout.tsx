@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Fraunces, Jost, Plus_Jakarta_Sans } from 'next/font/google';
+import { Cormorant_Garamond, Jost, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import '@/styles/admin-website.css';
 import AppProviders from '../providers/AppProviders';
@@ -16,14 +16,6 @@ const jost = Jost({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
   variable: '--font-jost',
-  display: 'swap',
-});
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-fraunces',
   display: 'swap',
 });
 
@@ -66,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${jost.variable} ${fraunces.variable} ${plusJakarta.variable}`}
+      className={`${cormorant.variable} ${jost.variable} ${plusJakarta.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
