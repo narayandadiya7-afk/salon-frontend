@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import {
   CalendarCheck2,
   CalendarClock,
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { SiteShell, HeroShell } from "@/components/admin/admin-website/site-shell";
 import { FaqItem } from "@/components/admin/admin-website/faq-item";
+import { LoopRail } from "@/components/admin/admin-website/looping-rail";
 import {
   ClosingCta,
   MetricBand,
@@ -267,6 +268,79 @@ const faqs = [
   },
 ];
 
+function SolutionCard({ item }: { item: (typeof solutions)[number] }) {
+  return (
+    <Link
+      href={item.to}
+      className="group block h-full overflow-hidden rounded-2xl bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-background sm:aspect-[16/10]">
+        <Image
+          src={item.image}
+          alt={item.alt}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 78vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          unoptimized
+        />
+      </div>
+
+      <div className="flex items-center justify-between gap-3 border-t border-primary-foreground/10 px-5 py-4">
+        <div>
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-brass">
+            {item.group}
+          </p>
+          <h3 className="mt-1 font-display text-xl leading-tight text-primary-foreground">
+            {item.label}
+          </h3>
+        </div>
+
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-primary">
+          <ArrowRight size={14} aria-hidden="true" />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function GalleryFigure({
+  item,
+  index,
+}: {
+  item: (typeof gallery)[number];
+  index: number;
+}) {
+  return (
+    <figure
+      className={
+        "group relative overflow-hidden rounded-xl border border-primary-foreground/15 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:col-span-6 " +
+        (index === 0 || index === 3 ? "lg:col-span-5" : "lg:col-span-7")
+      }
+    >
+      <Image
+        src={item.image}
+        alt={item.alt}
+        width={900}
+        height={1100}
+        sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 78vw"
+        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9] 2xl:aspect-[16/8.5]"
+        unoptimized
+      />
+
+      <div className="absolute inset-0 bg-linear-to-t from-primary/85 via-transparent to-transparent" />
+
+      <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brass sm:text-[10px]">
+          {String(index + 1).padStart(2, "0")}
+        </p>
+        <p className="mt-1 text-sm font-semibold leading-snug text-primary-foreground">
+          {item.label}
+        </p>
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function HomePage() {
   return (
     <SiteShell>
@@ -431,39 +505,20 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="scroll-reveal mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {solutions.map((solution) => (
-            <Link
-              key={solution.to}
-              href={solution.to}
-              className="group overflow-hidden rounded-2xl bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-background">
-                <Image
-                  src={solution.image}
-                  alt={solution.alt}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                unoptimized
-              />
-              </div>
+        {/* Mobile: a looping swipe rail keeps six image tiles to one screen
+            instead of a long stacked column. Desktop keeps the grid. */}
+        <LoopRail
+          ariaLabel="Business solutions — swipe to browse"
+          className="mt-10"
+        >
+          {solutions.map((item) => (
+            <SolutionCard key={item.to} item={item} />
+          ))}
+        </LoopRail>
 
-              <div className="flex items-center justify-between gap-3 border-t border-primary-foreground/10 px-5 py-4 sm:px-5">
-                <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-brass">
-                    {solution.group}
-                  </p>
-                  <h3 className="mt-1 font-display text-xl leading-tight text-primary-foreground">
-                    {solution.label}
-                  </h3>
-                </div>
-
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-primary">
-                  <ArrowRight size={14} aria-hidden="true" />
-                </span>
-              </div>
-            </Link>
+        <div className="scroll-reveal mt-12 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+          {solutions.map((item) => (
+            <SolutionCard key={item.to} item={item} />
           ))}
         </div>
       </section>
@@ -857,36 +912,15 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="scroll-reveal mt-12 grid grid-cols-1 gap-5 sm:grid-cols-12">
+          <LoopRail ariaLabel="Gallery — swipe to browse" className="mt-8">
             {gallery.map((item, index) => (
-              <figure
-                key={item.label}
-                className={
-                  "group relative overflow-hidden rounded-xl border border-primary-foreground/15 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:col-span-6 " +
-                  (index === 0 || index === 3 ? "lg:col-span-5" : "lg:col-span-7")
-                }
-              >
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  width={900}
-                  height={1100}
-                  sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 92vw"
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9] 2xl:aspect-[16/8.5]"
-                unoptimized
-              />
+              <GalleryFigure key={item.label} item={item} index={index} />
+            ))}
+          </LoopRail>
 
-                <div className="absolute inset-0 bg-linear-to-t from-primary/85 via-transparent to-transparent" />
-
-                <figcaption className="absolute inset-x-0 bottom-0 p-5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brass">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-primary-foreground">
-                    {item.label}
-                  </p>
-                </figcaption>
-              </figure>
+          <div className="scroll-reveal mt-12 hidden gap-5 sm:grid sm:grid-cols-12">
+            {gallery.map((item, index) => (
+              <GalleryFigure key={item.label} item={item} index={index} />
             ))}
           </div>
         </div>
