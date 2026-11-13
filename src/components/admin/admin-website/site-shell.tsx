@@ -75,7 +75,7 @@ export function HeroShell({
       <div className="banner-shade absolute inset-0" />
       <div className="pointer-events-none absolute inset-4 border border-primary-foreground/15 sm:inset-6" />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-10 pt-12 sm:px-8 sm:pb-14 lg:px-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-8 pb-10 pt-12 sm:px-10 sm:pb-14 lg:px-12">
         <div className="anim-rise flex items-center justify-between border-b border-primary-foreground/20 pb-5">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/70">
             Fyncho <span className="mx-2 text-brass">/</span> {eyebrow}
