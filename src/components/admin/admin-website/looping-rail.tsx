@@ -15,10 +15,12 @@ const SWIPE_SETTLE_MS = 150;
  * Mobile-only swipe rail that loops in both directions.
  *
  * The cards are rendered three times and the rail opens on the middle copy,
- * so the last card peeks in from the left of the first card (and the first
- * from the right of the last). Once scrolling settles on an outer copy the
- * rail shifts by exactly one copy width, which looks identical and keeps the
- * loop endless. Cards snap to the centre, leaving the neighbours visible.
+ * so swiping left from the first card reaches the last one (and vice versa).
+ * Once scrolling settles on an outer copy the rail shifts by exactly one copy
+ * width, which looks identical and keeps the loop endless. Cards take most of
+ * the rail width so both neighbours stay visible as a hint of what is next,
+ * and the rail clips overflow so they read as adjacent cards rather than
+ * chopped photos. `snap-always` keeps one swipe to one card.
  *
  * The rail is hidden from `sm` up, so callers render their grid layout next
  * to it. Cards are passed in as children, which keeps the page free of
@@ -28,7 +30,7 @@ export function LoopRail({
   children,
   ariaLabel,
   className = "",
-  itemClassName = "w-[78%] shrink-0 snap-center",
+  itemClassName = "w-[80%] shrink-0 snap-center snap-always",
 }: {
   children: ReactNode;
   ariaLabel: string;

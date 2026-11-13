@@ -325,7 +325,7 @@ function GalleryFigure({
         width={1200}
         height={675}
         sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 78vw"
-        className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-105 2xl:aspect-[16/8.5]"
+        className="aspect-[3/2] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9]"
         unoptimized
       />
 
