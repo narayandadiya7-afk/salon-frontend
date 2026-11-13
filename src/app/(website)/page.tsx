@@ -274,7 +274,9 @@ function SolutionCard({ item }: { item: (typeof solutions)[number] }) {
       href={item.to}
       className="group block h-full overflow-hidden rounded-2xl bg-primary shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-background sm:aspect-[16/10]">
+      {/* Rail and grid frames follow the source artwork's 16:9 ratio, so the
+          photos are shown whole instead of cropped. */}
+      <div className="relative aspect-[16/9] overflow-hidden bg-background sm:aspect-[16/10]">
         <Image
           src={item.image}
           alt={item.alt}
@@ -320,10 +322,10 @@ function GalleryFigure({
       <Image
         src={item.image}
         alt={item.alt}
-        width={900}
-        height={1100}
+        width={1200}
+        height={675}
         sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 78vw"
-        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:aspect-[16/9] 2xl:aspect-[16/8.5]"
+        className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-105 2xl:aspect-[16/8.5]"
         unoptimized
       />
 
@@ -377,17 +379,19 @@ export default function HomePage() {
               and daily operations — all from one connected platform.
             </p>
 
+            {/* On phones the two calls to action can't share a row, so each one
+                takes the full width instead of sitting short and ragged. */}
             <div className="anim-rise-3 mt-8 flex flex-wrap items-center gap-3">
               <Link
                 href="/register"
-                className="btn-shine rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift"
+                className="btn-shine w-full rounded-full bg-brass px-7 py-3.5 text-center text-sm font-semibold text-accent-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-foreground hover:shadow-lift sm:w-auto"
               >
                 Get Your Business Software
               </Link>
 
               <Link
                 href="/how-it-works"
-                className="rounded-full px-7 py-3.5 text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/35 transition-colors hover:bg-primary-foreground/10"
+                className="w-full rounded-full px-7 py-3.5 text-center text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/35 transition-colors hover:bg-primary-foreground/10 sm:w-auto"
               >
                 See how it works
               </Link>
@@ -1102,11 +1106,14 @@ export default function HomePage() {
                 Everything important, connected.
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-1">
+              {/* Two columns only where they genuinely fit: below 425px a single
+                  "Appointments" cell ran past its edge and got clipped by the
+                  rounded frame, so narrow screens get one label per row. */}
+              <div className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line min-[425px]:grid-cols-2 lg:grid-cols-1">
                 {dashboardHighlights.map((item) => (
                   <div
                     key={item}
-                    className="flex items-center gap-2 bg-background px-3 py-3 text-sm text-muted-foreground"
+                    className="flex items-center gap-2 bg-background px-4 py-3 text-sm text-muted-foreground"
                   >
                     <Check
                       size={13}
