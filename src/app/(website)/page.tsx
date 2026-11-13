@@ -315,8 +315,8 @@ function GalleryFigure({
   return (
     <figure
       className={
-        "group relative overflow-hidden rounded-xl border border-primary-foreground/15 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:col-span-6 " +
-        (index === 0 || index === 3 ? "lg:col-span-5" : "lg:col-span-7")
+        "group relative overflow-hidden rounded-xl border border-primary-foreground/15 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift " +
+        (index === 0 || index === 3 ? "col-span-5" : "col-span-7")
       }
     >
       <Image
