@@ -67,7 +67,7 @@ export default function FeaturesPage() {
         imageAlt="Professional service business workspace"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f, i) => (
             <div key={f.t} className="card-lux p-7">
@@ -80,7 +80,7 @@ export default function FeaturesPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="Built as one system"
             title="Your business information and daily operations stay connected."
@@ -116,7 +116,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="divide-y divide-line border-y border-line">
           {chapters.map((chapter, index) => (
             <article
@@ -156,7 +156,7 @@ export default function FeaturesPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="max-w-xl">
             <p className="eyebrow">Business management dashboard</p>
 
@@ -181,7 +181,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:py-28">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:py-28">
         <img
           src="/assets/admin-website/mobile-booking.jpg"
           alt="Customer booking an appointment on a mobile phone"

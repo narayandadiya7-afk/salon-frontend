@@ -48,7 +48,7 @@ export default function ResourcesPage() {
         imageAlt="Professional beauty tools and business notebook"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           {groups.map((g) => (
             <div key={g.title} className="card-lux p-8">
@@ -79,13 +79,13 @@ export default function ResourcesPage() {
             href="/register"
             className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
           >
-            Get Started Free
+            Get Your Business Software
           </Link>
         </div>
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="Start with the essentials"
             title="A practical library for building a business clients can understand and trust."
@@ -108,7 +108,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
             eyebrow="For owners and teams"

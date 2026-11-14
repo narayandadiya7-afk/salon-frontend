@@ -116,7 +116,7 @@ export default function ContactPage() {
       />
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <ContactForm />
@@ -240,7 +240,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="max-w-3xl">
           <span className="rule-brass" />
 
@@ -275,7 +275,7 @@ export default function ContactPage() {
       <ClosingCta
         title="Ready to get started?"
         description="Create your Fyncho business software, choose your unique business address, and start building your online presence."
-        primary={{ label: "Start with Fyncho", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "Log in", to: "/login" }}
       />
     </SiteShell>

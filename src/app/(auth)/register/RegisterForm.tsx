@@ -163,9 +163,12 @@ export function RegisterForm() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-block font-mono text-xs uppercase tracking-[0.2em] text-brass-soft hover:text-brass"
+          className="group mt-8 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
         >
-          Back to Avivane →
+          Back to Avivane
+          <span className="transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
         </Link>
       </section>
     );

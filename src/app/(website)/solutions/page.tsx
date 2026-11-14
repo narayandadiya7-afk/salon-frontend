@@ -122,7 +122,7 @@ export default function SolutionsPage() {
             gi % 2 === 1 ? "border-y border-line bg-surface" : ""
           }`}
         >
-          <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-7xl px-6">
             <div className="mb-10">
               <p className="eyebrow">{group.group}</p>
             </div>
@@ -132,7 +132,7 @@ export default function SolutionsPage() {
                 <Link
                   key={s.t}
                   href={s.to}
-                  className="card-lux block p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+                  className="card-lux group block p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
                 >
                   <span className="numeral">
                     {String(i + 1).padStart(2, "0")}
@@ -144,8 +144,11 @@ export default function SolutionsPage() {
                     {s.d}
                   </p>
 
-                  <span className="mt-5 block font-mono text-xs uppercase tracking-[0.18em] text-brass">
-                    Learn more →
+                  <span className="mt-5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-brass">
+                    Learn more
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
                   </span>
                 </Link>
               ))}
@@ -154,17 +157,17 @@ export default function SolutionsPage() {
         </section>
       ))}
 
-      <section className="mx-auto max-w-6xl px-6 py-16 text-center">
+      <section className="mx-auto max-w-7xl px-6 py-16 text-center">
         <Link
           href="/register"
           className="rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
         >
-          Get Started Free
+          Get Your Business Software
         </Link>
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="A platform that fits the trade"
             title="Different businesses need different services — not different systems."
@@ -209,7 +212,7 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
             eyebrow="From independent professionals to growing businesses"

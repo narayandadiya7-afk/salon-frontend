@@ -193,9 +193,12 @@ export function ContactForm() {
         <button
           type="button"
           onClick={() => setResult(false)}
-          className="mt-8 text-sm font-semibold text-brass-soft transition-colors hover:text-brass"
+          className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brass-soft transition-colors hover:text-brass"
         >
-          Send another message →
+          Send another message
+          <span className="transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
         </button>
       </div>
     );

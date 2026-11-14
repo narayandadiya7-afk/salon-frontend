@@ -268,7 +268,7 @@ export default function PricingPage() {
         imageAlt="Elegant modern service business interior"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="relative overflow-hidden rounded-3xl bg-primary px-8 py-14 shadow-lift ring-1 ring-brass/30 sm:px-14 sm:py-20">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-6">
@@ -315,7 +315,7 @@ export default function PricingPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="Why it works differently"
             title="A pricing model that follows your booking activity."
@@ -362,7 +362,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="How it works"
           title="Three steps, and the platform fee follows the value processed."
@@ -390,7 +390,7 @@ export default function PricingPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="No feature restrictions"
             title="Everything you need. One platform."
@@ -434,7 +434,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="Who Fyncho is for"
           title="The same platform, whichever kind of service business you run."
@@ -464,7 +464,7 @@ export default function PricingPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHeading
@@ -553,7 +553,7 @@ export default function PricingPage() {
       <ClosingCta
         title="Your business, online — at one clear platform rate."
         description={`Create your Fyncho business software, start taking bookings and pay ${PLATFORM_FEE_LABEL} on eligible booking and payment value processed through the platform. Any payment gateway processing fee is separate.`}
-        primary={{ label: "Start with Fyncho", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "Talk to us", to: "/contact" }}
       />
     </SiteShell>

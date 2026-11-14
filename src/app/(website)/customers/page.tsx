@@ -98,7 +98,7 @@ export default function CustomersPage() {
         imageAlt="Service business owner creating a polished customer experience"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-7xl px-6 pb-16">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
           <img
             src="/assets/admin-website/owner-portrait.jpg"
@@ -130,7 +130,7 @@ export default function CustomersPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 max-w-2xl">
             <p className="eyebrow">Different businesses</p>
 
@@ -193,7 +193,7 @@ export default function CustomersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="What Fyncho brings together"
           title="The practical tools behind a smoother customer experience."
@@ -246,7 +246,7 @@ export default function CustomersPage() {
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHeading
@@ -301,7 +301,7 @@ export default function CustomersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <SectionHeading
           eyebrow="The Fyncho experience"
           title="A direct connection between your business and your customers."
@@ -334,7 +334,7 @@ export default function CustomersPage() {
       <ClosingCta
         title="Give your business a place of its own."
         description="Create your Fyncho business software, choose your unique business address, and bring your services, customers, bookings, and daily operations together."
-        primary={{ label: "Get Started Free", to: "/register" }}
+        primary={{ label: "Get Your Business Software", to: "/register" }}
         secondary={{ label: "How It Works", to: "/how-it-works" }}
       />
     </SiteShell>

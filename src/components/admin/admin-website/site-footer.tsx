@@ -62,7 +62,7 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-line">
-      <div className="mx-auto max-w-6xl px-6 py-14">
+      <div className="mx-auto max-w-[90rem] px-6 py-14">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
           <div className="col-span-2 sm:col-span-3 lg:col-span-4 xl:col-span-2">
             <span className="font-display text-2xl font-semibold tracking-tight">Fyncho</span>

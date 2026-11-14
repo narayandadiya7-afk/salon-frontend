@@ -59,7 +59,7 @@ export function SolutionPageTemplate({
       />
 
       {/* CHALLENGES */}
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-6 pb-20">
         <SectionHeading
           eyebrow="The challenges"
           title="Running this type of business has its own complexity."
@@ -77,7 +77,7 @@ export function SolutionPageTemplate({
 
       {/* HOW FYNCHO HELPS */}
       <section className="border-y border-line bg-surface py-20">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="How Fyncho helps"
             title="One platform covering every part of the operation."
@@ -99,7 +99,7 @@ export function SolutionPageTemplate({
       </section>
 
       {/* USE CASES */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
             eyebrow="Use cases"
@@ -121,7 +121,7 @@ export function SolutionPageTemplate({
 
       {/* BENEFITS */}
       <section className="border-y border-line bg-surface py-20">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading eyebrow="Benefits" title="What changes when you run on Fyncho." />
           <div className="mt-10 grid gap-8 sm:grid-cols-3">
             {benefits.map((b, i) => (
@@ -135,7 +135,7 @@ export function SolutionPageTemplate({
       </section>
 
       {/* DASHBOARD PREVIEW */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <p className="eyebrow">Business dashboard</p>
@@ -148,9 +148,12 @@ export function SolutionPageTemplate({
             </p>
             <Link
               href="/features"
-              className="mt-8 inline-block font-mono text-xs uppercase tracking-[0.2em] text-brass-soft hover:text-brass"
+              className="group mt-8 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brass-soft transition-colors hover:text-brass"
             >
-              Explore all features →
+              Explore all features
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </Link>
           </div>
           <img
@@ -167,7 +170,7 @@ export function SolutionPageTemplate({
       {/* RELATED SOLUTIONS */}
       {relatedSolutions.length > 0 && (
         <section className="border-y border-line bg-surface py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-7xl px-6">
             <p className="eyebrow mb-8">Related solutions</p>
             <div className="flex flex-wrap gap-3">
               {relatedSolutions.map((r) => (
@@ -181,9 +184,12 @@ export function SolutionPageTemplate({
               ))}
               <Link
                 href="/solutions"
-                className="rounded-full border border-brass/40 bg-background px-5 py-2.5 text-sm text-brass-soft transition-colors hover:border-brass hover:text-brass"
+                className="group inline-flex items-center gap-2 rounded-full border border-brass/40 bg-background px-5 py-2.5 text-sm text-brass-soft transition-colors hover:border-brass hover:text-brass"
               >
-                All solutions →
+                All solutions
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </Link>
             </div>
           </div>

@@ -37,7 +37,7 @@ export default function AboutPage() {
         imageAlt="Sunlit premium service business interior designed around the customer experience"
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-7xl px-6 pb-16">
         <img
           src="/assets/admin-website/salon-hero.jpg"
           alt="A modern service business in warm daylight"
@@ -72,12 +72,12 @@ export default function AboutPage() {
           href="/register"
           className="mt-9 inline-block rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brass-soft"
         >
-          Get Started Free
+          Get Your Business Software
         </Link>
       </section>
 
       <section className="border-y border-line bg-surface py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="Our point of view"
             title="Your business should remain at the center of the experience."
@@ -115,7 +115,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-2">
           <SectionHeading
             eyebrow="Built to grow with you"

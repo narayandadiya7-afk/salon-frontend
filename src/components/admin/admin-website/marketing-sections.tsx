@@ -45,20 +45,25 @@ export function MetricBand({
   items: Array<{ value: string; label: string; detail?: string }>;
 }) {
   return (
-    <dl className="grid grid-cols-2 border-y border-line lg:grid-cols-4">
-      {items.map((item) => (
+    <dl className="grid grid-cols-2 overflow-hidden border-y border-line lg:grid-cols-4">
+      {items.map((item, index) => (
         <div
           key={item.label}
-          className="group border-line px-5 py-8 transition-colors duration-300 even:border-l hover:bg-background/60 lg:border-l lg:first:border-l-0"
+          className={
+            "group min-h-44 border-line px-5 py-7 transition-colors duration-300 hover:bg-background/60 sm:px-7 sm:py-8 lg:min-h-48 lg:px-8 " +
+            (index % 2 === 1 ? "border-l " : "") +
+            (index >= 2 ? "border-t lg:border-t-0 " : "") +
+            (index % 4 !== 0 ? "lg:border-l " : "")
+          }
         >
           <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             {item.label}
           </dt>
-          <dd className="mt-3 font-display text-5xl leading-none transition-colors duration-300 group-hover:text-brass-soft">
+          <dd className="mt-4 font-display text-5xl leading-none transition-colors duration-300 group-hover:text-brass-soft sm:text-6xl">
             {item.value}
           </dd>
           {item.detail && (
-            <p className="mt-3 max-w-[26ch] text-xs leading-relaxed text-muted-foreground">{item.detail}</p>
+            <p className="mt-3 max-w-[28ch] text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.detail}</p>
           )}
         </div>
       ))}
@@ -88,17 +93,17 @@ export function ClosingCta({
         <p className="mx-auto mt-6 max-w-[58ch] text-lg leading-relaxed text-pretty text-primary-foreground/70">
           {description}
         </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+        <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <Link
             href={primary ? primary.to : "/register"}
-            className="rounded-full bg-brass px-8 py-4 text-sm font-semibold text-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary-foreground"
+            className="w-full rounded-full bg-brass px-8 py-4 text-center text-sm font-semibold text-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary-foreground sm:w-auto"
           >
-            {primary ? primary.label : "Get Started Free"}
+            {primary ? primary.label : "Get Your Business Software"}
           </Link>
           {secondary && (
             <Link
               href={secondary.to}
-              className="rounded-full px-8 py-4 text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/25 transition-colors hover:bg-primary-foreground/10"
+              className="w-full rounded-full px-8 py-4 text-center text-sm font-semibold text-primary-foreground ring-1 ring-primary-foreground/25 transition-colors hover:bg-primary-foreground/10 sm:w-auto"
             >
               {secondary.label}
             </Link>

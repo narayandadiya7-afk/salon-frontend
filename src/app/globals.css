@@ -278,7 +278,7 @@ body.theme-slate {
   body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    max-width: 100%;
     font-family: "LexendRegular", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: var(--font-size-sm);
