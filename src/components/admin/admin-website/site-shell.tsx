@@ -36,7 +36,7 @@ export function HeroShell({
   return (
     <section
       className={
-        "page-banner relative isolate flex min-h-[calc(100svh-4rem)] lg:min-h-[720px] lg:max-h-[820px] flex-col overflow-hidden bg-primary " +
+        "page-banner relative isolate flex min-h-[50vh] lg:min-h-[720px] lg:max-h-[820px] flex-col overflow-hidden bg-primary " +
         (flushBottom ? "" : "mb-20 sm:mb-28")
       }
     >
@@ -73,9 +73,9 @@ export function HeroShell({
         />
       )}
       <div className="banner-shade absolute inset-0" />
-      <div className="pointer-events-none absolute inset-4 border border-primary-foreground/15 sm:inset-6" />
+      <div className="pointer-events-none absolute inset-6 border border-primary-foreground/15" />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-8 pb-10 pt-12 sm:px-10 sm:pb-14 lg:px-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-10 pb-10 pt-12 sm:px-10 sm:pb-14 lg:px-12">
         <div className="anim-rise flex items-center justify-between border-b border-primary-foreground/20 pb-5">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/70">
             Fyncho <span className="mx-2 text-brass">/</span> {eyebrow}
@@ -85,7 +85,7 @@ export function HeroShell({
           </p>
         </div>
 
-        <div className="flex-1 content-center py-10 lg:py-14">{children}</div>
+        <div className="flex-1 py-10 lg:content-center lg:py-14">{children}</div>
 
         {bottom && (
           <div className="anim-rise-4 border-t border-primary-foreground/20 pt-5">
